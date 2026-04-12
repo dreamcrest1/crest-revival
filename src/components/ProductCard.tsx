@@ -3,9 +3,14 @@ import { type Product } from '@/data/products';
 const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden card-hover group">
-      {/* Header with emoji and discount */}
-      <div className="relative bg-secondary/50 p-6 flex items-center justify-center min-h-[120px]">
-        <span className="text-5xl">{product.emoji}</span>
+      {/* Product image */}
+      <div className="relative bg-secondary/50 overflow-hidden">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-[180px] object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
         {product.discount && (
           <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-2.5 py-1 rounded-full">
             {product.discount}
