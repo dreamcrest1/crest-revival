@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { WhatsAppIcon, InstagramIcon, EmailIcon, YouTubeIcon } from './SocialIcons';
 
 const Footer = () => {
   return (
-    <footer id="contact" className="border-t border-border bg-card/50 py-12">
+    <footer id="contact" className="relative z-10 border-t border-border bg-card/50 backdrop-blur-sm py-12">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
@@ -14,9 +15,24 @@ const Footer = () => {
                 Dream<span className="text-primary">crest</span>
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-4">
               India's most trusted digital product store. Serving 15,000+ happy customers since 2021.
             </p>
+            {/* Social icons row */}
+            <div className="flex items-center gap-3">
+              <a href="https://wa.me/916357998730" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#25D366] transition-colors">
+                <WhatsAppIcon className="w-5 h-5" />
+              </a>
+              <a href="https://www.instagram.com/dreamcrest_solutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#E4405F] transition-colors">
+                <InstagramIcon className="w-5 h-5" />
+              </a>
+              <a href="https://www.youtube.com/channel/UCbqBFmu4oZ3PpcwEdMVDDcw" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#FF0000] transition-colors">
+                <YouTubeIcon className="w-5 h-5" />
+              </a>
+              <a href="mailto:dreamcrestsolutions@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                <EmailIcon className="w-5 h-5" />
+              </a>
+            </div>
           </div>
 
           <div>
@@ -41,20 +57,20 @@ const Footer = () => {
 
           <div>
             <h4 className="font-display font-semibold text-foreground mb-4">Contact Us</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="https://wa.me/916357998730" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                  💬 WhatsApp
+                <a href="https://wa.me/916357998730" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#25D366] transition-colors">
+                  <WhatsAppIcon className="w-4 h-4" /> WhatsApp
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/dreamcrest_solutions" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                  📸 Instagram
+                <a href="https://www.instagram.com/dreamcrest_solutions" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#E4405F] transition-colors">
+                  <InstagramIcon className="w-4 h-4" /> Instagram
                 </a>
               </li>
               <li>
-                <a href="mailto:dreamcrestsolutions@gmail.com" className="hover:text-primary transition-colors">
-                  📧 Email
+                <a href="mailto:dreamcrestsolutions@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+                  <EmailIcon className="w-4 h-4" /> Email
                 </a>
               </li>
               <li className="text-xs pt-1">🏢 D-18 Richmond Heights, Sector 37, Gandhinagar, GJ 382010</li>
