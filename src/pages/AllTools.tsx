@@ -156,7 +156,7 @@ const AllTools = () => {
                       transition={{ delay: i * 0.02 }}
                       className="bg-card border border-border rounded-xl p-4 text-center card-hover group flex flex-col items-center gap-2"
                     >
-                      <MessageCircle className="w-4 h-4 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
+                      <WhatsAppIcon className="w-4 h-4 text-primary opacity-60 group-hover:opacity-100 transition-opacity" />
                       <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors leading-tight">
                         {tool}
                       </span>
@@ -191,7 +191,7 @@ const AllTools = () => {
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{deal.pricing}</p>
                   <div className="mt-3 text-xs text-primary font-medium flex items-center gap-1">
-                    <MessageCircle className="w-3 h-3" /> WhatsApp
+                    <WhatsAppIcon className="w-3 h-3" /> WhatsApp
                   </div>
                 </motion.a>
               ))}
