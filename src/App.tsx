@@ -8,6 +8,9 @@ import Products from "./pages/Products.tsx";
 import Contact from "./pages/Contact.tsx";
 import Terms from "./pages/Terms.tsx";
 import FAQ from "./pages/FAQ.tsx";
+import Refunds from "./pages/Refunds.tsx";
+import About from "./pages/About.tsx";
+import AllTools from "./pages/AllTools.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -24,6 +27,9 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/refunds" element={<Refunds />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/alltools" element={<AllTools />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

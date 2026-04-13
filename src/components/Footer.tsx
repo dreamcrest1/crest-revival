@@ -24,18 +24,18 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
               <li><Link to="/products" className="hover:text-primary transition-colors">Products</Link></li>
-              <li><a href="/#about" className="hover:text-primary transition-colors">About</a></li>
-              <li><a href="/#faq" className="hover:text-primary transition-colors">FAQ</a></li>
+              <li><Link to="/alltools" className="hover:text-primary transition-colors">All Tools</Link></li>
+              <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
+              <li><Link to="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-foreground mb-4">Categories</h4>
+            <h4 className="font-display font-semibold text-foreground mb-4">Policies</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/products?category=AI+Tools" className="hover:text-primary transition-colors">AI Tools</Link></li>
-              <li><Link to="/products?category=Indian+OTT" className="hover:text-primary transition-colors">Indian OTT</Link></li>
-              <li><Link to="/products?category=Software" className="hover:text-primary transition-colors">Software</Link></li>
-              <li><Link to="/products?category=Writing+Tools" className="hover:text-primary transition-colors">Writing Tools</Link></li>
+              <li><Link to="/refunds" className="hover:text-primary transition-colors">Refund Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -52,12 +52,18 @@ const Footer = () => {
                   📸 Instagram
                 </a>
               </li>
+              <li>
+                <a href="mailto:dreamcrestsolutions@gmail.com" className="hover:text-primary transition-colors">
+                  📧 Email
+                </a>
+              </li>
+              <li className="text-xs pt-1">🏢 D-18 Richmond Heights, Sector 37, Gandhinagar, GJ 382010</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-border mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Dreamcrest Solutions. All rights reserved.</p>
+          <p>Powered by Dreamcrest & Dreamstar | © {new Date().getFullYear()} All rights reserved.</p>
         </div>
       </div>
     </footer>

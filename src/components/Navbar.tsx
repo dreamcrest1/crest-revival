@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Products', path: '/products' },
+  { label: 'All Tools', path: '/alltools' },
+  { label: 'About', path: '/about' },
   { label: 'FAQ', path: '/faq' },
+  { label: 'Refunds', path: '/refunds' },
   { label: 'Contact', path: '/contact' },
-  { label: 'Terms', path: '/terms' },
 ];
 
 const Navbar = () => {
@@ -36,7 +38,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-5">
           {navLinks.map(link => (
             <Link
               key={link.path}
