@@ -48,7 +48,7 @@ const AdminPages = () => {
       .eq('page_slug', activePage)
       .order('sort_order', { ascending: true });
     if (error) console.error(error);
-    setSections(data || []);
+    setSections(castSections(data || []));
     setLoading(false);
   };
 
