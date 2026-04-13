@@ -23,7 +23,10 @@ const ProductCard = ({ product }: { product: Product }) => {
         <h3 className="font-display font-semibold text-foreground text-sm leading-tight mb-1 line-clamp-2 min-h-[40px]">
           {product.name}
         </h3>
-        <p className="text-xs text-muted-foreground mb-3">{product.category}</p>
+        <p className="text-xs text-muted-foreground mb-2 line-clamp-2 min-h-[32px]">
+          {product.description}
+        </p>
+        <p className="text-xs text-muted-foreground/70 mb-3">{product.category}</p>
 
         <div className="flex items-baseline gap-2">
           <span className="font-display font-bold text-lg text-primary">{product.price}</span>
