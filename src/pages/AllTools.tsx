@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { MessageCircle } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/SocialIcons';
 
 type ToolCategory = {
   emoji: string;
