@@ -11,21 +11,25 @@ export type Product = {
 
 function categorize(name: string): { category: string; emoji: string } {
   const n = name.toLowerCase();
-  if (['chatgpt', 'cursor ai', 'bolt.new', 'perplexity', 'jasper', 'leonardo', 'creaitor', 'one ai', 'riku ai', 'jenni ai', 'writecream', 'supermachine'].some(k => n.includes(k)))
+  if (['chatgpt', 'cursor ai', 'bolt.new', 'perplexity', 'jasper', 'leonardo', 'creaitor', 'one ai', 'riku ai', 'jenni ai', 'writecream', 'supermachine', 'nichesss', 'texta', 'copymatic', 'bramework', 'hix ai', 'writehuman'].some(k => n.includes(k)))
     return { category: 'AI Tools', emoji: '🤖' };
-  if (['grammarly', 'quillbot', 'wordtune', 'wordhero', 'texta', 'linguix', 'copymatic', 'bramework', 'nichesss', 'writehuman', 'writerzen', 'hix ai', 'paperpal', 'turnitin', 'ref-n-write', 'quetext', 'scispace'].some(k => n.includes(k)))
+  if (['grammarly', 'quillbot', 'wordtune', 'wordhero', 'linguix', 'paperpal', 'turnitin', 'ref-n-write', 'quetext', 'scispace'].some(k => n.includes(k)))
     return { category: 'Writing Tools', emoji: '✍️' };
-  if (['filmora', 'flex clip', 'invideo', 'pictory', 'lumen5', 'create studio', 'vyond', 'vidtoon', 'toonly', 'doodly', 'doodle', 'wideo', 'offeo', 'design beast', 'avatar builder', 'people creator', 'photovibrance', 'sketch', 'video creator', 'screen to video', 'vidscribe', 'beautiful.ai', 'designrr', 'speechelo', 'voicely', 'vocal clone'].some(k => n.includes(k)))
+  if (['filmora', 'flex clip', 'invideo', 'pictory', 'lumen5', 'create studio', 'vyond', 'vidtoon', 'toonly', 'doodly', 'doodle', 'wideo', 'offeo', 'avatar builder', 'people creator', 'photovibrance', 'sketch', 'video creator', 'screen to video', 'vidscribe', 'beautiful.ai', 'designrr', 'speechelo', 'voicely', 'vocal clone'].some(k => n.includes(k)))
     return { category: 'Video Editing', emoji: '🎬' };
-  if (['hotstar', 'jiocinema', 'sony liv', 'zee5', 'aha ', 'eros now', 'hoichoi', 'klikk', 'sunnxt', 'sun nxt', 'manorama', 'magzter'].some(k => n.includes(k)))
+  if (['hotstar', 'jiocinema', 'sony liv', 'sonyliv', 'zee5', 'aha ', 'eros now', 'hoichoi', 'klikk', 'sunnxt', 'sun nxt', 'manorama'].some(k => n.includes(k)))
     return { category: 'Indian OTT', emoji: '📺' };
   if (['netflix', 'prime video', 'amazon prime', 'hbo', 'hulu', 'disney+', 'apple tv', 'paramount', 'curiosity', 'espn', 'mubi', 'showtime', 'movie box', 'youtube premium', 'spotify', 'iptv'].some(k => n.includes(k)))
     return { category: 'International OTT', emoji: '🌍' };
-  if (['ahrefs', 'semrush', 'helium', 'leadrocks', 'leads gorilla', 'outscraper', 'useartemis', 'link chest', 'moz pro', 'ubersuggest', 'keyword search', 'instantly', 'whatsapp pilot'].some(k => n.includes(k)))
+  if (['ahrefs', 'semrush', 'moz pro', 'ubersuggest', 'keyword search', 'writerzen', 'link chest'].some(k => n.includes(k)))
+    return { category: 'SEO', emoji: '🔍' };
+  if (['expressvpn', 'nordvpn', 'pure vpn', 'ipvanish'].some(k => n.includes(k)))
+    return { category: 'VPN', emoji: '🔐' };
+  if (['leadrocks', 'leads gorilla', 'outscraper', 'useartemis', 'instantly', 'helium', 'whatsapp pilot'].some(k => n.includes(k)))
     return { category: 'Lead Generation', emoji: '👥' };
-  if (['microsoft', 'office', 'google', 'azure', 'tableau', 'tally', 'loom', 'figma', 'flutterflow', 'skillshare'].some(k => n.includes(k)))
+  if (['microsoft', 'office', 'google', 'azure', 'tableau', 'tally', 'loom', 'figma', 'flutterflow', 'skillshare', 'canva', 'envato', 'freepik', 'pngtree', 'magzter', 'scribd', 'scopus', 'e books', 'xbox'].some(k => n.includes(k)))
     return { category: 'Cloud Services', emoji: '☁️' };
-  if (['adobe', 'autodesk', 'canva', 'envato', 'freepik', 'pngtree', 'windows', 'winrar', 'idm', 'avast', 'expressvpn', 'nordvpn', 'purevpn', 'ipvanish', 'coolnew', 'wondershare', 'tipard', 'xbox', 'scopus'].some(k => n.includes(k)))
+  if (['adobe', 'autodesk', 'windows', 'winrar', 'idm', 'avast', 'coolnew', 'wondershare', 'tipard', 'design beast'].some(k => n.includes(k)))
     return { category: 'Software', emoji: '💻' };
   return { category: 'Software', emoji: '💻' };
 }
@@ -187,6 +191,8 @@ export const categories = [
   { name: 'Writing Tools', emoji: '✍️', count: 0 },
   { name: 'Cloud Services', emoji: '☁️', count: 0 },
   { name: 'Lead Generation', emoji: '👥', count: 0 },
+  { name: 'SEO', emoji: '🔍', count: 0 },
+  { name: 'VPN', emoji: '🔐', count: 0 },
   { name: 'Software', emoji: '💻', count: 0 },
 ];
 

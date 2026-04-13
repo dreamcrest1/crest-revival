@@ -33,7 +33,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
 
         <a
-          href="https://wa.me/916357998730"
+          href="https://superprofile.bio/vp/dreamcrest-payments"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-3 block w-full text-center bg-primary/10 text-primary border border-primary/20 rounded-lg py-2 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
