@@ -87,7 +87,7 @@ const AllTools = () => {
   const totalTools = toolCategories.reduce((sum, cat) => sum + cat.tools.length, 0);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen relative z-10">
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4">
