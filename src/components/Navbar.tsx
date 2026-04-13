@@ -55,6 +55,12 @@ const Navbar = () => {
               Shop Now
             </Link>
           </Button>
+          <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10" asChild>
+            <Link to="/admin">
+              <Shield className="w-4 h-4 mr-2" />
+              Admin
+            </Link>
+          </Button>
         </div>
 
         <button className="md:hidden text-foreground" onClick={() => setIsOpen(!isOpen)}>
