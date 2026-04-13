@@ -18,7 +18,7 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/60 backdrop-blur-xl">
       {/* Top banner */}
       <div className="bg-primary/10 border-b border-primary/20 py-1.5 text-center">
         <p className="text-xs font-medium tracking-wider text-primary uppercase">
