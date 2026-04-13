@@ -16,6 +16,12 @@ interface PageSection {
   sort_order: number;
 }
 
+const castSections = (data: any[]): PageSection[] =>
+  data.map(d => ({
+    ...d,
+    content: (typeof d.content === 'object' && d.content !== null ? d.content : {}) as Record<string, any>,
+  }));
+
 const pages = [
   { slug: 'home', label: 'Home' },
   { slug: 'about', label: 'About' },
