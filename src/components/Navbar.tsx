@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X, ShoppingCart, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logo from '@/assets/logo.png';
 
@@ -53,6 +53,12 @@ const Navbar = () => {
             <Link to="/products">
               <ShoppingCart className="w-4 h-4 mr-2" />
               Shop Now
+            </Link>
+          </Button>
+          <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10" asChild>
+            <Link to="/admin">
+              <Shield className="w-4 h-4 mr-2" />
+              Admin
             </Link>
           </Button>
         </div>
