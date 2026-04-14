@@ -34,7 +34,7 @@ const HeroSection = () => {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="inline-flex items-center gap-2.5 bg-primary/[0.08] border border-primary/20 rounded-full px-5 py-2 mb-8 backdrop-blur-sm"
             >
-              <ZapIcon className="w-4 h-4" />
+              <Zap className="w-4 h-4 text-primary" />
               <span className="text-sm font-semibold text-primary tracking-wide">Up to 80% OFF on All Products</span>
             </motion.div>
 
@@ -73,15 +73,15 @@ const HeroSection = () => {
             {/* Trust badges */}
             <div className="flex flex-wrap gap-8 text-sm text-muted-foreground">
               <span className="flex items-center gap-2.5">
-                <ShieldIcon className="w-4 h-4" />
+                <Shield className="w-4 h-4 text-primary" />
                 <span className="font-medium">100% Genuine</span>
               </span>
               <span className="flex items-center gap-2.5">
-                <ZapIcon className="w-4 h-4" />
+                <Zap className="w-4 h-4 text-primary" />
                 <span className="font-medium">Instant Delivery</span>
               </span>
               <span className="flex items-center gap-2.5">
-                <ClockIcon className="w-4 h-4" />
+                <Clock className="w-4 h-4 text-primary" />
                 <span className="font-medium">24/7 Support</span>
               </span>
             </div>
