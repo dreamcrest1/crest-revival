@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { UsersIcon, BoxIcon, CalendarIcon, ShieldCheckIcon, ZapIcon, ClockIcon, ShieldIcon } from '@/components/icons/BrandIcons';
+import { UsersIcon, BoxIcon, CalendarIcon, ShieldCheckIcon } from '@/components/icons/BrandIcons';
 
 const stats = [
   { value: '15,000+', label: 'Happy Customers', Icon: UsersIcon },
