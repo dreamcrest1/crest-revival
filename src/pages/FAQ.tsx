@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import SEOHead from '@/components/SEOHead';
 
 const faqs = [
   {
@@ -49,6 +50,7 @@ const faqs = [
 const FAQ = () => {
   return (
     <div className="min-h-screen relative z-10">
+      <SEOHead />
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">

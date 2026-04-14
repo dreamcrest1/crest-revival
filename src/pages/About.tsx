@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Tag, HeadphonesIcon, Award, Globe, TrendingUp, Star, ChevronRight } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 const stats = [
   { value: '15,000+', label: 'Happy Customers', icon: '👥' },
@@ -46,6 +47,7 @@ const itemVariants = {
 const About = () => {
   return (
     <div className="min-h-screen relative z-10">
+      <SEOHead />
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4">

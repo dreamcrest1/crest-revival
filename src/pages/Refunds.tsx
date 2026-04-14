@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion } from 'framer-motion';
+import SEOHead from '@/components/SEOHead';
 
 const policies = [
   {
@@ -64,6 +65,7 @@ const policies = [
 const Refunds = () => {
   return (
     <div className="min-h-screen relative z-10">
+      <SEOHead />
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">

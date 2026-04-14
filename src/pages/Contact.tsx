@@ -4,6 +4,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { motion } from 'framer-motion';
 import { StarIcon, RocketIcon, WrenchIcon, CameraIcon, PlayIcon, PhoneIcon, GlobeIcon } from '@/components/icons/BrandIcons';
+import SEOHead from '@/components/SEOHead';
 
 const dreamcrestNumbers = [
   { label: '+91 97123 01164', link: 'https://wa.me/919712301164' },
@@ -29,6 +30,7 @@ const brands = [
 const Contact = () => {
   return (
     <div className="min-h-screen relative z-10">
+      <SEOHead />
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-5xl">
