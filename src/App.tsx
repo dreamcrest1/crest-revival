@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,44 +33,44 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        {loading && <Preloader onComplete={() => setLoading(false)} />}
-        <HyperspaceBackground />
-        <IndiaMapBackground />
-        <CursorTrail />
-        <AuthProvider>
-          <BrowserRouter>
-            <AnalyticsTracker />
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<Index />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/refunds" element={<Refunds />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/alltools" element={<AllTools />} />
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          {loading && <Preloader onComplete={() => setLoading(false)} />}
+          <HyperspaceBackground />
+          <IndiaMapBackground />
+          <CursorTrail />
+          <AuthProvider>
+            <BrowserRouter>
+              <AnalyticsTracker />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/refunds" element={<Refunds />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/alltools" element={<AllTools />} />
 
-              {/* Admin Routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboard />} />
-                <Route path="dashboard" element={<AdminDashboard />} />
-                <Route path="products" element={<AdminProducts />} />
-                <Route path="pages" element={<AdminPages />} />
-                <Route path="analytics" element={<AdminAnalytics />} />
-              </Route>
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="products" element={<AdminProducts />} />
+                  <Route path="pages" element={<AdminPages />} />
+                  <Route path="analytics" element={<AdminAnalytics />} />
+                </Route>
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </AuthProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
