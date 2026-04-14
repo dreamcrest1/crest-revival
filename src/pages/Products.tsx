@@ -7,6 +7,7 @@ import ProductCard from '@/components/ProductCard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import SEOHead from '@/components/SEOHead';
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,6 +37,7 @@ const Products = () => {
 
   return (
     <div className="min-h-screen relative z-10">
+      <SEOHead />
       <Navbar />
 
       <div className="pt-28 pb-16">
