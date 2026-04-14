@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -42,6 +43,7 @@ const categories = [
 ];
 
 const AdminProducts = () => {
+  const queryClient = useQueryClient();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -88,7 +90,7 @@ const AdminProducts = () => {
   };
 
   const handleSave = async () => {
-    if (!form.name || !form.price) {
+    if (!form.name || form.price === null || form.price === undefined) {
       toast.error('Name and price are required');
       return;
     }
@@ -96,29 +98,31 @@ const AdminProducts = () => {
 
     const payload = {
       name: form.name,
-      price: form.price,
-      original_price: form.original_price || null,
+      price: Number(form.price),
+      original_price: form.original_price !== null && form.original_price !== undefined && String(form.original_price) !== '' ? Number(form.original_price) : null,
       category: form.category,
       description: form.description || null,
       image_url: form.image_url || null,
       buy_link: form.buy_link,
       is_active: form.is_active,
-      sort_order: form.sort_order,
+      sort_order: Number(form.sort_order),
     };
 
+    let error;
     if (editProduct) {
-      const { error } = await supabase.from('products').update(payload).eq('id', editProduct.id);
+      ({ error } = await supabase.from('products').update(payload).eq('id', editProduct.id));
       if (error) toast.error('Failed to update product');
       else toast.success('Product updated');
     } else {
-      const { error } = await supabase.from('products').insert(payload);
+      ({ error } = await supabase.from('products').insert(payload));
       if (error) toast.error('Failed to create product');
       else toast.success('Product created');
     }
 
     setSaving(false);
     setDialogOpen(false);
-    loadProducts();
+    await loadProducts();
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const handleDelete = async (id: string) => {
@@ -126,12 +130,14 @@ const AdminProducts = () => {
     if (error) toast.error('Failed to delete');
     else toast.success('Product deleted');
     setDeleteConfirm(null);
-    loadProducts();
+    await loadProducts();
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const toggleActive = async (p: Product) => {
     await supabase.from('products').update({ is_active: !p.is_active }).eq('id', p.id);
-    loadProducts();
+    await loadProducts();
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const filtered = products.filter(p => {
@@ -234,11 +240,11 @@ const AdminProducts = () => {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label>Price (₹) *</Label>
-                <Input type="number" value={form.price} onChange={e => setForm({ ...form, price: parseFloat(e.target.value) || 0 })} />
+                <Input type="number" step="any" value={form.price} onChange={e => setForm({ ...form, price: e.target.value === '' ? 0 : Number(e.target.value) })} />
               </div>
               <div>
                 <Label>Original Price (₹)</Label>
-                <Input type="number" value={form.original_price || ''} onChange={e => setForm({ ...form, original_price: parseFloat(e.target.value) || null })} />
+                <Input type="number" step="any" value={form.original_price ?? ''} onChange={e => setForm({ ...form, original_price: e.target.value === '' ? null : Number(e.target.value) })} />
               </div>
             </div>
             <div>
@@ -268,7 +274,7 @@ const AdminProducts = () => {
             </div>
             <div>
               <Label>Sort Order</Label>
-              <Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
+              <Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: e.target.value === '' ? 0 : Number(e.target.value) })} />
             </div>
           </div>
           <DialogFooter>
