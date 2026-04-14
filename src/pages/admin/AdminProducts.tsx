@@ -90,7 +90,7 @@ const AdminProducts = () => {
   };
 
   const handleSave = async () => {
-    if (!form.name || !form.price) {
+    if (!form.name || form.price === null || form.price === undefined) {
       toast.error('Name and price are required');
       return;
     }
@@ -98,29 +98,31 @@ const AdminProducts = () => {
 
     const payload = {
       name: form.name,
-      price: form.price,
-      original_price: form.original_price || null,
+      price: Number(form.price),
+      original_price: form.original_price !== null && form.original_price !== undefined && String(form.original_price) !== '' ? Number(form.original_price) : null,
       category: form.category,
       description: form.description || null,
       image_url: form.image_url || null,
       buy_link: form.buy_link,
       is_active: form.is_active,
-      sort_order: form.sort_order,
+      sort_order: Number(form.sort_order),
     };
 
+    let error;
     if (editProduct) {
-      const { error } = await supabase.from('products').update(payload).eq('id', editProduct.id);
+      ({ error } = await supabase.from('products').update(payload).eq('id', editProduct.id));
       if (error) toast.error('Failed to update product');
       else toast.success('Product updated');
     } else {
-      const { error } = await supabase.from('products').insert(payload);
+      ({ error } = await supabase.from('products').insert(payload));
       if (error) toast.error('Failed to create product');
       else toast.success('Product created');
     }
 
     setSaving(false);
     setDialogOpen(false);
-    loadProducts();
+    await loadProducts();
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const handleDelete = async (id: string) => {
