@@ -130,12 +130,14 @@ const AdminProducts = () => {
     if (error) toast.error('Failed to delete');
     else toast.success('Product deleted');
     setDeleteConfirm(null);
-    loadProducts();
+    await loadProducts();
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const toggleActive = async (p: Product) => {
     await supabase.from('products').update({ is_active: !p.is_active }).eq('id', p.id);
-    loadProducts();
+    await loadProducts();
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const filtered = products.filter(p => {
