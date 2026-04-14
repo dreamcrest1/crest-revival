@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
 import HyperspaceBackground from "./components/HyperspaceBackground";
+import IndiaMapBackground from "./components/IndiaMapBackground";
 import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import Index from "./pages/Index";
@@ -31,6 +32,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <HyperspaceBackground />
+      <IndiaMapBackground />
       <CursorTrail />
       <AuthProvider>
         <BrowserRouter>
