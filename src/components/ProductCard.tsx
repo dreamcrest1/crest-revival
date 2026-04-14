@@ -1,11 +1,13 @@
 import { type Product } from '@/data/products';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, Tag, Shield } from 'lucide-react';
+import { X, ExternalLink, Tag, Shield, ShoppingCart } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
+import { useCart } from '@/contexts/CartContext';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { addToCart } = useCart();
 
   return (
     <>
@@ -45,9 +47,17 @@ const ProductCard = ({ product }: { product: Product }) => {
             )}
           </div>
 
-          <button className="w-full text-center bg-primary/10 text-primary border border-primary/20 rounded-xl py-2 text-xs font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300">
-            View Details
-          </button>
+          <div className="flex gap-2">
+            <button className="flex-1 text-center bg-primary/10 text-primary border border-primary/20 rounded-xl py-2 text-xs font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+              View Details
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+              className="w-9 h-9 flex items-center justify-center bg-primary text-primary-foreground rounded-xl hover:bg-primary/80 transition-all duration-300 shrink-0"
+            >
+              <ShoppingCart className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -124,6 +134,12 @@ const ProductCard = ({ product }: { product: Product }) => {
                   >
                     <ExternalLink className="w-4 h-4" /> Buy Now
                   </a>
+                  <button
+                    onClick={() => { addToCart(product); setIsOpen(false); }}
+                    className="flex items-center justify-center gap-2 bg-secondary border border-border rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                  </button>
                   <a
                     href={`https://wa.me/916357998730?text=${encodeURIComponent(`Hi! I'm interested in ${product.name} (${product.price}). Please share details.`)}`}
                     target="_blank"

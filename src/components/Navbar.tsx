@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCart } from '@/contexts/CartContext';
 import logo from '@/assets/logo.png';
 
 const navLinks = [
@@ -17,6 +18,7 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const cart = useCart();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/60 backdrop-blur-xl">
@@ -49,9 +51,19 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => cart.setIsOpen(true)}
+            className="relative w-9 h-9 rounded-full bg-secondary/50 border border-border flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            {cart.totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 w-4.5 h-4.5 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center min-w-[18px] h-[18px]">
+                {cart.totalItems}
+              </span>
+            )}
+          </button>
           <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold" asChild>
             <Link to="/products">
-              <ShoppingCart className="w-4 h-4 mr-2" />
               Shop Now
             </Link>
           </Button>
