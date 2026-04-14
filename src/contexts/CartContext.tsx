@@ -1,13 +1,13 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { type Product } from '@/data/products';
+import { type Product } from '@/hooks/useProducts';
 
 type CartItem = Product & { quantity: number };
 
 type CartContextType = {
   items: CartItem[];
   addToCart: (product: Product) => void;
-  removeFromCart: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -43,11 +43,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setIsOpen(true);
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string) => {
     setItems(prev => prev.filter(i => i.id !== productId));
   };
 
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) return removeFromCart(productId);
     setItems(prev => prev.map(i => i.id === productId ? { ...i, quantity } : i));
   };

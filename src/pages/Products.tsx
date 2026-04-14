@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { products, categories } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 import ProductCard from '@/components/ProductCard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -13,6 +13,10 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const activeCategory = searchParams.get('category') || 'All';
+  const { data, isLoading } = useProducts();
+
+  const products = data?.products || [];
+  const categories = data?.categories || [];
 
   const filtered = useMemo(() => {
     let result = products;
@@ -24,7 +28,7 @@ const Products = () => {
       result = result.filter(p => p.name.toLowerCase().includes(q));
     }
     return result;
-  }, [activeCategory, search]);
+  }, [activeCategory, search, products]);
 
   const setCategory = (cat: string) => {
     if (cat === 'All') {
@@ -95,14 +99,23 @@ const Products = () => {
             Showing {filtered.length} of {products.length} products
           </p>
 
-          {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {/* Loading */}
+          {isLoading && (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+            </div>
+          )}
 
-          {filtered.length === 0 && (
+          {/* Grid */}
+          {!isLoading && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filtered.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+
+          {!isLoading && filtered.length === 0 && (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">No products found.</p>
             </div>

@@ -1,4 +1,4 @@
-import { type Product } from '@/data/products';
+import { type Product } from '@/hooks/useProducts';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Tag, Shield, ShoppingCart } from 'lucide-react';
@@ -18,7 +18,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         {/* Hover glow */}
         <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none z-10" />
 
-        {/* Product image - centered for any size */}
+        {/* Product image */}
         <div className="relative bg-secondary/20 overflow-hidden aspect-square">
           <img
             src={product.image}
@@ -127,7 +127,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 {/* CTA buttons */}
                 <div className="flex gap-3">
                   <a
-                    href="https://superprofile.bio/vp/dreamcrest-payments"
+                    href={product.buyLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"

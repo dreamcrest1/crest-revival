@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { categories } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 import { motion } from 'framer-motion';
 
 const categoryIcons: Record<string, string> = {
@@ -13,14 +13,18 @@ const categoryIcons: Record<string, string> = {
   'Lead Generation': '👥',
   'Design Tools': '🎨',
   'Cloud Storage': '☁️',
+  'Cloud Services': '☁️',
   'Learning': '📚',
   'Music': '🎵',
+  'Software': '💻',
 };
 
 const CategoriesSection = () => {
+  const { data } = useProducts();
+  const categories = data?.categories || [];
+
   return (
     <section className="py-24 relative">
-      {/* Subtle section glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -51,7 +55,6 @@ const CategoriesSection = () => {
                 to={`/products?category=${encodeURIComponent(cat.name)}`}
                 className="group relative block bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl p-7 text-center card-hover overflow-hidden"
               >
-                {/* Hover glow effect */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/[0.06] to-transparent" />
 
                 <div className="relative z-10">
