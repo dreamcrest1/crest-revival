@@ -128,7 +128,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                     href={`https://wa.me/916357998730?text=${encodeURIComponent(`Hi! I'm interested in ${product.name} (${product.price}). Please share details.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-green-600/10 text-green-500 border border-green-500/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-green-600 hover:text-white transition-all"
+                    className="flex items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
                   >
                     <WhatsAppIcon className="w-4 h-4" />
                   </a>
