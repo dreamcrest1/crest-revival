@@ -1,11 +1,19 @@
-import { CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { UsersIcon, BoxIcon, CalendarIcon, ShieldCheckIcon } from '@/components/icons/BrandIcons';
+import { CheckCircle } from 'lucide-react';
 
 const features = [
   'Most Trusted Service Provider',
   'Over 200+ Products Available',
   'Most Responsive Customer Support',
   'Instant Digital Delivery',
+];
+
+const stats = [
+  { value: '15,000+', label: 'Happy Customers', sub: '& Growing Every Day', Icon: UsersIcon },
+  { value: '⭐ 4.9', label: 'Rating', Icon: ShieldCheckIcon },
+  { value: '🚀 2021', label: 'Since', Icon: CalendarIcon },
+  { value: '200+', label: 'Products', Icon: BoxIcon },
 ];
 
 const AboutSection = () => {
@@ -45,23 +53,23 @@ const AboutSection = () => {
             viewport={{ once: true }}
             className="grid grid-cols-2 gap-4"
           >
-            <div className="bg-card border border-border rounded-xl p-6 text-center">
-              <div className="font-display text-3xl font-bold text-primary">15,000+</div>
-              <div className="text-sm text-muted-foreground mt-1">Happy Customers</div>
-              <div className="text-xs text-muted-foreground mt-1">& Growing Every Day</div>
-            </div>
-            <div className="bg-card border border-border rounded-xl p-6 text-center">
-              <div className="font-display text-3xl font-bold text-primary">⭐ 4.9</div>
-              <div className="text-sm text-muted-foreground mt-1">Rating</div>
-            </div>
-            <div className="bg-card border border-border rounded-xl p-6 text-center">
-              <div className="font-display text-3xl font-bold text-primary">🚀 2021</div>
-              <div className="text-sm text-muted-foreground mt-1">Since</div>
-            </div>
-            <div className="bg-card border border-border rounded-xl p-6 text-center">
-              <div className="font-display text-3xl font-bold text-primary">200+</div>
-              <div className="text-sm text-muted-foreground mt-1">Products</div>
-            </div>
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative bg-card border border-border rounded-2xl p-6 text-center card-hover overflow-hidden"
+              >
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/5 to-transparent" />
+                <div className="relative z-10">
+                  <div className="font-display text-3xl font-bold text-primary">{s.value}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+                  {s.sub && <div className="text-xs text-muted-foreground mt-1">{s.sub}</div>}
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
