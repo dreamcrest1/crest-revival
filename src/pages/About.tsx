@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import IndiaMap from '@/components/IndiaMap';
+
 import { motion } from 'framer-motion';
 import { Zap, Shield, Tag, HeadphonesIcon } from 'lucide-react';
 import { UsersIcon, BoxIcon, CalendarIcon, ShieldCheckIcon } from '@/components/icons/BrandIcons';
@@ -71,12 +71,6 @@ const About = () => {
 
           {/* Our Story + India Map + Timeline */}
           <div className="relative mb-20 max-w-6xl mx-auto">
-            {/* India map background */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-              <div className="w-[600px] h-[600px] opacity-60">
-                <IndiaMap />
-              </div>
-            </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-start relative z-10">
               {/* Our Story */}
