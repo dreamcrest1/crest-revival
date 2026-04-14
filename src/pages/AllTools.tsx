@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { Search, X, ExternalLink } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 type ToolCategory = {
   emoji: string;
