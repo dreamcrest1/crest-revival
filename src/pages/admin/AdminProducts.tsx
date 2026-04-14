@@ -274,7 +274,7 @@ const AdminProducts = () => {
             </div>
             <div>
               <Label>Sort Order</Label>
-              <Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
+              <Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: e.target.value === '' ? 0 : Number(e.target.value) })} />
             </div>
           </div>
           <DialogFooter>
