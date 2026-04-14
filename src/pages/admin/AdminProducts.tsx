@@ -240,11 +240,11 @@ const AdminProducts = () => {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label>Price (₹) *</Label>
-                <Input type="number" value={form.price} onChange={e => setForm({ ...form, price: parseFloat(e.target.value) || 0 })} />
+                <Input type="number" step="any" value={form.price} onChange={e => setForm({ ...form, price: e.target.value === '' ? 0 : Number(e.target.value) })} />
               </div>
               <div>
                 <Label>Original Price (₹)</Label>
-                <Input type="number" value={form.original_price || ''} onChange={e => setForm({ ...form, original_price: parseFloat(e.target.value) || null })} />
+                <Input type="number" step="any" value={form.original_price ?? ''} onChange={e => setForm({ ...form, original_price: e.target.value === '' ? null : Number(e.target.value) })} />
               </div>
             </div>
             <div>
