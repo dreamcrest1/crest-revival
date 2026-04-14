@@ -32,6 +32,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <HyperspaceBackground />
+      <IndiaMapBackground />
       <CursorTrail />
       <AuthProvider>
         <BrowserRouter>
