@@ -47,8 +47,9 @@ const App = () => (
             <Route path="/alltools" element={<AllTools />} />
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
               <Route path="dashboard" element={<AdminDashboard />} />
               <Route path="products" element={<AdminProducts />} />
               <Route path="pages" element={<AdminPages />} />
