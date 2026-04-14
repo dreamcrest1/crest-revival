@@ -22,7 +22,7 @@ const AdminLogin = () => {
     );
   }
 
-  if (user && isAdmin) return <Navigate to="/admin/dashboard" replace />;
+  if (user && isAdmin) return <Navigate to="/admin" replace />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
