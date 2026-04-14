@@ -43,6 +43,7 @@ const categories = [
 ];
 
 const AdminProducts = () => {
+  const queryClient = useQueryClient();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
