@@ -20,39 +20,65 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const checkAdminRole = async (userId: string) => {
-    const { data } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId)
-      .eq('role', 'admin')
-      .maybeSingle();
-    return !!data;
+    try {
+      const { data, error } = await supabase.rpc('has_role', {
+        _user_id: userId,
+        _role: 'admin',
+      });
+
+      if (error) {
+        console.error('Failed to check admin role:', error);
+        return false;
+      }
+
+      return !!data;
+    } catch (error) {
+      console.error('Unexpected admin role check failure:', error);
+      return false;
+    }
   };
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    let isMounted = true;
+
+    const syncAuthState = async (session: Session | null) => {
+      if (!isMounted) return;
+
       setSession(session);
       setUser(session?.user ?? null);
-      if (session?.user) {
-        const admin = await checkAdminRole(session.user.id);
-        setIsAdmin(admin);
-      } else {
-        setIsAdmin(false);
+
+      try {
+        if (session?.user) {
+          const admin = await checkAdminRole(session.user.id);
+          if (isMounted) setIsAdmin(admin);
+        } else if (isMounted) {
+          setIsAdmin(false);
+        }
+      } finally {
+        if (isMounted) setLoading(false);
       }
-      setLoading(false);
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      void syncAuthState(session);
     });
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        const admin = await checkAdminRole(session.user.id);
-        setIsAdmin(admin);
-      }
-      setLoading(false);
-    });
+    void supabase.auth.getSession()
+      .then(({ data: { session } }) => syncAuthState(session))
+      .catch((error) => {
+        console.error('Failed to restore session:', error);
+        if (isMounted) {
+          setUser(null);
+          setSession(null);
+          setIsAdmin(false);
+          setLoading(false);
+        }
+      });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
