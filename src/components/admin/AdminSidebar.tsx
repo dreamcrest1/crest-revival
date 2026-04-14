@@ -1,5 +1,4 @@
 import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home } from 'lucide-react';
-import { NavLink } from '@/components/NavLink';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -30,6 +29,14 @@ const AdminSidebar = () => {
   const location = useLocation();
   const { signOut, user } = useAuth();
 
+  const isItemActive = (url: string) => {
+    if (url === '/admin/dashboard') {
+      return location.pathname === '/admin' || location.pathname === '/admin/dashboard';
+    }
+
+    return location.pathname.startsWith(url);
+  };
+
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
       <SidebarContent className="bg-card/80 backdrop-blur-sm">
@@ -44,16 +51,11 @@ const AdminSidebar = () => {
             <SidebarMenu>
               {menuItems.map(item => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      end={item.url === '/admin/dashboard'}
-                      className="hover:bg-muted/50"
-                      activeClassName="bg-muted text-primary font-medium"
-                    >
+                  <SidebarMenuButton asChild isActive={isItemActive(item.url)} tooltip={item.title}>
+                    <Link to={item.url}>
                       <item.icon className="mr-2 h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
-                    </NavLink>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -66,8 +68,8 @@ const AdminSidebar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link to="/" className="hover:bg-muted/50 text-muted-foreground">
+                <SidebarMenuButton asChild tooltip="View Site">
+                  <Link to="/" className="text-muted-foreground">
                     <Home className="mr-2 h-4 w-4" />
                     {!collapsed && <span>View Site</span>}
                   </Link>
