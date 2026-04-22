@@ -31,6 +31,11 @@ const ProductCard = ({ product }: { product: Product }) => {
               {product.discount}
             </span>
           )}
+          {product.isHotSelling && (
+            <span className="absolute top-2.5 right-2.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1">
+              🔥 HOT
+            </span>
+          )}
         </div>
 
         {/* Content */}
