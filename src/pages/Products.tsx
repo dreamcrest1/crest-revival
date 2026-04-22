@@ -13,29 +13,45 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const activeCategory = searchParams.get('category') || 'All';
+  const filterParam = searchParams.get('filter');
+  const isHotFilter = filterParam === 'hot';
   const { data, isLoading } = useProducts();
 
   const products = data?.products || [];
   const categories = data?.categories || [];
+  const hotSellingCount = products.filter((p) => p.isHotSelling).length;
 
   const filtered = useMemo(() => {
     let result = products;
-    if (activeCategory !== 'All') {
-      result = result.filter(p => p.category === activeCategory);
+    if (isHotFilter) {
+      result = result.filter((p) => p.isHotSelling);
+    } else if (activeCategory !== 'All') {
+      result = result.filter((p) => p.category === activeCategory);
     }
     if (search.trim()) {
       const q = search.toLowerCase();
-      result = result.filter(p => p.name.toLowerCase().includes(q));
+      result = result.filter((p) => p.name.toLowerCase().includes(q));
+    }
+    // When viewing "All", surface hot-selling products first
+    if (!isHotFilter && activeCategory === 'All') {
+      result = [...result].sort((a, b) => Number(b.isHotSelling) - Number(a.isHotSelling));
     }
     return result;
-  }, [activeCategory, search, products]);
+  }, [activeCategory, search, products, isHotFilter]);
 
   const setCategory = (cat: string) => {
+    searchParams.delete('filter');
     if (cat === 'All') {
       searchParams.delete('category');
     } else {
       searchParams.set('category', cat);
     }
+    setSearchParams(searchParams);
+  };
+
+  const setHotFilter = () => {
+    searchParams.delete('category');
+    searchParams.set('filter', 'hot');
     setSearchParams(searchParams);
   };
 
@@ -70,21 +86,31 @@ const Products = () => {
           {/* Category filters */}
           <div className="flex flex-wrap gap-2 justify-center mb-8">
             <button
+              onClick={setHotFilter}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all border inline-flex items-center gap-1.5 ${
+                isHotFilter
+                  ? 'bg-destructive text-destructive-foreground border-destructive'
+                  : 'bg-destructive/10 text-destructive border-destructive/30 hover:bg-destructive/20'
+              }`}
+            >
+              🔥 Hot Selling ({hotSellingCount})
+            </button>
+            <button
               onClick={() => setCategory('All')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
-                activeCategory === 'All'
+                activeCategory === 'All' && !isHotFilter
                   ? 'bg-primary text-primary-foreground border-primary'
                   : 'bg-card text-muted-foreground border-border hover:border-primary/50'
               }`}
             >
               All ({products.length})
             </button>
-            {categories.map(cat => (
+            {categories.map((cat) => (
               <button
                 key={cat.name}
                 onClick={() => setCategory(cat.name)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
-                  activeCategory === cat.name
+                  activeCategory === cat.name && !isHotFilter
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                 }`}
