@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import HotSellingSection from '@/components/HotSellingSection';
 import CategoriesSection from '@/components/CategoriesSection';
 import AboutSection from '@/components/AboutSection';
 import DeliveryProofs from '@/components/DeliveryProofs';
@@ -13,6 +14,7 @@ const Index = () => {
       <SEOHead />
       <Navbar />
       <HeroSection />
+      <HotSellingSection />
       <CategoriesSection />
       <AboutSection />
       <DeliveryProofs />

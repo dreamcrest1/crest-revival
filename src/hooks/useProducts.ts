@@ -12,6 +12,7 @@ export type Product = {
   emoji: string;
   image: string;
   buyLink: string;
+  isHotSelling?: boolean;
 };
 
 export type CategoryInfo = {
@@ -64,6 +65,7 @@ export function useProducts() {
         emoji: categoryEmojis[p.category] || '📦',
         image: p.image_url || '/placeholder.svg',
         buyLink: p.buy_link,
+        isHotSelling: (p as { is_hot_selling?: boolean }).is_hot_selling ?? false,
       }));
 
       // Build categories from actual data
@@ -77,7 +79,9 @@ export function useProducts() {
         count,
       }));
 
-      return { products, categories };
+      const hotSelling = products.filter((p) => p.isHotSelling);
+
+      return { products, categories, hotSelling };
     },
   });
 }
