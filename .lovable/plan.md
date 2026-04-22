@@ -1,68 +1,53 @@
 
 
-## Deploying Your Site to cPanel via GitHub
+## Goal
+Make the new product listings (and the full live catalog) survive any database outage by embedding a static snapshot in the frontend, while keeping live admin updates as the source of truth when the database is reachable.
 
-Here's the complete step-by-step process:
+## Approach: Static fallback + live override
 
-### Step 1: Connect Lovable to GitHub
-1. In the Lovable editor sidebar, click **Connectors** (root level)
-2. Click **GitHub → Connect project**
-3. Authorize the Lovable GitHub App when prompted
-4. Select your GitHub account
-5. Click **Create Repository** — this creates a new repo with all your code
-
-From this point, every change you make in Lovable auto-pushes to GitHub.
-
-### Step 2: Build the Project
-Since your site is a Vite/React app, it needs to be **built** into static files before hosting:
-
-1. Clone the repo locally: `git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git`
-2. Install dependencies: `npm install`
-3. Create a `.env` file with your environment variables (copy from Lovable's `.env`)
-4. Build: `npm run build`
-5. This creates a `dist/` folder with all static files
-
-### Step 3: Configure for cPanel SPA Routing
-Create an `.htaccess` file inside the `dist/` folder:
 ```text
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.html [L]
-```
-This ensures all routes (e.g., `/about`, `/products`) load correctly instead of showing 404.
-
-### Step 4: Upload to cPanel (MilesWeb)
-1. Log into your **cPanel** on MilesWeb
-2. Open **File Manager**
-3. Navigate to `public_html/` (or the subdomain folder for your domain)
-4. **Delete** existing files if replacing an old site
-5. **Upload** the entire contents of the `dist/` folder (not the folder itself — the files inside it)
-6. Make sure `index.html` is at the root of `public_html/`
-
-### Step 5: Point Your Domain
-If `dreamcrest.net` isn't already pointing to MilesWeb:
-1. In your domain registrar, set nameservers to MilesWeb's nameservers
-2. Or add an **A record** pointing to your MilesWeb server IP
-3. In cPanel, ensure the domain is added under **Domains** or **Addon Domains**
-
-### Step 6: Enable SSL
-1. In cPanel, go to **SSL/TLS** or **Let's Encrypt**
-2. Issue a free SSL certificate for your domain
-3. Force HTTPS redirect
-
-### Alternative: Automated Deploys
-For automatic deployment on every push, you can set up **GitHub Actions**:
-- Add a workflow that runs `npm run build` and FTPs the `dist/` folder to your cPanel using an action like `SamKirkland/FTP-Deploy-Action`
-
-### Summary
-```text
-Lovable → GitHub (auto-sync)
-GitHub → Local clone → npm run build → dist/
-dist/ + .htaccess → Upload to cPanel public_html/
+Page loads
+   │
+   ▼
+useProducts() → query Supabase
+   │
+   ├── ✅ success → use DB data (always wins)
+   │
+   └── ❌ error / timeout / empty
+            │
+            ▼
+       fallback to bundled snapshot
+       (src/data/staticProducts.ts)
 ```
 
-No code changes are needed for this — it's all configuration and deployment steps.
+The static snapshot is the same shape as DB rows, so the UI never knows the difference.
+
+## What gets built
+
+**1. New file: `src/data/staticProducts.ts`**
+- Exports a hand-maintained array of ~25 products in the exact `Product` shape used by `useProducts.ts` (id, name, description, price, originalPrice, discount, category, emoji, image, buyLink, isHotSelling).
+- Includes all 21 newly added listings (Stealth Writer, WriteHuman, Gemini + 5TB, Gemini Ultra, HeyGen Shared/Private, Hailuo, Runway ML, Perplexity Pro 1Y, Lovable Pro, Replit Core, Notion Business+, Bolt.new, Gamma AI, Cursor Pro, Manus AI, Eleven Labs, LinkedIn Career/Business, Office 365 Copilot, Webflow CMS) plus the 4 hero OTTs (Netflix, Prime Video, Hotstar, Sony LIV) all flagged `isHotSelling: true`.
+- IDs use stable `static-` prefixed strings so they never collide with DB UUIDs.
+
+**2. Update `src/hooks/useProducts.ts`**
+- Wrap the Supabase call in try/catch.
+- If the query throws, returns `null`, or returns an empty array → return the static snapshot mapped through the same category/discount logic.
+- If the query succeeds with rows → return DB data unchanged (live admin edits keep working).
+- Keep TanStack Query's `retry`, `staleTime: 60s`, and `refetchOnWindowFocus: true` so the frontend re-syncs the moment the DB comes back online.
+- Add a tiny `source: 'live' | 'fallback'` field to the returned object (handy for debugging; not shown in UI).
+
+**3. No UI changes**
+- `Products.tsx`, `HotSellingSection.tsx`, `ProductCard.tsx` already consume `useProducts()` — they automatically render whichever dataset the hook returns.
+
+## How "DB updates still flow to frontend" is guaranteed
+- Supabase remains the primary source. Static data is only used when the query fails or returns nothing.
+- TanStack Query auto-refetches on window focus + every 60s of staleness, so any admin edit propagates within seconds.
+- When you mark a new product hot-selling or change a price in `/admin`, the live DB result overrides the static snapshot on the next refetch — no rebuild needed.
+
+## Maintenance note
+The static snapshot is a *safety net*, not the source of truth. It only needs to be refreshed if you want newly added DB products to also appear during a future outage. I'll add a short comment at the top of `staticProducts.ts` explaining this.
+
+## Files touched
+- `src/data/staticProducts.ts` (new, ~25 entries)
+- `src/hooks/useProducts.ts` (add fallback branch + retry config)
 
