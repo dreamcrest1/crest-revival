@@ -55,9 +55,41 @@ const Products = () => {
     setSearchParams(searchParams);
   };
 
+  const itemListLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Dreamcrest Solutions Premium Digital Products',
+    numberOfItems: filtered.length,
+    itemListElement: filtered.slice(0, 30).map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: p.name,
+        image: p.image,
+        description: p.description || p.name,
+        category: p.category,
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'INR',
+          price: p.price,
+          availability: 'https://schema.org/InStock',
+          url: p.buyLink || 'https://dreamcrest.net/products',
+        },
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen relative z-10">
-      <SEOHead />
+      <SEOHead
+        jsonLd={itemListLd}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Products', url: '/products' },
+          ...(activeCategory !== 'All' ? [{ name: activeCategory, url: `/products?category=${activeCategory}` }] : []),
+        ]}
+      />
       <Navbar />
 
       <div className="pt-28 pb-16">

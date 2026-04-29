@@ -11,7 +11,19 @@ import SEOHead from '@/components/SEOHead';
 const Index = () => {
   return (
     <div className="min-h-screen relative z-10">
-      <SEOHead />
+      <SEOHead
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'Dreamcrest Solutions',
+          url: 'https://dreamcrest.net',
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: 'https://dreamcrest.net/products?search={search_term_string}',
+            'query-input': 'required name=search_term_string',
+          },
+        }}
+      />
       <Navbar />
       <HeroSection />
       <HotSellingSection />

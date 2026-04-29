@@ -48,9 +48,24 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
   return (
     <div className="min-h-screen relative z-10">
-      <SEOHead />
+      <SEOHead
+        jsonLd={faqJsonLd}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'FAQ', url: '/faq' },
+        ]}
+      />
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
