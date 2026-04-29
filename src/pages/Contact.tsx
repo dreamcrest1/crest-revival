@@ -30,7 +30,19 @@ const brands = [
 const Contact = () => {
   return (
     <div className="min-h-screen relative z-10">
-      <SEOHead />
+      <SEOHead
+        breadcrumbs={[{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          name: 'Contact Dreamcrest Solutions',
+          url: 'https://dreamcrest.net/contact',
+          contactPoint: [
+            { '@type': 'ContactPoint', telephone: '+91-6357998730', contactType: 'customer service', availableLanguage: ['English', 'Hindi'] },
+            { '@type': 'ContactPoint', telephone: '+91-9712301164', contactType: 'sales', availableLanguage: ['English', 'Hindi'] },
+          ],
+        }}
+      />
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-5xl">
