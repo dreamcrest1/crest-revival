@@ -107,9 +107,10 @@ const ProductCard = ({ product }: { product: Product }) => {
               {/* Image */}
               <div className="relative bg-secondary/20 overflow-hidden rounded-t-2xl">
                 <img
-                  src={product.image}
+                  src={safeImage}
                   alt={product.name}
                   className="w-full aspect-square object-contain object-center"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
                 />
                 {product.discount && (
                   <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
