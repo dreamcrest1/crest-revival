@@ -67,7 +67,34 @@ const SEOHead = ({
   const finalTitle = title || defaults.title || 'Dreamcrest Solutions – Premium Digital Products Store';
   const finalDesc = description || defaults.description || 'India\'s most trusted digital product store. Premium tools at unbeatable prices.';
   const finalKeywords = keywords || defaults.keywords || 'Dreamcrest Solutions, digital products, premium tools India';
-  const finalCanonical = canonical || `${baseUrl}${location.pathname}`;
+
+  // Build canonical: normalize path (lowercase, strip trailing slash except root)
+  // and only keep SEO-relevant query params (category, filter) on /products.
+  // Tracking params (utm_*, fbclid, gclid, ref, etc.) are always stripped to
+  // prevent duplicate indexing of the same content under different URLs.
+  const buildCanonical = (): string => {
+    if (canonical) {
+      return canonical.startsWith('http') ? canonical : `${baseUrl}${canonical}`;
+    }
+    let path = location.pathname.toLowerCase();
+    if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1);
+
+    const params = new URLSearchParams(location.search);
+    const allowedByPath: Record<string, string[]> = {
+      '/products': ['category', 'filter'],
+      '/alltools': ['category'],
+    };
+    const allowed = allowedByPath[path] || [];
+    const kept = new URLSearchParams();
+    allowed.forEach((key) => {
+      const v = params.get(key);
+      if (v) kept.set(key, v);
+    });
+    const qs = kept.toString();
+    return `${baseUrl}${path}${qs ? `?${qs}` : ''}`;
+  };
+
+  const finalCanonical = buildCanonical();
   const finalImage = ogImage || `${baseUrl}/logo.png`;
   const finalType = ogType || 'website';
 
