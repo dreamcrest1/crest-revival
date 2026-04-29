@@ -80,9 +80,22 @@ const Products = () => {
     })),
   };
 
+  const dynamicSeo = isHotFilter
+    ? {
+        title: 'Hot Selling Products – Trending Premium Tools & OTT | Dreamcrest Solutions',
+        description: `Shop our ${hotSellingCount} hottest-selling premium digital products including Netflix, Prime Video, Hotstar, ChatGPT & more. Trending picks at up to 80% off with instant delivery.`,
+      }
+    : activeCategory !== 'All'
+    ? {
+        title: `${activeCategory} – Premium ${activeCategory} at Best Prices | Dreamcrest Solutions`,
+        description: `Browse premium ${activeCategory} products at unbeatable prices in India. Verified, genuine subscriptions & licenses with instant WhatsApp delivery and 24/7 support.`,
+      }
+    : {};
+
   return (
     <div className="min-h-screen relative z-10">
       <SEOHead
+        {...dynamicSeo}
         jsonLd={itemListLd}
         breadcrumbs={[
           { name: 'Home', url: '/' },
