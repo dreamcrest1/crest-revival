@@ -240,11 +240,29 @@ const AdminProducts = () => {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label>Price (₹) *</Label>
-                <Input type="number" step="any" value={form.price} onChange={e => setForm({ ...form, price: e.target.value === '' ? 0 : Number(e.target.value) })} />
+                <Input
+                  type="text"
+                  inputMode="decimal"
+                  value={form.price === 0 && !editProduct ? '' : String(form.price ?? '')}
+                  onChange={e => {
+                    const v = e.target.value.replace(/[^0-9.]/g, '');
+                    setForm({ ...form, price: v === '' ? 0 : Number(v) });
+                  }}
+                  placeholder="e.g. 999"
+                />
               </div>
               <div>
                 <Label>Original Price (₹)</Label>
-                <Input type="number" step="any" value={form.original_price ?? ''} onChange={e => setForm({ ...form, original_price: e.target.value === '' ? null : Number(e.target.value) })} />
+                <Input
+                  type="text"
+                  inputMode="decimal"
+                  value={form.original_price === null || form.original_price === undefined ? '' : String(form.original_price)}
+                  onChange={e => {
+                    const v = e.target.value.replace(/[^0-9.]/g, '');
+                    setForm({ ...form, original_price: v === '' ? null : Number(v) });
+                  }}
+                  placeholder="e.g. 1999"
+                />
               </div>
             </div>
             <div>

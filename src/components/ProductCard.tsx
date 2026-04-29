@@ -4,10 +4,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Tag, Shield, ShoppingCart } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useCart } from '@/contexts/CartContext';
+import { useImageValid, isLikelyValidLink } from '@/hooks/useImageValid';
+
+const PLACEHOLDER = '/placeholder.svg';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { addToCart } = useCart();
+  const imgState = useImageValid(product.image);
+  const linkOk = isLikelyValidLink(product.buyLink);
+
+  // Hide the product entirely when its image is confirmed broken AND the buy link
+  // is also unusable — this keeps shelves looking clean during outages.
+  if (imgState === false && !linkOk) return null;
+
+  const safeImage = imgState === false ? PLACEHOLDER : product.image;
 
   return (
     <>
@@ -21,10 +32,11 @@ const ProductCard = ({ product }: { product: Product }) => {
         {/* Product image */}
         <div className="relative bg-secondary/20 overflow-hidden aspect-square">
           <img
-            src={product.image}
+            src={safeImage}
             alt={product.name}
             className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
           />
           {product.discount && (
             <span className="absolute top-2.5 left-2.5 bg-primary text-primary-foreground text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg">
@@ -95,9 +107,10 @@ const ProductCard = ({ product }: { product: Product }) => {
               {/* Image */}
               <div className="relative bg-secondary/20 overflow-hidden rounded-t-2xl">
                 <img
-                  src={product.image}
+                  src={safeImage}
                   alt={product.name}
                   className="w-full aspect-square object-contain object-center"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
                 />
                 {product.discount && (
                   <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
