@@ -192,6 +192,9 @@ const AdminAnalytics = () => {
             ))}
           </div>
 
+          {/* Live Visitors */}
+          <LiveVisitors />
+
           {/* Traffic */}
           <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-5">
             <h3 className="font-display font-semibold text-foreground mb-4">
