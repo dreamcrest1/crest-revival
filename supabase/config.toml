@@ -1,1 +1,7 @@
 project_id = "clfjjlyblzzkahdxgmom"
+
+[functions.track-visit]
+verify_jwt = false
+
+[functions.sitemap]
+verify_jwt = false
