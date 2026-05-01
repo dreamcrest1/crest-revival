@@ -147,6 +147,9 @@ const LiveVisitors = () => {
                   try { refHost = new URL(v.referrer).hostname; } catch { refHost = v.referrer; }
                 }
                 const loc = [v.city, v.region, v.country].filter(Boolean).join(', ') || '—';
+                const dev = v.device_type || deviceFromUA(v.user_agent);
+                const br = v.browser || browserFromUA(v.user_agent);
+                const os = v.os || osFromUA(v.user_agent);
                 return (
                   <tr key={v.id} className="border-b border-border/50 hover:bg-muted/20">
                     <td className="py-2 pr-3 whitespace-nowrap">
@@ -160,12 +163,12 @@ const LiveVisitors = () => {
                     </td>
                     <td className="py-2 pr-3">
                       <div className="flex items-center gap-1.5 text-foreground capitalize">
-                        <DeviceIcon type={v.device_type} />
-                        {v.device_type || 'unknown'}
+                        <DeviceIcon type={dev} />
+                        {dev}
                       </div>
                     </td>
                     <td className="py-2 pr-3 text-muted-foreground">
-                      {v.browser || '—'} <span className="opacity-50">·</span> {v.os || '—'}
+                      {br} <span className="opacity-50">·</span> {os}
                     </td>
                     <td className="py-2 pr-3">
                       <div className="flex items-center gap-1.5 text-muted-foreground" title={loc}>
