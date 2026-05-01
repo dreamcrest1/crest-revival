@@ -22,7 +22,7 @@ const detectDevice = (ua: string, width: number | null, touchPoints: number): st
   if (/Android/i.test(ua) && !/Mobile/i.test(ua)) return 'tablet';
   if (/Mobi|Android|iPhone|iPod|Opera Mini|IEMobile/i.test(ua)) return 'mobile';
   if (/Macintosh/i.test(ua) && touchPoints > 1) return 'tablet';
-  if (width !== null && width < 768 && touchPoints > 0) return 'mobile';
+  if (width !== null && width < 768) return 'mobile';
   return 'desktop';
 };
 
