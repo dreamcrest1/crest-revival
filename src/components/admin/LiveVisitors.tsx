@@ -34,6 +34,32 @@ const timeAgo = (iso: string) => {
   return `${Math.floor(s / 86400)}d ago`;
 };
 
+// Fallbacks derived from user_agent for legacy rows that didn't store these fields
+const deviceFromUA = (ua: string | null): string => {
+  if (!ua) return 'unknown';
+  if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return 'tablet';
+  if (/Mobi|Android|iPhone|iPod|Opera Mini|IEMobile/i.test(ua)) return 'mobile';
+  return 'desktop';
+};
+const browserFromUA = (ua: string | null): string => {
+  if (!ua) return '—';
+  if (/Edg\//i.test(ua)) return 'Edge';
+  if (/OPR\/|Opera/i.test(ua)) return 'Opera';
+  if (/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) return 'Chrome';
+  if (/Firefox\//i.test(ua)) return 'Firefox';
+  if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
+  return 'Other';
+};
+const osFromUA = (ua: string | null): string => {
+  if (!ua) return '—';
+  if (/Windows/i.test(ua)) return 'Windows';
+  if (/Android/i.test(ua)) return 'Android';
+  if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
+  if (/Mac OS X/i.test(ua)) return 'macOS';
+  if (/Linux/i.test(ua)) return 'Linux';
+  return 'Other';
+};
+
 const LiveVisitors = () => {
   const [visits, setVisits] = useState<Visit[]>([]);
   const [, setTick] = useState(0);
@@ -121,6 +147,9 @@ const LiveVisitors = () => {
                   try { refHost = new URL(v.referrer).hostname; } catch { refHost = v.referrer; }
                 }
                 const loc = [v.city, v.region, v.country].filter(Boolean).join(', ') || '—';
+                const dev = v.device_type || deviceFromUA(v.user_agent);
+                const br = v.browser || browserFromUA(v.user_agent);
+                const os = v.os || osFromUA(v.user_agent);
                 return (
                   <tr key={v.id} className="border-b border-border/50 hover:bg-muted/20">
                     <td className="py-2 pr-3 whitespace-nowrap">
@@ -134,12 +163,12 @@ const LiveVisitors = () => {
                     </td>
                     <td className="py-2 pr-3">
                       <div className="flex items-center gap-1.5 text-foreground capitalize">
-                        <DeviceIcon type={v.device_type} />
-                        {v.device_type || 'unknown'}
+                        <DeviceIcon type={dev} />
+                        {dev}
                       </div>
                     </td>
                     <td className="py-2 pr-3 text-muted-foreground">
-                      {v.browser || '—'} <span className="opacity-50">·</span> {v.os || '—'}
+                      {br} <span className="opacity-50">·</span> {os}
                     </td>
                     <td className="py-2 pr-3">
                       <div className="flex items-center gap-1.5 text-muted-foreground" title={loc}>
