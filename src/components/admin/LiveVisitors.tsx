@@ -34,6 +34,32 @@ const timeAgo = (iso: string) => {
   return `${Math.floor(s / 86400)}d ago`;
 };
 
+// Fallbacks derived from user_agent for legacy rows that didn't store these fields
+const deviceFromUA = (ua: string | null): string => {
+  if (!ua) return 'unknown';
+  if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return 'tablet';
+  if (/Mobi|Android|iPhone|iPod|Opera Mini|IEMobile/i.test(ua)) return 'mobile';
+  return 'desktop';
+};
+const browserFromUA = (ua: string | null): string => {
+  if (!ua) return '—';
+  if (/Edg\//i.test(ua)) return 'Edge';
+  if (/OPR\/|Opera/i.test(ua)) return 'Opera';
+  if (/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) return 'Chrome';
+  if (/Firefox\//i.test(ua)) return 'Firefox';
+  if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
+  return 'Other';
+};
+const osFromUA = (ua: string | null): string => {
+  if (!ua) return '—';
+  if (/Windows/i.test(ua)) return 'Windows';
+  if (/Android/i.test(ua)) return 'Android';
+  if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
+  if (/Mac OS X/i.test(ua)) return 'macOS';
+  if (/Linux/i.test(ua)) return 'Linux';
+  return 'Other';
+};
+
 const LiveVisitors = () => {
   const [visits, setVisits] = useState<Visit[]>([]);
   const [, setTick] = useState(0);
