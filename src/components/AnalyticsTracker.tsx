@@ -45,6 +45,30 @@ const AnalyticsTracker = () => {
     const track = async () => {
       try {
         const ua = navigator.userAgent;
+
+        // Try to fetch IP + geo (cached per session). Non-blocking failures are fine.
+        let geo: { ip?: string; country?: string; city?: string; region?: string } = {};
+        try {
+          const cached = sessionStorage.getItem('dc_geo');
+          if (cached) {
+            geo = JSON.parse(cached);
+          } else {
+            const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+            if (res.ok) {
+              const j = await res.json();
+              geo = {
+                ip: j.ip,
+                country: j.country_name,
+                city: j.city,
+                region: j.region,
+              };
+              sessionStorage.setItem('dc_geo', JSON.stringify(geo));
+            }
+          }
+        } catch {
+          // ignore geo errors
+        }
+
         await supabase.from('site_analytics').insert({
           page_path: location.pathname,
           event_type: 'page_view',
@@ -56,6 +80,10 @@ const AnalyticsTracker = () => {
           os: detectOS(ua),
           screen_width: window.screen?.width || null,
           language: navigator.language || null,
+          ip_address: geo.ip || null,
+          country: geo.country || null,
+          city: geo.city || null,
+          region: geo.region || null,
         });
       } catch (e) {
         // Silently fail - analytics shouldn't break the site
