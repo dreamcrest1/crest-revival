@@ -95,45 +95,54 @@ export type Database = {
       site_analytics: {
         Row: {
           browser: string | null
+          city: string | null
           country: string | null
           created_at: string
           device_type: string | null
           event_type: string
           id: string
+          ip_address: string | null
           language: string | null
           os: string | null
           page_path: string
           referrer: string | null
+          region: string | null
           screen_width: number | null
           user_agent: string | null
           visitor_id: string | null
         }
         Insert: {
           browser?: string | null
+          city?: string | null
           country?: string | null
           created_at?: string
           device_type?: string | null
           event_type?: string
           id?: string
+          ip_address?: string | null
           language?: string | null
           os?: string | null
           page_path: string
           referrer?: string | null
+          region?: string | null
           screen_width?: number | null
           user_agent?: string | null
           visitor_id?: string | null
         }
         Update: {
           browser?: string | null
+          city?: string | null
           country?: string | null
           created_at?: string
           device_type?: string | null
           event_type?: string
           id?: string
+          ip_address?: string | null
           language?: string | null
           os?: string | null
           page_path?: string
           referrer?: string | null
+          region?: string | null
           screen_width?: number | null
           user_agent?: string | null
           visitor_id?: string | null

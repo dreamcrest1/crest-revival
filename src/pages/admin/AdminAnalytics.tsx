@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Eye, Users, TrendingUp, Clock, Smartphone, Monitor, Tablet, Globe } from 'lucide-react';
+import LiveVisitors from '@/components/admin/LiveVisitors';
 
 const COLORS = ['hsl(24,95%,53%)', 'hsl(200,70%,50%)', 'hsl(142,71%,45%)', 'hsl(280,60%,50%)', 'hsl(340,70%,50%)', 'hsl(50,90%,55%)'];
 
@@ -190,6 +191,9 @@ const AdminAnalytics = () => {
               </div>
             ))}
           </div>
+
+          {/* Live Visitors */}
+          <LiveVisitors />
 
           {/* Traffic */}
           <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-5">
