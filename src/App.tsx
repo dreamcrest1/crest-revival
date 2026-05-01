@@ -15,6 +15,7 @@ import AnalyticsTracker from "./components/AnalyticsTracker";
 import Preloader from "./components/Preloader";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
@@ -52,6 +53,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/products" element={<Products />} />
+                  <Route path="/product/:slug" element={<ProductDetail />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/faq" element={<FAQ />} />

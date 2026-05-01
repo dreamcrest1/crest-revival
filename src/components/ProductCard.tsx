@@ -1,10 +1,12 @@
 import { type Product } from '@/hooks/useProducts';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Tag, Shield, ShoppingCart } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useCart } from '@/contexts/CartContext';
 import { useImageValid, isLikelyValidLink } from '@/hooks/useImageValid';
+import { slugify } from '@/lib/productSeo';
 
 const PLACEHOLDER = '/placeholder.svg';
 
@@ -65,9 +67,13 @@ const ProductCard = ({ product }: { product: Product }) => {
           </div>
 
           <div className="flex gap-2">
-            <button className="flex-1 text-center bg-primary/10 text-primary border border-primary/20 rounded-xl py-2 text-xs font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+            <Link
+              to={`/product/${slugify(product.name)}`}
+              onClick={(e) => e.stopPropagation()}
+              className="flex-1 text-center bg-primary/10 text-primary border border-primary/20 rounded-xl py-2 text-xs font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            >
               View Details
-            </button>
+            </Link>
             <button
               onClick={(e) => { e.stopPropagation(); addToCart(product); }}
               className="w-9 h-9 flex items-center justify-center bg-primary text-primary-foreground rounded-xl hover:bg-primary/80 transition-all duration-300 shrink-0"

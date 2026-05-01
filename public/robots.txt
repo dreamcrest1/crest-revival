@@ -18,4 +18,5 @@ User-agent: facebookexternalhit
 Allow: /
 
 Sitemap: https://dreamcrest.net/sitemap.xml
+Sitemap: https://clfjjlyblzzkahdxgmom.supabase.co/functions/v1/sitemap
 Host: https://dreamcrest.net

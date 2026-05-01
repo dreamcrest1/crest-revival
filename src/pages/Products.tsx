@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
+import { slugify } from '@/lib/productSeo';
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,18 +64,20 @@ const Products = () => {
     itemListElement: filtered.slice(0, 30).map((p, i) => ({
       '@type': 'ListItem',
       position: i + 1,
+      url: `https://dreamcrest.net/product/${slugify(p.name)}`,
       item: {
         '@type': 'Product',
         name: p.name,
         image: p.image,
         description: p.description || p.name,
         category: p.category,
+        url: `https://dreamcrest.net/product/${slugify(p.name)}`,
         offers: {
           '@type': 'Offer',
           priceCurrency: 'INR',
-          price: p.price,
+          price: p.price.replace(/[^\d.]/g, ''),
           availability: 'https://schema.org/InStock',
-          url: p.buyLink || 'https://dreamcrest.net/products',
+          url: `https://dreamcrest.net/product/${slugify(p.name)}`,
         },
       },
     })),
