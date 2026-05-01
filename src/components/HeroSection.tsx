@@ -39,13 +39,13 @@ const HeroSection = () => {
             </motion.div>
 
             <h1 className="font-display text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.1] mb-7 tracking-tight">
-              India's Most{' '}
-              <span className="text-gradient">Trusted</span>{' '}
-              Digital Product Store
+              Buy Premium Digital Products{' '}
+              <span className="text-gradient">Cheap</span>{' '}
+              in India — Dreamcrest Solutions
             </h1>
 
             <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-lg leading-relaxed">
-              Get premium AI tools, OTT subscriptions, software & more at unbeatable prices. Serving 15,000+ happy customers since 2021.
+              India's most trusted store for premium AI tools, OTT subscriptions, SEO tools, VPN & software at up to 80% off. 15,000+ happy customers delivered since 2021.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-10">
