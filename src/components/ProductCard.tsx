@@ -35,9 +35,12 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className="relative bg-secondary/20 overflow-hidden aspect-square">
           <img
             src={safeImage}
-            alt={product.name}
+            alt={`${product.name} – cheap ${product.category} group buy in India`}
+            width="400"
+            height="400"
             className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
+            decoding="async"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
           />
           {product.discount && (
@@ -114,8 +117,11 @@ const ProductCard = ({ product }: { product: Product }) => {
               <div className="relative bg-secondary/20 overflow-hidden rounded-t-2xl">
                 <img
                   src={safeImage}
-                  alt={product.name}
+                  alt={`${product.name} – buy ${product.name} cheap in India at Dreamcrest Solutions`}
+                  width="600"
+                  height="600"
                   className="w-full aspect-square object-contain object-center"
+                  decoding="async"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
                 />
                 {product.discount && (
