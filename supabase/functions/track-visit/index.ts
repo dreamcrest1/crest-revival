@@ -4,13 +4,14 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 const detectDevice = (ua: string): string => {
   if (!ua) return "desktop";
   if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return "tablet";
+  if (/Android/i.test(ua) && !/Mobile/i.test(ua)) return "tablet";
   if (/Mobi|Android|iPhone|iPod|Opera Mini|IEMobile/i.test(ua)) return "mobile";
   return "desktop";
 };
@@ -18,17 +19,17 @@ const detectBrowser = (ua: string): string => {
   if (!ua) return "Other";
   if (/Edg\//i.test(ua)) return "Edge";
   if (/OPR\/|Opera/i.test(ua)) return "Opera";
-  if (/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) return "Chrome";
-  if (/Firefox\//i.test(ua)) return "Firefox";
-  if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) return "Safari";
+  if (/CriOS|Chrome\//i.test(ua) && !/Chromium/i.test(ua)) return "Chrome";
+  if (/FxiOS|Firefox\//i.test(ua)) return "Firefox";
+  if (/Safari\//i.test(ua) && !/Chrome|CriOS|Android/i.test(ua)) return "Safari";
   if (/MSIE|Trident/i.test(ua)) return "IE";
   return "Other";
 };
 const detectOS = (ua: string): string => {
   if (!ua) return "Other";
-  if (/Windows/i.test(ua)) return "Windows";
   if (/Android/i.test(ua)) return "Android";
   if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+  if (/Windows/i.test(ua)) return "Windows";
   if (/Mac OS X/i.test(ua)) return "macOS";
   if (/Linux/i.test(ua)) return "Linux";
   return "Other";
@@ -79,6 +80,10 @@ Deno.serve(async (req) => {
       referrer,
       screen_width,
       language,
+      user_agent,
+      device_type,
+      browser,
+      os,
     } = body || {};
 
     if (!page_path) {
@@ -88,7 +93,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const ua = req.headers.get("user-agent") || "";
+    const ua = req.headers.get("user-agent") || user_agent || "";
     const xff = req.headers.get("x-forwarded-for") || "";
     const ip =
       xff.split(",")[0].trim() ||
@@ -109,9 +114,9 @@ Deno.serve(async (req) => {
       visitor_id: visitor_id || null,
       user_agent: ua,
       referrer: referrer || null,
-      device_type: detectDevice(ua),
-      browser: detectBrowser(ua),
-      os: detectOS(ua),
+      device_type: device_type || detectDevice(ua),
+      browser: browser || detectBrowser(ua),
+      os: os || detectOS(ua),
       screen_width: screen_width || null,
       language: language || null,
       ip_address: ip || null,
