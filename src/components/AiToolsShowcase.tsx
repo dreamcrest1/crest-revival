@@ -76,7 +76,7 @@ const AiToolsShowcase = () => {
   const [offset, setOffset] = useState(0);
   useEffect(() => {
     if (pool.length <= 8) return;
-    const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), 3000);
+    const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), 4000);
     return () => clearInterval(id);
   }, [pool.length]);
 
