@@ -8,6 +8,7 @@ import logo from '@/assets/logo.png';
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Products', path: '/products' },
+  { label: 'AI Tools', path: '/ai-tools', live: true },
   { label: 'All Tools', path: '/alltools' },
   { label: 'About', path: '/about' },
   { label: 'FAQ', path: '/faq' },
@@ -41,11 +42,16 @@ const Navbar = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
+              className={`relative text-sm font-medium transition-colors hover:text-primary flex items-center gap-1.5 ${
                 location.pathname === link.path ? 'text-primary' : 'text-muted-foreground'
               }`}
             >
               {link.label}
+              {link.live && (
+                <span className="inline-flex items-center gap-1 text-[9px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-400/10 border border-emerald-400/30 px-1.5 py-0.5 rounded">
+                  <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />LIVE
+                </span>
+              )}
             </Link>
           ))}
         </div>
