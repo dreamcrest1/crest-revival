@@ -146,13 +146,43 @@ const AiTools = () => {
   const qc = useQueryClient();
   const [q, setQ] = useState('');
   const [sort, setSort] = useState<'default' | 'price-asc' | 'price-desc'>('default');
+  const [category, setCategory] = useState<string>('All');
+
+  // Stable shuffled order per session (so cards don't reshuffle on every render)
+  const shuffleSeed = useRef(Math.random());
+  const shuffled = useMemo(() => {
+    const arr = [...tools];
+    // Deterministic shuffle using seeded PRNG so order stays stable during the session
+    let seed = Math.floor(shuffleSeed.current * 2 ** 31);
+    const rand = () => {
+      seed = (seed * 1664525 + 1013904223) % 2 ** 31;
+      return seed / 2 ** 31;
+    };
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [tools]);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    tools.forEach((t) => {
+      const c = (t.meta ?? metaForTool(t.name)).category;
+      if (c) set.add(c);
+    });
+    return ['All', ...Array.from(set).sort()];
+  }, [tools]);
 
   const filtered = useMemo(() => {
-    let list = tools.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
+    let list = shuffled.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
+    if (category !== 'All') {
+      list = list.filter((t) => (t.meta ?? metaForTool(t.name)).category === category);
+    }
     if (sort === 'price-asc') list = [...list].sort((a, b) => a.price - b.price);
     if (sort === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
     return list;
-  }, [tools, q, sort]);
+  }, [shuffled, q, sort, category]);
 
   const lastSync = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('en-IN') : '—';
 
