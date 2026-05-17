@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { metaForTool, type ToolMeta } from '@/data/aiToolMeta';
 
 const CSV_URL =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDvURG_Eu2-ecumNbY-FOKyhweInykVs25janeK4MJn8uGw7WLFVyyhFU_nEMbIMjKAF9aGh_-Au3e/pub?output=csv';
@@ -14,6 +15,7 @@ export type AiTool = {
   change: number; // % change vs previous fetch
   trend: 'up' | 'down' | 'flat';
   spark: number[]; // tiny sparkline
+  meta: ToolMeta;
 };
 
 /** Minimal CSV parser that handles quoted fields containing commas. */
@@ -103,9 +105,10 @@ export function useAiTools() {
           const change = Math.round(changeRaw * 100) / 100;
           const trend: AiTool['trend'] = change > 0.2 ? 'up' : change < -0.2 ? 'down' : 'flat';
 
+          const trimmedName = name.trim();
           return {
             id: `${idx}-${name}-${validity}`.toLowerCase().replace(/\s+/g, '-'),
-            name: name.trim(),
+            name: trimmedName,
             validity: (validity || '').trim(),
             price,
             image: image?.trim() || '',
@@ -113,6 +116,7 @@ export function useAiTools() {
             change,
             trend,
             spark: buildSpark(seed, change / 100),
+            meta: metaForTool(trimmedName),
           };
         })
         .filter((p): p is AiTool => !!p);
