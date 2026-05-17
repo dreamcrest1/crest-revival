@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -12,6 +12,52 @@ import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo
 
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
+
+/**
+ * Resilient logo display: walks the same fallback chain as the catalog tile.
+ * curated SVG → Clearbit → Google high-res favicon → sheet image (via weserv)
+ * → ultimate fallback (site logo). Advances on each <img> onError.
+ */
+function LogoImage({
+  name,
+  meta,
+  sheetImage,
+}: {
+  name: string;
+  meta: ReturnType<typeof metaForTool>;
+  sheetImage?: string;
+}) {
+  const sources: string[] = [];
+  if (meta.logo) sources.push(meta.logo);
+  if (meta.domain) {
+    sources.push(`https://logo.clearbit.com/${meta.domain}?size=512`);
+    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
+  }
+  if (sheetImage) {
+    sources.push(
+      `https://images.weserv.nl/?url=${encodeURIComponent(sheetImage.replace(/^https?:\/\//, ''))}&w=512&h=512&fit=contain&output=webp&q=90`,
+    );
+  }
+  sources.push('/logo.png');
+
+  const [idx, setIdx] = useState(0);
+  const src = sources[Math.min(idx, sources.length - 1)];
+
+  return (
+    <img
+      key={src}
+      src={src}
+      alt={`${name} logo`}
+      width={420}
+      height={420}
+      loading="eager"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      className="max-w-[70%] max-h-[70%] object-contain drop-shadow-xl"
+      onError={() => setIdx((i) => Math.min(i + 1, sources.length - 1))}
+    />
+  );
+}
 
 const AiToolDetail = () => {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -101,16 +147,10 @@ const AiToolDetail = () => {
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
             {/* Logo / image card */}
             <div className="bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl p-6 aspect-square flex items-center justify-center relative overflow-hidden">
-              <img
-                src={seo.ogImage}
-                alt={`${tool.name} logo`}
-                width={420}
-                height={420}
-                loading="eager"
-                className="max-w-[70%] max-h-[70%] object-contain drop-shadow-xl"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/logo.png';
-                }}
+              <LogoImage
+                name={tool.name}
+                meta={meta}
+                sheetImage={tool.image}
               />
               <div className="absolute top-3 left-3 bg-primary/10 text-primary border border-primary/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
                 {meta.category}

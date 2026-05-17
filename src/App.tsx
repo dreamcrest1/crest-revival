@@ -13,6 +13,7 @@ import IndiaMapBackground from "./components/IndiaMapBackground";
 import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import Preloader from "./components/Preloader";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
@@ -50,6 +51,7 @@ const App = () => {
           <CartProvider>
             <AuthProvider>
               <BrowserRouter>
+                <ScrollToTop />
                 <CartDrawer />
                 <AnalyticsTracker />
                 <Routes>
