@@ -33,7 +33,7 @@ function BrandLogo({ t }: { t: AiTool }) {
   const sources: string[] = [];
   if (meta.domain) {
     sources.push(`https://logo.clearbit.com/${meta.domain}?size=256`);
-    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`);
+    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
     sources.push(`https://icons.duckduckgo.com/ip3/${meta.domain}.ico`);
   }
   if (t.image) {
