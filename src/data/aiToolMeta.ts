@@ -334,6 +334,16 @@ export const TOOL_META: ToolMeta[] = [
     features: ['AI PRD generator', 'User story templates', 'Roadmap builder', 'Jira/Linear export'],
   },
   {
+    match: 'chatprf',
+    category: 'Product',
+    domain: 'chatprd.ai',
+    color: '#4F46E5',
+    tagline: 'AI product manager for PRDs & specs',
+    description:
+      'ChatPRD Pro — generate complete PRDs, user stories, roadmaps and tickets with AI trained on PM best practices. Templates for every product workflow.',
+    features: ['AI PRD generator', 'User story templates', 'Roadmap builder', 'Jira/Linear export'],
+  },
+  {
     match: 'rezi',
     category: 'Career',
     domain: 'rezi.ai',
