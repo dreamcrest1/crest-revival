@@ -246,8 +246,6 @@ const AiToolsShowcase = () => {
                     marginTop: -tileSize / 2,
                     transform: `rotateY(${lon}deg) rotateX(${-lat}deg) translateZ(${radius}px)`,
                     transformStyle: 'preserve-3d',
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
                     animationDelay: `${i * 35}ms`,
                   }}
                 >
@@ -263,7 +261,6 @@ const AiToolsShowcase = () => {
                   {/* White logo card */}
                   <div
                     className="relative w-full h-full rounded-2xl bg-white border border-white/40 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6)] flex items-center justify-center p-2 transition-transform duration-300 group-hover:scale-110"
-                    style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   >
                     {t && meta ? (
                       <ShowcaseLogo tool={t} meta={meta} />
