@@ -23,6 +23,7 @@ import Refunds from "./pages/Refunds";
 import About from "./pages/About";
 import AllTools from "./pages/AllTools";
 import AiTools from "./pages/AiTools";
+import AiToolDetail from "./pages/AiToolDetail";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -62,6 +63,7 @@ const App = () => {
                   <Route path="/about" element={<About />} />
                   <Route path="/alltools" element={<AllTools />} />
                   <Route path="/ai-tools" element={<AiTools />} />
+                  <Route path="/ai-tool/:slug" element={<AiToolDetail />} />
 
                   <Route path="/admin/login" element={<AdminLogin />} />
                   <Route path="/admin" element={<AdminLayout />}>
