@@ -210,6 +210,11 @@ const AiTools = () => {
               Genuine premium subscriptions at the most affordable prices in India.
               Private accounts delivered instantly to your email after payment.
             </p>
+            <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-foreground bg-card/60 backdrop-blur border border-border/60 px-3 py-1.5 rounded-full">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary tabular-nums">{tools.length}</span>
+              <span className="text-muted-foreground">premium tools available</span>
+            </div>
           </div>
 
           {/* Trust strip */}
