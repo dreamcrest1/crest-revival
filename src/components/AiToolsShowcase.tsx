@@ -246,8 +246,6 @@ const AiToolsShowcase = () => {
                     marginTop: -tileSize / 2,
                     transform: `rotateY(${lon}deg) rotateX(${-lat}deg) translateZ(${radius}px)`,
                     transformStyle: 'preserve-3d',
-                    backfaceVisibility: 'hidden',
-                    WebkitBackfaceVisibility: 'hidden',
                     animationDelay: `${i * 35}ms`,
                   }}
                 >
