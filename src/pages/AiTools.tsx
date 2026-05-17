@@ -30,10 +30,10 @@ function hexToRgb(hex: string) {
 function BrandLogo({ t }: { t: AiTool }) {
   // Build the source chain — first valid source is used; on error advance.
   const sources: string[] = [];
-  if (t.meta.domain) {
-    sources.push(`https://logo.clearbit.com/${t.meta.domain}?size=256`);
-    sources.push(`https://www.google.com/s2/favicons?domain=${t.meta.domain}&sz=128`);
-    sources.push(`https://icons.duckduckgo.com/ip3/${t.meta.domain}.ico`);
+  if (meta.domain) {
+    sources.push(`https://logo.clearbit.com/${meta.domain}?size=256`);
+    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`);
+    sources.push(`https://icons.duckduckgo.com/ip3/${meta.domain}.ico`);
   }
   if (t.image) {
     sources.push(
@@ -42,7 +42,7 @@ function BrandLogo({ t }: { t: AiTool }) {
   }
 
   const [idx, setIdx] = useState(0);
-  const { r, g, b } = hexToRgb(t.meta.color);
+  const { r, g, b } = hexToRgb(meta.color);
   const bg = {
     background: `radial-gradient(circle at 30% 20%, rgba(${r},${g},${b},0.95), rgba(${r},${g},${b},0.55) 60%, rgba(${r},${g},${b},0.35))`,
   };
@@ -75,7 +75,7 @@ function BrandLogo({ t }: { t: AiTool }) {
       )}
 
       <div className={`absolute bottom-2 left-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur ${onDark ? 'bg-white/15 text-white border border-white/20' : 'bg-black/10 text-black/80 border border-black/15'}`}>
-        {t.meta.category}
+        {meta.category}
       </div>
     </div>
   );
@@ -94,10 +94,10 @@ function ToolCard({ t }: { t: AiTool }) {
 
       <div className="p-4 flex flex-col gap-2.5 relative z-10 flex-1">
         <h3 className="font-display font-semibold text-foreground text-sm leading-tight line-clamp-2 min-h-[36px]">{t.name}</h3>
-        <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{t.meta.tagline}</p>
+        <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{meta.tagline}</p>
 
         <ul className="text-[10.5px] text-muted-foreground space-y-0.5">
-          {t.meta.features.slice(0, 2).map((f) => (
+          {meta.features.slice(0, 2).map((f) => (
             <li key={f} className="flex items-start gap-1.5">
               <CheckCircle2 className="w-3 h-3 text-primary shrink-0 mt-0.5" />
               <span className="line-clamp-1">{f}</span>
