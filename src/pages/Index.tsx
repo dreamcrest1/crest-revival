@@ -26,9 +26,9 @@ const Index = () => {
         }}
       />
       <Navbar />
+      <AiToolsShowcase />
       <HeroSection />
       <HotSellingSection />
-      <AiToolsShowcase />
       <CategoriesSection />
       <AboutSection />
       <DeliveryProofs />
