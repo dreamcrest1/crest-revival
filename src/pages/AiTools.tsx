@@ -67,12 +67,12 @@ const CATEGORY_BUCKETS: Record<string, string> = {
 };
 
 const bucketFor = (t: AiTool) => {
-  const c = (t.meta ?? metaForTool(t.name)).category;
+  const c = metaForTool(t.name).category;
   return CATEGORY_BUCKETS[c] ?? 'Other';
 };
 
 const waLink = (t: AiTool) => {
-  const meta = t.meta ?? metaForTool(t.name);
+  const meta = metaForTool(t.name);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Hi! I'm interested in *${t.name}* (${t.validity}) at ₹${t.price}.\n\n${meta.tagline}\n\nPlease share details on how to purchase.`,
   )}`;
@@ -87,7 +87,7 @@ function hexToRgb(hex: string) {
 
 // Branded logo tile: brand color background + logo from a fallback chain.
 function BrandLogo({ t }: { t: AiTool }) {
-  const meta = t.meta ?? metaForTool(t.name);
+  const meta = metaForTool(t.name);
   // Build the source chain — first valid source is used; on error advance.
   const sources: string[] = [];
   // 1) Curated high-res override (SVG when available)
@@ -146,7 +146,7 @@ function BrandLogo({ t }: { t: AiTool }) {
 }
 
 function ToolCard({ t }: { t: AiTool }) {
-  const meta = t.meta ?? metaForTool(t.name);
+  const meta = metaForTool(t.name);
   return (
     <div className="group relative bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col">
       <div className="relative aspect-square overflow-hidden">
