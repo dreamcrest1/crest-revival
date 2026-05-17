@@ -275,6 +275,34 @@ const AiTools = () => {
             </div>
           </div>
 
+          {/* Category pills */}
+          {categories.length > 1 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {categories.map((c) => {
+                const count = c === 'All'
+                  ? tools.length
+                  : tools.filter((t) => (t.meta ?? metaForTool(t.name)).category === c).length;
+                const active = category === c;
+                return (
+                  <button
+                    key={c}
+                    onClick={() => setCategory(c)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap ${
+                      active
+                        ? 'bg-primary text-primary-foreground border-primary'
+                        : 'bg-card/60 backdrop-blur border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                    }`}
+                  >
+                    {c}
+                    <span className={`ml-1.5 tabular-nums ${active ? 'text-primary-foreground/80' : 'text-foreground/50'}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {/* Grid */}
           {isLoading ? (
             <div className="flex justify-center py-20">
