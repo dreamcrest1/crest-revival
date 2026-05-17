@@ -166,7 +166,7 @@ const AiToolDetail = () => {
                 <Sparkles className="w-3.5 h-3.5" /> Group Buy India
               </div>
               <h1 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-2">
-                Buy <span className="text-primary">{tool.name}</span> Cheap in India
+                <span className="text-primary">{tool.name}</span>
               </h1>
               <p className="text-muted-foreground mb-5">{meta.description || meta.tagline}</p>
 
