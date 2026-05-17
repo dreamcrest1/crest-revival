@@ -347,7 +347,7 @@ const AiTools = () => {
               {categories.map((c) => {
                 const count = c === 'All'
                   ? tools.length
-                  : tools.filter((t) => (t.meta ?? metaForTool(t.name)).category === c).length;
+                  : tools.filter((t) => bucketFor(t) === c).length;
                 const active = category === c;
                 return (
                   <button
