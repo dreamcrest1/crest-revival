@@ -143,20 +143,21 @@ const AiToolsShowcase = () => {
           </p>
         </div>
 
-        {/* 3-D perspective tile grid — mouse-tracked tilt */}
+        {/* 3-D perspective tile grid — realtime mouse + touch parallax */}
         <div
           ref={stageRef}
           onMouseMove={handleMove}
           onMouseLeave={handleLeave}
-          className="relative mb-12 mx-auto max-w-5xl"
+          onTouchStart={handleTouch}
+          onTouchMove={handleTouch}
+          onTouchEnd={handleLeave}
+          className="relative mb-12 mx-auto max-w-5xl touch-none select-none"
           style={{ perspective: '1400px' }}
         >
           <div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 transition-transform duration-300 ease-out will-change-transform"
-            style={{
-              transformStyle: 'preserve-3d',
-              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-            }}
+            ref={gridRef}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 will-change-transform"
+            style={{ transformStyle: 'preserve-3d' }}
           >
             {(featured.length > 0
               ? featured
