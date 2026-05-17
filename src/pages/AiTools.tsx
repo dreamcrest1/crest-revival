@@ -23,38 +23,42 @@ function hexToRgb(hex: string) {
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
 
-// Branded logo tile: brand color background + Clearbit logo. Falls back to symbol.
+// Branded logo tile: brand color background + logo from a fallback chain.
 function BrandLogo({ t }: { t: AiTool }) {
-  const [stage, setStage] = useState<'clearbit' | 'sheet' | 'letter'>(
-    t.meta.domain ? 'clearbit' : t.image ? 'sheet' : 'letter',
-  );
+  // Build the source chain — first valid source is used; on error advance.
+  const sources: string[] = [];
+  if (t.meta.domain) {
+    sources.push(`https://logo.clearbit.com/${t.meta.domain}?size=256`);
+    sources.push(`https://www.google.com/s2/favicons?domain=${t.meta.domain}&sz=128`);
+    sources.push(`https://icons.duckduckgo.com/ip3/${t.meta.domain}.ico`);
+  }
+  if (t.image) {
+    sources.push(
+      `https://images.weserv.nl/?url=${encodeURIComponent(t.image.replace(/^https?:\/\//, ''))}&w=400&h=400&fit=contain&output=webp&q=85`,
+    );
+  }
+
+  const [idx, setIdx] = useState(0);
   const { r, g, b } = hexToRgb(t.meta.color);
   const bg = {
     background: `radial-gradient(circle at 30% 20%, rgba(${r},${g},${b},0.95), rgba(${r},${g},${b},0.55) 60%, rgba(${r},${g},${b},0.35))`,
   };
-  // Pick contrasting text/logo treatment based on luminance
   const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   const onDark = luma < 0.55;
-
-  const clearbitSrc = `https://logo.clearbit.com/${t.meta.domain}?size=256`;
-  const sheetSrc = t.image
-    ? `https://images.weserv.nl/?url=${encodeURIComponent(t.image.replace(/^https?:\/\//, ''))}&w=400&h=400&fit=contain&output=webp&q=85`
-    : '';
+  const exhausted = idx >= sources.length;
 
   return (
     <div className="w-full h-full flex items-center justify-center p-6 relative" style={bg}>
-      {/* subtle pattern */}
       <div className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '14px 14px', color: onDark ? '#fff' : '#000' }} />
 
-      {stage === 'letter' && (
+      {exhausted ? (
         <span className={`font-display font-bold text-6xl drop-shadow-lg ${onDark ? 'text-white' : 'text-black'}`}>{t.symbol}</span>
-      )}
-
-      {stage !== 'letter' && (
+      ) : (
         <div className={`relative w-3/4 h-3/4 rounded-2xl flex items-center justify-center backdrop-blur-sm ${onDark ? 'bg-white/95' : 'bg-black/5'}`}>
           <img
-            src={stage === 'clearbit' ? clearbitSrc : sheetSrc}
+            key={sources[idx]}
+            src={sources[idx]}
             alt={`${t.name} logo`}
             width={220}
             height={220}
@@ -62,15 +66,11 @@ function BrandLogo({ t }: { t: AiTool }) {
             decoding="async"
             referrerPolicy="no-referrer"
             className="max-w-[80%] max-h-[80%] object-contain"
-            onError={() => {
-              if (stage === 'clearbit') setStage(t.image ? 'sheet' : 'letter');
-              else setStage('letter');
-            }}
+            onError={() => setIdx((i) => i + 1)}
           />
         </div>
       )}
 
-      {/* category chip */}
       <div className={`absolute bottom-2 left-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur ${onDark ? 'bg-white/15 text-white border border-white/20' : 'bg-black/10 text-black/80 border border-black/15'}`}>
         {t.meta.category}
       </div>
