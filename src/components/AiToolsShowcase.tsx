@@ -156,6 +156,17 @@ const AiToolsShowcase = () => {
           </p>
         </div>
 
+        {/* Inject keyframes + hex clip locally so we don't touch global config */}
+        <style>{`
+          @keyframes ai-orbit {
+            0%   { transform: translateY(0px)    rotateX(6deg)  rotateY(-4deg); }
+            50%  { transform: translateY(-22px)  rotateX(-4deg) rotateY(6deg); }
+            100% { transform: translateY(0px)    rotateX(6deg)  rotateY(-4deg); }
+          }
+          .ai-tile-float { animation: ai-orbit 8s ease-in-out infinite alternate; transform-style: preserve-3d; }
+          .ai-hex-clip   { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+        `}</style>
+
         {/* 3-D perspective tile grid — realtime mouse + touch parallax */}
         <div
           ref={stageRef}
@@ -165,11 +176,11 @@ const AiToolsShowcase = () => {
           onTouchMove={handleTouch}
           onTouchEnd={handleLeave}
           className="relative mb-12 mx-auto max-w-5xl touch-none select-none"
-          style={{ perspective: '1400px' }}
+          style={{ perspective: '1600px' }}
         >
           <div
             ref={gridRef}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 will-change-transform"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-12 md:gap-x-10 md:gap-y-16 items-center justify-items-center will-change-transform"
             style={{ transformStyle: 'preserve-3d' }}
           >
             {(featured.length > 0
@@ -178,57 +189,79 @@ const AiToolsShowcase = () => {
             ).map((t, i) => {
               const meta = t ? metaForTool(t.name) : null;
               const href = t ? `/ai-tool/${slugifyAiTool(t.name)}` : '/ai-tools';
-              const delay = `${i * 60}ms`;
+
+              // Per-slot shape + isometric offset for the kinetic mixed-grid look
+              const variants = [
+                { shape: 'rounded-3xl',       offset: '',                  hex: false },
+                { shape: 'ai-hex-clip',       offset: 'mt-10 md:mt-20',    hex: true  },
+                { shape: 'rounded-full',      offset: '',                  hex: false },
+                { shape: 'ai-hex-clip',       offset: 'mt-6 md:mt-14',     hex: true  },
+                { shape: 'ai-hex-clip',       offset: '-mt-2 md:-mt-6',    hex: true  },
+                { shape: 'rounded-[2.5rem]',  offset: 'mt-10 md:mt-2',     hex: false },
+                { shape: 'ai-hex-clip',       offset: '-mt-6 md:mt-10',    hex: true  },
+                { shape: 'rounded-3xl',       offset: 'mt-6 md:-mt-2',     hex: false },
+              ] as const;
+              const v = variants[i % variants.length];
+
+              const orbitDelay = `${-(i * 1.1).toFixed(2)}s`;
+              const orbitDuration = `${7 + (i % 4)}s`;
+              const fadeDelay = `${i * 60}ms`;
+
               return (
                 <Link
                   key={`slot-${i}-${t?.id ?? 'ph'}`}
                   to={href}
-                  className="group relative aspect-square rounded-2xl bg-card/70 backdrop-blur-md border border-border/60 overflow-hidden hover:border-primary/60 transition-all duration-500 hover:shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.5)] animate-fade-in will-change-transform"
+                  className={`group relative flex flex-col items-center gap-3 animate-fade-in will-change-transform ${v.offset}`}
                   style={{
-                    animationDelay: delay,
+                    animationDelay: fadeDelay,
                     transformStyle: 'preserve-3d',
-                    transform: 'translateZ(0)',
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.transform =
-                      'translateZ(60px) scale(1.08)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.transform = 'translateZ(0) scale(1)';
                   }}
                 >
-                  {/* Brand color halo */}
+                  {/* Floating shape — owns the orbit + hover lift */}
                   <div
-                    className="absolute inset-0 opacity-40 group-hover:opacity-80 transition-opacity duration-500"
+                    className="ai-tile-float relative w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 transition-transform duration-500 group-hover:scale-110"
                     style={{
-                      background: meta
-                        ? `radial-gradient(circle at 50% 40%, ${meta.color}66, transparent 70%)`
-                        : 'radial-gradient(circle at 50% 40%, hsl(var(--primary)/0.3), transparent 70%)',
+                      animationDelay: orbitDelay,
+                      animationDuration: orbitDuration,
                     }}
-                  />
-                  {/* Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center p-3">
-                    {t && meta ? (
-                      <div className="w-full h-full rounded-xl bg-white/95 backdrop-blur flex items-center justify-center p-1.5 shadow-lg">
+                  >
+                    {/* Soft brand-color halo behind the tile */}
+                    <div
+                      className="absolute -inset-3 rounded-full blur-2xl opacity-50 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: meta
+                          ? `radial-gradient(circle at 50% 50%, ${meta.color}77, transparent 70%)`
+                          : 'radial-gradient(circle at 50% 50%, hsl(var(--primary)/0.4), transparent 70%)',
+                      }}
+                    />
+
+                    {/* White logo card in chosen shape */}
+                    <div
+                      className={`relative w-full h-full bg-white flex items-center justify-center p-4 md:p-5 shadow-[0_25px_45px_-12px_rgba(0,0,0,0.55)] group-hover:shadow-[0_30px_60px_-12px_hsl(var(--primary)/0.55)] transition-shadow duration-500 ${v.shape} ${v.hex ? '' : 'border border-white/30'}`}
+                    >
+                      {t && meta ? (
                         <ShowcaseLogo tool={t} meta={meta} />
-                      </div>
-                    ) : (
-                      <div className="w-full h-full rounded-xl bg-muted/50 animate-pulse" />
-                    )}
+                      ) : (
+                        <div className="w-full h-full bg-muted/50 animate-pulse rounded-xl" />
+                      )}
+
+                      {/* Hover shine sweep */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    </div>
                   </div>
+
                   {/* Name pill */}
                   {t && (
-                    <div className="absolute bottom-2 left-2 right-2 bg-background/85 backdrop-blur border border-border text-foreground text-[10px] md:text-xs font-semibold px-2 py-1 rounded-md text-center truncate">
+                    <span className="text-[10px] md:text-xs uppercase font-bold text-foreground tracking-[0.18em] bg-background/70 backdrop-blur border border-border px-3 py-1 rounded-full max-w-[10rem] truncate">
                       {t.name}
-                    </div>
+                    </span>
                   )}
-                  {/* Hover shine */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </Link>
               );
             })}
           </div>
         </div>
+
 
         {/* Big CTA */}
         <div className="flex justify-center">
