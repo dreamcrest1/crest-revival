@@ -308,7 +308,7 @@ const AiTools = () => {
             </div>
             <div className="flex gap-2">
               {([
-                ['default', 'Featured'],
+                ['trending', 'Trending'],
                 ['price-asc', 'Price ↑'],
                 ['price-desc', 'Price ↓'],
               ] as const).map(([k, label]) => (
