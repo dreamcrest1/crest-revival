@@ -94,9 +94,8 @@ export function useAiTools() {
       return data
         .map((cols, idx): AiTool | null => {
           const [name, validity, priceRaw, image] = cols;
-          if (!name || !priceRaw) return null;
-          const price = Number(String(priceRaw).replace(/[^\d.]/g, ''));
-          if (!price) return null;
+          if (!name || !name.trim()) return null;
+          const price = Number(String(priceRaw || '').replace(/[^\d.]/g, '')) || 0;
 
           // Deterministic "market" data per product so it looks alive but consistent
           const seed = Array.from(name + validity).reduce((a, c) => a + c.charCodeAt(0), 1);

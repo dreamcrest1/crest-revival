@@ -12,6 +12,64 @@ import { metaForTool } from '@/data/aiToolMeta';
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
 
+// Broad category buckets — collapses the many fine-grained meta.category values
+// into a small set of pills so the top filter row isn't cluttered.
+const CATEGORY_BUCKETS: Record<string, string> = {
+  'LLM Chat': 'AI & Chat',
+  'AI Assistant': 'AI & Chat',
+  'AI Search': 'AI & Chat',
+  'AI Agent': 'AI & Chat',
+  'AI Tools': 'AI & Chat',
+  'Voice AI': 'AI & Chat',
+  'Writing': 'AI & Chat',
+  'Research': 'AI & Chat',
+
+  'Design': 'Design & Creative',
+  'AI Design': 'Design & Creative',
+  'Creative': 'Design & Creative',
+  'Design Inspo': 'Design & Creative',
+  'Whiteboard': 'Design & Creative',
+  'Presentations': 'Design & Creative',
+  'Video': 'Design & Creative',
+  'Video Editing': 'Design & Creative',
+
+  'AI Coding': 'Development',
+  'Dev Tools': 'Development',
+  'Backend': 'Development',
+  'Database': 'Development',
+  'Hosting': 'Development',
+  'Internal Tools': 'Development',
+  'Web Builder': 'Development',
+  'No-Code': 'Development',
+  'Monitoring': 'Development',
+  'Security': 'Development',
+  'Web Scraping': 'Development',
+
+  'Productivity': 'Productivity',
+  'Office Suite': 'Productivity',
+  'Project Mgmt': 'Productivity',
+  'Knowledge Base': 'Productivity',
+  'Meetings': 'Productivity',
+  'Subscription': 'Productivity',
+  'Automation': 'Productivity',
+
+  'Sales': 'Business & Growth',
+  'Marketing': 'Business & Growth',
+  'Career': 'Business & Growth',
+  'Networking': 'Business & Growth',
+  'Support': 'Business & Growth',
+  'Product': 'Business & Growth',
+  'Analytics': 'Business & Growth',
+  'Data': 'Business & Growth',
+
+  'Learning': 'Learning',
+};
+
+const bucketFor = (t: AiTool) => {
+  const c = (t.meta ?? metaForTool(t.name)).category;
+  return CATEGORY_BUCKETS[c] ?? 'Other';
+};
+
 const waLink = (t: AiTool) => {
   const meta = t.meta ?? metaForTool(t.name);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -110,21 +168,27 @@ function ToolCard({ t }: { t: AiTool }) {
           </ul>
         ) : null}
 
-        <div className="flex items-baseline gap-2 pt-1">
-          <span className="font-display font-bold text-2xl text-primary tabular-nums">
-            ₹{t.price.toLocaleString('en-IN')}
-          </span>
-          <span className="text-[11px] text-muted-foreground">/ {t.validity.toLowerCase()}</span>
+        <div className="flex items-baseline gap-2 pt-1 min-h-[36px]">
+          {t.price > 0 ? (
+            <>
+              <span className="font-display font-bold text-2xl text-primary tabular-nums">
+                ₹{t.price.toLocaleString('en-IN')}
+              </span>
+              <span className="text-[11px] text-muted-foreground">/ {t.validity.toLowerCase()}</span>
+            </>
+          ) : (
+            <span className="font-display font-semibold text-sm text-primary">Contact for pricing</span>
+          )}
         </div>
 
         <div className="flex gap-2 mt-auto pt-1">
           <a
-            href={COSMOFEED_URL}
+            href={t.price > 0 ? COSMOFEED_URL : waLink(t)}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-primary-foreground rounded-xl py-2.5 text-xs font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
           >
-            <Zap className="w-3.5 h-3.5" /> Buy Now
+            <Zap className="w-3.5 h-3.5" /> {t.price > 0 ? 'Buy Now' : 'Enquire'}
           </a>
           <a
             href={waLink(t)}
@@ -167,20 +231,22 @@ const AiTools = () => {
 
   const categories = useMemo(() => {
     const set = new Set<string>();
-    tools.forEach((t) => {
-      const c = (t.meta ?? metaForTool(t.name)).category;
-      if (c) set.add(c);
-    });
-    return ['All', ...Array.from(set).sort()];
+    tools.forEach((t) => set.add(bucketFor(t)));
+    const ORDER = ['AI & Chat', 'Design & Creative', 'Development', 'Productivity', 'Business & Growth', 'Learning', 'Other'];
+    const sorted = Array.from(set).sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
+    return ['All', ...sorted];
   }, [tools]);
 
   const filtered = useMemo(() => {
     let list = shuffled.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
     if (category !== 'All') {
-      list = list.filter((t) => (t.meta ?? metaForTool(t.name)).category === category);
+      list = list.filter((t) => bucketFor(t) === category);
     }
-    if (sort === 'price-asc') list = [...list].sort((a, b) => a.price - b.price);
-    if (sort === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
+    // Treat "Contact for pricing" (price === 0) as the highest value so it sinks
+    // to the bottom in both ascending and descending price sorts.
+    const priceKey = (p: number) => (p > 0 ? p : Number.POSITIVE_INFINITY);
+    if (sort === 'price-asc') list = [...list].sort((a, b) => priceKey(a.price) - priceKey(b.price));
+    if (sort === 'price-desc') list = [...list].sort((a, b) => priceKey(b.price) - priceKey(a.price));
     return list;
   }, [shuffled, q, sort, category]);
 
@@ -281,7 +347,7 @@ const AiTools = () => {
               {categories.map((c) => {
                 const count = c === 'All'
                   ? tools.length
-                  : tools.filter((t) => (t.meta ?? metaForTool(t.name)).category === c).length;
+                  : tools.filter((t) => bucketFor(t) === c).length;
                 const active = category === c;
                 return (
                   <button
