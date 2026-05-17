@@ -26,12 +26,17 @@ export type ToolMeta = {
 // Crisp SVG-first logo overrides for brands that come out blurry from Clearbit/favicon fallbacks.
 // SimpleIcons CDN serves brand-coloured SVGs that stay sharp at any size.
 const LOGO_OVERRIDES: Record<string, string> = {
+  'adobe.com': 'https://api.iconify.design/simple-icons/adobecreativecloud.svg?color=%23DA1F26',
   'airtable.com': 'https://cdn.simpleicons.org/airtable/18BFFF',
   'autodesk.com': 'https://cdn.simpleicons.org/autodesk/0696D7',
   'grammarly.com': 'https://cdn.simpleicons.org/grammarly/15C39A',
   'intercom.com': 'https://cdn.simpleicons.org/intercom/1F8DED',
+  'linkedin.com': 'https://api.iconify.design/simple-icons/linkedin.svg?color=%230A66C2',
   'mongodb.com': 'https://cdn.simpleicons.org/mongodb/47A248',
+  'n8n.io': 'https://api.iconify.design/simple-icons/n8n.svg?color=%23EA4B71',
+  'render.com': 'https://api.iconify.design/simple-icons/render.svg?color=%2346E3B7',
   'roboform.com': 'https://cdn.roboform.com/images/logos/rf-logo.svg',
+  'sentry.io': 'https://api.iconify.design/simple-icons/sentry.svg?color=%23362D59',
   'tilda.cc': 'https://cdn.simpleicons.org/tildapublishing/FFB81C',
   'firecrawl.dev': 'https://avatars.githubusercontent.com/u/135057108?s=400',
   'questionpro.com': 'https://www.questionpro.com/images/logo/questionpro-logo.svg',
