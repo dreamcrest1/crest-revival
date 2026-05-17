@@ -770,10 +770,6 @@ export const TOOL_META: ToolMeta[] = [
     tagline: 'No-code landing page builder',
     description: 'PageMaker Pro — drag-and-drop landing page builder with 100+ templates, A/B testing, custom domains and CRM integrations for marketers.',
     features: ['Drag-and-drop builder', '100+ templates', 'A/B testing', 'CRM integrations'] },
-  { match: 'apify', category: 'Web Scraping', domain: 'apify.com', color: '#97CA00',
-    tagline: 'Web scraping & automation platform',
-    description: 'Apify — credits to run 4,500+ pre-built scrapers or build your own. Scrape Google, LinkedIn, Amazon, Instagram with proxies and scheduling.',
-    features: ['4,500+ Actors', 'Residential proxies', 'Scheduled runs', 'API + Webhooks'] },
 ];
 
 export function metaForTool(name: string): ToolMeta {
