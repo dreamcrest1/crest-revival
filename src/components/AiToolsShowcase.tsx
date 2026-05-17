@@ -55,9 +55,9 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
 const AiToolsShowcase = () => {
   const { data: tools = [] } = useAiTools();
 
-  // Top 8 most-searched tools, deduped by name (the sheet has duplicate rows
-  // for the same product across different validities — we only want one tile).
-  const featured = useMemo(() => {
+  // Larger pool of top-popularity tools (deduped) so we can rotate the visible
+  // 8 every few seconds for a "live" feel.
+  const pool = useMemo(() => {
     const seen = new Set<string>();
     const unique: AiTool[] = [];
     for (const t of [...tools].sort(
@@ -67,10 +67,23 @@ const AiToolsShowcase = () => {
       if (seen.has(key)) continue;
       seen.add(key);
       unique.push(t);
-      if (unique.length === 8) break;
+      if (unique.length === 24) break;
     }
     return unique;
   }, [tools]);
+
+  // Rotating offset — shifts the visible window every 3s.
+  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    if (pool.length <= 8) return;
+    const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), 3000);
+    return () => clearInterval(id);
+  }, [pool.length]);
+
+  const featured = useMemo(() => {
+    if (pool.length === 0) return [];
+    return Array.from({ length: Math.min(8, pool.length) }, (_, i) => pool[(offset + i) % pool.length]);
+  }, [pool, offset]);
 
   // ── Realtime 3-D parallax ──
   // Mouse / touch updates a *target* tilt; a requestAnimationFrame loop lerps
