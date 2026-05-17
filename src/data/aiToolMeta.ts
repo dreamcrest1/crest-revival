@@ -2,6 +2,7 @@
 // Each entry provides a clean brand logo (via Clearbit), a brand color used
 // as a tile background, a short marketing tagline, and longer product info
 // that we surface in the card and the WhatsApp pre-fill.
+import merlinLogo from '@/assets/merlin-logo.svg';
 
 export type ToolMeta = {
   /** keyword matched (case-insensitive substring) against the sheet "Tool Name" */
@@ -30,15 +31,15 @@ const LOGO_OVERRIDES: Record<string, string> = {
   'grammarly.com': 'https://cdn.simpleicons.org/grammarly/15C39A',
   'intercom.com': 'https://cdn.simpleicons.org/intercom/1F8DED',
   'mongodb.com': 'https://cdn.simpleicons.org/mongodb/47A248',
-  'roboform.com': 'https://cdn.simpleicons.org/roboform/0079FF',
+  'roboform.com': 'https://cdn.roboform.com/images/logos/rf-logo.svg',
   'tilda.cc': 'https://cdn.simpleicons.org/tildapublishing/FFB81C',
   'firecrawl.dev': 'https://avatars.githubusercontent.com/u/135057108?s=400',
-  'questionpro.com': 'https://www.questionpro.com/images/QuestionPro-logo.svg',
-  'merlin.foyer.work': 'https://www.getmerlin.in/vector-images/merlin-logo-foreground.svg',
-  'magicpatterns.com': 'https://www.magicpatterns.com/favicon-256.png',
-  'gumloop.com': 'https://avatars.githubusercontent.com/u/156625144?s=400',
-  'chatprd.ai': 'https://chatprd.ai/icon-512.png',
-  'vibeflow.dev': 'https://vibeflow.dev/logo.png',
+  'questionpro.com': 'https://www.questionpro.com/images/logo/questionpro-logo.svg',
+  'merlin.foyer.work': merlinLogo,
+  'magicpatterns.com': 'https://www.magicpatterns.com/magicpatterns_logo_light.svg',
+  'gumloop.com': 'https://www.gumloop.com/images/gumloop_icon.svg',
+  'chatprd.ai': 'https://www.chatprd.ai/_next/static/media/logo-text-black.8e455f3e.svg',
+  'vibeflow.ai': 'https://vibeflow.ai/favicon.svg',
 };
 
 // Order matters — more specific names first (e.g. "Linkedin Sales Navigator" before "Linkedin")
@@ -334,6 +335,16 @@ export const TOOL_META: ToolMeta[] = [
     features: ['AI PRD generator', 'User story templates', 'Roadmap builder', 'Jira/Linear export'],
   },
   {
+    match: 'chatprf',
+    category: 'Product',
+    domain: 'chatprd.ai',
+    color: '#4F46E5',
+    tagline: 'AI product manager for PRDs & specs',
+    description:
+      'ChatPRD Pro — generate complete PRDs, user stories, roadmaps and tickets with AI trained on PM best practices. Templates for every product workflow.',
+    features: ['AI PRD generator', 'User story templates', 'Roadmap builder', 'Jira/Linear export'],
+  },
+  {
     match: 'rezi',
     category: 'Career',
     domain: 'rezi.ai',
@@ -586,7 +597,7 @@ export const TOOL_META: ToolMeta[] = [
   {
     match: 'vibeflow',
     category: 'AI Coding',
-    domain: 'vibeflow.dev',
+    domain: 'vibeflow.ai',
     color: '#A855F7',
     tagline: 'Vibe coding AI development platform',
     description:
