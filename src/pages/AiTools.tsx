@@ -376,7 +376,7 @@ const AiTools = () => {
           ) : error ? (
             <div className="text-center py-20 text-muted-foreground">
               Could not load products.
-              <button onClick={() => qc.invalidateQueries({ queryKey: ['ai-tools-sheet-v2'] })} className="text-primary underline ml-1">Retry</button>
+              <button onClick={() => qc.invalidateQueries({ queryKey: ['ai-tools-sheet-v3'] })} className="text-primary underline ml-1">Retry</button>
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">No tools match "{q}".</div>
