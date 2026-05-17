@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap } from 'lucide-react';
 import Navbar from '@/components/Navbar';
