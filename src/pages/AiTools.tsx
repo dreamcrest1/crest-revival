@@ -251,14 +251,105 @@ const AiTools = () => {
 
   const lastSync = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('en-IN') : '—';
 
+  // ── SEO: build keyword cloud + ItemList/Product JSON-LD from live tools.
+  // Goal: rank for "group buy <tool>", "cheap <tool>", "discounted <tool>",
+  // "<tool> India price" etc. for every product we sell.
+  const { seoKeywords, seoDescription, seoJsonLd } = useMemo(() => {
+    // Use trending order so the most-searched names lead the keyword string.
+    const top = trending.slice(0, 40);
+    const kwParts: string[] = [
+      'group buy AI tools', 'cheap AI tools India', 'discounted AI tools',
+      'AI tools sale India', 'group buy SEO tools', 'cheap SEO tools India',
+      'AI subscription India cheap', 'premium AI tools group buy',
+      'buy ChatGPT cheap India', 'cheap design tools India',
+      'group buy software India', 'discounted SaaS subscriptions',
+    ];
+    top.forEach((t) => {
+      const n = t.name;
+      kwParts.push(
+        `group buy ${n}`, `cheap ${n}`, `${n} cheap India`,
+        `discounted ${n}`, `${n} group buy`, `buy ${n} cheap`,
+        `${n} India price`, `${n} subscription cheap`, `${n} discount India`,
+      );
+    });
+    const keywords = kwParts.join(', ').toLowerCase();
+
+    const topNames = trending.slice(0, 8).map((t) => t.name).join(', ');
+    const description = `Group buy ${trending.length || '100+'} premium AI tools at the cheapest prices in India — ${topNames || 'ChatGPT, Lovable, Figma, Replit, Gamma'} & more. Genuine accounts, instant email delivery, full warranty.`;
+
+    const itemList = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Premium AI Tools – Group Buy India',
+      numberOfItems: trending.length,
+      itemListElement: trending.slice(0, 60).map((t, i) => {
+        const meta = metaForTool(t.name);
+        return {
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'Product',
+            name: t.name,
+            description: `${meta.tagline || `Group buy ${t.name} at the cheapest price in India.`} (${t.validity})`,
+            category: meta.category,
+            brand: { '@type': 'Brand', name: t.name.split(' ')[0] },
+            ...(meta.domain ? { url: `https://${meta.domain}` } : {}),
+            offers: {
+              '@type': 'Offer',
+              priceCurrency: 'INR',
+              price: t.price > 0 ? String(t.price) : '0',
+              availability: 'https://schema.org/InStock',
+              seller: { '@type': 'Organization', name: 'Dreamcrest Solutions' },
+              ...(t.price === 0 ? { description: 'Contact for pricing' } : {}),
+            },
+          },
+        };
+      }),
+    };
+
+    const faqLd = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How does group buy for AI tools work at Dreamcrest?',
+          acceptedAnswer: { '@type': 'Answer', text: 'You pay a fraction of the official price for a private premium AI subscription. Accounts are delivered instantly to your registered email after payment, with full warranty for the entire validity period.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Are these AI tool subscriptions genuine?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. Every plan — ChatGPT Plus, Lovable Pro, Figma, Replit Core, Gamma, Manus and more — is a genuine private subscription with full premium features, not a shared or cracked account.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Where can I buy cheap AI tools in India?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Dreamcrest Solutions offers the cheapest AI tools, SEO tools, design tools and SaaS subscriptions in India via group buy, with instant delivery and 24/7 WhatsApp support at +91 6357998730.' },
+        },
+      ],
+    };
+
+    return { seoKeywords: keywords, seoDescription: description, seoJsonLd: [itemList, faqLd] };
+  }, [trending]);
+
   return (
     <div className="min-h-screen relative z-10">
       <SEOHead
-        title="AI Tools – Cheap AI Subscriptions India | Dreamcrest"
-        description="Premium AI subscriptions — ChatGPT Plus, Eleven Labs, Lovable, Replit, Figma, Manus, Gamma & more at the cheapest prices in India. Private accounts, instant email delivery."
-        keywords="cheap AI tools India, ChatGPT Plus cheap, Eleven Labs group buy, Lovable Pro cheap, Replit Core India, Figma cheap, AI subscription India"
+        title="Group Buy AI Tools India – Cheap ChatGPT, Lovable, Figma & 100+ More | Dreamcrest"
+        description={seoDescription}
+        keywords={seoKeywords}
         canonical="https://dreamcrest.net/ai-tools"
+        jsonLd={seoJsonLd}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'AI Tools', url: '/ai-tools' },
+        ]}
       />
+      {/* Hidden SEO text — gives crawlers a per-product keyword block without cluttering UI */}
+      <div className="sr-only" aria-hidden="true">
+        <h2>Group buy AI tools, cheap AI subscriptions & discounted SaaS in India</h2>
+        <p>Dreamcrest Solutions offers group buy and discounted prices for: {trending.map((t) => `group buy ${t.name}, cheap ${t.name}, ${t.name} India price`).join('; ')}.</p>
+      </div>
       <Navbar />
 
       <div className="pt-28 pb-16">
