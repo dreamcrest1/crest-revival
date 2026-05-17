@@ -18,6 +18,27 @@ export type ToolMeta = {
   description: string;
   /** Bullet feature highlights */
   features: string[];
+  /** Optional explicit logo URL (SVG preferred). Tried before the Clearbit fallback. */
+  logo?: string;
+};
+
+// Crisp SVG-first logo overrides for brands that come out blurry from Clearbit/favicon fallbacks.
+// SimpleIcons CDN serves brand-coloured SVGs that stay sharp at any size.
+const LOGO_OVERRIDES: Record<string, string> = {
+  'airtable.com': 'https://cdn.simpleicons.org/airtable/18BFFF',
+  'autodesk.com': 'https://cdn.simpleicons.org/autodesk/0696D7',
+  'grammarly.com': 'https://cdn.simpleicons.org/grammarly/15C39A',
+  'intercom.com': 'https://cdn.simpleicons.org/intercom/1F8DED',
+  'mongodb.com': 'https://cdn.simpleicons.org/mongodb/47A248',
+  'roboform.com': 'https://cdn.simpleicons.org/roboform/0079FF',
+  'tilda.cc': 'https://cdn.simpleicons.org/tildapublishing/FFB81C',
+  'firecrawl.dev': 'https://avatars.githubusercontent.com/u/135057108?s=400',
+  'questionpro.com': 'https://www.questionpro.com/images/QuestionPro-logo.svg',
+  'merlin.foyer.work': 'https://www.getmerlin.in/vector-images/merlin-logo-foreground.svg',
+  'magicpatterns.com': 'https://www.magicpatterns.com/favicon-256.png',
+  'gumloop.com': 'https://avatars.githubusercontent.com/u/156625144?s=400',
+  'chatprd.ai': 'https://chatprd.ai/icon-512.png',
+  'vibeflow.dev': 'https://vibeflow.dev/logo.png',
 };
 
 // Order matters — more specific names first (e.g. "Linkedin Sales Navigator" before "Linkedin")
