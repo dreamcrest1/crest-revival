@@ -80,7 +80,7 @@ function buildSpark(seed: number, trendBias: number): number[] {
 
 export function useAiTools() {
   return useQuery({
-    queryKey: ['ai-tools-sheet'],
+    queryKey: ['ai-tools-sheet-v2'],
     staleTime: 60_000,
     refetchOnWindowFocus: false,
     queryFn: async (): Promise<AiTool[]> => {
