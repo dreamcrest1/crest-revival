@@ -210,24 +210,18 @@ const AiTools = () => {
   const { data: tools = [], isLoading, isFetching, dataUpdatedAt, error } = useAiTools();
   const qc = useQueryClient();
   const [q, setQ] = useState('');
-  const [sort, setSort] = useState<'default' | 'price-asc' | 'price-desc'>('default');
+  const [sort, setSort] = useState<'trending' | 'price-asc' | 'price-desc'>('trending');
   const [category, setCategory] = useState<string>('All');
 
-  // Stable shuffled order per session (so cards don't reshuffle on every render)
-  const shuffleSeed = useRef(Math.random());
-  const shuffled = useMemo(() => {
-    const arr = [...tools];
-    // Deterministic shuffle using seeded PRNG so order stays stable during the session
-    let seed = Math.floor(shuffleSeed.current * 2 ** 31);
-    const rand = () => {
-      seed = (seed * 1664525 + 1013904223) % 2 ** 31;
-      return seed / 2 ** 31;
-    };
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(rand() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+  // Default order = most-Google-searched first. We pre-sort once so the
+  // baseline list is "trending desc"; price sorts then override it.
+  const trending = useMemo(() => {
+    return [...tools].sort((a, b) => {
+      const diff = popularityFor(b.name) - popularityFor(a.name);
+      if (diff !== 0) return diff;
+      // Tiebreaker: shorter validity (likely entry plan) first, then name.
+      return a.name.localeCompare(b.name);
+    });
   }, [tools]);
 
   const categories = useMemo(() => {
@@ -239,7 +233,7 @@ const AiTools = () => {
   }, [tools]);
 
   const filtered = useMemo(() => {
-    let list = shuffled.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
+    let list = trending.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
     if (category !== 'All') {
       list = list.filter((t) => bucketFor(t) === category);
     }
@@ -249,7 +243,7 @@ const AiTools = () => {
     if (sort === 'price-asc') list = [...list].sort((a, b) => priceKey(a.price) - priceKey(b.price));
     if (sort === 'price-desc') list = [...list].sort((a, b) => priceKey(b.price) - priceKey(a.price));
     return list;
-  }, [shuffled, q, sort, category]);
+  }, [trending, q, sort, category]);
 
   const lastSync = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('en-IN') : '—';
 
