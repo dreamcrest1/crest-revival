@@ -7,6 +7,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useAiTools, type AiTool } from '@/hooks/useAiTools';
+import { metaForTool } from '@/data/aiToolMeta';
 
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
