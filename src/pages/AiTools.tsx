@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -9,6 +10,7 @@ import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { popularityFor } from '@/data/aiToolPopularity';
+import { slugifyAiTool } from '@/lib/aiToolSeo';
 
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
@@ -147,17 +149,20 @@ function BrandLogo({ t }: { t: AiTool }) {
 
 function ToolCard({ t }: { t: AiTool }) {
   const meta = metaForTool(t.name);
+  const detailHref = `/ai-tool/${slugifyAiTool(t.name)}`;
   return (
     <div className="group relative bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col">
-      <div className="relative aspect-square overflow-hidden">
+      <Link to={detailHref} className="block relative aspect-square overflow-hidden" aria-label={`View ${t.name} details`}>
         <BrandLogo t={t} />
         <div className="absolute top-2.5 right-2.5 bg-background/85 backdrop-blur border border-border text-foreground text-[10px] font-mono px-2 py-0.5 rounded-full">
           {t.validity}
         </div>
-      </div>
+      </Link>
 
       <div className="p-4 flex flex-col gap-2.5 relative z-10 flex-1">
-        <h3 className="font-display font-semibold text-foreground text-sm leading-tight line-clamp-2 min-h-[36px]">{t.name}</h3>
+        <Link to={detailHref} className="hover:text-primary transition-colors">
+          <h3 className="font-display font-semibold text-foreground text-sm leading-tight line-clamp-2 min-h-[36px]">{t.name}</h3>
+        </Link>
         {meta.tagline && (
           <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{meta.tagline}</p>
         )}
