@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, Zap } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { metaForTool, type ToolMeta } from '@/data/aiToolMeta';
 import { popularityFor } from '@/data/aiToolPopularity';
@@ -40,7 +40,7 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
       loading="lazy"
       decoding="async"
       referrerPolicy="no-referrer"
-      className="max-w-[78%] max-h-[78%] object-contain"
+      className="max-w-[92%] max-h-[92%] object-contain"
       onError={() => setIdx((i) => Math.min(i + 1, sources.length - 1))}
     />
   );
@@ -55,26 +55,68 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
 const AiToolsShowcase = () => {
   const { data: tools = [] } = useAiTools();
 
+  // Top 8 most-searched tools, deduped by name (the sheet has duplicate rows
+  // for the same product across different validities — we only want one tile).
   const featured = useMemo(() => {
-    return [...tools]
-      .sort((a, b) => popularityFor(b.name) - popularityFor(a.name))
-      .slice(0, 8);
+    const seen = new Set<string>();
+    const unique: AiTool[] = [];
+    for (const t of [...tools].sort(
+      (a, b) => popularityFor(b.name) - popularityFor(a.name),
+    )) {
+      const key = t.name.trim().toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      unique.push(t);
+      if (unique.length === 8) break;
+    }
+    return unique;
   }, [tools]);
 
-  // Mouse-tracked tilt
+  // ── Realtime 3-D parallax ──
+  // Mouse / touch updates a *target* tilt; a requestAnimationFrame loop lerps
+  // the *current* tilt toward it each frame and writes it straight to the
+  // DOM (transform style). Skipping React state on the hot path eliminates
+  // re-render jitter and keeps the motion buttery at 60fps.
   const stageRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 14, y: -6 });
+  const gridRef = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: 14, y: -6 });
+  const current = useRef({ x: 14, y: -6 });
+  const rafId = useRef<number | null>(null);
 
-  const handleMove = (e: React.MouseEvent) => {
+  useEffect(() => {
+    const tick = () => {
+      // Critically-damped lerp — 0.12 = quick but smooth catch-up
+      current.current.x += (target.current.x - current.current.x) * 0.12;
+      current.current.y += (target.current.y - current.current.y) * 0.12;
+      if (gridRef.current) {
+        gridRef.current.style.transform = `rotateX(${current.current.x.toFixed(2)}deg) rotateY(${current.current.y.toFixed(2)}deg)`;
+      }
+      rafId.current = requestAnimationFrame(tick);
+    };
+    rafId.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafId.current != null) cancelAnimationFrame(rafId.current);
+    };
+  }, []);
+
+  const updateFromPoint = (clientX: number, clientY: number) => {
     const el = stageRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    // Tilt range: ±18° on Y (left/right) and rest at ~10-22° on X (front/back)
-    setTilt({ x: 16 - py * 16, y: -px * 22 });
+    const px = (clientX - r.left) / r.width - 0.5; // -0.5..0.5
+    const py = (clientY - r.top) / r.height - 0.5;
+    target.current = { x: 16 - py * 18, y: -px * 24 };
   };
-  const handleLeave = () => setTilt({ x: 14, y: -6 });
+
+  const handleMove = (e: React.MouseEvent) => updateFromPoint(e.clientX, e.clientY);
+  const handleTouch = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    if (!t) return;
+    updateFromPoint(t.clientX, t.clientY);
+  };
+  const handleLeave = () => {
+    target.current = { x: 14, y: -6 };
+  };
 
   return (
     <section className="relative py-20 md:py-28 overflow-hidden">
