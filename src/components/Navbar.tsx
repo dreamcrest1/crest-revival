@@ -8,7 +8,7 @@ import logo from '@/assets/logo.png';
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Products', path: '/products' },
-  { label: 'AI Tools', path: '/ai-tools', live: true },
+  { label: 'AI Tools', path: '/ai-tools' },
   { label: 'All Tools', path: '/alltools' },
   { label: 'About', path: '/about' },
   { label: 'FAQ', path: '/faq' },
