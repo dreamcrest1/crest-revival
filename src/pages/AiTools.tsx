@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -146,13 +146,43 @@ const AiTools = () => {
   const qc = useQueryClient();
   const [q, setQ] = useState('');
   const [sort, setSort] = useState<'default' | 'price-asc' | 'price-desc'>('default');
+  const [category, setCategory] = useState<string>('All');
+
+  // Stable shuffled order per session (so cards don't reshuffle on every render)
+  const shuffleSeed = useRef(Math.random());
+  const shuffled = useMemo(() => {
+    const arr = [...tools];
+    // Deterministic shuffle using seeded PRNG so order stays stable during the session
+    let seed = Math.floor(shuffleSeed.current * 2 ** 31);
+    const rand = () => {
+      seed = (seed * 1664525 + 1013904223) % 2 ** 31;
+      return seed / 2 ** 31;
+    };
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [tools]);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    tools.forEach((t) => {
+      const c = (t.meta ?? metaForTool(t.name)).category;
+      if (c) set.add(c);
+    });
+    return ['All', ...Array.from(set).sort()];
+  }, [tools]);
 
   const filtered = useMemo(() => {
-    let list = tools.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
+    let list = shuffled.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
+    if (category !== 'All') {
+      list = list.filter((t) => (t.meta ?? metaForTool(t.name)).category === category);
+    }
     if (sort === 'price-asc') list = [...list].sort((a, b) => a.price - b.price);
     if (sort === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
     return list;
-  }, [tools, q, sort]);
+  }, [shuffled, q, sort, category]);
 
   const lastSync = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('en-IN') : '—';
 
@@ -180,6 +210,11 @@ const AiTools = () => {
               Genuine premium subscriptions at the most affordable prices in India.
               Private accounts delivered instantly to your email after payment.
             </p>
+            <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-foreground bg-card/60 backdrop-blur border border-border/60 px-3 py-1.5 rounded-full">
+              <Sparkles className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary tabular-nums">{tools.length}</span>
+              <span className="text-muted-foreground">premium tools available</span>
+            </div>
           </div>
 
           {/* Trust strip */}
@@ -239,6 +274,34 @@ const AiTools = () => {
               </button>
             </div>
           </div>
+
+          {/* Category pills */}
+          {categories.length > 1 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {categories.map((c) => {
+                const count = c === 'All'
+                  ? tools.length
+                  : tools.filter((t) => (t.meta ?? metaForTool(t.name)).category === c).length;
+                const active = category === c;
+                return (
+                  <button
+                    key={c}
+                    onClick={() => setCategory(c)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all whitespace-nowrap ${
+                      active
+                        ? 'bg-primary text-primary-foreground border-primary'
+                        : 'bg-card/60 backdrop-blur border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                    }`}
+                  >
+                    {c}
+                    <span className={`ml-1.5 tabular-nums ${active ? 'text-primary-foreground/80' : 'text-foreground/50'}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           {/* Grid */}
           {isLoading ? (
