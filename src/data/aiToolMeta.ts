@@ -614,6 +614,9 @@ export const TOOL_META: ToolMeta[] = [
   },
   {
     match: 'slite',
+  },
+  {
+    match: 'sllite',
     category: 'Knowledge Base',
     domain: 'slite.com',
     color: '#3B5BFE',
