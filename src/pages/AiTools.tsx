@@ -13,87 +13,102 @@ const WHATSAPP_NUMBER = '916357998730';
 
 const waLink = (t: AiTool) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hi! I'm interested in *${t.name}* (${t.validity}) at ₹${t.price}. Please share details on how to purchase.`,
+    `Hi! I'm interested in *${t.name}* (${t.validity}) at ₹${t.price}.\n\n${t.meta.tagline}\n\nPlease share details on how to purchase.`,
   )}`;
 
-// Gradient palette used for letter-tile fallbacks — keyed off product name
-const gradients = [
-  'from-violet-500/30 to-fuchsia-500/20',
-  'from-cyan-500/30 to-blue-500/20',
-  'from-emerald-500/30 to-teal-500/20',
-  'from-amber-500/30 to-orange-500/20',
-  'from-rose-500/30 to-pink-500/20',
-  'from-indigo-500/30 to-purple-500/20',
-];
-const gradientFor = (name: string) => {
-  let h = 0;
-  for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return gradients[h % gradients.length];
-};
+// Convert brand hex into a soft gradient background pair
+function hexToRgb(hex: string) {
+  const h = hex.replace('#', '');
+  const n = parseInt(h.length === 3 ? h.split('').map((c) => c + c).join('') : h, 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
 
-// Try direct image first, then weserv proxy, then branded tile
-function ProductImage({ url, name, symbol }: { url: string; name: string; symbol: string }) {
-  const [stage, setStage] = useState<'direct' | 'proxy' | 'fallback'>(url ? 'direct' : 'fallback');
+// Branded logo tile: brand color background + Clearbit logo. Falls back to symbol.
+function BrandLogo({ t }: { t: AiTool }) {
+  const [stage, setStage] = useState<'clearbit' | 'sheet' | 'letter'>(
+    t.meta.domain ? 'clearbit' : t.image ? 'sheet' : 'letter',
+  );
+  const { r, g, b } = hexToRgb(t.meta.color);
+  const bg = {
+    background: `radial-gradient(circle at 30% 20%, rgba(${r},${g},${b},0.95), rgba(${r},${g},${b},0.55) 60%, rgba(${r},${g},${b},0.35))`,
+  };
+  // Pick contrasting text/logo treatment based on luminance
+  const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  const onDark = luma < 0.55;
 
-  if (stage === 'fallback' || !url) {
-    return (
-      <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${gradientFor(name)}`}>
-        <span className="font-display font-bold text-5xl text-foreground/80 drop-shadow">{symbol}</span>
-      </div>
-    );
-  }
-
-  const src =
-    stage === 'direct'
-      ? url
-      : `https://images.weserv.nl/?url=${encodeURIComponent(url.replace(/^https?:\/\//, ''))}&w=600&h=600&fit=cover&a=attention&output=webp&q=82`;
+  const clearbitSrc = `https://logo.clearbit.com/${t.meta.domain}?size=256`;
+  const sheetSrc = t.image
+    ? `https://images.weserv.nl/?url=${encodeURIComponent(t.image.replace(/^https?:\/\//, ''))}&w=400&h=400&fit=contain&output=webp&q=85`
+    : '';
 
   return (
-    <img
-      src={src}
-      alt={`${name} subscription`}
-      width={600}
-      height={600}
-      loading="lazy"
-      decoding="async"
-      referrerPolicy="no-referrer"
-      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-      onError={() => setStage(stage === 'direct' ? 'proxy' : 'fallback')}
-    />
+    <div className="w-full h-full flex items-center justify-center p-6 relative" style={bg}>
+      {/* subtle pattern */}
+      <div className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '14px 14px', color: onDark ? '#fff' : '#000' }} />
+
+      {stage === 'letter' && (
+        <span className={`font-display font-bold text-6xl drop-shadow-lg ${onDark ? 'text-white' : 'text-black'}`}>{t.symbol}</span>
+      )}
+
+      {stage !== 'letter' && (
+        <div className={`relative w-3/4 h-3/4 rounded-2xl flex items-center justify-center backdrop-blur-sm ${onDark ? 'bg-white/95' : 'bg-black/5'}`}>
+          <img
+            src={stage === 'clearbit' ? clearbitSrc : sheetSrc}
+            alt={`${t.name} logo`}
+            width={220}
+            height={220}
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="max-w-[80%] max-h-[80%] object-contain"
+            onError={() => {
+              if (stage === 'clearbit') setStage(t.image ? 'sheet' : 'letter');
+              else setStage('letter');
+            }}
+          />
+        </div>
+      )}
+
+      {/* category chip */}
+      <div className={`absolute bottom-2 left-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur ${onDark ? 'bg-white/15 text-white border border-white/20' : 'bg-black/10 text-black/80 border border-black/15'}`}>
+        {t.meta.category}
+      </div>
+    </div>
   );
 }
 
 function ToolCard({ t }: { t: AiTool }) {
   return (
-    <div className="group relative bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden hover:border-primary/40 transition-all duration-300 flex flex-col">
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/[0.06] to-transparent pointer-events-none" />
-
-      <div className="relative bg-secondary/20 aspect-square overflow-hidden">
-        <ProductImage url={t.image} name={t.name} symbol={t.symbol} />
-        <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1 bg-background/80 backdrop-blur border border-primary/20 text-primary text-[10px] font-semibold px-2 py-0.5 rounded-full">
-          <Sparkles className="w-3 h-3" /> AI
-        </div>
-        <div className="absolute top-2.5 right-2.5 bg-background/80 backdrop-blur border border-border text-foreground text-[10px] font-mono px-2 py-0.5 rounded-full">
+    <div className="group relative bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden hover:border-primary/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col">
+      <div className="relative aspect-square overflow-hidden">
+        <BrandLogo t={t} />
+        <div className="absolute top-2.5 right-2.5 bg-background/85 backdrop-blur border border-border text-foreground text-[10px] font-mono px-2 py-0.5 rounded-full">
           {t.validity}
         </div>
       </div>
 
-      <div className="p-4 flex flex-col gap-3 relative z-10 flex-1">
+      <div className="p-4 flex flex-col gap-2.5 relative z-10 flex-1">
         <h3 className="font-display font-semibold text-foreground text-sm leading-tight line-clamp-2 min-h-[36px]">{t.name}</h3>
+        <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{t.meta.tagline}</p>
 
-        <div className="flex items-baseline gap-2">
+        <ul className="text-[10.5px] text-muted-foreground space-y-0.5">
+          {t.meta.features.slice(0, 2).map((f) => (
+            <li key={f} className="flex items-start gap-1.5">
+              <CheckCircle2 className="w-3 h-3 text-primary shrink-0 mt-0.5" />
+              <span className="line-clamp-1">{f}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-baseline gap-2 pt-1">
           <span className="font-display font-bold text-2xl text-primary tabular-nums">
             ₹{t.price.toLocaleString('en-IN')}
           </span>
           <span className="text-[11px] text-muted-foreground">/ {t.validity.toLowerCase()}</span>
         </div>
 
-        <div className="text-[11px] text-muted-foreground border-t border-border/60 pt-2.5 space-y-1.5">
-          <p className="flex items-start gap-1.5"><Mail className="w-3 h-3 text-primary shrink-0 mt-0.5" /> Private subscription — delivered to your email</p>
-          <p className="flex items-start gap-1.5"><Shield className="w-3 h-3 text-primary shrink-0 mt-0.5" /> 100% genuine with warranty</p>
-        </div>
-
-        <div className="flex gap-2 mt-auto">
+        <div className="flex gap-2 mt-auto pt-1">
           <a
             href={COSMOFEED_URL}
             target="_blank"
