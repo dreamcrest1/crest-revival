@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
+import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2, TrendingUp } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -8,6 +8,7 @@ import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
+import { popularityFor } from '@/data/aiToolPopularity';
 
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
