@@ -28,6 +28,7 @@ function hexToRgb(hex: string) {
 
 // Branded logo tile: brand color background + logo from a fallback chain.
 function BrandLogo({ t }: { t: AiTool }) {
+  const meta = t.meta ?? metaForTool(t.name);
   // Build the source chain — first valid source is used; on error advance.
   const sources: string[] = [];
   if (meta.domain) {
