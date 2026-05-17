@@ -194,9 +194,9 @@ const AiToolsShowcase = () => {
                     }}
                   />
                   {/* Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center p-5">
+                  <div className="absolute inset-0 flex items-center justify-center p-3">
                     {t && meta ? (
-                      <div className="w-full h-full rounded-xl bg-white/95 backdrop-blur flex items-center justify-center p-3 shadow-lg">
+                      <div className="w-full h-full rounded-xl bg-white/95 backdrop-blur flex items-center justify-center p-1.5 shadow-lg">
                         <ShowcaseLogo tool={t} meta={meta} />
                       </div>
                     ) : (
