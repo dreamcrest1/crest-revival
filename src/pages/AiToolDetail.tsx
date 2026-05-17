@@ -101,16 +101,10 @@ const AiToolDetail = () => {
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
             {/* Logo / image card */}
             <div className="bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl p-6 aspect-square flex items-center justify-center relative overflow-hidden">
-              <img
-                src={seo.ogImage}
-                alt={`${tool.name} logo`}
-                width={420}
-                height={420}
-                loading="eager"
-                className="max-w-[70%] max-h-[70%] object-contain drop-shadow-xl"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/logo.png';
-                }}
+              <LogoImage
+                name={tool.name}
+                meta={meta}
+                sheetImage={tool.image}
               />
               <div className="absolute top-3 left-3 bg-primary/10 text-primary border border-primary/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
                 {meta.category}
