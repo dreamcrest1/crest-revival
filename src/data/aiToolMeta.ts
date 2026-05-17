@@ -772,9 +772,15 @@ export const TOOL_META: ToolMeta[] = [
     features: ['Drag-and-drop builder', '100+ templates', 'A/B testing', 'CRM integrations'] },
 ];
 
+// Normalise: lowercase, strip all non-alphanumerics (handles "FlutterFlow" vs
+// "flutter flow", "SlLITE" typos, punctuation, multiple spaces, etc.)
+function normalise(s: string): string {
+  return s.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 export function metaForTool(name: string): ToolMeta {
-  const lower = name.toLowerCase();
-  const hit = TOOL_META.find((m) => lower.includes(m.match));
+  const n = normalise(name);
+  const hit = TOOL_META.find((m) => n.includes(normalise(m.match)));
   if (hit) return hit;
   // Generic fallback
   return {

@@ -33,7 +33,7 @@ function BrandLogo({ t }: { t: AiTool }) {
   const sources: string[] = [];
   if (meta.domain) {
     sources.push(`https://logo.clearbit.com/${meta.domain}?size=256`);
-    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=128`);
+    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
     sources.push(`https://icons.duckduckgo.com/ip3/${meta.domain}.ico`);
   }
   if (t.image) {
@@ -95,16 +95,20 @@ function ToolCard({ t }: { t: AiTool }) {
 
       <div className="p-4 flex flex-col gap-2.5 relative z-10 flex-1">
         <h3 className="font-display font-semibold text-foreground text-sm leading-tight line-clamp-2 min-h-[36px]">{t.name}</h3>
-        <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{meta.tagline}</p>
+        {meta.tagline && (
+          <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{meta.tagline}</p>
+        )}
 
-        <ul className="text-[10.5px] text-muted-foreground space-y-0.5">
-          {meta.features.slice(0, 2).map((f) => (
-            <li key={f} className="flex items-start gap-1.5">
-              <CheckCircle2 className="w-3 h-3 text-primary shrink-0 mt-0.5" />
-              <span className="line-clamp-1">{f}</span>
-            </li>
-          ))}
-        </ul>
+        {meta.features?.length ? (
+          <ul className="text-[10.5px] text-muted-foreground space-y-0.5">
+            {meta.features.slice(0, 2).map((f) => (
+              <li key={f} className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3 h-3 text-primary shrink-0 mt-0.5" />
+                <span className="line-clamp-1">{f}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className="flex items-baseline gap-2 pt-1">
           <span className="font-display font-bold text-2xl text-primary tabular-nums">
