@@ -41,7 +41,8 @@ const LOGO_OVERRIDES: Record<string, string> = {
   'firecrawl.dev': 'https://avatars.githubusercontent.com/u/135057108?s=400',
   'questionpro.com': 'https://www.questionpro.com/images/logo/questionpro-logo.svg',
   'merlin.foyer.work': merlinLogo,
-  'magicpatterns.com': 'https://www.magicpatterns.com/magicpatterns_logo_light.svg',
+  'magicpatterns.com': 'https://www.magicpatterns.com/magicpatterns_logo_dark.svg',
+  'leads.cm': 'https://leads.cm/favicon.svg',
   'gumloop.com': 'https://www.gumloop.com/images/gumloop_icon.svg',
   'chatprd.ai': 'https://www.chatprd.ai/_next/static/media/logo-text-black.8e455f3e.svg',
   'vibeflow.ai': 'https://vibeflow.ai/favicon.svg',
@@ -272,7 +273,7 @@ export const TOOL_META: ToolMeta[] = [
   {
     match: 'leads',
     category: 'Sales',
-    domain: 'leads.com',
+    domain: 'leads.cm',
     color: '#0EA5E9',
     tagline: 'B2B lead database & email finder',
     description:

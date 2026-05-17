@@ -124,7 +124,7 @@ function BrandLogo({ t }: { t: AiTool }) {
       {exhausted ? (
         <span className={`font-display font-bold text-6xl drop-shadow-lg ${onDark ? 'text-white' : 'text-black'}`}>{t.symbol}</span>
       ) : (
-        <div className="relative w-3/4 h-3/4 rounded-2xl flex items-center justify-center bg-background/95 backdrop-blur-sm border border-border/40">
+        <div className="relative w-3/4 h-3/4 rounded-2xl flex items-center justify-center bg-white/95 backdrop-blur-sm border border-white/40 shadow-sm">
           <img
             key={sources[idx]}
             src={sources[idx]}
