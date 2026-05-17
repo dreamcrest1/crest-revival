@@ -181,7 +181,7 @@ const AiToolsShowcase = () => {
               const delay = `${i * 60}ms`;
               return (
                 <Link
-                  key={t?.id || `ph-${i}`}
+                  key={`slot-${i}-${t?.id ?? 'ph'}`}
                   to={href}
                   className="group relative aspect-square rounded-2xl bg-card/70 backdrop-blur-md border border-border/60 overflow-hidden hover:border-primary/60 transition-all duration-500 hover:shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.5)] animate-fade-in will-change-transform"
                   style={{
