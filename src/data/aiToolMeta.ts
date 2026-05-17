@@ -596,7 +596,7 @@ export const TOOL_META: ToolMeta[] = [
   {
     match: 'vibeflow',
     category: 'AI Coding',
-    domain: 'vibeflow.dev',
+    domain: 'vibeflow.ai',
     color: '#A855F7',
     tagline: 'Vibe coding AI development platform',
     description:
