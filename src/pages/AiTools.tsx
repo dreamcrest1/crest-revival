@@ -220,7 +220,7 @@ const AiTools = () => {
                 </button>
               ))}
               <button
-                onClick={() => qc.invalidateQueries({ queryKey: ['ai-tools-sheet'] })}
+                onClick={() => qc.invalidateQueries({ queryKey: ['ai-tools-sheet-v2'] })}
                 disabled={isFetching}
                 title={`Last synced: ${lastSync}`}
                 className="inline-flex items-center gap-1.5 bg-card/60 border border-border hover:border-primary/40 text-foreground text-xs font-medium px-3 py-2.5 rounded-xl transition-all disabled:opacity-50"
@@ -239,7 +239,7 @@ const AiTools = () => {
           ) : error ? (
             <div className="text-center py-20 text-muted-foreground">
               Could not load products.
-              <button onClick={() => qc.invalidateQueries({ queryKey: ['ai-tools-sheet'] })} className="text-primary underline ml-1">Retry</button>
+              <button onClick={() => qc.invalidateQueries({ queryKey: ['ai-tools-sheet-v2'] })} className="text-primary underline ml-1">Retry</button>
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground">No tools match "{q}".</div>
