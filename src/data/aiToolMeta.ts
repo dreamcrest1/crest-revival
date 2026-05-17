@@ -2,6 +2,7 @@
 // Each entry provides a clean brand logo (via Clearbit), a brand color used
 // as a tile background, a short marketing tagline, and longer product info
 // that we surface in the card and the WhatsApp pre-fill.
+import merlinLogo from '@/assets/merlin-logo.svg';
 
 export type ToolMeta = {
   /** keyword matched (case-insensitive substring) against the sheet "Tool Name" */
@@ -34,7 +35,7 @@ const LOGO_OVERRIDES: Record<string, string> = {
   'tilda.cc': 'https://cdn.simpleicons.org/tildapublishing/FFB81C',
   'firecrawl.dev': 'https://avatars.githubusercontent.com/u/135057108?s=400',
   'questionpro.com': 'https://www.questionpro.com/images/logo/questionpro-logo.svg',
-  'merlin.foyer.work': 'https://app.getmerlin.in/favicon.ico',
+  'merlin.foyer.work': merlinLogo,
   'magicpatterns.com': 'https://www.magicpatterns.com/magicpatterns_logo_light.svg',
   'gumloop.com': 'https://www.gumloop.com/images/gumloop_icon.svg',
   'chatprd.ai': 'https://www.chatprd.ai/_next/static/media/logo-text-black.8e455f3e.svg',
