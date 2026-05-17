@@ -231,20 +231,22 @@ const AiTools = () => {
 
   const categories = useMemo(() => {
     const set = new Set<string>();
-    tools.forEach((t) => {
-      const c = (t.meta ?? metaForTool(t.name)).category;
-      if (c) set.add(c);
-    });
-    return ['All', ...Array.from(set).sort()];
+    tools.forEach((t) => set.add(bucketFor(t)));
+    const ORDER = ['AI & Chat', 'Design & Creative', 'Development', 'Productivity', 'Business & Growth', 'Learning', 'Other'];
+    const sorted = Array.from(set).sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b));
+    return ['All', ...sorted];
   }, [tools]);
 
   const filtered = useMemo(() => {
     let list = shuffled.filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
     if (category !== 'All') {
-      list = list.filter((t) => (t.meta ?? metaForTool(t.name)).category === category);
+      list = list.filter((t) => bucketFor(t) === category);
     }
-    if (sort === 'price-asc') list = [...list].sort((a, b) => a.price - b.price);
-    if (sort === 'price-desc') list = [...list].sort((a, b) => b.price - a.price);
+    // Treat "Contact for pricing" (price === 0) as the highest value so it sinks
+    // to the bottom in both ascending and descending price sorts.
+    const priceKey = (p: number) => (p > 0 ? p : Number.POSITIVE_INFINITY);
+    if (sort === 'price-asc') list = [...list].sort((a, b) => priceKey(a.price) - priceKey(b.price));
+    if (sort === 'price-desc') list = [...list].sort((a, b) => priceKey(b.price) - priceKey(a.price));
     return list;
   }, [shuffled, q, sort, category]);
 
