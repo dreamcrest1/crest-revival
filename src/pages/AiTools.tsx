@@ -12,6 +12,64 @@ import { metaForTool } from '@/data/aiToolMeta';
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
 
+// Broad category buckets — collapses the many fine-grained meta.category values
+// into a small set of pills so the top filter row isn't cluttered.
+const CATEGORY_BUCKETS: Record<string, string> = {
+  'LLM Chat': 'AI & Chat',
+  'AI Assistant': 'AI & Chat',
+  'AI Search': 'AI & Chat',
+  'AI Agent': 'AI & Chat',
+  'AI Tools': 'AI & Chat',
+  'Voice AI': 'AI & Chat',
+  'Writing': 'AI & Chat',
+  'Research': 'AI & Chat',
+
+  'Design': 'Design & Creative',
+  'AI Design': 'Design & Creative',
+  'Creative': 'Design & Creative',
+  'Design Inspo': 'Design & Creative',
+  'Whiteboard': 'Design & Creative',
+  'Presentations': 'Design & Creative',
+  'Video': 'Design & Creative',
+  'Video Editing': 'Design & Creative',
+
+  'AI Coding': 'Development',
+  'Dev Tools': 'Development',
+  'Backend': 'Development',
+  'Database': 'Development',
+  'Hosting': 'Development',
+  'Internal Tools': 'Development',
+  'Web Builder': 'Development',
+  'No-Code': 'Development',
+  'Monitoring': 'Development',
+  'Security': 'Development',
+  'Web Scraping': 'Development',
+
+  'Productivity': 'Productivity',
+  'Office Suite': 'Productivity',
+  'Project Mgmt': 'Productivity',
+  'Knowledge Base': 'Productivity',
+  'Meetings': 'Productivity',
+  'Subscription': 'Productivity',
+  'Automation': 'Productivity',
+
+  'Sales': 'Business & Growth',
+  'Marketing': 'Business & Growth',
+  'Career': 'Business & Growth',
+  'Networking': 'Business & Growth',
+  'Support': 'Business & Growth',
+  'Product': 'Business & Growth',
+  'Analytics': 'Business & Growth',
+  'Data': 'Business & Growth',
+
+  'Learning': 'Learning',
+};
+
+const bucketFor = (t: AiTool) => {
+  const c = (t.meta ?? metaForTool(t.name)).category;
+  return CATEGORY_BUCKETS[c] ?? 'Other';
+};
+
 const waLink = (t: AiTool) => {
   const meta = t.meta ?? metaForTool(t.name);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
