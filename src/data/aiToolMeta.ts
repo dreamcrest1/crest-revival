@@ -802,7 +802,10 @@ function normalise(s: string): string {
 export function metaForTool(name: string): ToolMeta {
   const n = normalise(name);
   const hit = TOOL_META.find((m) => n.includes(normalise(m.match)));
-  if (hit) return hit;
+  if (hit) {
+    const logo = hit.logo ?? LOGO_OVERRIDES[hit.domain];
+    return logo ? { ...hit, logo } : hit;
+  }
   // Generic fallback
   return {
     match: '',
