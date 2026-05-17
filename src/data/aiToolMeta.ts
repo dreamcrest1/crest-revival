@@ -30,15 +30,15 @@ const LOGO_OVERRIDES: Record<string, string> = {
   'grammarly.com': 'https://cdn.simpleicons.org/grammarly/15C39A',
   'intercom.com': 'https://cdn.simpleicons.org/intercom/1F8DED',
   'mongodb.com': 'https://cdn.simpleicons.org/mongodb/47A248',
-  'roboform.com': 'https://cdn.simpleicons.org/roboform/0079FF',
+  'roboform.com': 'https://cdn.roboform.com/images/logos/rf-logo.svg',
   'tilda.cc': 'https://cdn.simpleicons.org/tildapublishing/FFB81C',
   'firecrawl.dev': 'https://avatars.githubusercontent.com/u/135057108?s=400',
-  'questionpro.com': 'https://www.questionpro.com/images/QuestionPro-logo.svg',
-  'merlin.foyer.work': 'https://www.getmerlin.in/vector-images/merlin-logo-foreground.svg',
-  'magicpatterns.com': 'https://www.magicpatterns.com/favicon-256.png',
-  'gumloop.com': 'https://avatars.githubusercontent.com/u/156625144?s=400',
-  'chatprd.ai': 'https://chatprd.ai/icon-512.png',
-  'vibeflow.dev': 'https://vibeflow.dev/logo.png',
+  'questionpro.com': 'https://www.questionpro.com/images/logo/questionpro-logo.svg',
+  'merlin.foyer.work': 'https://app.getmerlin.in/favicon.ico',
+  'magicpatterns.com': 'https://www.magicpatterns.com/magicpatterns_logo_light.svg',
+  'gumloop.com': 'https://www.gumloop.com/images/gumloop_icon.svg',
+  'chatprd.ai': 'https://www.chatprd.ai/_next/static/media/logo-text-black.8e455f3e.svg',
+  'vibeflow.ai': 'https://vibeflow.ai/favicon.svg',
 };
 
 // Order matters — more specific names first (e.g. "Linkedin Sales Navigator" before "Linkedin")
