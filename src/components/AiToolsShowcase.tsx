@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, Zap } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { metaForTool, type ToolMeta } from '@/data/aiToolMeta';
 import { popularityFor } from '@/data/aiToolPopularity';
@@ -40,7 +40,7 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
       loading="lazy"
       decoding="async"
       referrerPolicy="no-referrer"
-      className="max-w-[78%] max-h-[78%] object-contain"
+      className="max-w-[92%] max-h-[92%] object-contain"
       onError={() => setIdx((i) => Math.min(i + 1, sources.length - 1))}
     />
   );
@@ -55,26 +55,68 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
 const AiToolsShowcase = () => {
   const { data: tools = [] } = useAiTools();
 
+  // Top 8 most-searched tools, deduped by name (the sheet has duplicate rows
+  // for the same product across different validities — we only want one tile).
   const featured = useMemo(() => {
-    return [...tools]
-      .sort((a, b) => popularityFor(b.name) - popularityFor(a.name))
-      .slice(0, 8);
+    const seen = new Set<string>();
+    const unique: AiTool[] = [];
+    for (const t of [...tools].sort(
+      (a, b) => popularityFor(b.name) - popularityFor(a.name),
+    )) {
+      const key = t.name.trim().toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      unique.push(t);
+      if (unique.length === 8) break;
+    }
+    return unique;
   }, [tools]);
 
-  // Mouse-tracked tilt
+  // ── Realtime 3-D parallax ──
+  // Mouse / touch updates a *target* tilt; a requestAnimationFrame loop lerps
+  // the *current* tilt toward it each frame and writes it straight to the
+  // DOM (transform style). Skipping React state on the hot path eliminates
+  // re-render jitter and keeps the motion buttery at 60fps.
   const stageRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 14, y: -6 });
+  const gridRef = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: 14, y: -6 });
+  const current = useRef({ x: 14, y: -6 });
+  const rafId = useRef<number | null>(null);
 
-  const handleMove = (e: React.MouseEvent) => {
+  useEffect(() => {
+    const tick = () => {
+      // Critically-damped lerp — 0.12 = quick but smooth catch-up
+      current.current.x += (target.current.x - current.current.x) * 0.12;
+      current.current.y += (target.current.y - current.current.y) * 0.12;
+      if (gridRef.current) {
+        gridRef.current.style.transform = `rotateX(${current.current.x.toFixed(2)}deg) rotateY(${current.current.y.toFixed(2)}deg)`;
+      }
+      rafId.current = requestAnimationFrame(tick);
+    };
+    rafId.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafId.current != null) cancelAnimationFrame(rafId.current);
+    };
+  }, []);
+
+  const updateFromPoint = (clientX: number, clientY: number) => {
     const el = stageRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5; // -0.5..0.5
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    // Tilt range: ±18° on Y (left/right) and rest at ~10-22° on X (front/back)
-    setTilt({ x: 16 - py * 16, y: -px * 22 });
+    const px = (clientX - r.left) / r.width - 0.5; // -0.5..0.5
+    const py = (clientY - r.top) / r.height - 0.5;
+    target.current = { x: 16 - py * 18, y: -px * 24 };
   };
-  const handleLeave = () => setTilt({ x: 14, y: -6 });
+
+  const handleMove = (e: React.MouseEvent) => updateFromPoint(e.clientX, e.clientY);
+  const handleTouch = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    if (!t) return;
+    updateFromPoint(t.clientX, t.clientY);
+  };
+  const handleLeave = () => {
+    target.current = { x: 14, y: -6 };
+  };
 
   return (
     <section className="relative py-20 md:py-28 overflow-hidden">
@@ -101,20 +143,21 @@ const AiToolsShowcase = () => {
           </p>
         </div>
 
-        {/* 3-D perspective tile grid — mouse-tracked tilt */}
+        {/* 3-D perspective tile grid — realtime mouse + touch parallax */}
         <div
           ref={stageRef}
           onMouseMove={handleMove}
           onMouseLeave={handleLeave}
-          className="relative mb-12 mx-auto max-w-5xl"
+          onTouchStart={handleTouch}
+          onTouchMove={handleTouch}
+          onTouchEnd={handleLeave}
+          className="relative mb-12 mx-auto max-w-5xl touch-none select-none"
           style={{ perspective: '1400px' }}
         >
           <div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 transition-transform duration-300 ease-out will-change-transform"
-            style={{
-              transformStyle: 'preserve-3d',
-              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-            }}
+            ref={gridRef}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4 will-change-transform"
+            style={{ transformStyle: 'preserve-3d' }}
           >
             {(featured.length > 0
               ? featured
@@ -151,9 +194,9 @@ const AiToolsShowcase = () => {
                     }}
                   />
                   {/* Logo */}
-                  <div className="absolute inset-0 flex items-center justify-center p-5">
+                  <div className="absolute inset-0 flex items-center justify-center p-3">
                     {t && meta ? (
-                      <div className="w-full h-full rounded-xl bg-white/95 backdrop-blur flex items-center justify-center p-3 shadow-lg">
+                      <div className="w-full h-full rounded-xl bg-white/95 backdrop-blur flex items-center justify-center p-1.5 shadow-lg">
                         <ShowcaseLogo tool={t} meta={meta} />
                       </div>
                     ) : (
