@@ -614,9 +614,6 @@ export const TOOL_META: ToolMeta[] = [
   },
   {
     match: 'slite',
-  },
-  {
-    match: 'sllite',
     category: 'Knowledge Base',
     domain: 'slite.com',
     color: '#3B5BFE',
@@ -624,6 +621,16 @@ export const TOOL_META: ToolMeta[] = [
     description:
       'Slite — simple, fast knowledge base with Ask (AI Q&A across your docs), templates, doc verification and easy team collaboration.',
     features: ['AI Q&A (Ask)', 'Doc verification', 'Templates', 'Fast & minimal'],
+  },
+  {
+    match: 'sllite',
+    category: 'Knowledge Base',
+    domain: 'slite.com',
+    color: '#3B5BFE',
+    tagline: 'AI-powered company wiki (Premium)',
+    description:
+      'Slite Premium — advanced controls, analytics, integrations and priority support on top of the Standard knowledge base features.',
+    features: ['Everything in Standard', 'Advanced analytics', 'Priority support', 'Premium integrations'],
   },
   {
     match: 'otter',
