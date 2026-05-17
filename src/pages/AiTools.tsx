@@ -12,10 +12,12 @@ import { metaForTool } from '@/data/aiToolMeta';
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
 
-const waLink = (t: AiTool) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hi! I'm interested in *${t.name}* (${t.validity}) at ₹${t.price}.\n\n${t.meta.tagline}\n\nPlease share details on how to purchase.`,
+const waLink = (t: AiTool) => {
+  const meta = t.meta ?? metaForTool(t.name);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `Hi! I'm interested in *${t.name}* (${t.validity}) at ₹${t.price}.\n\n${meta.tagline}\n\nPlease share details on how to purchase.`,
   )}`;
+};
 
 // Convert brand hex into a soft gradient background pair
 function hexToRgb(hex: string) {
