@@ -106,6 +106,7 @@ const AiToolsShowcase = () => {
   const stageRef = useRef<HTMLDivElement>(null);
   const rot = useRef({ x: -15, y: 0 });           // current rotation (deg)
   const dragging = useRef(false);
+  const dragDist = useRef(0);                     // px moved during current drag
   const last = useRef({ x: 0, y: 0 });
   const autoSpin = useRef(0.18);                  // deg per frame on Y axis
   const rafId = useRef<number | null>(null);
@@ -114,7 +115,6 @@ const AiToolsShowcase = () => {
     const tick = () => {
       if (!dragging.current) {
         rot.current.y += autoSpin.current;
-        // Slow easing of X back toward -15 when not dragging
         rot.current.x += (-15 - rot.current.x) * 0.04;
       }
       if (sphereRef.current) {
@@ -130,12 +130,14 @@ const AiToolsShowcase = () => {
 
   const onDown = (clientX: number, clientY: number) => {
     dragging.current = true;
+    dragDist.current = 0;
     last.current = { x: clientX, y: clientY };
   };
   const onMove = (clientX: number, clientY: number) => {
     if (!dragging.current) return;
     const dx = clientX - last.current.x;
     const dy = clientY - last.current.y;
+    dragDist.current += Math.abs(dx) + Math.abs(dy);
     rot.current.y += dx * 0.35;
     rot.current.x = Math.max(-70, Math.min(70, rot.current.x - dy * 0.35));
     last.current = { x: clientX, y: clientY };
