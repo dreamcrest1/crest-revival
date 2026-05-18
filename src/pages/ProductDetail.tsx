@@ -9,6 +9,8 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
+import ProductReviews from '@/components/ProductReviews';
+import { useRatingStats } from '@/hooks/useProductReviews';
 
 const PLACEHOLDER = '/placeholder.svg';
 
