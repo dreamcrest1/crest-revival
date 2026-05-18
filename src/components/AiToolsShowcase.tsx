@@ -345,15 +345,8 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
                       : 'border-white/10 group-hover:border-primary/60 group-hover:shadow-[0_30px_80px_-10px_hsl(var(--primary)/0.7)]'
                   }`}
                 >
-                  <div className="relative aspect-square bg-white/95 overflow-hidden">
-                    <img
-                      src={proxyImage(tool.image, 400)}
-                      alt={tool.name}
-                      loading="lazy"
-                      draggable={false}
-                      className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
-                    />
+                  <div className="relative aspect-square overflow-hidden">
+                    <BrandLogo t={tool} compact />
                     <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[10px] font-bold tracking-wide">
                       {tool.symbol}
                     </div>
