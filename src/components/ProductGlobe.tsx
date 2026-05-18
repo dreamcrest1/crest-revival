@@ -124,9 +124,6 @@ const ProductGlobe = () => {
         <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-foreground">
           Explore Our <span className="text-primary">Universe of Tools</span>
         </h2>
-        <p className="text-muted-foreground text-sm sm:text-base mt-2">
-          Drag to spin · Tap a logo to open
-        </p>
       </div>
 
       <div
