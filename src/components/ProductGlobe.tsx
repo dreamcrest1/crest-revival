@@ -50,7 +50,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       }),
     );
 
-    return out.slice(0, isMobile ? 24 : 40);
+    return out.slice(0, isMobile ? 30 : 60);
   }, [aiTools, isMobile]);
 }
 
