@@ -88,7 +88,7 @@ function LogoTile({
   onSelect: (href: string) => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const texture = useSafeTexture(item.image);
+  const { tex: texture, failed } = useSafeTexture(item.image);
   const groupRef = useRef<THREE.Group>(null);
   const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
