@@ -107,7 +107,7 @@ function LogoTile({
     if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
   });
 
-  if (!texture) return null;
+  if (failed || !texture) return null;
   const scale = hovered ? size * 1.2 : size;
 
   return (
