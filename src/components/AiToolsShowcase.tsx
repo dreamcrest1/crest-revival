@@ -172,15 +172,8 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
               transition={{ type: 'spring', stiffness: 220, damping: 28 }}
             >
               <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${abs === 0 ? 'border-primary shadow-[0_30px_80px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
-                <div className="relative aspect-square bg-white/95 overflow-hidden">
-                  <img
-                    src={proxyImage(tool.image, 400)}
-                    alt={tool.name}
-                    loading="lazy"
-                    draggable={false}
-                    className="w-full h-full object-contain p-3"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
-                  />
+                <div className="relative aspect-square overflow-hidden">
+                  <BrandLogo t={tool} compact />
                   <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[9px] font-bold tracking-wide">
                     {tool.symbol}
                   </div>
