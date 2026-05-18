@@ -107,33 +107,72 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
   </motion.div>
 );
 
-/* ---------------- MOBILE: Swipe-only curved coverflow ---------------- */
+/* ---------------- MOBILE: Continuous-drag curved coverflow ---------------- */
+const STEP = 70; // px per card position
 const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
-  const [active, setActive] = useState(0);
+  const [pos, setPos] = useState(0); // fractional index
   const [selected, setSelected] = useState<AiTool | null>(null);
   const startX = useRef<number | null>(null);
-  const dx = useRef(0);
+  const startPos = useRef(0);
   const moved = useRef(0);
+  const lastDx = useRef(0);
+  const lastT = useRef(0);
+  const velocity = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
-  const go = (dir: number) => setActive((a) => (a + dir + items.length) % items.length);
+  const len = items.length;
+  const wrap = (n: number) => ((n % len) + len) % len;
+  const active = wrap(Math.round(pos));
+
+  const cancelInertia = () => {
+    if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = null;
+  };
+
+  const settle = (target: number) => {
+    cancelInertia();
+    const start = performance.now();
+    const from = pos;
+    const dur = 280;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setPos(from + (target - from) * eased);
+      if (p < 1) rafRef.current = requestAnimationFrame(tick);
+      else rafRef.current = null;
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  };
 
   const onTouchStart = (e: React.TouchEvent) => {
+    cancelInertia();
     startX.current = e.touches[0].clientX;
-    dx.current = 0;
+    startPos.current = pos;
     moved.current = 0;
+    lastDx.current = 0;
+    lastT.current = performance.now();
+    velocity.current = 0;
   };
   const onTouchMove = (e: React.TouchEvent) => {
     if (startX.current == null) return;
-    dx.current = e.touches[0].clientX - startX.current;
-    moved.current = Math.abs(dx.current);
+    const dx = e.touches[0].clientX - startX.current;
+    const now = performance.now();
+    const dt = Math.max(1, now - lastT.current);
+    velocity.current = (dx - lastDx.current) / dt; // px/ms
+    lastDx.current = dx;
+    lastT.current = now;
+    moved.current = Math.abs(dx);
+    setPos(startPos.current - dx / STEP);
   };
   const onTouchEnd = () => {
-    if (Math.abs(dx.current) > 35) go(dx.current < 0 ? 1 : -1);
+    if (startX.current == null) return;
     startX.current = null;
-    dx.current = 0;
+    // Project with momentum, then snap to nearest card.
+    const projected = pos - (velocity.current * 180) / STEP;
+    settle(Math.round(projected));
   };
 
-  if (!items.length) return null;
+  if (!len) return null;
 
   return (
     <>
@@ -145,16 +184,18 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
         onTouchEnd={onTouchEnd}
       >
         {items.map((tool, i) => {
-          let offset = i - active;
-          if (offset > items.length / 2) offset -= items.length;
-          if (offset < -items.length / 2) offset += items.length;
+          // signed fractional offset from pos, wrapped
+          let offset = i - pos;
+          if (offset > len / 2) offset -= len;
+          if (offset < -len / 2) offset += len;
           const abs = Math.abs(offset);
-          if (abs > 3) return null;
-          const x = offset * 70;
-          const rotY = offset * -28;
-          const scale = abs === 0 ? 1 : abs === 1 ? 0.78 : abs === 2 ? 0.6 : 0.45;
+          if (abs > 3.2) return null;
+          const x = offset * STEP;
+          const rotY = Math.max(-90, Math.min(90, offset * -28));
+          const scale = Math.max(0.35, 1 - abs * 0.22);
           const z = -abs * 90;
-          const opacity = abs === 0 ? 1 : abs === 1 ? 0.7 : abs === 2 ? 0.4 : 0.18;
+          const opacity = Math.max(0.1, 1 - abs * 0.32);
+          const focused = abs < 0.5;
 
           return (
             <motion.button
@@ -162,14 +203,22 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
               type="button"
               onClick={() => {
                 if (moved.current > 8) return;
-                abs === 0 ? setSelected(tool) : setActive(i);
+                if (focused) setSelected(tool);
+                else settle(i);
               }}
               className="absolute top-1/2 left-1/2 focus:outline-none"
-              style={{ width: 130, height: 190, marginLeft: -65, marginTop: -95, transformStyle: 'preserve-3d' }}
-              animate={{ x, scale, rotateY: rotY, z, opacity, zIndex: 10 - abs }}
-              transition={{ type: 'spring', stiffness: 220, damping: 28 }}
+              style={{
+                width: 130,
+                height: 190,
+                marginLeft: -65,
+                marginTop: -95,
+                transformStyle: 'preserve-3d',
+                transform: `translate3d(${x}px,0,${z}px) rotateY(${rotY}deg) scale(${scale})`,
+                opacity,
+                zIndex: 10 - Math.round(abs),
+              }}
             >
-              <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${abs === 0 ? 'border-primary shadow-[0_25px_60px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
+              <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${focused ? 'border-primary shadow-[0_25px_60px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
                 <div className="relative aspect-square overflow-hidden">
                   <BrandLogo t={tool} compact />
                   <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold tracking-wide">
@@ -195,7 +244,7 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
         {items.map((_, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => settle(i)}
             className={`h-1.5 rounded-full transition-all ${i === active ? 'w-5 bg-primary' : 'w-1.5 bg-muted-foreground/40'}`}
             aria-label={`Go to ${i + 1}`}
           />
