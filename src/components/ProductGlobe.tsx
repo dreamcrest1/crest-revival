@@ -13,44 +13,44 @@ export type GlobeItem = {
   href: string;
 };
 
-// Curated OTT brand logos via simpleicons CDN (crisp SVG, CORS-friendly)
+// Curated OTT brand logos via simpleicons CDN (verified slugs only)
 const OTT_LOGOS: GlobeItem[] = [
   { name: 'Netflix', image: 'https://cdn.simpleicons.org/netflix/E50914', href: '/all-tools' },
   { name: 'Prime Video', image: 'https://cdn.simpleicons.org/primevideo/00A8E1', href: '/all-tools' },
   { name: 'Hotstar', image: 'https://cdn.simpleicons.org/hotstar/1F80E0', href: '/all-tools' },
-  { name: 'Zee5', image: 'https://cdn.simpleicons.org/zee5/8230FF', href: '/all-tools' },
-  { name: 'SonyLIV', image: 'https://cdn.simpleicons.org/sonyliv/E50914', href: '/all-tools' },
 ];
 
 function useGlobeItems(isMobile: boolean): GlobeItem[] {
   const { data: aiTools } = useAiTools();
 
   return useMemo(() => {
-    const seen = new Set<string>();
+    const seenName = new Set<string>();
+    const seenImg = new Set<string>();
     const out: GlobeItem[] = [];
     const push = (it: GlobeItem) => {
-      const key = it.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (!key || seen.has(key) || !it.image) return;
-      seen.add(key);
+      const nameKey = it.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const imgKey = it.image.toLowerCase().trim();
+      if (!nameKey || !imgKey) return;
+      if (seenName.has(nameKey) || seenImg.has(imgKey)) return;
+      seenName.add(nameKey);
+      seenImg.add(imgKey);
       out.push(it);
     };
 
-    // OTT logos first (always crisp via Clearbit)
     OTT_LOGOS.forEach(push);
 
-    // Then AI tools — only those that actually have a logo image
     const tools = [...(aiTools ?? [])]
       .filter((t) => t.image && t.image.trim().length > 0)
       .sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
     tools.forEach((t) =>
       push({
-        name: t.name,
+        name: t.name.trim(),
         image: proxyImage(t.image, 256),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );
 
-    return out.slice(0, isMobile ? 28 : 45);
+    return out.slice(0, isMobile ? 18 : 26);
   }, [aiTools, isMobile]);
 }
 
