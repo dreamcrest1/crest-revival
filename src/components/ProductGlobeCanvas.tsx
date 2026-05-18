@@ -256,11 +256,34 @@ function RotatingGroup({
   paused: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
-  const positions = useMemo(() => fibonacciSphere(items.length, radius), [items.length, radius]);
+
+  // Generate per-tile orbit params: random axis, radius slightly outside the globe,
+  // varied phase and speed (some clockwise, some counter-clockwise).
+  const orbits = useMemo<OrbitParams[]>(() => {
+    return items.map(() => {
+      const axis = new THREE.Vector3(
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+      ).normalize();
+      // Build an orthonormal basis (u, v) perpendicular to axis
+      const helper =
+        Math.abs(axis.y) < 0.95
+          ? new THREE.Vector3(0, 1, 0)
+          : new THREE.Vector3(1, 0, 0);
+      const u = new THREE.Vector3().crossVectors(axis, helper).normalize();
+      const v = new THREE.Vector3().crossVectors(axis, u).normalize();
+      const r = radius * (1.15 + Math.random() * 0.45);
+      const phase = Math.random() * Math.PI * 2;
+      const dir = Math.random() < 0.5 ? -1 : 1;
+      const speed = dir * (0.18 + Math.random() * 0.32);
+      return { u, v, radius: r, phase, speed };
+    });
+  }, [items, radius]);
+
   const startPositions = useMemo(
     () =>
-      positions.map((p) => {
-        // Scatter tiles randomly within a much larger sphere; biased outward
+      orbits.map(() => {
         const dir = new THREE.Vector3(
           Math.random() * 2 - 1,
           Math.random() * 2 - 1,
@@ -269,17 +292,15 @@ function RotatingGroup({
         const dist = radius * (3 + Math.random() * 2);
         return dir.multiplyScalar(dist);
       }),
-    [positions, radius],
+    [orbits, radius],
   );
   const formStartRef = useRef<number | null>(null);
   const [formStart, setFormStart] = useState(0);
-  useFrame(({ clock }, delta) => {
+  useFrame(({ clock }) => {
     if (formStartRef.current === null) {
       formStartRef.current = clock.getElapsedTime();
       setFormStart(formStartRef.current);
     }
-    if (!group.current || paused) return;
-    group.current.rotation.y += delta * 0.2;
   });
 
   return (
@@ -288,13 +309,14 @@ function RotatingGroup({
       {items.map((it, i) => (
         <LogoTile
           key={it.name + i}
-          position={positions[i]}
+          orbit={orbits[i]}
           startPosition={startPositions[i]}
           formStart={formStart}
           formDuration={1.8}
           item={it}
           size={tileSize}
           onSelect={onSelect}
+          paused={paused}
         />
       ))}
     </group>
