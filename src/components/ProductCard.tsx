@@ -65,7 +65,12 @@ const ProductCard = ({ product }: { product: Product }) => {
           <h3 className="font-display font-semibold text-foreground text-sm leading-tight mb-1 line-clamp-2 min-h-[36px]">
             {product.name}
           </h3>
-          <p className="text-[11px] text-muted-foreground/60 mb-2 font-medium">{product.category}</p>
+          <div className="flex items-center justify-between mb-2 gap-2">
+            <p className="text-[11px] text-muted-foreground/60 font-medium truncate">{product.category}</p>
+            {stat && stat.review_count > 0 && (
+              <StarBadge rating={Number(stat.avg_rating)} count={stat.review_count} />
+            )}
+          </div>
 
           <div className="flex items-baseline gap-2 mb-3">
             <span className="font-display font-bold text-lg text-primary">{product.price}</span>
