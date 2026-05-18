@@ -88,7 +88,9 @@ function LogoTile({
   onSelect: (href: string) => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const { tex: texture, failed } = useSafeTexture(item.image);
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const activeImage = item.images[Math.min(sourceIndex, item.images.length - 1)] ?? '';
+  const { tex: texture, failed } = useSafeTexture(activeImage);
   const groupRef = useRef<THREE.Group>(null);
   const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
@@ -106,6 +108,14 @@ function LogoTile({
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
     if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
   });
+
+  useEffect(() => {
+    setSourceIndex(0);
+  }, [item.name, item.images]);
+
+  useEffect(() => {
+    if (failed && sourceIndex < item.images.length - 1) setSourceIndex((i) => i + 1);
+  }, [failed, sourceIndex, item.images.length]);
 
   if (failed || !texture) return null;
   const scale = hovered ? size * 1.2 : size;
