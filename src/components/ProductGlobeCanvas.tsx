@@ -319,6 +319,15 @@ const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
       dpr={isMobile ? [1, 1] : [1, 1.5]}
       camera={{ position: [0, 0, isMobile ? 8 : 9], fov: 42 }}
       gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
+      onCreated={({ gl }) => {
+        // preventDefault lets the browser fire 'webglcontextrestored'
+        // so r3f can rebuild after GPU pressure or tab switches.
+        gl.domElement.addEventListener(
+          'webglcontextlost',
+          (e) => e.preventDefault(),
+          false,
+        );
+      }}
       onPointerDown={handleStart}
       onPointerUp={handleEnd}
       onPointerLeave={handleEnd}
