@@ -52,7 +52,7 @@ export const trackEvent = async (
       event_type: eventType,
       page_path: window.location.pathname,
       visitor_id: getVisitorId() ?? undefined,
-      metadata,
+      metadata: metadata as Record<string, string>,
     }]);
   } catch { /* never break */ }
 };
