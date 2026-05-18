@@ -2,17 +2,7 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { useAiTools } from '@/hooks/useAiTools';
-import { popularityFor } from '@/data/aiToolPopularity';
-import { metaForTool } from '@/data/aiToolMeta';
-import { slugifyAiTool } from '@/lib/aiToolSeo';
-
-/** Use ONLY the user-uploaded local /logos/*.png — no external sources. */
-function logoSourcesForTool(name: string, _image: string): string[] {
-  const meta = metaForTool(name);
-  if (meta.logo && meta.logo.startsWith('/logos/')) return [meta.logo];
-  return [];
-}
+import { GLOBE_LOGOS } from '@/data/userLogos';
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
 
@@ -22,30 +12,18 @@ export type GlobeItem = {
   href: string;
 };
 
-function useGlobeItems(isMobile: boolean): GlobeItem[] {
-  const { data: aiTools } = useAiTools();
-
-  return useMemo(() => {
-    const seenName = new Set<string>();
-    const out: GlobeItem[] = [];
-
-    const tools = [...(aiTools ?? [])].sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
-    for (const t of tools) {
-      const nameKey = t.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (!nameKey || seenName.has(nameKey)) continue;
-      const images = logoSourcesForTool(t.name, t.image);
-      if (images.length === 0) continue;
-      seenName.add(nameKey);
-      out.push({
-        name: t.name.trim(),
-        images,
-        href: `/ai-tool/${slugifyAiTool(t.name)}`,
-      });
-    }
-
-    return out.slice(0, isMobile ? 48 : 96);
-  }, [aiTools, isMobile]);
+function useGlobeItems(_isMobile: boolean): GlobeItem[] {
+  return useMemo(
+    () =>
+      GLOBE_LOGOS.map((l) => ({
+        name: l.name,
+        images: [`/logos/${l.file}`],
+        href: l.href,
+      })),
+    [],
+  );
 }
+
 
 const ProductGlobe = () => {
   const navigate = useNavigate();
