@@ -211,12 +211,26 @@ const AiToolsShowcase = () => {
         {/* 3-D perspective tile grid — realtime mouse + touch parallax */}
         <div
           ref={stageRef}
+          onMouseEnter={() => setIsShufflePaused(true)}
           onMouseMove={handleMove}
-          onMouseLeave={handleLeave}
-          onTouchStart={handleTouch}
+          onMouseLeave={() => {
+            setIsShufflePaused(false);
+            handleLeave();
+          }}
+          onTouchStart={(e) => {
+            setIsShufflePaused(true);
+            handleTouch(e);
+          }}
           onTouchMove={handleTouch}
-          onTouchEnd={handleLeave}
-          className="relative mb-12 mx-auto max-w-5xl touch-none select-none"
+          onTouchEnd={() => {
+            setIsShufflePaused(false);
+            handleLeave();
+          }}
+          onTouchCancel={() => {
+            setIsShufflePaused(false);
+            handleLeave();
+          }}
+          className="relative mb-12 mx-auto max-w-5xl touch-pan-y select-none"
           style={{ perspective: '1400px' }}
         >
           <div
