@@ -60,22 +60,32 @@ function useSafeTexture(url: string): TexState {
   return state;
 }
 
+type OrbitParams = {
+  u: THREE.Vector3;
+  v: THREE.Vector3;
+  radius: number;
+  phase: number;
+  speed: number;
+};
+
 function LogoTile({
-  position,
+  orbit,
   startPosition,
   formStart,
   formDuration,
   item,
   size,
   onSelect,
+  paused,
 }: {
-  position: THREE.Vector3;
+  orbit: OrbitParams;
   startPosition: THREE.Vector3;
   formStart: number;
   formDuration: number;
   item: GlobeItem;
   size: number;
   onSelect: (href: string) => void;
+  paused: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const [sourceIndex, setSourceIndex] = useState(0);
@@ -87,8 +97,11 @@ function LogoTile({
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
+  const orbitPos = useMemo(() => new THREE.Vector3(), []);
   const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
   const appearStartRef = useRef<number | null>(null);
+  const pausedAngleRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
   const APPEAR_DURATION = 0.7;
 
   // easeOutCubic
@@ -97,7 +110,7 @@ function LogoTile({
   useFrame(({ clock }) => {
     const now = clock.getElapsedTime();
 
-    // Formation animation (globe-wide): position + base scale ease
+    // Formation animation
     const formP = THREE.MathUtils.clamp((now - formStart) / formDuration, 0, 1);
     const formEased = ease(formP);
 
@@ -111,10 +124,26 @@ function LogoTile({
         : THREE.MathUtils.clamp((now - appearStartRef.current) / APPEAR_DURATION, 0, 1);
     const appearEased = ease(appearP);
 
+    // Advance orbit angle (pauses on interaction)
+    const dt = Math.min(0.05, now - lastTimeRef.current || 0);
+    lastTimeRef.current = now;
+    if (!paused) pausedAngleRef.current += dt * orbit.speed;
+    const theta = orbit.phase + pausedAngleRef.current;
+
+    // Position on orbit circle
+    const c = Math.cos(theta) * orbit.radius;
+    const s = Math.sin(theta) * orbit.radius;
+    orbitPos.set(
+      orbit.u.x * c + orbit.v.x * s,
+      orbit.u.y * c + orbit.v.y * s,
+      orbit.u.z * c + orbit.v.z * s,
+    );
+
     if (billboardRef.current) {
-      currentPos.lerpVectors(startPosition, position, formEased);
+      currentPos.lerpVectors(startPosition, orbitPos, formEased);
       billboardRef.current.position.copy(currentPos);
     }
+
 
     if (!groupRef.current) return;
     // Scale combines formation + a gentle pop-in once texture arrives
