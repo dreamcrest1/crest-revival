@@ -24,9 +24,7 @@ function logoSourcesForTool(name: string, sheetImage?: string): string[] {
     sources.push(proxiedSquareLogo(`https://${meta.domain}/favicon.svg`, 256));
     sources.push(proxiedSquareLogo(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`, 256));
     sources.push(proxiedSquareLogo(`https://${meta.domain}/apple-touch-icon.png`, 256));
-    sources.push(proxiedSquareLogo(`https://logo.clearbit.com/${meta.domain}?size=256`, 256));
   }
-  if (sheetImage) sources.push(proxiedSquareLogo(sheetImage, 256));
   return Array.from(new Set(sources.filter(Boolean)));
 }
 
