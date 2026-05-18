@@ -835,5 +835,6 @@ export function metaForTool(name: string): ToolMeta {
     description:
       'A genuine premium subscription delivered as a private account to your registered email. Full warranty for the entire validity period.',
     features: ['Private account', 'Email delivery', 'Full warranty', 'Instant access'],
+    logo: userLogo ?? undefined,
   };
 }
