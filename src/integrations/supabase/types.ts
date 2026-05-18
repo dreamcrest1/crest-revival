@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      error_logs: {
+        Row: {
+          col_no: number | null
+          created_at: string
+          error_type: string
+          id: string
+          line_no: number | null
+          message: string
+          metadata: Json | null
+          page_url: string | null
+          source: string | null
+          stack: string | null
+          user_agent: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          col_no?: number | null
+          created_at?: string
+          error_type?: string
+          id?: string
+          line_no?: number | null
+          message: string
+          metadata?: Json | null
+          page_url?: string | null
+          source?: string | null
+          stack?: string | null
+          user_agent?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          col_no?: number | null
+          created_at?: string
+          error_type?: string
+          id?: string
+          line_no?: number | null
+          message?: string
+          metadata?: Json | null
+          page_url?: string | null
+          source?: string | null
+          stack?: string | null
+          user_agent?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: []
+      }
       page_content: {
         Row: {
           content: Json

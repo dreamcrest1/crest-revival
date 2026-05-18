@@ -32,6 +32,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminPages from "./pages/admin/AdminPages";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminSeoAudit from "./pages/admin/AdminSeoAudit";
+import AdminErrorLogs from "./pages/admin/AdminErrorLogs";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +76,8 @@ const App = () => {
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="pages" element={<AdminPages />} />
                     <Route path="analytics" element={<AdminAnalytics />} />
+                    <Route path="seo-audit" element={<AdminSeoAudit />} />
+                    <Route path="errors" element={<AdminErrorLogs />} />
                   </Route>
 
                   <Route path="*" element={<NotFound />} />
