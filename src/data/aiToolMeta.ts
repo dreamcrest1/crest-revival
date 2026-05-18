@@ -3,6 +3,7 @@
 // as a tile background, a short marketing tagline, and longer product info
 // that we surface in the card and the WhatsApp pre-fill.
 import merlinLogo from '@/assets/merlin-logo.svg';
+import { userLogoFor } from '@/data/userLogos';
 
 export type ToolMeta = {
   /** keyword matched (case-insensitive substring) against the sheet "Tool Name" */
