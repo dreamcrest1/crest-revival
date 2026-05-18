@@ -1,6 +1,6 @@
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Billboard, OrbitControls } from '@react-three/drei';
-import { Suspense, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import type { GlobeItem } from './ProductGlobe';
 
@@ -25,6 +25,35 @@ function fibonacciSphere(n: number, radius: number): THREE.Vector3[] {
   return out;
 }
 
+function useSafeTexture(url: string): THREE.Texture | null {
+  const [tex, setTex] = useState<THREE.Texture | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    const loader = new THREE.TextureLoader();
+    loader.setCrossOrigin('anonymous');
+    loader.load(
+      url || PLACEHOLDER,
+      (t) => {
+        if (cancelled) { t.dispose(); return; }
+        t.colorSpace = THREE.SRGBColorSpace;
+        t.anisotropy = 2;
+        setTex(t);
+      },
+      undefined,
+      () => {
+        // fallback to placeholder on error
+        loader.load(PLACEHOLDER, (t) => {
+          if (cancelled) { t.dispose(); return; }
+          t.colorSpace = THREE.SRGBColorSpace;
+          setTex(t);
+        });
+      },
+    );
+    return () => { cancelled = true; };
+  }, [url]);
+  return tex;
+}
+
 function LogoTile({
   position,
   item,
@@ -37,19 +66,8 @@ function LogoTile({
   onSelect: (href: string) => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const texture = useLoader(
-    THREE.TextureLoader,
-    item.image || PLACEHOLDER,
-    undefined,
-    (err) => {
-      // swallow — fall back below
-      console.warn('logo load fail', item.name, err);
-    },
-  );
-  if (texture) {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 2;
-  }
+  const texture = useSafeTexture(item.image);
+  if (!texture) return null;
 
   const scale = hovered ? size * 1.18 : size;
 
@@ -119,14 +137,13 @@ function RotatingGroup({
   return (
     <group ref={group}>
       {items.map((it, i) => (
-        <Suspense key={it.name + i} fallback={null}>
-          <LogoTile
-            position={positions[i]}
-            item={it}
-            size={tileSize}
-            onSelect={onSelect}
-          />
-        </Suspense>
+        <LogoTile
+          key={it.name + i}
+          position={positions[i]}
+          item={it}
+          size={tileSize}
+          onSelect={onSelect}
+        />
       ))}
     </group>
   );
