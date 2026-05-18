@@ -74,7 +74,7 @@ const ProductGlobe = () => {
 
       <div
         className="relative mx-auto flex items-center justify-center"
-        style={{ height: isMobile ? 320 : 620, width: '100%', maxWidth: 1100 }}
+        style={{ height: isMobile ? 380 : 620, width: '100%', maxWidth: 1100 }}
       >
         <div className="relative w-full h-full flex items-center justify-center">
           {reduced || items.length === 0 ? (
