@@ -46,11 +46,8 @@ const Header = () => (
         <Sparkles className="w-3.5 h-3.5" /> AI Universe
       </div>
       <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-        Premium <span className="text-gradient">AI Tools</span> in orbit
+        Premium <span className="text-gradient">AI Tools</span>
       </h2>
-      <p className="text-muted-foreground mt-2 max-w-xl text-sm md:text-base">
-        Hand-picked AI subscriptions. Lineup refreshes every few seconds.
-      </p>
     </div>
     <Link
       to="/ai-tools"
