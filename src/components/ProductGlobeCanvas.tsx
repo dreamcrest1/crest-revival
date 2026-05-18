@@ -51,6 +51,7 @@ function LogoTile({
   item,
   size,
   onSelect,
+  index,
 }: {
   position: THREE.Vector3;
   startPosition: THREE.Vector3;
@@ -59,6 +60,7 @@ function LogoTile({
   item: GlobeItem;
   size: number;
   onSelect: (logo: GlobeLogo) => void;
+  index: number;
 }) {
   const [hovered, setHovered] = useState(false);
   const texture = useTexture(item.image);
@@ -88,6 +90,9 @@ function LogoTile({
 
     if (billboardRef.current) {
       currentPos.lerpVectors(startPosition, position, formEased);
+      // gentle floating bob per logo, offset by index for organic feel
+      const bob = Math.sin(now * 1.2 + index * 0.9) * 0.04;
+      currentPos.y += bob * formEased;
       billboardRef.current.position.copy(currentPos);
     }
 
@@ -209,6 +214,7 @@ function RotatingGroup({
           item={it}
           size={tileSize}
           onSelect={onSelect}
+          index={i}
         />
       ))}
     </group>
@@ -225,7 +231,7 @@ const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   // Slightly smaller sphere with the camera pulled back so all logos sit
   // comfortably inside the frame (no edge clipping on desktop).
   const radius = isMobile ? 2.3 : 2.9;
-  const tileSize = isMobile ? 1.58 : 1.66;
+  const tileSize = isMobile ? 1.34 : 1.41;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
