@@ -1,0 +1,12 @@
+UPDATE products SET image_url='https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/JioCinema_Logo.svg/512px-JioCinema_Logo.svg.png' WHERE id='ee6e00dc-f2fa-462b-9b51-0fe2b1404514';
+UPDATE products SET image_url='https://logo.clearbit.com/linguix.com?size=512' WHERE id='ecce1884-e452-447e-ab8b-c9c1801da45f';
+UPDATE products SET image_url='https://logo.clearbit.com/lumen5.com?size=512' WHERE id='9de4a715-f7c0-4d5a-98f4-f6280566964b';
+UPDATE products SET image_url='https://logo.clearbit.com/movieboxpro.app?size=512' WHERE id='81c5af2c-b9ce-41e9-bc61-e484bf61812c';
+UPDATE products SET image_url='https://logo.clearbit.com/pictory.ai?size=512' WHERE id='39744220-0464-46e4-9ef3-58e564f8d3f5';
+UPDATE products SET image_url='https://cdn.simpleicons.org/skillshare/00FF84' WHERE id='f1482d93-4076-4824-944a-5483f9af0f8f';
+UPDATE products SET image_url='https://logo.clearbit.com/vidscribe.ai?size=512' WHERE id='0300670f-7159-4da8-88c0-8e754abbe432';
+UPDATE products SET image_url='https://cdn.simpleicons.org/elevenlabs/000000' WHERE id='6efe1f8b-94e5-4ab2-9d1a-1532b4693628';
+UPDATE products SET image_url='https://cdn.simpleicons.org/vyond/D9272E' WHERE id='8db1bbf1-7a32-4f78-b6a6-09e665291f24';
+UPDATE products SET image_url='https://logo.clearbit.com/wideo.co?size=512' WHERE id='cba5f196-4815-4f1a-8f41-d5aea43d0935';
+UPDATE products SET image_url='https://logo.clearbit.com/wideo.co?size=512' WHERE id='8541921c-f5d8-4936-b98c-92290dbc8d71';
+UPDATE products SET image_url='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2021.svg/512px-Windows_logo_-_2021.svg.png' WHERE id='996a7638-982a-4b6d-bec3-a70b07c7f5f5';
