@@ -83,6 +83,16 @@ const AllTools = () => {
 
   const isSearching = searchQuery.trim().length > 0;
 
+  const handleSetFilter = useCallback((filter: string) => {
+    setActiveFilter(filter);
+    setDisplayCount(INITIAL_DISPLAY);
+  }, []);
+
+  const handleSearch = useCallback((q: string) => {
+    setSearchQuery(q);
+    setDisplayCount(INITIAL_DISPLAY);
+  }, []);
+
   const filteredTools = useMemo(() => {
     let list = unified;
     if (activeFilter !== 'All') list = list.filter((t) => t.category === activeFilter);
@@ -92,6 +102,9 @@ const AllTools = () => {
     }
     return list;
   }, [unified, activeFilter, isSearching, searchQuery]);
+
+  const visibleTools = filteredTools.slice(0, displayCount);
+  const hasMore = displayCount < filteredTools.length;
 
   const trendingCount = Math.min(12, filteredTools.length);
 
