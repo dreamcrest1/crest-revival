@@ -77,7 +77,7 @@ function pagesToCsv(pages: PageReport[]): string {
       p.loadMs, p.issues.join('; '),
     ].map(csvEscape).join(','));
   }
-  return rows.map((r) => Array.isArray(r) ? r.join(',') : r).join('\n');
+  return rows.map((r) => r.join(',')).join('\n');
 }
 
 function sitemapToCsv(entries: { loc: string; status?: number }[]): string {
