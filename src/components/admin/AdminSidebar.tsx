@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle } from 'lucide-react';
+import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, Star, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -19,8 +19,15 @@ import logo from '@/assets/logo.png';
 const menuItems = [
   { title: 'Dashboard', url: '/admin/dashboard', icon: LayoutDashboard },
   { title: 'Products', url: '/admin/products', icon: Package },
+  { title: 'Reviews', url: '/admin/reviews', icon: Star },
+  { title: 'Blog', url: '/admin/blog', icon: BookOpen },
   { title: 'Pages', url: '/admin/pages', icon: FileText },
   { title: 'Analytics', url: '/admin/analytics', icon: BarChart3 },
+  { title: 'Funnel', url: '/admin/funnel', icon: Filter },
+  { title: 'UTM', url: '/admin/utm', icon: Megaphone },
+  { title: 'Heatmap', url: '/admin/heatmap', icon: MousePointerClick },
+  { title: 'Geo', url: '/admin/geo', icon: Globe },
+  { title: 'Search Queries', url: '/admin/search-queries', icon: SearchCheck },
   { title: 'SEO Audit', url: '/admin/seo-audit', icon: Search },
   { title: 'Error Logs', url: '/admin/errors', icon: AlertCircle },
 ];
