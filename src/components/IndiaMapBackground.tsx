@@ -17,6 +17,7 @@ const dots = [
 const IndiaMapBackground = () => {
   const pathRef = useRef<SVGPathElement>(null);
   const [pathLength, setPathLength] = useState(0);
+  const [scrollOpacity, setScrollOpacity] = useState(0);
 
   useEffect(() => {
     if (pathRef.current) {
@@ -24,16 +25,28 @@ const IndiaMapBackground = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // Fully hide the India map while the user is on the hero (globe) section.
+    // As they scroll past it, fade the map in smoothly.
+    const handleScroll = () => {
+      const vh = window.innerHeight || 1;
+      const y = window.scrollY;
+      const fadeStart = vh * 0.45;
+      const fadeEnd = vh * 0.95;
+      const t = (y - fadeStart) / (fadeEnd - fadeStart);
+      setScrollOpacity(Math.max(0, Math.min(1, t)));
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center"
       style={{
-        // Mask out the homepage globe area (top-center) so logos read cleanly,
-        // while keeping the India map fully visible everywhere else.
-        WebkitMaskImage:
-          'radial-gradient(ellipse 42% 32% at 50% 22%, transparent 55%, black 92%)',
-        maskImage:
-          'radial-gradient(ellipse 42% 32% at 50% 22%, transparent 55%, black 92%)',
+        opacity: scrollOpacity,
+        transition: 'opacity 0.4s ease-out',
       }}
     >
       <motion.div
