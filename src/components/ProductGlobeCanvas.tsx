@@ -222,8 +222,10 @@ type Props = {
 };
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
-  const radius = isMobile ? 2.6 : 3.2;
-  const tileSize = isMobile ? 1.0 : 1.15;
+  // Slightly smaller sphere with the camera pulled back so all logos sit
+  // comfortably inside the frame (no edge clipping on desktop).
+  const radius = isMobile ? 2.3 : 2.9;
+  const tileSize = isMobile ? 1.1 : 1.15;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
@@ -239,7 +241,7 @@ const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   return (
     <Canvas
       dpr={isMobile ? [1, 1] : [1, 1.5]}
-      camera={{ position: [0, 0, isMobile ? 7.2 : 8.2], fov: 42 }}
+      camera={{ position: [0, 0, isMobile ? 8.5 : 9.5], fov: 42 }}
       gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
       onCreated={({ gl }) => {
         gl.domElement.addEventListener(
