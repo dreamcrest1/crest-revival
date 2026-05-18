@@ -2,10 +2,13 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
-import { Search, X, ExternalLink } from 'lucide-react';
+import { Search, X, ExternalLink, Flame } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { useProducts } from '@/hooks/useProducts';
+import { useAiTools } from '@/hooks/useAiTools';
+import { popularityFor } from '@/data/aiToolPopularity';
 
 type ToolCategory = {
   emoji: string;
