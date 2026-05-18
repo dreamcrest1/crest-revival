@@ -17,15 +17,30 @@ const dots = [
 const IndiaMapBackground = () => {
   const pathRef = useRef<SVGPathElement>(null);
   const [pathLength, setPathLength] = useState(0);
+  const [scrollOpacity, setScrollOpacity] = useState(0);
 
   useEffect(() => {
     if (pathRef.current) {
       setPathLength(pathRef.current.getTotalLength());
     }
+    const onScroll = () => {
+      // Fully hidden in hero, fade in as the user scrolls past ~60% of viewport height
+      const start = window.innerHeight * 0.6;
+      const end = window.innerHeight * 1.1;
+      const y = window.scrollY;
+      const o = Math.max(0, Math.min(1, (y - start) / (end - start)));
+      setScrollOpacity(o);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
+    <div
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center transition-opacity duration-300"
+      style={{ opacity: scrollOpacity }}
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}

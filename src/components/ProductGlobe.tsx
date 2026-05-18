@@ -37,17 +37,19 @@ function weservSquare(src: string, size = 512): string {
 /** Same multi-source fallback chain as the /ai-tools BrandLogo, proxied for WebGL. */
 function logoSourcesForTool(name: string, image: string): string[] {
   const meta = metaForTool(name);
+  const out: string[] = [];
+  // Prefer the user-uploaded local logo (no proxy needed — same origin).
+  if (meta.logo && meta.logo.startsWith('/logos/')) out.push(meta.logo);
   const raw: string[] = [];
   const override = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
   if (override) raw.push(override);
-  if (meta.logo) raw.push(meta.logo);
+  if (meta.logo && !meta.logo.startsWith('/logos/')) raw.push(meta.logo);
   if (meta.domain) {
     raw.push(`https://logo.clearbit.com/${meta.domain}?size=512`);
     raw.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
   }
   if (image) raw.push(image);
-  const seen = new Set<string>();
-  const out: string[] = [];
+  const seen = new Set<string>(out);
   for (const u of raw) {
     if (!u || seen.has(u)) continue;
     seen.add(u);

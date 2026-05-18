@@ -3,6 +3,7 @@
 // as a tile background, a short marketing tagline, and longer product info
 // that we surface in the card and the WhatsApp pre-fill.
 import merlinLogo from '@/assets/merlin-logo.svg';
+import { userLogoFor } from '@/data/userLogos';
 
 export type ToolMeta = {
   /** keyword matched (case-insensitive substring) against the sheet "Tool Name" */
@@ -817,10 +818,11 @@ function normalise(s: string): string {
 }
 
 export function metaForTool(name: string): ToolMeta {
+  const userLogo = userLogoFor(name);
   const n = normalise(name);
   const hit = TOOL_META.find((m) => n.includes(normalise(m.match)));
   if (hit) {
-    const logo = hit.logo ?? LOGO_OVERRIDES[hit.domain];
+    const logo = userLogo ?? hit.logo ?? LOGO_OVERRIDES[hit.domain];
     return logo ? { ...hit, logo } : hit;
   }
   // Generic fallback
@@ -833,5 +835,6 @@ export function metaForTool(name: string): ToolMeta {
     description:
       'A genuine premium subscription delivered as a private account to your registered email. Full warranty for the entire validity period.',
     features: ['Private account', 'Email delivery', 'Full warranty', 'Instant access'],
+    logo: userLogo ?? undefined,
   };
 }
