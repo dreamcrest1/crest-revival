@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Billboard, OrbitControls } from '@react-three/drei';
+import { Billboard, OrbitControls, Trail } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import type { GlobeItem } from './ProductGlobe';
@@ -145,65 +145,44 @@ function LogoTile({
 
   return (
     <Billboard ref={billboardRef} position={startPosition}>
-      <group
-        ref={groupRef}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          setHovered(true);
-          document.body.style.cursor = 'pointer';
-        }}
-        onPointerOut={() => {
-          setHovered(false);
-          document.body.style.cursor = '';
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect(item.href);
-        }}
+      <Trail
+        width={0.35}
+        length={4}
+        color={'#f97316'}
+        attenuation={(t) => t * t}
+        decay={1.2}
       >
-        {/* Outer glow ring on hover */}
-        {hovered && (
-          <mesh position={[0, 0, -0.02]}>
-            <ringGeometry args={[0.56, 0.72, 48]} />
-            <meshBasicMaterial color="#f97316" transparent opacity={0.55} depthWrite={false} />
-          </mesh>
-        )}
-        {/* Subtle border ring always visible */}
-        <mesh position={[0, 0, -0.01]}>
-          <ringGeometry args={[0.52, 0.56, 48]} />
-          <meshBasicMaterial
-            ref={ringMatRef}
-            color={hovered ? '#f97316' : '#ffffff'}
-            transparent
-            opacity={0.25}
-            depthWrite={false}
-          />
-        </mesh>
-        {/* Clean white circular icon plate */}
-        <mesh>
-          <circleGeometry args={[0.52, 48]} />
-          <meshBasicMaterial
-            ref={discMatRef}
-            color="#ffffff"
-            transparent
-            opacity={0.96}
-            depthWrite={false}
-          />
-        </mesh>
-        {/* Logo image — only mounted once texture has loaded */}
-        {texture && (
-          <mesh position={[0, 0, 0.001]}>
-            <planeGeometry args={[0.72, 0.72]} />
-            <meshBasicMaterial
-              ref={logoMatRef}
-              map={texture}
-              transparent
-              toneMapped={false}
-              depthWrite={false}
-            />
-          </mesh>
-        )}
-      </group>
+        <group
+          ref={groupRef}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            setHovered(true);
+            document.body.style.cursor = 'pointer';
+          }}
+          onPointerOut={() => {
+            setHovered(false);
+            document.body.style.cursor = '';
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(item.href);
+          }}
+        >
+          {/* Logo image — only mounted once texture has loaded */}
+          {texture && (
+            <mesh>
+              <planeGeometry args={[0.9, 0.9]} />
+              <meshBasicMaterial
+                ref={logoMatRef}
+                map={texture}
+                transparent
+                toneMapped={false}
+                depthWrite={false}
+              />
+            </mesh>
+          )}
+        </group>
+      </Trail>
     </Billboard>
   );
 }
@@ -301,7 +280,7 @@ type Props = {
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   const radius = isMobile ? 2.4 : 3.0;
-  const tileSize = isMobile ? 0.6 : 0.68;
+  const tileSize = isMobile ? 0.48 : 0.544;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
