@@ -43,7 +43,10 @@ function useSafeTexture(url: string): TexState {
       (t) => {
         if (cancelled) { t.dispose(); return; }
         t.colorSpace = THREE.SRGBColorSpace;
-        t.anisotropy = 4;
+        t.anisotropy = 8;
+        t.minFilter = THREE.LinearMipmapLinearFilter;
+        t.magFilter = THREE.LinearFilter;
+        t.generateMipmaps = true;
         setState({ tex: t, failed: false });
       },
       undefined,
