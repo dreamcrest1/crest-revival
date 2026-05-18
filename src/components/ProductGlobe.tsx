@@ -3,20 +3,36 @@ import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useAiTools } from '@/hooks/useAiTools';
 import { popularityFor } from '@/data/aiToolPopularity';
+import { metaForTool } from '@/data/aiToolMeta';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 
-/** Same image proxy as the /ai-tools page — contain-fit keeps logos crisp. */
-function logoUrl(src: string, size = 256): string {
+/** WebGL needs CORS-safe logo textures; keep the same source order as /ai-tools. */
+function proxiedSquareLogo(src: string, size = 256): string {
   if (!src) return '';
   const stripped = src.replace(/^https?:\/\//, '');
   return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=85`;
+}
+
+function logoSourcesForTool(name: string, sheetImage?: string): string[] {
+  const meta = metaForTool(name);
+  const sources: string[] = [];
+  if (meta.logo) {
+    sources.push(meta.logo);
+    if (/^https?:\/\//.test(meta.logo)) sources.push(proxiedSquareLogo(meta.logo, 256));
+  }
+  if (meta.domain) {
+    sources.push(proxiedSquareLogo(`https://logo.clearbit.com/${meta.domain}?size=256`, 256));
+    sources.push(proxiedSquareLogo(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`, 256));
+  }
+  if (sheetImage) sources.push(proxiedSquareLogo(sheetImage, 256));
+  return Array.from(new Set(sources.filter(Boolean)));
 }
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
 
 export type GlobeItem = {
   name: string;
-  image: string;
+  images: string[];
   href: string;
 };
 
@@ -29,7 +45,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
     const out: GlobeItem[] = [];
     const push = (it: GlobeItem) => {
       const nameKey = it.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const imgKey = it.image.toLowerCase().trim();
+      const imgKey = it.images[0]?.toLowerCase().trim() ?? '';
       if (!nameKey || !imgKey) return;
       if (seenName.has(nameKey) || seenImg.has(imgKey)) return;
       seenName.add(nameKey);
@@ -43,7 +59,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
     tools.forEach((t) =>
       push({
         name: t.name.trim(),
-        image: logoUrl(t.image, 256),
+        images: logoSourcesForTool(t.name, t.image),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );
