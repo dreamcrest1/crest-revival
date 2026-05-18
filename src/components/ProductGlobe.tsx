@@ -3,20 +3,47 @@ import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useAiTools } from '@/hooks/useAiTools';
 import { popularityFor } from '@/data/aiToolPopularity';
+import { metaForTool } from '@/data/aiToolMeta';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 
-/** Same image proxy as the /ai-tools page — contain-fit keeps logos crisp. */
-function logoUrl(src: string, size = 256): string {
+const iconify = (slug: string, color: string) => `https://api.iconify.design/simple-icons/${slug}.svg?color=%23${color}`;
+
+const GLOBE_ICON_OVERRIDES: Record<string, string> = {
+  'adobe.com': iconify('adobecreativecloud', 'DA1F26'),
+  'clickup.com': iconify('clickup', '7B68EE'),
+  'figma.com': iconify('figma', 'F24E1E'),
+  'flutterflow.io': iconify('flutter', '02569B'),
+  'intercom.com': iconify('intercom', '1F8DED'),
+  'linear.app': iconify('linear', '5E6AD2'),
+  'loom.com': iconify('loom', '625DF5'),
+  'miro.com': iconify('miro', 'FFD02F'),
+  'mongodb.com': iconify('mongodb', '47A248'),
+  'notion.so': iconify('notion', '000000'),
+  'perplexity.ai': iconify('perplexity', '1FB8CD'),
+  'posthog.com': iconify('posthog', 'FF5C00'),
+  'replit.com': iconify('replit', 'F26207'),
+  'supabase.com': iconify('supabase', '3ECF8E'),
+  'webflow.com': iconify('webflow', '146EF5'),
+};
+
+/** WebGL needs CORS-safe logo textures; keep the same source order as /ai-tools. */
+function proxiedSquareLogo(src: string, size = 256): string {
   if (!src) return '';
   const stripped = src.replace(/^https?:\/\//, '');
   return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=85`;
+}
+
+function logoSourcesForTool(name: string): string[] {
+  const meta = metaForTool(name);
+  const icon = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
+  return icon ? [icon, proxiedSquareLogo(icon, 256)] : [];
 }
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
 
 export type GlobeItem = {
   name: string;
-  image: string;
+  images: string[];
   href: string;
 };
 
@@ -29,7 +56,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
     const out: GlobeItem[] = [];
     const push = (it: GlobeItem) => {
       const nameKey = it.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const imgKey = it.image.toLowerCase().trim();
+      const imgKey = it.images[0]?.toLowerCase().trim() ?? '';
       if (!nameKey || !imgKey) return;
       if (seenName.has(nameKey) || seenImg.has(imgKey)) return;
       seenName.add(nameKey);
@@ -37,13 +64,11 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       out.push(it);
     };
 
-    const tools = [...(aiTools ?? [])]
-      .filter((t) => t.image && t.image.trim().length > 0)
-      .sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
+    const tools = [...(aiTools ?? [])].sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
     tools.forEach((t) =>
       push({
         name: t.name.trim(),
-        image: logoUrl(t.image, 256),
+        images: logoSourcesForTool(t.name),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );

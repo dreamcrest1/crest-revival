@@ -6,26 +6,6 @@ import type { GlobeItem } from './ProductGlobe';
 
 const PLACEHOLDER = '/placeholder.svg';
 
-/** Build a soft circular alpha mask texture once and share across all tiles. */
-let _circleAlpha: THREE.CanvasTexture | null = null;
-function getCircleAlphaTexture(): THREE.CanvasTexture {
-  if (_circleAlpha) return _circleAlpha;
-  const size = 256;
-  const c = document.createElement('canvas');
-  c.width = c.height = size;
-  const ctx = c.getContext('2d')!;
-  const g = ctx.createRadialGradient(size / 2, size / 2, size * 0.35, size / 2, size / 2, size * 0.5);
-  g.addColorStop(0, 'rgba(255,255,255,1)');
-  g.addColorStop(0.85, 'rgba(255,255,255,1)');
-  g.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, size, size);
-  const tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.NoColorSpace;
-  _circleAlpha = tex;
-  return tex;
-}
-
 /** Even sphere distribution via Fibonacci lattice. */
 function fibonacciSphere(n: number, radius: number): THREE.Vector3[] {
   const out: THREE.Vector3[] = [];
@@ -55,6 +35,7 @@ function useSafeTexture(url: string): TexState {
       setState({ tex: null, failed: true });
       return;
     }
+    setState({ tex: null, failed: false });
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin('anonymous');
     loader.load(
@@ -88,7 +69,9 @@ function LogoTile({
   onSelect: (href: string) => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const { tex: texture, failed } = useSafeTexture(item.image);
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const activeImage = item.images[Math.min(sourceIndex, item.images.length - 1)] ?? '';
+  const { tex: texture, failed } = useSafeTexture(activeImage);
   const groupRef = useRef<THREE.Group>(null);
   const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
@@ -106,6 +89,14 @@ function LogoTile({
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
     if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
   });
+
+  useEffect(() => {
+    setSourceIndex(0);
+  }, [item.name, item.images]);
+
+  useEffect(() => {
+    if (failed && sourceIndex < item.images.length - 1) setSourceIndex((i) => i + 1);
+  }, [failed, sourceIndex, item.images.length]);
 
   if (failed || !texture) return null;
   const scale = hovered ? size * 1.2 : size;
@@ -147,24 +138,23 @@ function LogoTile({
             depthWrite={false}
           />
         </mesh>
-        {/* Dark glassy disc background */}
+        {/* Clean white circular icon plate */}
         <mesh>
           <circleGeometry args={[0.52, 48]} />
           <meshBasicMaterial
             ref={discMatRef}
-            color="#0a0e1a"
+            color="#ffffff"
             transparent
-            opacity={0.92}
+            opacity={0.96}
             depthWrite={false}
           />
         </mesh>
         {/* Logo image, contained inside the disc, masked to a circle */}
         <mesh position={[0, 0, 0.001]}>
-          <circleGeometry args={[0.5, 48]} />
+          <planeGeometry args={[0.58, 0.58]} />
           <meshBasicMaterial
             ref={logoMatRef}
             map={texture}
-            alphaMap={getCircleAlphaTexture()}
             transparent
             toneMapped={false}
             depthWrite={false}
