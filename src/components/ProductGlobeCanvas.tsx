@@ -158,14 +158,14 @@ function LogoTile({
             depthWrite={false}
           />
         </mesh>
-        {/* Dark glassy disc background */}
+        {/* Clean white circular icon plate */}
         <mesh>
           <circleGeometry args={[0.52, 48]} />
           <meshBasicMaterial
             ref={discMatRef}
-            color="#0a0e1a"
+            color="#ffffff"
             transparent
-            opacity={0.92}
+            opacity={0.96}
             depthWrite={false}
           />
         </mesh>
