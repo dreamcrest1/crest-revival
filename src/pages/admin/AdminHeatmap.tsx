@@ -13,6 +13,8 @@ type RangeKey = keyof typeof RANGES;
 
 const SCREENSHOT_KEY = (path: string) => `dc_admin_screen:${path}`;
 
+const DEFAULT_PATHS = ['/', '/products', '/alltools', '/ai-tools', '/blog', '/about', '/contact', '/faq', '/terms', '/refunds'];
+
 const renderHeatmap = (canvas: HTMLCanvasElement, clicks: ClickRow[]) => {
   const w = canvas.width, h = canvas.height;
   const ctx = canvas.getContext('2d');
