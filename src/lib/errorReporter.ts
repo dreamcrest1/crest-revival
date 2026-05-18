@@ -46,7 +46,7 @@ async function flush() {
   if (!queue.length) return;
   const batch = queue.splice(0, queue.length);
   try {
-    await supabase.from('error_logs').insert(batch);
+    await supabase.from('error_logs').insert(batch as never);
   } catch {
     // best-effort, do not throw
   }
