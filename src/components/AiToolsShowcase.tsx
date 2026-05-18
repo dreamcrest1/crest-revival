@@ -57,6 +57,8 @@ const FALLBACK_TOOL_NAMES = [
   'Perplexity Pro',
 ];
 
+const EMPTY_TOOLS: AiTool[] = [];
+
 function shuffleTools(items: AiTool[]) {
   const next = [...items];
   for (let i = next.length - 1; i > 0; i -= 1) {
@@ -73,7 +75,8 @@ function shuffleTools(items: AiTool[]) {
  * transforms compound with the parent rotation.
  */
 const AiToolsShowcase = () => {
-  const { data: tools = [] } = useAiTools();
+  const { data } = useAiTools();
+  const tools = data ?? EMPTY_TOOLS;
 
   const fallbackTools = useMemo<AiTool[]>(
     () =>
