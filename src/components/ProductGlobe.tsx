@@ -26,17 +26,33 @@ const GLOBE_ICON_OVERRIDES: Record<string, string> = {
   'webflow.com': iconify('webflow', '146EF5'),
 };
 
-/** WebGL needs CORS-safe logo textures; keep the same source order as /ai-tools. */
-function proxiedSquareLogo(src: string, size = 256): string {
+/** Proxy any url through weserv as a clean square — CORS-safe + crisp for WebGL textures. */
+function weservSquare(src: string, size = 512): string {
   if (!src) return '';
   const stripped = src.replace(/^https?:\/\//, '');
-  return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=85`;
+  return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=90`;
 }
 
-function logoSourcesForTool(name: string): string[] {
+/** Same multi-source fallback chain as the /ai-tools BrandLogo, proxied for WebGL. */
+function logoSourcesForTool(name: string, image: string): string[] {
   const meta = metaForTool(name);
-  const icon = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
-  return icon ? [icon, proxiedSquareLogo(icon, 256)] : [];
+  const raw: string[] = [];
+  const override = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
+  if (override) raw.push(override);
+  if (meta.logo) raw.push(meta.logo);
+  if (meta.domain) {
+    raw.push(`https://logo.clearbit.com/${meta.domain}?size=512`);
+    raw.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
+  }
+  if (image) raw.push(image);
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const u of raw) {
+    if (!u || seen.has(u)) continue;
+    seen.add(u);
+    out.push(weservSquare(u, 512));
+  }
+  return out;
 }
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
@@ -52,28 +68,23 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
 
   return useMemo(() => {
     const seenName = new Set<string>();
-    const seenImg = new Set<string>();
     const out: GlobeItem[] = [];
-    const push = (it: GlobeItem) => {
-      const nameKey = it.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const imgKey = it.images[0]?.toLowerCase().trim() ?? '';
-      if (!nameKey || !imgKey) return;
-      if (seenName.has(nameKey) || seenImg.has(imgKey)) return;
-      seenName.add(nameKey);
-      seenImg.add(imgKey);
-      out.push(it);
-    };
 
     const tools = [...(aiTools ?? [])].sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
-    tools.forEach((t) =>
-      push({
+    for (const t of tools) {
+      const nameKey = t.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!nameKey || seenName.has(nameKey)) continue;
+      const images = logoSourcesForTool(t.name, t.image);
+      if (images.length === 0) continue;
+      seenName.add(nameKey);
+      out.push({
         name: t.name.trim(),
-        images: logoSourcesForTool(t.name),
+        images,
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
-      }),
-    );
+      });
+    }
 
-    return out.slice(0, isMobile ? 30 : 60);
+    return out.slice(0, isMobile ? 48 : 96);
   }, [aiTools, isMobile]);
 }
 

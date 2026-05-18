@@ -1,64 +1,39 @@
 ## Goal
+The 3D globe should show **all AI tools** as **perfect circles with crisp, high-quality logos** — using the exact same multi-source logo fallback chain as the `/ai-tools` page (which currently looks great).
 
-Replace the current `AiToolsShowcase` at the top of the homepage with a 3D sphere of ~40–60 product/AI-tool logos that auto-rotates, can be dragged to spin, and opens the product on click — fast on mobile, no jank.
+## Problem
+- `src/components/ProductGlobe.tsx` only resolves logos from a tiny `GLOBE_ICON_OVERRIDES` map (15 brands). Every other tool returns an empty `images` array, so `LogoTile` renders nothing → far fewer circles than the catalog.
+- Textures are loaded at 256 px and the plane is masked by a circle disc behind it, so SVGs come out pixelated and the white square edge can poke past the circle.
 
-## Tech choice
+## Fix
 
-- **react-three-fiber `@^8.18` + drei `@^9.122` + three `>=0.133`** (pinned per project constraint).
-- No models, no textures, no postprocessing. Just `<Billboard>` planes with the logo `<Image>` per item — extremely cheap to render.
-- Lazy-loaded via `React.lazy` + `Suspense` so the WebGL bundle (~150KB gz) never blocks first paint. SSR-safe fallback is a static logo grid.
-
-## Implementation
-
-1. **New component** `src/components/ProductGlobe.tsx`
-   - Builds positions on a sphere using the Fibonacci lattice (even distribution, no clumping).
-   - Each logo = `<Billboard>` + `<Image>` (drei) at radius ~3, size auto-scaled by viewport.
-   - Group auto-rotates on Y at ~0.15 rad/s; `OrbitControls` enabled with `enableZoom={false}`, `enablePan={false}`, damping on, autoRotate handed off to OrbitControls itself.
-   - On pointer down → pause auto-rotate; on pointer up + 2s idle → resume (mirrors the AiToolsShowcase pause-on-hover behavior).
-   - Click a logo → navigate to `/product/{slug}` (products) or `/ai-tools/{slug}` (AI tools) using the same slug helpers already in `src/lib/productSeo.ts` / `aiToolSeo.ts`.
-   - Hover → logo scales 1.15× + soft orange glow ring (matches brand HSL 24 95% 53%).
-
-2. **Data source** `useMemo` merging:
-   - `useProducts().hotSelling` (or top ~30 by sort_order)
-   - `useAiTools()` top ~20 by `popularityFor`
-   - Dedupe by normalized name, cap at 60.
-   - Each entry: `{ name, image, href }`.
-
-3. **Performance guardrails**
-   - `<Canvas dpr={[1, 1.5]} frameloop="demand"` then re-render on rotation tick (or `frameloop="always"` with `gl={{ antialias: false, powerPreference: 'high-performance' }}`).
-   - `useReducedMotion()` → static grid fallback, no Canvas mounted.
-   - `IntersectionObserver` via `react-intersection-observer`: only mount the Canvas when in viewport; unmount when scrolled away (pauses GPU work).
-   - Mobile (`< 640px`): cap items to 30, smaller radius, smaller logos, `dpr={[1, 1]}`.
-   - All logos preloaded through drei's `useTexture.preload` with cached URLs; `<Image>` toneMapped={false}.
-   - No shadows, no lights beyond `<ambientLight intensity={1} />`.
-
-4. **Layout** in `src/pages/Index.tsx`
-   - Replace `<AiToolsShowcase />` with `<ProductGlobe />` (lazy + Suspense).
-   - Section: ~520px tall desktop / 360px mobile, transparent bg so hyperspace background shows through.
-   - Heading "Explore Our Universe of Tools" + small caption + scroll hint chevron under the globe.
-
-5. **Cleanup**
-   - Keep `AiToolsShowcase.tsx` file (not delete) but unused — easy revert.
-   - Memory: update `mem://style/visual-identity` with the new globe section.
-
-## Packages
+### 1. `src/components/ProductGlobe.tsx` — same logo chain as `BrandLogo` in `src/pages/AiTools.tsx`
+Replace `logoSourcesForTool` so each tool returns the same ordered list of sources used on `/ai-tools`, all proxied through weserv at 512 px square (`fit=contain`) for crisp CORS-safe textures in WebGL:
 
 ```
-bun add three@^0.160 @react-three/fiber@^8.18 @react-three/drei@^9.122 react-intersection-observer
+1. meta.logo                                (curated SVG override)
+2. https://logo.clearbit.com/<domain>?size=512
+3. https://www.google.com/s2/favicons?domain=<domain>&sz=256
+4. weserv(t.image)                          (sheet image, contain 512²)
 ```
 
-## Files
+Each entry is wrapped with `https://images.weserv.nl/?url=<encoded>&w=512&h=512&fit=contain&output=webp&q=90` so three.js can sample them via CORS and they stay sharp.
 
-- New: `src/components/ProductGlobe.tsx`
-- Edit: `src/pages/Index.tsx` (swap component, add lazy boundary)
-- Edit: `mem://style/visual-identity` + `mem://index.md`
+Keep `GLOBE_ICON_OVERRIDES` (iconify SVGs for top brands) prepended for the few cases where it improves on Clearbit.
 
-## Mobile-perf checklist
+Then in `useGlobeItems`:
+- Build items from every AI tool (no filtering by override), keeping `popularityFor` sort.
+- Only skip when the final source list is empty (no domain and no `t.image`).
+- Raise caps to mobile 48 / desktop 96 so the sphere is well-populated.
 
-- Lazy-load behind Suspense — homepage TTI unchanged.
-- IntersectionObserver mount/unmount.
-- DPR clamped to 1 on phones.
-- 30-logo cap on mobile vs 60 on desktop.
-- `prefers-reduced-motion` → static grid fallback.
-- No shadows / lights / postprocessing.
-- Single draw call per logo (Billboard plane); ~30 draw calls on mobile is comfortably 60fps even on mid-range Androids.
+### 2. `src/components/ProductGlobeCanvas.tsx` — perfect circles, no pixelation
+- Bump texture quality: `t.anisotropy = renderer.capabilities.getMaxAnisotropy()` (cap 8), set `t.minFilter = THREE.LinearMipmapLinearFilter`, `t.magFilter = THREE.LinearFilter`, `t.generateMipmaps = true` in `useSafeTexture`.
+- Shrink the logo plane from `0.58` to `0.5` so it fits cleanly **inside** the `0.52`-radius white disc — no square corners ever poke past the circle, giving a true circular logo at every angle.
+- Keep the white circular plate as the visible "circle"; the logo image sits centered inside.
+
+### 3. Result
+Every AI tool with a brand domain or sheet image becomes a circle on the globe. Logos look identical in quality to the `/ai-tools` cards.
+
+## Files touched
+- `src/components/ProductGlobe.tsx`
+- `src/components/ProductGlobeCanvas.tsx`

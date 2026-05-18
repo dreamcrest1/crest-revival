@@ -43,7 +43,10 @@ function useSafeTexture(url: string): TexState {
       (t) => {
         if (cancelled) { t.dispose(); return; }
         t.colorSpace = THREE.SRGBColorSpace;
-        t.anisotropy = 4;
+        t.anisotropy = 8;
+        t.minFilter = THREE.LinearMipmapLinearFilter;
+        t.magFilter = THREE.LinearFilter;
+        t.generateMipmaps = true;
         setState({ tex: t, failed: false });
       },
       undefined,
@@ -151,7 +154,7 @@ function LogoTile({
         </mesh>
         {/* Logo image, contained inside the disc, masked to a circle */}
         <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[0.58, 0.58]} />
+          <planeGeometry args={[0.72, 0.72]} />
           <meshBasicMaterial
             ref={logoMatRef}
             map={texture}
