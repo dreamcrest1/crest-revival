@@ -231,11 +231,33 @@ function RotatingGroup({
 }) {
   const group = useRef<THREE.Group>(null);
   const positions = useMemo(() => fibonacciSphere(items.length, radius), [items.length, radius]);
-
-  useFrame((_, delta) => {
+  const startPositions = useMemo(
+    () =>
+      positions.map((p) => {
+        // Scatter tiles randomly within a much larger sphere; biased outward
+        const dir = new THREE.Vector3(
+          Math.random() * 2 - 1,
+          Math.random() * 2 - 1,
+          Math.random() * 2 - 1,
+        ).normalize();
+        const dist = radius * (3 + Math.random() * 2);
+        return dir.multiplyScalar(dist);
+      }),
+    [positions, radius],
+  );
+  const formStartRef = useRef<number | null>(null);
+  const [formStart, setFormStart] = useState(0);
+  useFrame(({ clock }) => {
+    if (formStartRef.current === null) {
+      formStartRef.current = clock.getElapsedTime();
+      setFormStart(formStartRef.current);
+    }
     if (!group.current || paused) return;
     group.current.rotation.y += delta * 0.2;
   });
+  // remove stale delta-capture useFrame above; rewrite properly
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _noop = 0;
 
   return (
     <group ref={group} rotation={[0.35, 0, 0]}>
@@ -244,6 +266,9 @@ function RotatingGroup({
         <LogoTile
           key={it.name + i}
           position={positions[i]}
+          startPosition={startPositions[i]}
+          formStart={formStart}
+          formDuration={1.8}
           item={it}
           size={tileSize}
           onSelect={onSelect}
