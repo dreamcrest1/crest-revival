@@ -271,25 +271,39 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
     }
   });
 
+  const captured = useRef(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const DRAG_THRESHOLD = 6;
+
   const onPointerDown = (e: React.PointerEvent) => {
     dragging.current = true;
+    captured.current = false;
     lastX.current = e.clientX;
     velocity.current = 0;
     movedSinceDown.current = 0;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    // Do NOT capture immediately — that would swallow card clicks.
   };
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging.current) return;
     const dx = e.clientX - lastX.current;
     lastX.current = e.clientX;
     movedSinceDown.current += Math.abs(dx);
+    // Only start capturing once user has actually dragged past threshold.
+    if (!captured.current && movedSinceDown.current > DRAG_THRESHOLD) {
+      captured.current = true;
+      stageRef.current?.setPointerCapture(e.pointerId);
+    }
+    if (!captured.current) return;
     const d = dx * 0.4;
     rotation.set(rotation.get() + d);
     velocity.current = d * 60;
   };
   const onPointerUp = (e: React.PointerEvent) => {
     dragging.current = false;
-    (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    if (captured.current) {
+      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch {}
+    }
+    captured.current = false;
   };
 
   return (
