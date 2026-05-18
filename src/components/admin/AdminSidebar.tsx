@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, Star, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck } from 'lucide-react';
+import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, Star, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck, Sparkles } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
