@@ -7,6 +7,9 @@ import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useCart } from '@/contexts/CartContext';
 import { useImageValid, isLikelyValidLink } from '@/hooks/useImageValid';
 import { slugify } from '@/lib/productSeo';
+import { waLink } from '@/lib/whatsapp';
+import { useAllRatingStats } from '@/hooks/useProductReviews';
+import StarBadge from '@/components/StarBadge';
 
 const PLACEHOLDER = '/placeholder.svg';
 
