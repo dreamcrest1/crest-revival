@@ -9,7 +9,6 @@ import SEOHead from '@/components/SEOHead';
 const dreamcrestNumbers = [
   { label: '+91 97123 01164', link: 'https://wa.me/919712301164' },
   { label: '+91 63579 98730', link: 'https://wa.me/916357998730' },
-  { label: '+91 63579 98724', link: 'https://wa.me/916357998724' },
 ];
 
 const dreamstarNumbers = [
