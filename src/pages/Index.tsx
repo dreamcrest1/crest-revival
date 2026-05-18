@@ -28,8 +28,8 @@ const Index = () => {
       />
       <Navbar />
       <ProductGlobe />
-      <HeroSection />
       <AiToolsShowcase />
+      <HeroSection />
       <HotSellingSection />
       <CategoriesSection />
       <AboutSection />
