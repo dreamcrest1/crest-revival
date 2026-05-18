@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { Search, X, ExternalLink, Flame } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
@@ -48,9 +48,13 @@ const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 type UnifiedTool = { name: string; category: string; emoji: string; popularity: number };
 
+const INITIAL_DISPLAY = 48;
+const LOAD_MORE_INCREMENT = 24;
+
 const AllTools = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [displayCount, setDisplayCount] = useState(INITIAL_DISPLAY);
   const { data: productsData } = useProducts();
   const { data: aiTools = [] } = useAiTools();
 
@@ -79,6 +83,16 @@ const AllTools = () => {
 
   const isSearching = searchQuery.trim().length > 0;
 
+  const handleSetFilter = useCallback((filter: string) => {
+    setActiveFilter(filter);
+    setDisplayCount(INITIAL_DISPLAY);
+  }, []);
+
+  const handleSearch = useCallback((q: string) => {
+    setSearchQuery(q);
+    setDisplayCount(INITIAL_DISPLAY);
+  }, []);
+
   const filteredTools = useMemo(() => {
     let list = unified;
     if (activeFilter !== 'All') list = list.filter((t) => t.category === activeFilter);
@@ -88,6 +102,9 @@ const AllTools = () => {
     }
     return list;
   }, [unified, activeFilter, isSearching, searchQuery]);
+
+  const visibleTools = filteredTools.slice(0, displayCount);
+  const hasMore = displayCount < filteredTools.length;
 
   const trendingCount = Math.min(12, filteredTools.length);
 
@@ -133,11 +150,11 @@ const AllTools = () => {
                 type="text"
                 placeholder="Search tools..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full bg-card/60 backdrop-blur-sm border border-border/60 rounded-xl pl-11 pr-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/40 transition-colors"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                <button onClick={() => handleSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                   <X className="w-4 h-4" />
                 </button>
               )}
@@ -147,7 +164,7 @@ const AllTools = () => {
           {/* Category Filter Pills */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-wrap gap-2 justify-center mb-10">
             <button
-              onClick={() => setActiveFilter('All')}
+              onClick={() => handleSetFilter('All')}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                 activeFilter === 'All'
                   ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
@@ -159,7 +176,7 @@ const AllTools = () => {
             {categories.map(cat => (
               <button
                 key={cat.name}
-                onClick={() => setActiveFilter(cat.name)}
+                onClick={() => handleSetFilter(cat.name)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                   activeFilter === cat.name
                     ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
@@ -195,7 +212,7 @@ const AllTools = () => {
                 transition={{ duration: 0.3 }}
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3"
               >
-                {filteredTools.map((tool, i) => {
+                {visibleTools.map((tool, i) => {
                   const isTrending = !isSearching && activeFilter === 'All' && i < trendingCount;
                   return (
                     <motion.a
@@ -231,6 +248,17 @@ const AllTools = () => {
                 })}
               </motion.div>
             </AnimatePresence>
+
+            {hasMore && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={() => setDisplayCount((c) => c + LOAD_MORE_INCREMENT)}
+                  className="px-6 py-3 rounded-xl bg-card/60 backdrop-blur-sm border border-border/60 text-sm font-medium text-foreground hover:border-primary/40 hover:text-primary transition-all duration-300"
+                >
+                  Load more ({filteredTools.length - displayCount} remaining)
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Streaming Deals */}
