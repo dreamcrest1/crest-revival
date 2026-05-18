@@ -1,9 +1,16 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { useAiTools, proxyImage } from '@/hooks/useAiTools';
+import { useAiTools } from '@/hooks/useAiTools';
 import { popularityFor } from '@/data/aiToolPopularity';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
+
+/** Same image proxy as the /ai-tools page — contain-fit keeps logos crisp. */
+function logoUrl(src: string, size = 256): string {
+  if (!src) return '';
+  const stripped = src.replace(/^https?:\/\//, '');
+  return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=85`;
+}
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
 
