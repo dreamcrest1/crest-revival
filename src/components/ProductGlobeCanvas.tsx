@@ -246,7 +246,7 @@ const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
 
   return (
     <Canvas
-      dpr={isMobile ? [1, 1] : [1, 1.5]}
+      dpr={isMobile ? [1.5, 2.5] : [1, 1.5]}
       camera={{ position: [0, 0, isMobile ? 8.5 : 9.5], fov: 42 }}
       gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
       onCreated={({ gl }) => {
