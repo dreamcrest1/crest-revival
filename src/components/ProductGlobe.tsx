@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { useAiTools } from '@/hooks/useAiTools';
@@ -146,11 +147,19 @@ const ProductGlobe = () => {
           <GlobeSkeleton />
         ) : inView ? (
           <Suspense fallback={<GlobeSkeleton />}>
-            <GlobeCanvas
-              items={items}
-              isMobile={isMobile}
-              onSelect={handleSelect}
-            />
+            <motion.div
+              key="globe"
+              className="w-full h-full"
+              initial={{ opacity: 0, scale: 0.85, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <GlobeCanvas
+                items={items}
+                isMobile={isMobile}
+                onSelect={handleSelect}
+              />
+            </motion.div>
           </Suspense>
         ) : (
           <GlobeSkeleton />
