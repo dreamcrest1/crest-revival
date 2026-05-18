@@ -60,22 +60,32 @@ function useSafeTexture(url: string): TexState {
   return state;
 }
 
+type OrbitParams = {
+  u: THREE.Vector3;
+  v: THREE.Vector3;
+  radius: number;
+  phase: number;
+  speed: number;
+};
+
 function LogoTile({
-  position,
+  orbit,
   startPosition,
   formStart,
   formDuration,
   item,
   size,
   onSelect,
+  paused,
 }: {
-  position: THREE.Vector3;
+  orbit: OrbitParams;
   startPosition: THREE.Vector3;
   formStart: number;
   formDuration: number;
   item: GlobeItem;
   size: number;
   onSelect: (href: string) => void;
+  paused: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const [sourceIndex, setSourceIndex] = useState(0);
@@ -87,8 +97,11 @@ function LogoTile({
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
+  const orbitPos = useMemo(() => new THREE.Vector3(), []);
   const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
   const appearStartRef = useRef<number | null>(null);
+  const pausedAngleRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
   const APPEAR_DURATION = 0.7;
 
   // easeOutCubic
@@ -97,7 +110,7 @@ function LogoTile({
   useFrame(({ clock }) => {
     const now = clock.getElapsedTime();
 
-    // Formation animation (globe-wide): position + base scale ease
+    // Formation animation
     const formP = THREE.MathUtils.clamp((now - formStart) / formDuration, 0, 1);
     const formEased = ease(formP);
 
@@ -111,10 +124,26 @@ function LogoTile({
         : THREE.MathUtils.clamp((now - appearStartRef.current) / APPEAR_DURATION, 0, 1);
     const appearEased = ease(appearP);
 
+    // Advance orbit angle (pauses on interaction)
+    const dt = Math.min(0.05, now - lastTimeRef.current || 0);
+    lastTimeRef.current = now;
+    if (!paused) pausedAngleRef.current += dt * orbit.speed;
+    const theta = orbit.phase + pausedAngleRef.current;
+
+    // Position on orbit circle
+    const c = Math.cos(theta) * orbit.radius;
+    const s = Math.sin(theta) * orbit.radius;
+    orbitPos.set(
+      orbit.u.x * c + orbit.v.x * s,
+      orbit.u.y * c + orbit.v.y * s,
+      orbit.u.z * c + orbit.v.z * s,
+    );
+
     if (billboardRef.current) {
-      currentPos.lerpVectors(startPosition, position, formEased);
+      currentPos.lerpVectors(startPosition, orbitPos, formEased);
       billboardRef.current.position.copy(currentPos);
     }
+
 
     if (!groupRef.current) return;
     // Scale combines formation + a gentle pop-in once texture arrives
@@ -227,11 +256,34 @@ function RotatingGroup({
   paused: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
-  const positions = useMemo(() => fibonacciSphere(items.length, radius), [items.length, radius]);
+
+  // Generate per-tile orbit params: random axis, radius slightly outside the globe,
+  // varied phase and speed (some clockwise, some counter-clockwise).
+  const orbits = useMemo<OrbitParams[]>(() => {
+    return items.map(() => {
+      const axis = new THREE.Vector3(
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+      ).normalize();
+      // Build an orthonormal basis (u, v) perpendicular to axis
+      const helper =
+        Math.abs(axis.y) < 0.95
+          ? new THREE.Vector3(0, 1, 0)
+          : new THREE.Vector3(1, 0, 0);
+      const u = new THREE.Vector3().crossVectors(axis, helper).normalize();
+      const v = new THREE.Vector3().crossVectors(axis, u).normalize();
+      const r = radius * (1.15 + Math.random() * 0.45);
+      const phase = Math.random() * Math.PI * 2;
+      const dir = Math.random() < 0.5 ? -1 : 1;
+      const speed = dir * (0.18 + Math.random() * 0.32);
+      return { u, v, radius: r, phase, speed };
+    });
+  }, [items, radius]);
+
   const startPositions = useMemo(
     () =>
-      positions.map((p) => {
-        // Scatter tiles randomly within a much larger sphere; biased outward
+      orbits.map(() => {
         const dir = new THREE.Vector3(
           Math.random() * 2 - 1,
           Math.random() * 2 - 1,
@@ -240,17 +292,15 @@ function RotatingGroup({
         const dist = radius * (3 + Math.random() * 2);
         return dir.multiplyScalar(dist);
       }),
-    [positions, radius],
+    [orbits, radius],
   );
   const formStartRef = useRef<number | null>(null);
   const [formStart, setFormStart] = useState(0);
-  useFrame(({ clock }, delta) => {
+  useFrame(({ clock }) => {
     if (formStartRef.current === null) {
       formStartRef.current = clock.getElapsedTime();
       setFormStart(formStartRef.current);
     }
-    if (!group.current || paused) return;
-    group.current.rotation.y += delta * 0.2;
   });
 
   return (
@@ -259,13 +309,14 @@ function RotatingGroup({
       {items.map((it, i) => (
         <LogoTile
           key={it.name + i}
-          position={positions[i]}
+          orbit={orbits[i]}
           startPosition={startPositions[i]}
           formStart={formStart}
           formDuration={1.8}
           item={it}
           size={tileSize}
           onSelect={onSelect}
+          paused={paused}
         />
       ))}
     </group>
