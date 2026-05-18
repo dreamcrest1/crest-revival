@@ -7,55 +7,11 @@ import { popularityFor } from '@/data/aiToolPopularity';
 import { metaForTool } from '@/data/aiToolMeta';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 
-const iconify = (slug: string, color: string) => `https://api.iconify.design/simple-icons/${slug}.svg?color=%23${color}`;
-
-const GLOBE_ICON_OVERRIDES: Record<string, string> = {
-  'adobe.com': iconify('adobecreativecloud', 'DA1F26'),
-  'clickup.com': iconify('clickup', '7B68EE'),
-  'figma.com': iconify('figma', 'F24E1E'),
-  'flutterflow.io': iconify('flutter', '02569B'),
-  'intercom.com': iconify('intercom', '1F8DED'),
-  'linear.app': iconify('linear', '5E6AD2'),
-  'loom.com': iconify('loom', '625DF5'),
-  'miro.com': iconify('miro', 'FFD02F'),
-  'mongodb.com': iconify('mongodb', '47A248'),
-  'notion.so': iconify('notion', '000000'),
-  'perplexity.ai': iconify('perplexity', '1FB8CD'),
-  'posthog.com': iconify('posthog', 'FF5C00'),
-  'replit.com': iconify('replit', 'F26207'),
-  'supabase.com': iconify('supabase', '3ECF8E'),
-  'webflow.com': iconify('webflow', '146EF5'),
-};
-
-/** Proxy any url through weserv as a clean square — CORS-safe + crisp for WebGL textures. */
-function weservSquare(src: string, size = 512): string {
-  if (!src) return '';
-  const stripped = src.replace(/^https?:\/\//, '');
-  return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=90`;
-}
-
-/** Same multi-source fallback chain as the /ai-tools BrandLogo, proxied for WebGL. */
-function logoSourcesForTool(name: string, image: string): string[] {
+/** Use ONLY the user-uploaded local /logos/*.png — no external sources. */
+function logoSourcesForTool(name: string, _image: string): string[] {
   const meta = metaForTool(name);
-  const out: string[] = [];
-  // Prefer the user-uploaded local logo (no proxy needed — same origin).
-  if (meta.logo && meta.logo.startsWith('/logos/')) out.push(meta.logo);
-  const raw: string[] = [];
-  const override = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
-  if (override) raw.push(override);
-  if (meta.logo && !meta.logo.startsWith('/logos/')) raw.push(meta.logo);
-  if (meta.domain) {
-    raw.push(`https://logo.clearbit.com/${meta.domain}?size=512`);
-    raw.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
-  }
-  if (image) raw.push(image);
-  const seen = new Set<string>(out);
-  for (const u of raw) {
-    if (!u || seen.has(u)) continue;
-    seen.add(u);
-    out.push(weservSquare(u, 512));
-  }
-  return out;
+  if (meta.logo && meta.logo.startsWith('/logos/')) return [meta.logo];
+  return [];
 }
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
