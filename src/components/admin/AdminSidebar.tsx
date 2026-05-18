@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home } from 'lucide-react';
+import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -21,6 +21,8 @@ const menuItems = [
   { title: 'Products', url: '/admin/products', icon: Package },
   { title: 'Pages', url: '/admin/pages', icon: FileText },
   { title: 'Analytics', url: '/admin/analytics', icon: BarChart3 },
+  { title: 'SEO Audit', url: '/admin/seo-audit', icon: Search },
+  { title: 'Error Logs', url: '/admin/errors', icon: AlertCircle },
 ];
 
 const AdminSidebar = () => {
