@@ -150,7 +150,7 @@ const AllTools = () => {
                 type="text"
                 placeholder="Search tools..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full bg-card/60 backdrop-blur-sm border border-border/60 rounded-xl pl-11 pr-10 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/40 transition-colors"
               />
               {searchQuery && (
