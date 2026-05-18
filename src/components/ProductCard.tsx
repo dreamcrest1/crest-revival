@@ -10,13 +10,17 @@ import { slugify } from '@/lib/productSeo';
 import { waLink } from '@/lib/whatsapp';
 import { useAllRatingStats } from '@/hooks/useProductReviews';
 import StarBadge from '@/components/StarBadge';
+import { userLogoFor } from '@/data/userLogos';
 
 const PLACEHOLDER = '/placeholder.svg';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { addToCart } = useCart();
-  const imgState = useImageValid(product.image);
+  // Prefer the user-uploaded brand logo whenever we have a match for this product.
+  const brandLogo = userLogoFor(product.name);
+  const effectiveImage = brandLogo ?? product.image;
+  const imgState = useImageValid(effectiveImage);
   const linkOk = isLikelyValidLink(product.buyLink);
   const { data: ratingStats } = useAllRatingStats();
   const stat = ratingStats?.[product.id];
@@ -25,7 +29,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   // is also unusable — this keeps shelves looking clean during outages.
   if (imgState === false && !linkOk) return null;
 
-  const safeImage = imgState === false ? PLACEHOLDER : product.image;
+  const safeImage = imgState === false ? PLACEHOLDER : effectiveImage;
 
   return (
     <>
