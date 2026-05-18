@@ -36,12 +36,11 @@ function useSafeTexture(url: string): THREE.Texture | null {
       (t) => {
         if (cancelled) { t.dispose(); return; }
         t.colorSpace = THREE.SRGBColorSpace;
-        t.anisotropy = 2;
+        t.anisotropy = 4;
         setTex(t);
       },
       undefined,
       () => {
-        // fallback to placeholder on error
         loader.load(PLACEHOLDER, (t) => {
           if (cancelled) { t.dispose(); return; }
           t.colorSpace = THREE.SRGBColorSpace;
@@ -67,25 +66,31 @@ function LogoTile({
 }) {
   const [hovered, setHovered] = useState(false);
   const texture = useSafeTexture(item.image);
-  if (!texture) return null;
+  const groupRef = useRef<THREE.Group>(null);
+  const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
+  const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
+  const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
+  const worldPos = useMemo(() => new THREE.Vector3(), []);
 
-  const scale = hovered ? size * 1.18 : size;
+  // Depth-based fade: back of sphere fades, front stays sharp
+  useFrame(() => {
+    if (!groupRef.current) return;
+    groupRef.current.getWorldPosition(worldPos);
+    // worldPos.z roughly in [-radius, +radius]; map to opacity
+    const t = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0, 1);
+    const opacity = 0.15 + t * 0.85;
+    if (discMatRef.current) discMatRef.current.opacity = opacity * 0.92;
+    if (logoMatRef.current) logoMatRef.current.opacity = opacity;
+    if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
+  });
+
+  if (!texture) return null;
+  const scale = hovered ? size * 1.2 : size;
 
   return (
     <Billboard position={position}>
-      {/* Hover glow ring */}
-      {hovered && (
-        <mesh>
-          <circleGeometry args={[size * 0.62, 32]} />
-          <meshBasicMaterial
-            color="#f97316"
-            transparent
-            opacity={0.35}
-            depthWrite={false}
-          />
-        </mesh>
-      )}
-      <mesh
+      <group
+        ref={groupRef}
         scale={[scale, scale, scale]}
         onPointerOver={(e) => {
           e.stopPropagation();
@@ -101,15 +106,74 @@ function LogoTile({
           onSelect(item.href);
         }}
       >
-        <planeGeometry args={[1, 1]} />
+        {/* Outer glow ring on hover */}
+        {hovered && (
+          <mesh position={[0, 0, -0.02]}>
+            <ringGeometry args={[0.56, 0.72, 48]} />
+            <meshBasicMaterial color="#f97316" transparent opacity={0.55} depthWrite={false} />
+          </mesh>
+        )}
+        {/* Subtle border ring always visible */}
+        <mesh position={[0, 0, -0.01]}>
+          <ringGeometry args={[0.52, 0.56, 48]} />
+          <meshBasicMaterial
+            ref={ringMatRef}
+            color={hovered ? '#f97316' : '#ffffff'}
+            transparent
+            opacity={0.25}
+            depthWrite={false}
+          />
+        </mesh>
+        {/* Dark glassy disc background */}
+        <mesh>
+          <circleGeometry args={[0.52, 48]} />
+          <meshBasicMaterial
+            ref={discMatRef}
+            color="#0a0e1a"
+            transparent
+            opacity={0.92}
+            depthWrite={false}
+          />
+        </mesh>
+        {/* Logo image, contained inside the disc */}
+        <mesh position={[0, 0, 0.001]}>
+          <planeGeometry args={[0.78, 0.78]} />
+          <meshBasicMaterial
+            ref={logoMatRef}
+            map={texture}
+            transparent
+            toneMapped={false}
+            depthWrite={false}
+          />
+        </mesh>
+      </group>
+    </Billboard>
+  );
+}
+
+function WireSphere({ radius }: { radius: number }) {
+  return (
+    <>
+      <mesh>
+        <sphereGeometry args={[radius * 0.98, 48, 32]} />
         <meshBasicMaterial
-          map={texture}
+          color="#f97316"
+          wireframe
           transparent
-          toneMapped={false}
-          side={THREE.DoubleSide}
+          opacity={0.06}
+          depthWrite={false}
         />
       </mesh>
-    </Billboard>
+      <mesh>
+        <sphereGeometry args={[radius * 0.6, 32, 24]} />
+        <meshBasicMaterial
+          color="#f97316"
+          transparent
+          opacity={0.04}
+          depthWrite={false}
+        />
+      </mesh>
+    </>
   );
 }
 
@@ -131,11 +195,12 @@ function RotatingGroup({
 
   useFrame((_, delta) => {
     if (!group.current || paused) return;
-    group.current.rotation.y += delta * 0.18;
+    group.current.rotation.y += delta * 0.2;
   });
 
   return (
-    <group ref={group}>
+    <group ref={group} rotation={[0.35, 0, 0]}>
+      <WireSphere radius={radius} />
       {items.map((it, i) => (
         <LogoTile
           key={it.name + i}
@@ -157,7 +222,7 @@ type Props = {
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   const radius = isMobile ? 2.6 : 3.2;
-  const tileSize = isMobile ? 0.7 : 0.8;
+  const tileSize = isMobile ? 0.85 : 1.0;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
@@ -173,8 +238,8 @@ const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   return (
     <Canvas
       dpr={isMobile ? [1, 1] : [1, 1.5]}
-      camera={{ position: [0, 0, isMobile ? 7 : 8], fov: 45 }}
-      gl={{ antialias: false, powerPreference: 'high-performance', alpha: true }}
+      camera={{ position: [0, 0, isMobile ? 8 : 9], fov: 42 }}
+      gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
       onPointerDown={handleStart}
       onPointerUp={handleEnd}
       onPointerLeave={handleEnd}

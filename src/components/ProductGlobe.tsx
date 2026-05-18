@@ -93,8 +93,18 @@ const ProductGlobe = () => {
 
       <div
         className="relative w-full mx-auto"
-        style={{ height: isMobile ? 360 : 520, maxWidth: 1100 }}
+        style={{ height: isMobile ? 380 : 560, maxWidth: 1100 }}
       >
+        {/* Radial backdrop to dim background bleed-through */}
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.55) 45%, transparent 75%)',
+          }}
+        />
+        <div className="relative w-full h-full">
         {reduced || items.length === 0 ? (
           <StaticGrid items={items} />
         ) : inView ? (
@@ -108,6 +118,7 @@ const ProductGlobe = () => {
         ) : (
           <div className="w-full h-full" />
         )}
+        </div>
       </div>
     </section>
   );
