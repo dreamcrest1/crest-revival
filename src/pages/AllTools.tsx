@@ -8,6 +8,7 @@ import { Search, X, ExternalLink, Flame } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
 import { useProducts } from '@/hooks/useProducts';
 import { useAiTools } from '@/hooks/useAiTools';
+import { trackEvent } from '@/lib/eventTracker';
 import { popularityFor } from '@/data/aiToolPopularity';
 
 type ToolCategory = {
@@ -218,6 +219,7 @@ const AllTools = () => {
                     <motion.a
                       key={tool.name}
                       href={getWhatsAppLink(tool.name)}
+                      onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: tool.name, category: tool.category })}
                       target="_blank"
                       rel="noopener noreferrer"
                       initial={{ opacity: 0, scale: 0.95 }}
@@ -285,6 +287,7 @@ const AllTools = () => {
                 <motion.a
                   key={deal.name}
                   href={getWhatsAppLink(deal.name)}
+                  onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: deal.name, category: 'Streaming' })}
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 10 }}

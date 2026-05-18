@@ -9,6 +9,7 @@ import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useAiTools } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
+import { trackEvent } from '@/lib/eventTracker';
 
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
@@ -208,6 +209,7 @@ const AiToolDetail = () => {
                   href={tool.price > 0 ? COSMOFEED_URL : waLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => void trackEvent(tool.price > 0 ? 'checkout_click' : 'tool_whatsapp_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image })}
                   className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
                 >
                   <Zap className="w-4 h-4" /> {tool.price > 0 ? 'Buy Now' : 'Enquire'}
@@ -216,6 +218,7 @@ const AiToolDetail = () => {
                   href={waLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image })}
                   className="flex items-center justify-center gap-2 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-[#25D366] hover:text-white transition-all"
                 >
                   <WhatsAppIcon className="w-4 h-4" /> WhatsApp
