@@ -18,6 +18,8 @@ const ProductCard = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
   const imgState = useImageValid(product.image);
   const linkOk = isLikelyValidLink(product.buyLink);
+  const { data: ratingStats } = useAllRatingStats();
+  const stat = ratingStats?.[product.id];
 
   // Hide the product entirely when its image is confirmed broken AND the buy link
   // is also unusable — this keeps shelves looking clean during outages.
