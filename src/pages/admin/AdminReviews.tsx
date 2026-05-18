@@ -16,7 +16,8 @@ interface Review {
 }
 
 const AdminReviews = () => {
-  const { products } = useProducts();
+  const { data: productsData } = useProducts();
+  const products = productsData?.products ?? [];
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'pending' | 'approved' | 'all'>('pending');
