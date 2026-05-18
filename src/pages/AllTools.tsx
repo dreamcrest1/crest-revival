@@ -48,9 +48,13 @@ const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 type UnifiedTool = { name: string; category: string; emoji: string; popularity: number };
 
+const INITIAL_DISPLAY = 48;
+const LOAD_MORE_INCREMENT = 24;
+
 const AllTools = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [displayCount, setDisplayCount] = useState(INITIAL_DISPLAY);
   const { data: productsData } = useProducts();
   const { data: aiTools = [] } = useAiTools();
 
