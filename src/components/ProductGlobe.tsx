@@ -37,15 +37,13 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       out.push(it);
     };
 
-    OTT_LOGOS.forEach(push);
-
     const tools = [...(aiTools ?? [])]
       .filter((t) => t.image && t.image.trim().length > 0)
       .sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
     tools.forEach((t) =>
       push({
         name: t.name.trim(),
-        image: proxyImage(t.image, 256),
+        image: logoUrl(t.image, 256),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );
