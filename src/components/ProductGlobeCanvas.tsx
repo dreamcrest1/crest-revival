@@ -155,12 +155,13 @@ function LogoTile({
             depthWrite={false}
           />
         </mesh>
-        {/* Logo image, contained inside the disc */}
+        {/* Logo image, contained inside the disc, masked to a circle */}
         <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[0.78, 0.78]} />
+          <circleGeometry args={[0.5, 48]} />
           <meshBasicMaterial
             ref={logoMatRef}
             map={texture}
+            alphaMap={getCircleAlphaTexture()}
             transparent
             toneMapped={false}
             depthWrite={false}
