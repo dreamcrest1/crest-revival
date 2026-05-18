@@ -50,7 +50,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       }),
     );
 
-    return out.slice(0, isMobile ? 18 : 26);
+    return out.slice(0, isMobile ? 24 : 40);
   }, [aiTools, isMobile]);
 }
 
@@ -82,7 +82,7 @@ const ProductGlobe = () => {
   return (
     <section
       ref={ref}
-      className="relative w-full pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden"
+      className="relative w-full pt-28 sm:pt-32 pb-12 sm:pb-16 overflow-hidden"
       aria-label="Explore Our Universe of Tools"
     >
       <div className="text-center mb-6 sm:mb-10 px-4">
