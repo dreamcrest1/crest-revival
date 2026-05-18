@@ -14,6 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          body_markdown: string
+          cover_image_url: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          is_published: boolean
+          og_image_url: string | null
+          published_at: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body_markdown?: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean
+          og_image_url?: string | null
+          published_at?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body_markdown?: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean
+          og_image_url?: string | null
+          published_at?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      click_events: {
+        Row: {
+          created_at: string
+          element_tag: string | null
+          element_text: string | null
+          id: string
+          page_path: string
+          viewport_w: number | null
+          visitor_id: string | null
+          x_pct: number
+          y_pct: number
+        }
+        Insert: {
+          created_at?: string
+          element_tag?: string | null
+          element_text?: string | null
+          id?: string
+          page_path: string
+          viewport_w?: number | null
+          visitor_id?: string | null
+          x_pct: number
+          y_pct: number
+        }
+        Update: {
+          created_at?: string
+          element_tag?: string | null
+          element_text?: string | null
+          id?: string
+          page_path?: string
+          viewport_w?: number | null
+          visitor_id?: string | null
+          x_pct?: number
+          y_pct?: number
+        }
+        Relationships: []
+      }
       error_logs: {
         Row: {
           col_no: number | null
@@ -152,12 +239,17 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          image_alt: string | null
           image_url: string | null
           is_active: boolean
           is_hot_selling: boolean
           name: string
+          og_image_url: string | null
           original_price: number | null
           price: number
+          seo_description: string | null
+          seo_keywords: string | null
+          seo_title: string | null
           sort_order: number
           updated_at: string
         }
@@ -167,12 +259,17 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          image_alt?: string | null
           image_url?: string | null
           is_active?: boolean
           is_hot_selling?: boolean
           name: string
+          og_image_url?: string | null
           original_price?: number | null
           price: number
+          seo_description?: string | null
+          seo_keywords?: string | null
+          seo_title?: string | null
           sort_order?: number
           updated_at?: string
         }
@@ -182,12 +279,17 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          image_alt?: string | null
           image_url?: string | null
           is_active?: boolean
           is_hot_selling?: boolean
           name?: string
+          og_image_url?: string | null
           original_price?: number | null
           price?: number
+          seo_description?: string | null
+          seo_keywords?: string | null
+          seo_title?: string | null
           sort_order?: number
           updated_at?: string
         }
@@ -204,6 +306,7 @@ export type Database = {
           id: string
           ip_address: string | null
           language: string | null
+          metadata: Json
           os: string | null
           page_path: string
           referrer: string | null
@@ -222,6 +325,7 @@ export type Database = {
           id?: string
           ip_address?: string | null
           language?: string | null
+          metadata?: Json
           os?: string | null
           page_path: string
           referrer?: string | null
@@ -240,6 +344,7 @@ export type Database = {
           id?: string
           ip_address?: string | null
           language?: string | null
+          metadata?: Json
           os?: string | null
           page_path?: string
           referrer?: string | null

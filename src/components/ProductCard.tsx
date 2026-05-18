@@ -7,6 +7,9 @@ import { WhatsAppIcon } from '@/components/SocialIcons';
 import { useCart } from '@/contexts/CartContext';
 import { useImageValid, isLikelyValidLink } from '@/hooks/useImageValid';
 import { slugify } from '@/lib/productSeo';
+import { waLink } from '@/lib/whatsapp';
+import { useAllRatingStats } from '@/hooks/useProductReviews';
+import StarBadge from '@/components/StarBadge';
 
 const PLACEHOLDER = '/placeholder.svg';
 
@@ -15,6 +18,8 @@ const ProductCard = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
   const imgState = useImageValid(product.image);
   const linkOk = isLikelyValidLink(product.buyLink);
+  const { data: ratingStats } = useAllRatingStats();
+  const stat = ratingStats?.[product.id];
 
   // Hide the product entirely when its image is confirmed broken AND the buy link
   // is also unusable — this keeps shelves looking clean during outages.
@@ -60,7 +65,12 @@ const ProductCard = ({ product }: { product: Product }) => {
           <h3 className="font-display font-semibold text-foreground text-sm leading-tight mb-1 line-clamp-2 min-h-[36px]">
             {product.name}
           </h3>
-          <p className="text-[11px] text-muted-foreground/60 mb-2 font-medium">{product.category}</p>
+          <div className="flex items-center justify-between mb-2 gap-2">
+            <p className="text-[11px] text-muted-foreground/60 font-medium truncate">{product.category}</p>
+            {stat && stat.review_count > 0 && (
+              <StarBadge rating={Number(stat.avg_rating)} count={stat.review_count} />
+            )}
+          </div>
 
           <div className="flex items-baseline gap-2 mb-3">
             <span className="font-display font-bold text-lg text-primary">{product.price}</span>
@@ -171,7 +181,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                     <ShoppingCart className="w-4 h-4" />
                   </button>
                   <a
-                    href={`https://wa.me/916357998730?text=${encodeURIComponent(`Hi! I'm interested in ${product.name} (${product.price}). Please share details.`)}`}
+                    href={waLink({ name: product.name, price: product.price, slug: slugify(product.name), category: product.category }, 'product-card')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all"

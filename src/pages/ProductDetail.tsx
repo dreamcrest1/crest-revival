@@ -11,6 +11,10 @@ import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import ProductReviews from '@/components/ProductReviews';
 import { useRatingStats } from '@/hooks/useProductReviews';
+import LiveViewers from '@/components/social/LiveViewers';
+import { waLink } from '@/lib/whatsapp';
+import { trackEvent } from '@/lib/eventTracker';
+import { useEffect } from 'react';
 
 const PLACEHOLDER = '/placeholder.svg';
 
@@ -201,9 +205,9 @@ const ProductDetail = () => {
     categoryHowItWorks[product.category] ||
     'After payment, you receive your access details directly on WhatsApp within minutes. Follow the simple instructions to log in and start using your subscription.';
 
-  const whatsappMsg = encodeURIComponent(
-    `Hi! I'm interested in ${product.name} (${product.price}). Please share details.`,
-  );
+  const waHref = waLink({ name: product.name, price: product.price, slug: slugify(product.name), category: product.category }, 'product-detail');
+
+  useEffect(() => { void trackEvent('product_view', { product_id: product.id, name: product.name }); }, [product.id, product.name]);
 
   return (
     <div className="min-h-screen relative z-10">
@@ -296,7 +300,8 @@ const ProductDetail = () => {
                   <ShoppingCart className="w-4 h-4" /> Add to Cart
                 </button>
                 <a
-                  href={`https://wa.me/916357998730?text=${whatsappMsg}`}
+                  href={waHref}
+                  onClick={() => void trackEvent('whatsapp_click', { product_id: product.id })}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
@@ -304,6 +309,7 @@ const ProductDetail = () => {
                   <WhatsAppIcon className="w-4 h-4" /> WhatsApp
                 </a>
               </div>
+              <div className="mt-4"><LiveViewers productId={product.id} /></div>
             </div>
           </div>
 
