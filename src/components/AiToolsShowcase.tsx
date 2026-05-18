@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { Sparkles, ArrowRight, Star, X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useAiTools, proxyImage, type AiTool } from '@/hooks/useAiTools';
+import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { BrandLogo } from '@/components/ai/BrandLogo';
 
 const COUNT = 12;
 const ROTATE_MS = 5000;
@@ -79,13 +80,8 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
       <X className="w-4 h-4" />
     </button>
     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
-      <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-xl bg-white/95 p-2 md:p-3 flex items-center justify-center shrink-0 mx-auto sm:mx-0">
-        <img
-          src={proxyImage(tool.image, 400)}
-          alt={tool.name}
-          className="w-full h-full object-contain"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
-        />
+      <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex items-center justify-center shrink-0 mx-auto sm:mx-0">
+        <BrandLogo t={tool} compact />
       </div>
       <div className="flex-1 min-w-0 w-full">
         <div className="flex items-center gap-2 mb-2">
@@ -176,15 +172,8 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
               transition={{ type: 'spring', stiffness: 220, damping: 28 }}
             >
               <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${abs === 0 ? 'border-primary shadow-[0_30px_80px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
-                <div className="relative aspect-square bg-white/95 overflow-hidden">
-                  <img
-                    src={proxyImage(tool.image, 400)}
-                    alt={tool.name}
-                    loading="lazy"
-                    draggable={false}
-                    className="w-full h-full object-contain p-3"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
-                  />
+                <div className="relative aspect-square overflow-hidden">
+                  <BrandLogo t={tool} compact />
                   <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[9px] font-bold tracking-wide">
                     {tool.symbol}
                   </div>
@@ -356,15 +345,8 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
                       : 'border-white/10 group-hover:border-primary/60 group-hover:shadow-[0_30px_80px_-10px_hsl(var(--primary)/0.7)]'
                   }`}
                 >
-                  <div className="relative aspect-square bg-white/95 overflow-hidden">
-                    <img
-                      src={proxyImage(tool.image, 400)}
-                      alt={tool.name}
-                      loading="lazy"
-                      draggable={false}
-                      className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
-                    />
+                  <div className="relative aspect-square overflow-hidden">
+                    <BrandLogo t={tool} compact />
                     <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[10px] font-bold tracking-wide">
                       {tool.symbol}
                     </div>
