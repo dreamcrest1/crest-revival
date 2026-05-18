@@ -97,7 +97,7 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
         <div className="flex flex-wrap items-center gap-3 mt-3 md:mt-4">
           <span className="text-xl md:text-3xl font-bold text-primary">₹{tool.price}</span>
           <Link
-            to="/ai-tools"
+            to={`/ai-tool/${slugifyAiTool(tool.name)}`}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
           >
             Grab this tool <ExternalLink className="w-4 h-4" />
