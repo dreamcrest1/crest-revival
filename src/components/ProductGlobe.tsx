@@ -6,23 +6,24 @@ import { popularityFor } from '@/data/aiToolPopularity';
 import { metaForTool } from '@/data/aiToolMeta';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 
+const iconify = (slug: string, color: string) => `https://api.iconify.design/simple-icons/${slug}.svg?color=%23${color}`;
+
 const GLOBE_ICON_OVERRIDES: Record<string, string> = {
-  'adobe.com': 'https://cdn.simpleicons.org/adobecreativecloud/DA1F26',
-  'clickup.com': 'https://cdn.simpleicons.org/clickup/7B68EE',
-  'figma.com': 'https://cdn.simpleicons.org/figma/F24E1E',
-  'flutterflow.io': 'https://cdn.simpleicons.org/flutter/02569B',
-  'intercom.com': 'https://cdn.simpleicons.org/intercom/1F8DED',
-  'linear.app': 'https://cdn.simpleicons.org/linear/5E6AD2',
-  'loom.com': 'https://cdn.simpleicons.org/loom/625DF5',
-  'miro.com': 'https://cdn.simpleicons.org/miro/FFD02F',
-  'mongodb.com': 'https://cdn.simpleicons.org/mongodb/47A248',
-  'notion.so': 'https://cdn.simpleicons.org/notion/000000',
-  'perplexity.ai': 'https://cdn.simpleicons.org/perplexity/1FB8CD',
-  'posthog.com': 'https://cdn.simpleicons.org/posthog/FF5C00',
-  'replit.com': 'https://cdn.simpleicons.org/replit/F26207',
-  'roboform.com': 'https://cdn.simpleicons.org/roboform/0079FF',
-  'supabase.com': 'https://cdn.simpleicons.org/supabase/3ECF8E',
-  'webflow.com': 'https://cdn.simpleicons.org/webflow/146EF5',
+  'adobe.com': iconify('adobecreativecloud', 'DA1F26'),
+  'clickup.com': iconify('clickup', '7B68EE'),
+  'figma.com': iconify('figma', 'F24E1E'),
+  'flutterflow.io': iconify('flutter', '02569B'),
+  'intercom.com': iconify('intercom', '1F8DED'),
+  'linear.app': iconify('linear', '5E6AD2'),
+  'loom.com': iconify('loom', '625DF5'),
+  'miro.com': iconify('miro', 'FFD02F'),
+  'mongodb.com': iconify('mongodb', '47A248'),
+  'notion.so': iconify('notion', '000000'),
+  'perplexity.ai': iconify('perplexity', '1FB8CD'),
+  'posthog.com': iconify('posthog', 'FF5C00'),
+  'replit.com': iconify('replit', 'F26207'),
+  'supabase.com': iconify('supabase', '3ECF8E'),
+  'webflow.com': iconify('webflow', '146EF5'),
 };
 
 /** WebGL needs CORS-safe logo textures; keep the same source order as /ai-tools. */
@@ -34,18 +35,8 @@ function proxiedSquareLogo(src: string, size = 256): string {
 
 function logoSourcesForTool(name: string): string[] {
   const meta = metaForTool(name);
-  const sources: string[] = [];
-  if (meta.logo) {
-    sources.push(meta.logo);
-    if (/^https?:\/\//.test(meta.logo)) sources.push(proxiedSquareLogo(meta.logo, 256));
-  }
-  if (meta.domain) {
-    if (GLOBE_ICON_OVERRIDES[meta.domain]) sources.unshift(GLOBE_ICON_OVERRIDES[meta.domain]);
-    sources.push(proxiedSquareLogo(`https://${meta.domain}/favicon.svg`, 256));
-    sources.push(proxiedSquareLogo(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`, 256));
-    sources.push(proxiedSquareLogo(`https://${meta.domain}/apple-touch-icon.png`, 256));
-  }
-  return Array.from(new Set(sources.filter(Boolean)));
+  const icon = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
+  return icon ? [icon, proxiedSquareLogo(icon, 256)] : [];
 }
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
