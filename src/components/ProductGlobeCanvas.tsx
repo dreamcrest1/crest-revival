@@ -247,7 +247,7 @@ function RotatingGroup({
   );
   const formStartRef = useRef<number | null>(null);
   const [formStart, setFormStart] = useState(0);
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     if (formStartRef.current === null) {
       formStartRef.current = clock.getElapsedTime();
       setFormStart(formStartRef.current);
@@ -255,9 +255,6 @@ function RotatingGroup({
     if (!group.current || paused) return;
     group.current.rotation.y += delta * 0.2;
   });
-  // remove stale delta-capture useFrame above; rewrite properly
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _noop = 0;
 
   return (
     <group ref={group} rotation={[0.35, 0, 0]}>
