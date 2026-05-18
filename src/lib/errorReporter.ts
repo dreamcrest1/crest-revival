@@ -10,7 +10,7 @@ type Payload = {
   col_no?: number;
   user_agent?: string;
   visitor_id?: string;
-  metadata?: Record<string, unknown>;
+  metadata?: Record<string, string | number | boolean | null | undefined>;
 };
 
 const queue: Payload[] = [];
