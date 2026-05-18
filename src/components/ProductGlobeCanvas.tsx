@@ -45,32 +45,35 @@ function fibonacciSphere(n: number, radius: number): THREE.Vector3[] {
   return out;
 }
 
-function useSafeTexture(url: string): THREE.Texture | null {
-  const [tex, setTex] = useState<THREE.Texture | null>(null);
+type TexState = { tex: THREE.Texture | null; failed: boolean };
+
+function useSafeTexture(url: string): TexState {
+  const [state, setState] = useState<TexState>({ tex: null, failed: false });
   useEffect(() => {
     let cancelled = false;
+    if (!url) {
+      setState({ tex: null, failed: true });
+      return;
+    }
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin('anonymous');
     loader.load(
-      url || PLACEHOLDER,
+      url,
       (t) => {
         if (cancelled) { t.dispose(); return; }
         t.colorSpace = THREE.SRGBColorSpace;
         t.anisotropy = 4;
-        setTex(t);
+        setState({ tex: t, failed: false });
       },
       undefined,
       () => {
-        loader.load(PLACEHOLDER, (t) => {
-          if (cancelled) { t.dispose(); return; }
-          t.colorSpace = THREE.SRGBColorSpace;
-          setTex(t);
-        });
+        if (cancelled) return;
+        setState({ tex: null, failed: true });
       },
     );
     return () => { cancelled = true; };
   }, [url]);
-  return tex;
+  return state;
 }
 
 function LogoTile({

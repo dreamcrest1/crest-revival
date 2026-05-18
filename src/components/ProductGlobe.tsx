@@ -13,14 +13,14 @@ export type GlobeItem = {
   href: string;
 };
 
-// Curated OTT brand logos via Clearbit (square, mostly transparent/dark)
+// Curated OTT brand logos via simpleicons CDN (crisp SVG, CORS-friendly)
 const OTT_LOGOS: GlobeItem[] = [
-  { name: 'Netflix', image: 'https://logo.clearbit.com/netflix.com', href: '/all-tools' },
-  { name: 'Prime Video', image: 'https://logo.clearbit.com/primevideo.com', href: '/all-tools' },
-  { name: 'Hotstar', image: 'https://logo.clearbit.com/hotstar.com', href: '/all-tools' },
-  { name: 'Zee5', image: 'https://logo.clearbit.com/zee5.com', href: '/all-tools' },
-  { name: 'SonyLIV', image: 'https://logo.clearbit.com/sonyliv.com', href: '/all-tools' },
-].map((o) => ({ ...o, image: proxyImage(o.image, 256) }));
+  { name: 'Netflix', image: 'https://cdn.simpleicons.org/netflix/E50914', href: '/all-tools' },
+  { name: 'Prime Video', image: 'https://cdn.simpleicons.org/primevideo/00A8E1', href: '/all-tools' },
+  { name: 'Hotstar', image: 'https://cdn.simpleicons.org/hotstar/1F80E0', href: '/all-tools' },
+  { name: 'Zee5', image: 'https://cdn.simpleicons.org/zee5/8230FF', href: '/all-tools' },
+  { name: 'SonyLIV', image: 'https://cdn.simpleicons.org/sonyliv/E50914', href: '/all-tools' },
+];
 
 function useGlobeItems(isMobile: boolean): GlobeItem[] {
   const { data: aiTools } = useAiTools();
