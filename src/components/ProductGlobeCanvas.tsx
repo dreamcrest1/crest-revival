@@ -190,17 +190,19 @@ function LogoTile({
             depthWrite={false}
           />
         </mesh>
-        {/* Logo image, contained inside the disc, masked to a circle */}
-        <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[0.72, 0.72]} />
-          <meshBasicMaterial
-            ref={logoMatRef}
-            map={texture}
-            transparent
-            toneMapped={false}
-            depthWrite={false}
-          />
-        </mesh>
+        {/* Logo image — only mounted once texture has loaded */}
+        {texture && (
+          <mesh position={[0, 0, 0.001]}>
+            <planeGeometry args={[0.72, 0.72]} />
+            <meshBasicMaterial
+              ref={logoMatRef}
+              map={texture}
+              transparent
+              toneMapped={false}
+              depthWrite={false}
+            />
+          </mesh>
+        )}
       </group>
     </Billboard>
   );
