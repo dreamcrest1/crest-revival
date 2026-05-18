@@ -76,11 +76,11 @@ const AdminHeatmap = () => {
         .select('page_path')
         .gte('created_at', new Date(Date.now() - RANGES[range] * 86400000).toISOString())
         .limit(5000);
-      const set = new Set<string>();
+      const set = new Set<string>(DEFAULT_PATHS);
       for (const r of (data as { page_path: string }[]) || []) set.add(r.page_path);
       const arr = [...set];
       setPaths(arr);
-      if (arr.length && !selected) setSelected(arr[0]);
+      setSelected((prev) => prev || arr[0] || '');
       setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
