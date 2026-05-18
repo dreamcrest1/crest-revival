@@ -88,30 +88,45 @@ function LogoTile({
   const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
   const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
+  const appearStartRef = useRef<number | null>(null);
+  const APPEAR_DURATION = 0.7;
 
   // easeOutCubic
   const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
   useFrame(({ clock }) => {
-    // Formation animation: interpolate position + reveal scale/opacity
-    const elapsed = clock.getElapsedTime() - formStart;
-    const p = THREE.MathUtils.clamp(elapsed / formDuration, 0, 1);
-    const eased = ease(p);
+    const now = clock.getElapsedTime();
+
+    // Formation animation (globe-wide): position + base scale ease
+    const formP = THREE.MathUtils.clamp((now - formStart) / formDuration, 0, 1);
+    const formEased = ease(formP);
+
+    // Per-tile reveal: only starts when its texture has loaded
+    if (texture && appearStartRef.current === null) {
+      appearStartRef.current = now;
+    }
+    const appearP =
+      appearStartRef.current === null
+        ? 0
+        : THREE.MathUtils.clamp((now - appearStartRef.current) / APPEAR_DURATION, 0, 1);
+    const appearEased = ease(appearP);
 
     if (billboardRef.current) {
-      currentPos.lerpVectors(startPosition, position, eased);
+      currentPos.lerpVectors(startPosition, position, formEased);
       billboardRef.current.position.copy(currentPos);
     }
 
     if (!groupRef.current) return;
-    const baseScale = (hovered ? size * 1.2 : size) * eased;
+    // Scale combines formation + a gentle pop-in once texture arrives
+    const reveal = appearEased;
+    const baseScale = (hovered ? size * 1.2 : size) * formEased * (0.7 + 0.3 * reveal);
     groupRef.current.scale.setScalar(baseScale);
 
-    // Depth-based fade once formed
+    // Depth-based fade combined with per-tile reveal opacity
     groupRef.current.getWorldPosition(worldPos);
     const t = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0, 1);
     const depthOpacity = 0.45 + t * 0.55;
-    const opacity = depthOpacity * eased;
+    const opacity = depthOpacity * formEased * reveal;
     if (discMatRef.current) discMatRef.current.opacity = opacity * 0.92;
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
     if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
@@ -119,13 +134,14 @@ function LogoTile({
 
   useEffect(() => {
     setSourceIndex(0);
+    appearStartRef.current = null;
   }, [item.name, item.images]);
 
   useEffect(() => {
     if (failed && sourceIndex < item.images.length - 1) setSourceIndex((i) => i + 1);
   }, [failed, sourceIndex, item.images.length]);
 
-  if (failed || !texture) return null;
+  if (failed) return null;
 
   return (
     <Billboard ref={billboardRef} position={startPosition}>
@@ -174,17 +190,19 @@ function LogoTile({
             depthWrite={false}
           />
         </mesh>
-        {/* Logo image, contained inside the disc, masked to a circle */}
-        <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[0.72, 0.72]} />
-          <meshBasicMaterial
-            ref={logoMatRef}
-            map={texture}
-            transparent
-            toneMapped={false}
-            depthWrite={false}
-          />
-        </mesh>
+        {/* Logo image — only mounted once texture has loaded */}
+        {texture && (
+          <mesh position={[0, 0, 0.001]}>
+            <planeGeometry args={[0.72, 0.72]} />
+            <meshBasicMaterial
+              ref={logoMatRef}
+              map={texture}
+              transparent
+              toneMapped={false}
+              depthWrite={false}
+            />
+          </mesh>
+        )}
       </group>
     </Billboard>
   );
