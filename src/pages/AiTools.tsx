@@ -163,6 +163,11 @@ function ToolCard({ t }: { t: AiTool }) {
         <Link to={detailHref} className="hover:text-primary transition-colors">
           <h3 className="font-display font-semibold text-foreground text-sm leading-tight line-clamp-2 min-h-[36px]">{t.name}</h3>
         </Link>
+        {/^.*personal email.*$/i.test(t.name) && (
+          <span className="inline-flex items-center gap-1 self-start text-[10px] font-semibold uppercase tracking-wider text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full">
+            <Mail className="w-3 h-3" /> Activated on your personal email
+          </span>
+        )}
         {meta.tagline && (
           <p className="text-[11px] text-muted-foreground line-clamp-2 min-h-[30px]">{meta.tagline}</p>
         )}

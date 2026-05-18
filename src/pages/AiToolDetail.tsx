@@ -168,6 +168,15 @@ const AiToolDetail = () => {
               <h1 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-2">
                 <span className="text-primary">{tool.name}</span>
               </h1>
+              {/personal email/i.test(tool.name) && (
+                <div className="flex items-start gap-2 bg-primary/10 border border-primary/20 text-foreground rounded-xl px-3 py-2.5 mb-4 text-sm">
+                  <Mail className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <span>
+                    <span className="font-semibold text-primary">Activated on your personal email</span>
+                    {' '}— share your email at checkout and we'll activate the plan directly on your own Claude account.
+                  </span>
+                </div>
+              )}
               <p className="text-muted-foreground mb-5">{meta.description || meta.tagline}</p>
 
               <div className="flex items-baseline gap-3 mb-5">
