@@ -100,6 +100,7 @@ const App = () => {
                     <Route path="heatmap" element={<AdminHeatmap />} />
                     <Route path="geo" element={<AdminGeo />} />
                     <Route path="search-queries" element={<AdminSearchQueries />} />
+                    <Route path="insights" element={<AdminInsights />} />
                     <Route path="seo-audit" element={<AdminSeoAudit />} />
                     <Route path="errors" element={<AdminErrorLogs />} />
                   </Route>
