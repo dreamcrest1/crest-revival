@@ -280,7 +280,7 @@ type Props = {
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   const radius = isMobile ? 2.4 : 3.0;
-  const tileSize = isMobile ? 0.6 : 0.68;
+  const tileSize = isMobile ? 0.48 : 0.544;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
