@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, ZoomableGroup, Marker } from 'react-simple-maps';
 import { scaleSqrt } from 'd3-scale';
 
 // Tiny city coordinate dataset for major Indian cities — enough for bubble overlay
@@ -95,27 +95,17 @@ const GeoMap = ({ mode, countries = [], cities = [] }: Props) => {
           </Geographies>
 
           {mode === 'india' && cityBubbles.map((b) => (
-            <g key={b.name} transform={`translate(${b.coords[0]} ${b.coords[1]})`}>
-              <CityBubble v={b.v} size={sizeScale(b.v)} name={b.name} />
-            </g>
+            <Marker key={b.name} coordinates={b.coords}>
+              <circle r={sizeScale(b.v)} fill="hsl(24, 95%, 53%)" fillOpacity={0.55} stroke="hsl(24, 95%, 53%)" strokeWidth={1.2} />
+              <text textAnchor="middle" y={-sizeScale(b.v) - 3} style={{ fontFamily: 'inherit', fontSize: 9, fill: 'hsl(0,0%,90%)', pointerEvents: 'none' }}>
+                {b.name} · {b.v}
+              </text>
+            </Marker>
           ))}
         </ZoomableGroup>
       </ComposableMap>
     </div>
   );
 };
-
-// react-simple-maps uses a Mercator projection; we render bubbles inside Geographies using Marker
-// To keep coordinates correct we wrap in a Marker-equivalent: render through ProjectionContext via plain SVG <g> using projected coords.
-// Simpler: import Marker from react-simple-maps for correct projection.
-import { Marker } from 'react-simple-maps';
-const CityBubble = ({ v, size, name }: { v: number; size: number; name: string }) => (
-  <Marker coordinates={[0, 0]}>
-    <circle r={size} fill="hsl(24, 95%, 53%)" fillOpacity={0.55} stroke="hsl(24, 95%, 53%)" strokeWidth={1.2} />
-    <text textAnchor="middle" y={-size - 3} style={{ fontFamily: 'inherit', fontSize: 9, fill: 'hsl(0,0%,90%)', pointerEvents: 'none' }}>
-      {name} · {v}
-    </text>
-  </Marker>
-);
 
 export default GeoMap;
