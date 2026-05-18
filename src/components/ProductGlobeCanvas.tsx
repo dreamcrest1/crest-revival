@@ -83,9 +83,7 @@ function LogoTile({
   const { tex: texture, failed } = useSafeTexture(activeImage);
   const billboardRef = useRef<THREE.Group>(null);
   const groupRef = useRef<THREE.Group>(null);
-  const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
-  const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
   const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
   const appearStartRef = useRef<number | null>(null);
