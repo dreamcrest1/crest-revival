@@ -46,6 +46,28 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
   );
 }
 
+const FALLBACK_TOOL_NAMES = [
+  'ChatGPT Plus',
+  'Lovable Pro',
+  'Figma Professional',
+  'Replit Core',
+  'Gamma Pro',
+  'Manus AI Pro',
+  'Canva Pro',
+  'Perplexity Pro',
+];
+
+const EMPTY_TOOLS: AiTool[] = [];
+
+function shuffleTools(items: AiTool[]) {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
 /**
  * Home-page AI Tools showcase with realtime 3-D parallax: the grid container
  * tracks the cursor and rotates on X/Y axes, individual tiles lift on
@@ -53,10 +75,28 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
  * transforms compound with the parent rotation.
  */
 const AiToolsShowcase = () => {
-  const { data: tools = [] } = useAiTools();
+  const { data } = useAiTools();
+  const tools = data ?? EMPTY_TOOLS;
 
-  // Larger pool of top-popularity tools (deduped) so we can rotate the visible
-  // 8 every few seconds for a "live" feel.
+  const fallbackTools = useMemo<AiTool[]>(
+    () =>
+      FALLBACK_TOOL_NAMES.map((name, idx) => ({
+        id: `fallback-${idx}-${slugifyAiTool(name)}`,
+        name,
+        validity: '',
+        price: 0,
+        image: '',
+        symbol: name.slice(0, 4).toUpperCase(),
+        change: 0,
+        trend: 'flat',
+        spark: [],
+        meta: metaForTool(name),
+      })),
+    [],
+  );
+
+  // Full unique product pool (deduped by name) so every shuffle pulls from all
+  // tools while preventing duplicates from showing in the same 8-card instance.
   const pool = useMemo(() => {
     const seen = new Set<string>();
     const unique: AiTool[] = [];
@@ -67,23 +107,38 @@ const AiToolsShowcase = () => {
       if (seen.has(key)) continue;
       seen.add(key);
       unique.push(t);
-      if (unique.length === 24) break;
     }
     return unique;
   }, [tools]);
 
-  // Rotating offset — shifts the visible window every 3s.
-  const [offset, setOffset] = useState(0);
+  const [isShufflePaused, setIsShufflePaused] = useState(false);
+  const [shuffledPool, setShuffledPool] = useState<AiTool[]>([]);
+  const [page, setPage] = useState(0);
+
   useEffect(() => {
-    if (pool.length <= 8) return;
-    const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), 4000);
+    setShuffledPool(shuffleTools(pool));
+    setPage(0);
+  }, [pool]);
+
+  useEffect(() => {
+    if (pool.length <= 8 || isShufflePaused) return;
+    const id = setInterval(() => {
+      setPage((currentPage) => {
+        const totalPages = Math.max(1, Math.ceil(pool.length / 8));
+        const nextPage = (currentPage + 1) % totalPages;
+        if (nextPage === 0) setShuffledPool(shuffleTools(pool));
+        return nextPage;
+      });
+    }, 4000);
     return () => clearInterval(id);
-  }, [pool.length]);
+  }, [isShufflePaused, pool]);
 
   const featured = useMemo(() => {
-    if (pool.length === 0) return [];
-    return Array.from({ length: Math.min(8, pool.length) }, (_, i) => pool[(offset + i) % pool.length]);
-  }, [pool, offset]);
+    const activePool = shuffledPool.length > 0 ? shuffledPool : fallbackTools;
+    const count = Math.min(8, activePool.length);
+    const start = (page * count) % activePool.length;
+    return Array.from({ length: count }, (_, i) => activePool[(start + i) % activePool.length]);
+  }, [fallbackTools, page, shuffledPool]);
 
   // ── Realtime 3-D parallax ──
   // Mouse / touch updates a *target* tilt; a requestAnimationFrame loop lerps
@@ -159,12 +214,26 @@ const AiToolsShowcase = () => {
         {/* 3-D perspective tile grid — realtime mouse + touch parallax */}
         <div
           ref={stageRef}
+          onMouseEnter={() => setIsShufflePaused(true)}
           onMouseMove={handleMove}
-          onMouseLeave={handleLeave}
-          onTouchStart={handleTouch}
+          onMouseLeave={() => {
+            setIsShufflePaused(false);
+            handleLeave();
+          }}
+          onTouchStart={(e) => {
+            setIsShufflePaused(true);
+            handleTouch(e);
+          }}
           onTouchMove={handleTouch}
-          onTouchEnd={handleLeave}
-          className="relative mb-12 mx-auto max-w-5xl touch-none select-none"
+          onTouchEnd={() => {
+            setIsShufflePaused(false);
+            handleLeave();
+          }}
+          onTouchCancel={() => {
+            setIsShufflePaused(false);
+            handleLeave();
+          }}
+          className="relative mb-12 mx-auto max-w-5xl touch-pan-y select-none"
           style={{ perspective: '1400px' }}
         >
           <div
