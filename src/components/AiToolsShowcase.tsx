@@ -55,8 +55,8 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
 const AiToolsShowcase = () => {
   const { data: tools = [] } = useAiTools();
 
-  // Larger pool of top-popularity tools (deduped) so we can rotate the visible
-  // 8 every few seconds for a "live" feel.
+  // Full unique product pool (deduped by name) so every shuffle pulls from all
+  // tools while preventing duplicates from showing in the same 8-card instance.
   const pool = useMemo(() => {
     const seen = new Set<string>();
     const unique: AiTool[] = [];
@@ -67,23 +67,47 @@ const AiToolsShowcase = () => {
       if (seen.has(key)) continue;
       seen.add(key);
       unique.push(t);
-      if (unique.length === 24) break;
     }
     return unique;
   }, [tools]);
 
-  // Rotating offset — shifts the visible window every 3s.
-  const [offset, setOffset] = useState(0);
+  const shuffleTools = (items: AiTool[]) => {
+    const next = [...items];
+    for (let i = next.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [next[i], next[j]] = [next[j], next[i]];
+    }
+    return next;
+  };
+
+  const [isShufflePaused, setIsShufflePaused] = useState(false);
+  const [shuffledPool, setShuffledPool] = useState<AiTool[]>([]);
+  const [page, setPage] = useState(0);
+
   useEffect(() => {
-    if (pool.length <= 8) return;
-    const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), 4000);
+    setShuffledPool(shuffleTools(pool));
+    setPage(0);
+  }, [pool]);
+
+  useEffect(() => {
+    if (pool.length <= 8 || isShufflePaused) return;
+    const id = setInterval(() => {
+      setPage((currentPage) => {
+        const totalPages = Math.max(1, Math.ceil(pool.length / 8));
+        const nextPage = (currentPage + 1) % totalPages;
+        if (nextPage === 0) setShuffledPool(shuffleTools(pool));
+        return nextPage;
+      });
+    }, 4000);
     return () => clearInterval(id);
-  }, [pool.length]);
+  }, [isShufflePaused, pool]);
 
   const featured = useMemo(() => {
-    if (pool.length === 0) return [];
-    return Array.from({ length: Math.min(8, pool.length) }, (_, i) => pool[(offset + i) % pool.length]);
-  }, [pool, offset]);
+    if (shuffledPool.length === 0) return [];
+    const count = Math.min(8, shuffledPool.length);
+    const start = (page * count) % shuffledPool.length;
+    return Array.from({ length: count }, (_, i) => shuffledPool[(start + i) % shuffledPool.length]);
+  }, [page, shuffledPool]);
 
   // ── Realtime 3-D parallax ──
   // Mouse / touch updates a *target* tilt; a requestAnimationFrame loop lerps
