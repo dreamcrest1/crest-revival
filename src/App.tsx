@@ -45,6 +45,8 @@ import AdminSearchQueries from "./pages/admin/AdminSearchQueries";
 import AdminGeo from "./pages/admin/AdminGeo";
 import AdminHeatmap from "./pages/admin/AdminHeatmap";
 import AdminUtm from "./pages/admin/AdminUtm";
+import AdminInsights from "./pages/admin/AdminInsights";
+import ExitIntentSurvey from "./components/ExitIntentSurvey";
 
 const queryClient = new QueryClient();
 
