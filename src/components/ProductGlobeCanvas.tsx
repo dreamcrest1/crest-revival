@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Billboard, OrbitControls } from '@react-three/drei';
+import { Billboard, OrbitControls, Trail } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import type { GlobeItem } from './ProductGlobe';
