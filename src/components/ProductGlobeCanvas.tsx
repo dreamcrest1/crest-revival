@@ -55,6 +55,7 @@ function useSafeTexture(url: string): TexState {
       setState({ tex: null, failed: true });
       return;
     }
+    setState({ tex: null, failed: false });
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin('anonymous');
     loader.load(
