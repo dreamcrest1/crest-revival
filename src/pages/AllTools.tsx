@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { Search, X, ExternalLink, Flame } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
