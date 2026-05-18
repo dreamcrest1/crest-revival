@@ -808,6 +808,17 @@ export const TOOL_META: ToolMeta[] = [
     tagline: 'No-code landing page builder',
     description: 'PageMaker Pro — drag-and-drop landing page builder with 100+ templates, A/B testing, custom domains and CRM integrations for marketers.',
     features: ['Drag-and-drop builder', '100+ templates', 'A/B testing', 'CRM integrations'] },
+  {
+    match: 'claude',
+    category: 'AI Assistant',
+    domain: 'anthropic.com',
+    color: '#D97757',
+    logo: 'https://cdn.simpleicons.org/claude/D97757',
+    tagline: "Anthropic's Claude — safer, smarter conversations",
+    description:
+      'Claude AI Pro/5x/20x plans activated on your personal email. Priority access to Claude Sonnet & Opus, larger context windows, Projects, Artifacts and significantly higher message limits than the free tier.',
+    features: ['Claude Sonnet & Opus', 'Larger context window', 'Projects & Artifacts', 'Priority access'],
+  },
 ];
 
 // Normalise: lowercase, strip all non-alphanumerics (handles "FlutterFlow" vs
