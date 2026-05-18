@@ -2,7 +2,59 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { GLOBE_LOGOS } from '@/data/userLogos';
+import { useAiTools } from '@/hooks/useAiTools';
+import { popularityFor } from '@/data/aiToolPopularity';
+import { metaForTool } from '@/data/aiToolMeta';
+import { slugifyAiTool } from '@/lib/aiToolSeo';
+
+const iconify = (slug: string, color: string) => `https://api.iconify.design/simple-icons/${slug}.svg?color=%23${color}`;
+
+const GLOBE_ICON_OVERRIDES: Record<string, string> = {
+  'adobe.com': iconify('adobecreativecloud', 'DA1F26'),
+  'clickup.com': iconify('clickup', '7B68EE'),
+  'figma.com': iconify('figma', 'F24E1E'),
+  'flutterflow.io': iconify('flutter', '02569B'),
+  'intercom.com': iconify('intercom', '1F8DED'),
+  'linear.app': iconify('linear', '5E6AD2'),
+  'loom.com': iconify('loom', '625DF5'),
+  'miro.com': iconify('miro', 'FFD02F'),
+  'mongodb.com': iconify('mongodb', '47A248'),
+  'notion.so': iconify('notion', '000000'),
+  'perplexity.ai': iconify('perplexity', '1FB8CD'),
+  'posthog.com': iconify('posthog', 'FF5C00'),
+  'replit.com': iconify('replit', 'F26207'),
+  'supabase.com': iconify('supabase', '3ECF8E'),
+  'webflow.com': iconify('webflow', '146EF5'),
+};
+
+/** Proxy any url through weserv as a clean square — CORS-safe + crisp for WebGL textures. */
+function weservSquare(src: string, size = 512): string {
+  if (!src) return '';
+  const stripped = src.replace(/^https?:\/\//, '');
+  return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=90`;
+}
+
+/** Same multi-source fallback chain as the /ai-tools BrandLogo, proxied for WebGL. */
+function logoSourcesForTool(name: string, image: string): string[] {
+  const meta = metaForTool(name);
+  const raw: string[] = [];
+  const override = meta.domain ? GLOBE_ICON_OVERRIDES[meta.domain] : '';
+  if (override) raw.push(override);
+  if (meta.logo) raw.push(meta.logo);
+  if (meta.domain) {
+    raw.push(`https://logo.clearbit.com/${meta.domain}?size=512`);
+    raw.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
+  }
+  if (image) raw.push(image);
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const u of raw) {
+    if (!u || seen.has(u)) continue;
+    seen.add(u);
+    out.push(weservSquare(u, 512));
+  }
+  return out;
+}
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
 
@@ -12,18 +64,30 @@ export type GlobeItem = {
   href: string;
 };
 
-function useGlobeItems(_isMobile: boolean): GlobeItem[] {
-  return useMemo(
-    () =>
-      GLOBE_LOGOS.map((l) => ({
-        name: l.name,
-        images: [`/logos/${l.file}`],
-        href: l.href,
-      })),
-    [],
-  );
-}
+function useGlobeItems(isMobile: boolean): GlobeItem[] {
+  const { data: aiTools } = useAiTools();
 
+  return useMemo(() => {
+    const seenName = new Set<string>();
+    const out: GlobeItem[] = [];
+
+    const tools = [...(aiTools ?? [])].sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
+    for (const t of tools) {
+      const nameKey = t.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!nameKey || seenName.has(nameKey)) continue;
+      const images = logoSourcesForTool(t.name, t.image);
+      if (images.length === 0) continue;
+      seenName.add(nameKey);
+      out.push({
+        name: t.name.trim(),
+        images,
+        href: `/ai-tool/${slugifyAiTool(t.name)}`,
+      });
+    }
+
+    return out.slice(0, isMobile ? 48 : 96);
+  }, [aiTools, isMobile]);
+}
 
 const ProductGlobe = () => {
   const navigate = useNavigate();

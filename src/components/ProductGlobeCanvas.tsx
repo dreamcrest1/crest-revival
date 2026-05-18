@@ -83,7 +83,9 @@ function LogoTile({
   const { tex: texture, failed } = useSafeTexture(activeImage);
   const billboardRef = useRef<THREE.Group>(null);
   const groupRef = useRef<THREE.Group>(null);
+  const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
+  const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
   const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
   const appearStartRef = useRef<number | null>(null);
@@ -125,7 +127,9 @@ function LogoTile({
     const t = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0, 1);
     const depthOpacity = 0.45 + t * 0.55;
     const opacity = depthOpacity * formEased * reveal;
+    if (discMatRef.current) discMatRef.current.opacity = opacity * 0.92;
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
+    if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
   });
 
   useEffect(() => {
@@ -157,21 +161,48 @@ function LogoTile({
           onSelect(item.href);
         }}
       >
-        {/* Logo image — click & hover target is the logo plane itself, no surrounding square */}
+        {/* Outer glow ring on hover */}
+        {hovered && (
+          <mesh position={[0, 0, -0.02]}>
+            <ringGeometry args={[0.56, 0.72, 48]} />
+            <meshBasicMaterial color="#f97316" transparent opacity={0.55} depthWrite={false} />
+          </mesh>
+        )}
+        {/* Subtle border ring always visible */}
+        <mesh position={[0, 0, -0.01]}>
+          <ringGeometry args={[0.52, 0.56, 48]} />
+          <meshBasicMaterial
+            ref={ringMatRef}
+            color={hovered ? '#f97316' : '#ffffff'}
+            transparent
+            opacity={0.25}
+            depthWrite={false}
+          />
+        </mesh>
+        {/* Clean white circular icon plate */}
+        <mesh>
+          <circleGeometry args={[0.52, 48]} />
+          <meshBasicMaterial
+            ref={discMatRef}
+            color="#ffffff"
+            transparent
+            opacity={0.96}
+            depthWrite={false}
+          />
+        </mesh>
+        {/* Logo image — only mounted once texture has loaded */}
         {texture && (
           <mesh position={[0, 0, 0.001]}>
-            <planeGeometry args={[1, 1]} />
+            <planeGeometry args={[0.72, 0.72]} />
             <meshBasicMaterial
               ref={logoMatRef}
               map={texture}
               transparent
-              alphaTest={0.05}
               toneMapped={false}
               depthWrite={false}
             />
           </mesh>
         )}
-
       </group>
     </Billboard>
   );
@@ -270,7 +301,7 @@ type Props = {
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   const radius = isMobile ? 2.4 : 3.0;
-  const tileSize = isMobile ? 1.5 : 1.7;
+  const tileSize = isMobile ? 0.6 : 0.68;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 

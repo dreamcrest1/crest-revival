@@ -16,10 +16,18 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
   const sources = useMemo(() => {
     const out: string[] = [];
     if (meta.logo) out.push(meta.logo);
+    if (meta.domain) {
+      out.push(`https://logo.clearbit.com/${meta.domain}?size=256`);
+      out.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
+    }
+    if (tool.image) {
+      out.push(
+        `https://images.weserv.nl/?url=${encodeURIComponent(tool.image.replace(/^https?:\/\//, ''))}&w=256&h=256&fit=contain&output=webp&q=85`,
+      );
+    }
     out.push('/logo.png');
     return out;
-  }, [meta.logo]);
-
+  }, [tool.image, meta.logo, meta.domain]);
 
   const [idx, setIdx] = useState(0);
   const src = sources[Math.min(idx, sources.length - 1)];

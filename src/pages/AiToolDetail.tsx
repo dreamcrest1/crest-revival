@@ -29,8 +29,16 @@ function LogoImage({
 }) {
   const sources: string[] = [];
   if (meta.logo) sources.push(meta.logo);
+  if (meta.domain) {
+    sources.push(`https://logo.clearbit.com/${meta.domain}?size=512`);
+    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
+  }
+  if (sheetImage) {
+    sources.push(
+      `https://images.weserv.nl/?url=${encodeURIComponent(sheetImage.replace(/^https?:\/\//, ''))}&w=512&h=512&fit=contain&output=webp&q=90`,
+    );
+  }
   sources.push('/logo.png');
-
 
   const [idx, setIdx] = useState(0);
   const src = sources[Math.min(idx, sources.length - 1)];

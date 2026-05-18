@@ -90,10 +90,22 @@ function hexToRgb(hex: string) {
 // Branded logo tile: brand color background + logo from a fallback chain.
 function BrandLogo({ t }: { t: AiTool }) {
   const meta = metaForTool(t.name);
-  // Only use the user-uploaded local logo — no external sources.
+  // Build the source chain — first valid source is used; on error advance.
   const sources: string[] = [];
+  // 1) Curated high-res override (SVG when available)
   if (meta.logo) sources.push(meta.logo);
-
+  if (meta.domain) {
+    // 2) Clearbit brand logo
+    sources.push(`https://logo.clearbit.com/${meta.domain}?size=256`);
+    // 3) Google high-res favicon
+    sources.push(`https://www.google.com/s2/favicons?domain=${meta.domain}&sz=256`);
+  }
+  if (t.image) {
+    // 4) Sheet-provided image, proxied through weserv at a clean square
+    sources.push(
+      `https://images.weserv.nl/?url=${encodeURIComponent(t.image.replace(/^https?:\/\//, ''))}&w=400&h=400&fit=contain&output=webp&q=85`,
+    );
+  }
 
   const [idx, setIdx] = useState(0);
   const { r, g, b } = hexToRgb(meta.color);
