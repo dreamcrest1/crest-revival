@@ -128,7 +128,7 @@ const ProductGlobe = () => {
 
       <div
         className="relative w-full mx-auto"
-        style={{ height: isMobile ? 380 : 560, maxWidth: 1100 }}
+        style={{ height: isMobile ? 285 : 560, maxWidth: 1100 }}
       >
         {/* Radial backdrop to dim background bleed-through */}
         <div
@@ -162,6 +162,18 @@ const ProductGlobe = () => {
           <GlobeSkeleton />
         )}
         </div>
+      </div>
+
+      <div className="flex justify-center mt-6 sm:mt-8 px-4">
+        <button
+          onClick={() => navigate('/ai-tools')}
+          className="group relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm sm:text-base shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all duration-300"
+        >
+          <span>Explore AI Tools</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </button>
       </div>
     </section>
   );
