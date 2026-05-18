@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { Sparkles, ArrowRight, Star, X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useAiTools, proxyImage, type AiTool } from '@/hooks/useAiTools';
+import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { BrandLogo } from '@/components/ai/BrandLogo';
 
 const COUNT = 12;
 const ROTATE_MS = 5000;
