@@ -51,6 +51,7 @@ function LogoTile({
   item,
   size,
   onSelect,
+  index,
 }: {
   position: THREE.Vector3;
   startPosition: THREE.Vector3;
@@ -59,6 +60,7 @@ function LogoTile({
   item: GlobeItem;
   size: number;
   onSelect: (logo: GlobeLogo) => void;
+  index: number;
 }) {
   const [hovered, setHovered] = useState(false);
   const texture = useTexture(item.image);
@@ -88,6 +90,9 @@ function LogoTile({
 
     if (billboardRef.current) {
       currentPos.lerpVectors(startPosition, position, formEased);
+      // gentle floating bob per logo, offset by index for organic feel
+      const bob = Math.sin(now * 1.2 + index * 0.9) * 0.04;
+      currentPos.y += bob * formEased;
       billboardRef.current.position.copy(currentPos);
     }
 
