@@ -11,6 +11,7 @@ import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { popularityFor } from '@/data/aiToolPopularity';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
+import { trackEvent } from '@/lib/eventTracker';
 
 const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
 const WHATSAPP_NUMBER = '916357998730';
