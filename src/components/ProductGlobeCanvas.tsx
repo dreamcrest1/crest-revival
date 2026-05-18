@@ -154,7 +154,7 @@ function LogoTile({
         </mesh>
         {/* Logo image, contained inside the disc, masked to a circle */}
         <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[0.58, 0.58]} />
+          <planeGeometry args={[0.72, 0.72]} />
           <meshBasicMaterial
             ref={logoMatRef}
             map={texture}
