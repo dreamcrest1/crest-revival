@@ -20,13 +20,6 @@ export type GlobeItem = {
   href: string;
 };
 
-// Curated OTT brand logos via simpleicons CDN (verified slugs only)
-const OTT_LOGOS: GlobeItem[] = [
-  { name: 'Netflix', image: 'https://cdn.simpleicons.org/netflix/E50914', href: '/all-tools' },
-  { name: 'Prime Video', image: 'https://cdn.simpleicons.org/primevideo/00A8E1', href: '/all-tools' },
-  { name: 'Hotstar', image: 'https://cdn.simpleicons.org/hotstar/1F80E0', href: '/all-tools' },
-];
-
 function useGlobeItems(isMobile: boolean): GlobeItem[] {
   const { data: aiTools } = useAiTools();
 
