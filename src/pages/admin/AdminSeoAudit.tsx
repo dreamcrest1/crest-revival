@@ -57,12 +57,13 @@ function downloadBlob(name: string, content: string, type = 'text/csv') {
 }
 
 function pagesToCsv(pages: PageReport[]): string {
-  const rows = [[
+  const header = [
     'url', 'status', 'indexable', 'title', 'title_len', 'description', 'desc_len',
     'canonical', 'robots', 'og:title', 'og:description', 'og:image', 'og:url',
     'twitter:card', 'jsonld_types', 'h1_count', 'img_missing_alt', 'internal_links',
     'broken_links', 'load_ms', 'issues',
-  ]];
+  ];
+  const rows: string[] = [header.join(',')];
   for (const p of pages) {
     const jsonldTypes = p.jsonLd.map((j) => {
       const o = j as { '@type'?: string | string[] };
@@ -77,7 +78,7 @@ function pagesToCsv(pages: PageReport[]): string {
       p.loadMs, p.issues.join('; '),
     ].map(csvEscape).join(','));
   }
-  return rows.map((r) => r.join(',')).join('\n');
+  return rows.join('\n');
 }
 
 function sitemapToCsv(entries: { loc: string; status?: number }[]): string {
