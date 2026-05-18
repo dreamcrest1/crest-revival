@@ -73,22 +73,21 @@ const ProductGlobe = () => {
       </div>
 
       <div
-        className="relative w-full mx-auto"
-        style={{ height: isMobile ? 285 : 560, maxWidth: 1100 }}
+        className="relative mx-auto flex items-center justify-center"
+        style={{ height: isMobile ? 320 : 620, width: '100%', maxWidth: 1100 }}
       >
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full flex items-center justify-center">
           {reduced || items.length === 0 ? (
             <GlobeSkeleton />
           ) : inView ? (
             <Suspense fallback={<GlobeSkeleton />}>
-              {/* Boot-up: small sphere → big with a soft blur fade.
-                  Long-ish duration intentionally masks asset load latency. */}
               <motion.div
                 key="globe"
                 className="w-full h-full"
-                initial={{ opacity: 0, scale: 0.15, filter: 'blur(14px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transformOrigin: '50% 50%' }}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               >
                 <GlobeCanvas
                   items={items}
