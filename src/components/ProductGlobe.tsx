@@ -1,9 +1,16 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { useAiTools, proxyImage } from '@/hooks/useAiTools';
+import { useAiTools } from '@/hooks/useAiTools';
 import { popularityFor } from '@/data/aiToolPopularity';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
+
+/** Same image proxy as the /ai-tools page — contain-fit keeps logos crisp. */
+function logoUrl(src: string, size = 256): string {
+  if (!src) return '';
+  const stripped = src.replace(/^https?:\/\//, '');
+  return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=85`;
+}
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
 
@@ -12,13 +19,6 @@ export type GlobeItem = {
   image: string;
   href: string;
 };
-
-// Curated OTT brand logos via simpleicons CDN (verified slugs only)
-const OTT_LOGOS: GlobeItem[] = [
-  { name: 'Netflix', image: 'https://cdn.simpleicons.org/netflix/E50914', href: '/all-tools' },
-  { name: 'Prime Video', image: 'https://cdn.simpleicons.org/primevideo/00A8E1', href: '/all-tools' },
-  { name: 'Hotstar', image: 'https://cdn.simpleicons.org/hotstar/1F80E0', href: '/all-tools' },
-];
 
 function useGlobeItems(isMobile: boolean): GlobeItem[] {
   const { data: aiTools } = useAiTools();
@@ -37,15 +37,13 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       out.push(it);
     };
 
-    OTT_LOGOS.forEach(push);
-
     const tools = [...(aiTools ?? [])]
       .filter((t) => t.image && t.image.trim().length > 0)
       .sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
     tools.forEach((t) =>
       push({
         name: t.name.trim(),
-        image: proxyImage(t.image, 256),
+        image: logoUrl(t.image, 256),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );
