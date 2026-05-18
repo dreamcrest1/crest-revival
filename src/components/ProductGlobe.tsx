@@ -53,9 +53,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       out.push(it);
     };
 
-    const tools = [...(aiTools ?? [])]
-      .filter((t) => t.image && t.image.trim().length > 0)
-      .sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
+    const tools = [...(aiTools ?? [])].sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
     tools.forEach((t) =>
       push({
         name: t.name.trim(),
