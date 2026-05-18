@@ -214,6 +214,7 @@ function RotatingGroup({
           item={it}
           size={tileSize}
           onSelect={onSelect}
+          index={i}
         />
       ))}
     </group>
