@@ -115,8 +115,8 @@ const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
   const { w, h, gap, stage, range } = SIZES[size];
   const [active, setActive] = useState(0);
   const hover = useRef(false);
+  const startX = useRef(0);
   const dragging = useRef(false);
-  const lastX = useRef(0);
   const moved = useRef(0);
   const captured = useRef(false);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -136,13 +136,13 @@ const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
   const onPointerDown = (e: React.PointerEvent) => {
     dragging.current = true;
     captured.current = false;
-    lastX.current = e.clientX;
+    startX.current = e.clientX;
     moved.current = 0;
   };
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging.current) return;
-    const dx = e.clientX - lastX.current;
-    moved.current += Math.abs(dx);
+    const dx = e.clientX - startX.current;
+    moved.current = Math.abs(dx);
     if (!captured.current && moved.current > DRAG_THRESHOLD) {
       captured.current = true;
       stageRef.current?.setPointerCapture(e.pointerId);
@@ -151,16 +151,13 @@ const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
   const onPointerUp = (e: React.PointerEvent) => {
     if (captured.current) {
       try { stageRef.current?.releasePointerCapture(e.pointerId); } catch {}
-      const totalDx = e.clientX - lastX.current + 0; // last delta only — use moved sign via clientX diff from start? approximate by velocity
     }
-    if (moved.current > 60) {
-      const dx = e.clientX - (lastX.current - 0);
-      // Use direction of last move accumulated via clientX vs start; fallback to nothing
-      go(dx < 0 ? 1 : -1);
-    }
+    const dx = e.clientX - startX.current;
+    if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
     dragging.current = false;
     captured.current = false;
   };
+
 
   // Keyboard
   useEffect(() => {
