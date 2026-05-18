@@ -1,92 +1,45 @@
-# Globe overhaul + India map masking + logo→product mapping
+# Fix Claude logo + Personal Email indicator
 
-## 1. Asset import & rename
+## What's wrong
 
-Copy all 40 PNGs from `user-uploads://logos_new-2.zip` into `src/assets/globe-logos/` with brand-named filenames (kebab-case), so the bundler hashes them and they're cached forever.
+**Logo issue (root cause confirmed):** The 6 new Claude rows in the Google Sheet use this image URL:
 
-Identified mapping from numeric filenames (verified by viewing each):
+`https://static.vecteezy.com/.../claude-ai-logo-rounded-hd-free-png.png`
 
-```text
-2.png  → jasper.png            3.png  → deepgram.png
-4.png  → gemini.png            5.png  → perplexity.png
-6.png  → claude.png            7.png  → bolt-new.png
-8.png  → lovable.png           9.png  → netflix.png
-10.png → prime-video.png       11.png → zee5.png
-12.png → sonyliv.png           13.png → jiohotstar.png
-14.png → hoichoi.png           15.png → chaupal.png
-16.png → iptv.png              17.png → hbo-max.png
-18.png → crunchyroll.png       20.png → firecrawl.png
-21.png → canva.png             23.png → adobe-cc.png
-24.png → figma.png             25.png → envato-elements.png
-26.png → heygen.png            27.png → elevenlabs.png
-28.png → runway.png            30.png → gamma.png
-31.png → semrush.png           32.png → office-365.png
-33.png → notion-plus.png       34.png → linkedin.png
-35.png → quillbot.png          36.png → coursera.png
-37.png → datacamp.png          38.png → nordvpn.png
-39.png → turnitin.png
-chatgpt.png · supabase.png · replit.png · wondershare-filmora.png · youtube.png
-```
+Vecteezy blocks hotlinking — the URL returns **HTTP 403** when fetched directly, and **HTTP 404** through our `images.weserv.nl` proxy. No amount of proxying will make it work; the source itself refuses external requests. That's why every other tool image loads but Claude's doesn't.
 
-Total: **40 brand-named PNGs**.
+**Personal Email info:** The 6 listings are activated on the customer's personal email (already part of the product name "… Personal Email"), but there is no visual indicator on the card / detail page making this delivery method obvious to buyers.
 
-## 2. New globe data source
+## Plan
 
-Create `src/data/globeLogos.ts` — a single source of truth that imports each PNG via ES module and pairs it with a deep-link target:
+### 1. Local logo fallback (fixes Claude immediately, future-proof)
 
-```text
-{ name, image, href }   // href = '/ai-tool/<slug>' OR '/products/<slug>'
-```
+We already ship a high-quality `claude.png` in `src/assets/globe-logos/`. Add a small name → local asset map and use it as a fallback in `useAiTools`:
 
-Mapping rules:
-- **OTT / streaming → Products page detail**: Netflix, Prime Video, JioHotstar, SonyLiv, Zee5, Hoichoi, Chaupal, HBO Max, Crunchyroll, YouTube, IPTV
-- **Everything else → AI tool detail page**: ChatGPT, Jasper, Gemini, Perplexity, Claude, Bolt.new, Lovable, Firecrawl, Canva, Adobe CC, Figma, Envato Elements, HeyGen, ElevenLabs, Runway, Gamma, Deepgram, Semrush, Office 365, Notion Plus, LinkedIn, QuillBot, Coursera, Datacamp, NordVPN, Turnitin, Supabase, Replit, Wondershare Filmora
+- New file `src/data/toolLogoFallbacks.ts` exports a `Record<string, string>` of normalized tool-name keywords → imported local PNG (start with `claude`, easy to extend later for any other broken external URL).
+- In `useAiTools.ts`, when building each `AiTool`:
+  - If the sheet's `image` URL is empty **or** known-broken (host matches `vecteezy.com`, etc.), use the local fallback if the name matches.
+  - Otherwise keep the existing weserv-proxied URL but still set `fallbackImage` on the tool so `ProductCard` / detail page can swap on `onError`.
+- Add `fallbackImage?: string` to the `AiTool` type.
+- Update `ProductCard` and `AiToolDetail` `<img>` tags with `onError={() => setSrc(fallbackImage ?? '/placeholder.svg')}`.
 
-I'll match against existing product names in `src/data/staticProducts.ts` and AI tool names from the Google-Sheet `useAiTools` data. For any logo with no match in either dataset, the href will fall back to `/ai-tools` (the listing page) so nothing 404s.
+Result: Claude logo shows the bundled asset instantly; any future broken sheet URL gracefully falls back to placeholder.
 
-## 3. `ProductGlobe.tsx` rewrite
+### 2. "Personal Email" delivery badge
 
-- **Drop** `useAiTools` + `metaForTool` + iconify / weserv / clearbit chain → use the static `globeLogos` array. No more dynamic logo fetching, no proxied URLs, no Sheet dependency for the globe.
-- **Remove the radial backdrop disc** behind each logo on the canvas (the round halo behind logos).
-- **Keep the wireframe sphere itself** (per your answer).
-- **Boot-up animation**: when the globe canvas mounts, animate `scale` from `0.15 → 1` over ~1400ms with a soft `easeOut` curve while opacity fades 0→1 and blur 12px→0. Use Framer Motion (already a dependency). This both hides perceived load time and gives the "small sphere forms then expands" feel you asked for.
-- Keep mobile size at the already-reduced 285px and desktop at 560px.
-- Keep the "Explore AI Tools" CTA below the globe.
+When a tool's name contains "Personal Email" (case-insensitive):
 
-## 4. `ProductGlobeCanvas.tsx` adjustments
+- **Product card (`ProductCard.tsx`)**: small pill below the title — "Delivered on your personal email" with the mail icon, using existing accent (orange) tokens.
+- **Detail page (`AiToolDetail.tsx`)**: a more prominent info row near the price/CTA: "✉️ Activated on your personal email — share your email at checkout." styled with existing glassmorphism card.
 
-- Remove the per-logo circular disc/plane backing — render only the logo texture on a transparent quad.
-- Slightly increase logo plane size to compensate for the missing disc so logos remain readable.
-- Keep rotation, hover scale, click handler.
-
-## 5. India map masking
-
-In `src/components/IndiaMapBackground.tsx` (fixed full-viewport background): wrap the SVG layer in a container with a **radial CSS mask** centered on the top of the viewport, fading transparent in the globe area and opaque elsewhere:
-
-```text
-mask-image: radial-gradient(ellipse 55% 40% at 50% 18%, transparent 55%, black 80%);
-```
-
-Result: India map renders globally, but the area visually occupied by the globe (top of the homepage) shows none of the map — so the globe stays clean. Everywhere else on the page India remains visible as today. No JS scroll-listener needed.
-
-## 6. Memory update
-
-Add a new memory file `mem://features/globe` recording: PNG-only globe logo set in `src/assets/globe-logos/`, no halo discs, mapped via `src/data/globeLogos.ts` to AI tool or product detail routes, scale-in boot animation.
-
-## 7. Build & ship
-
-After implementing, run `npm run build` and re-package `dreamcrest-dist.zip` (with `.htaccess` + new hashed `index-*.js`) for your manual cPanel upload. Same upload procedure as before — delete old `public_html/index.html` + `assets/`, extract zip.
-
----
+No business-logic changes, no DB changes — purely presentational, driven off the existing tool name.
 
 ## Files touched
+- `src/data/toolLogoFallbacks.ts` (new)
+- `src/hooks/useAiTools.ts` (add fallback resolution + type field)
+- `src/components/ProductCard.tsx` (img onError + Personal Email pill)
+- `src/pages/AiToolDetail.tsx` (img onError + Personal Email info row)
 
-- **new**: `src/assets/globe-logos/*.png` (40 files), `src/data/globeLogos.ts`, `mem://features/globe`
-- **edited**: `src/components/ProductGlobe.tsx`, `src/components/ProductGlobeCanvas.tsx`, `src/components/IndiaMapBackground.tsx`
-- **removed code paths**: globe's dependency on `useAiTools`, `aiToolMeta` GLOBE_ICON_OVERRIDES, weserv/clearbit URL chain
-
-## Out of scope (won't touch)
-
-- AI tools page and OTT products page themselves
-- Sheet-driven `useAiTools` (still used elsewhere, just not by the globe)
-- GitHub deploy workflow
+## Out of scope
+- Editing the Google Sheet (you can later swap the Vecteezy URL for any hotlink-friendly one and it'll still work — the fallback only kicks in when the remote fails).
+- Globe component — unaffected; it uses bundled logos already.
