@@ -101,7 +101,7 @@ function LogoTile({
     groupRef.current.getWorldPosition(worldPos);
     // worldPos.z roughly in [-radius, +radius]; map to opacity
     const t = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0, 1);
-    const opacity = 0.15 + t * 0.85;
+    const opacity = 0.45 + t * 0.55;
     if (discMatRef.current) discMatRef.current.opacity = opacity * 0.92;
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
     if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
@@ -246,7 +246,7 @@ type Props = {
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   const radius = isMobile ? 2.4 : 3.0;
-  const tileSize = isMobile ? 0.55 : 0.62;
+  const tileSize = isMobile ? 0.6 : 0.68;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
