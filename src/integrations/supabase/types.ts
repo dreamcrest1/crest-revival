@@ -89,6 +89,62 @@ export type Database = {
         }
         Relationships: []
       }
+      product_reviews: {
+        Row: {
+          author_name: string
+          body: string
+          city: string | null
+          created_at: string
+          id: string
+          is_approved: boolean
+          is_featured: boolean
+          language: string
+          product_id: string
+          rating: number
+          title: string | null
+          updated_at: string
+          verified_buyer: boolean
+        }
+        Insert: {
+          author_name: string
+          body: string
+          city?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          is_featured?: boolean
+          language?: string
+          product_id: string
+          rating: number
+          title?: string | null
+          updated_at?: string
+          verified_buyer?: boolean
+        }
+        Update: {
+          author_name?: string
+          body?: string
+          city?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          is_featured?: boolean
+          language?: string
+          product_id?: string
+          rating?: number
+          title?: string | null
+          updated_at?: string
+          verified_buyer?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           buy_link: string
@@ -217,7 +273,27 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      product_rating_stats: {
+        Row: {
+          avg_rating: number | null
+          count_1: number | null
+          count_2: number | null
+          count_3: number | null
+          count_4: number | null
+          count_5: number | null
+          product_id: string | null
+          review_count: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       has_role: {

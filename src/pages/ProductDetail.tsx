@@ -9,6 +9,8 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
+import ProductReviews from '@/components/ProductReviews';
+import { useRatingStats } from '@/hooks/useProductReviews';
 
 const PLACEHOLDER = '/placeholder.svg';
 
@@ -192,7 +194,8 @@ const ProductDetail = () => {
     );
   }
 
-  const seo = buildProductSeo(product);
+  const { data: ratingStats } = useRatingStats(product.id);
+  const seo = buildProductSeo(product, ratingStats);
   const features = categoryFeatures[product.category] || categoryFeatures.Other;
   const howItWorks =
     categoryHowItWorks[product.category] ||
@@ -388,6 +391,9 @@ const ProductDetail = () => {
               <li>24/7 customer support for any issues or replacements.</li>
             </ul>
           </div>
+
+          {/* Reviews */}
+          <ProductReviews productId={product.id} productName={product.name} />
 
           {/* Related */}
           <RelatedProducts all={products} current={product} />
