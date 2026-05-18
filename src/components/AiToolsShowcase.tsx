@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useMotionValue, useAnimationFrame, animate } from 'framer-motion';
-import { Sparkles, ArrowRight, Star } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
+import { Sparkles, ArrowRight, Star, X, ExternalLink } from 'lucide-react';
 import { useAiTools, proxyImage, type AiTool } from '@/hooks/useAiTools';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const COUNT = 12;
 const ROTATE_MS = 5000;
 
-/** Strip validity-like suffixes so "ElevenLabs 1 Month" and "ElevenLabs 3 Months" collapse. */
 function baseKey(name: string): string {
   return name
     .toLowerCase()
@@ -38,7 +37,7 @@ const AiToolsShowcase = () => {
   const isMobile = useIsMobile();
   const [tablet, setTablet] = useState(false);
   const [offset, setOffset] = useState(0);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const [selected, setSelected] = useState<AiTool | null>(null);
 
   useEffect(() => {
     const onResize = () => setTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
@@ -47,33 +46,32 @@ const AiToolsShowcase = () => {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Responsive sizing
-  const radius = isMobile ? 200 : tablet ? 320 : 460;
-  const cardW = isMobile ? 130 : tablet ? 170 : 200;
-  const cardH = isMobile ? 190 : tablet ? 240 : 280;
-  const stageH = isMobile ? 380 : tablet ? 500 : 600;
+  // Responsive sizing — smaller, tighter on mobile
+  const radius = isMobile ? 150 : tablet ? 320 : 460;
+  const cardW = isMobile ? 96 : tablet ? 170 : 200;
+  const cardH = isMobile ? 138 : tablet ? 240 : 280;
+  const stageH = isMobile ? 320 : tablet ? 500 : 600;
 
   const pool = data || [];
   const items = useMemo(() => pickUnique(pool, offset, COUNT), [pool, offset]);
 
-  // Rotate the visible 12 every 5s
   useEffect(() => {
     if (pool.length <= COUNT) return;
     const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), ROTATE_MS);
     return () => clearInterval(id);
   }, [pool.length]);
 
-  // Drag-to-spin with inertia + auto rotation
+  // Drag-to-spin with inertia + auto rotation; pause auto when a card is selected
   const rotation = useMotionValue(0);
   const dragging = useRef(false);
   const lastX = useRef(0);
   const velocity = useRef(0);
-  const AUTO_SPEED = 360 / 48; // deg per second, matches old 48s loop
+  const movedSinceDown = useRef(0);
+  const AUTO_SPEED = 360 / 48;
 
   useAnimationFrame((_, delta) => {
-    if (dragging.current) return;
+    if (dragging.current || selected) return;
     const dt = delta / 1000;
-    // decay flung velocity
     if (Math.abs(velocity.current) > 0.01) {
       rotation.set(rotation.get() + velocity.current * dt);
       velocity.current *= Math.pow(0.92, delta / 16);
@@ -86,15 +84,17 @@ const AiToolsShowcase = () => {
     dragging.current = true;
     lastX.current = e.clientX;
     velocity.current = 0;
+    movedSinceDown.current = 0;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging.current) return;
     const dx = e.clientX - lastX.current;
     lastX.current = e.clientX;
-    const delta = dx * 0.4; // sensitivity
-    rotation.set(rotation.get() + delta);
-    velocity.current = delta * 60; // approx deg/sec for inertia
+    movedSinceDown.current += Math.abs(dx);
+    const d = dx * 0.4;
+    rotation.set(rotation.get() + d);
+    velocity.current = d * 60;
   };
   const onPointerUp = (e: React.PointerEvent) => {
     dragging.current = false;
@@ -125,7 +125,7 @@ const AiToolsShowcase = () => {
               Premium <span className="text-gradient">AI Tools</span> in orbit
             </h2>
             <p className="text-muted-foreground mt-2 max-w-xl text-sm md:text-base">
-              Drag to spin. Tap any card to grab it. Lineup refreshes every few seconds.
+              Drag to spin. Tap a card to see details. Lineup refreshes every few seconds.
             </p>
           </div>
           <Link
@@ -137,9 +137,8 @@ const AiToolsShowcase = () => {
         </motion.div>
 
         <div
-          ref={stageRef}
           className="relative w-full select-none touch-none cursor-grab active:cursor-grabbing"
-          style={{ perspective: isMobile ? '900px' : '1600px', height: stageH }}
+          style={{ perspective: isMobile ? '800px' : '1600px', height: stageH }}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
@@ -153,16 +152,17 @@ const AiToolsShowcase = () => {
           >
             {items.map((tool, i) => {
               const angle = (i / items.length) * 360;
+              const isSel = selected?.id === tool.id;
               return (
-                <Link
+                <button
                   key={tool.id}
-                  to="/ai-tools"
-                  draggable={false}
+                  type="button"
                   onClick={(e) => {
-                    // Suppress click if user was dragging
-                    if (Math.abs(velocity.current) > 30) e.preventDefault();
+                    if (movedSinceDown.current > 8) return;
+                    e.stopPropagation();
+                    setSelected(isSel ? null : tool);
                   }}
-                  className="absolute left-1/2 top-1/2 group"
+                  className="absolute left-1/2 top-1/2 group focus:outline-none"
                   style={{
                     width: cardW,
                     height: cardH,
@@ -173,19 +173,17 @@ const AiToolsShowcase = () => {
                   }}
                 >
                   <motion.div
-                    initial={{ y: 0 }}
-                    animate={{ y: [0, -10, 0] }}
-                    whileHover={{ y: 0, scale: 1.06 }}
+                    animate={{ y: [0, -10, 0], scale: isSel ? 1.1 : 1 }}
+                    whileHover={{ y: 0, scale: isSel ? 1.1 : 1.06 }}
                     transition={{
-                      y: {
-                        duration: 4 + (i % 5) * 0.4,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: i * 0.15,
-                      },
+                      y: { duration: 4 + (i % 5) * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.15 },
                       scale: { duration: 0.25, ease: 'easeOut' },
                     }}
-                    className="w-full h-full rounded-2xl overflow-hidden bg-card/40 backdrop-blur-xl border border-white/10 shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.4)] group-hover:border-primary/60 group-hover:shadow-[0_30px_80px_-10px_hsl(var(--primary)/0.7)] transition-[border-color,box-shadow] duration-300 flex flex-col"
+                    className={`w-full h-full rounded-2xl overflow-hidden bg-card/40 backdrop-blur-xl border shadow-[0_20px_60px_-15px_hsl(var(--primary)/0.4)] transition-[border-color,box-shadow] duration-300 flex flex-col ${
+                      isSel
+                        ? 'border-primary shadow-[0_30px_80px_-10px_hsl(var(--primary)/0.9)] ring-2 ring-primary/60'
+                        : 'border-white/10 group-hover:border-primary/60 group-hover:shadow-[0_30px_80px_-10px_hsl(var(--primary)/0.7)]'
+                    }`}
                   >
                     <div className="relative aspect-square bg-white/95 overflow-hidden">
                       <img
@@ -193,41 +191,101 @@ const AiToolsShowcase = () => {
                         alt={tool.name}
                         loading="lazy"
                         draggable={false}
-                        className="w-full h-full object-contain p-3 md:p-4 transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-contain p-2 md:p-4 transition-transform duration-500 group-hover:scale-110"
                         onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
                       />
-                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[10px] font-bold tracking-wide">
+                      <div className="absolute top-1 left-1 md:top-2 md:left-2 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[9px] md:text-[10px] font-bold tracking-wide">
                         {tool.symbol}
                       </div>
-                      {tool.trend === 'up' && (
+                      {tool.trend === 'up' && !isMobile && (
                         <div className="absolute top-2 right-2 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-500/90 text-white text-[10px] font-bold">
                           <Star className="w-2.5 h-2.5 fill-current" /> {tool.change.toFixed(1)}%
                         </div>
                       )}
                     </div>
-                    <div className="flex-1 p-2 md:p-3 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90">
-                      <div>
-                        <h3 className="font-display text-xs md:text-sm font-bold text-foreground line-clamp-2 leading-tight">
-                          {tool.name}
-                        </h3>
-                        <p className="text-[10px] text-muted-foreground mt-0.5">{tool.validity}</p>
-                      </div>
-                      <div className="flex items-end justify-between mt-1 md:mt-2">
-                        <span className="text-primary font-bold text-sm md:text-base">₹{tool.price}</span>
-                        <span className="text-[10px] text-primary/80 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                          View →
-                        </span>
+                    <div className="flex-1 px-2 py-1.5 md:p-3 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90 min-h-0">
+                      <h3 className="font-display text-[10px] md:text-sm font-bold text-foreground line-clamp-1 md:line-clamp-2 leading-tight text-left">
+                        {tool.name}
+                      </h3>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="text-primary font-bold text-xs md:text-base">₹{tool.price}</span>
+                        {!isMobile && (
+                          <span className="text-[10px] text-muted-foreground truncate ml-1">{tool.validity}</span>
+                        )}
                       </div>
                     </div>
                   </motion.div>
-                </Link>
+                </button>
               );
             })}
           </motion.div>
 
-          <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-background to-transparent pointer-events-none z-20" />
-          <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-background to-transparent pointer-events-none z-20" />
+          <div className="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-background to-transparent pointer-events-none z-20" />
+          <div className="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-background to-transparent pointer-events-none z-20" />
         </div>
+
+        {/* Selected product detail card */}
+        <AnimatePresence>
+          {selected && (
+            <motion.div
+              key={selected.id}
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.96 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="mt-8 max-w-3xl mx-auto rounded-2xl border border-primary/30 bg-card/60 backdrop-blur-xl p-5 md:p-6 shadow-[0_30px_80px_-20px_hsl(var(--primary)/0.5)] relative"
+            >
+              <button
+                type="button"
+                onClick={() => setSelected(null)}
+                className="absolute top-3 right-3 p-1.5 rounded-full bg-background/60 hover:bg-background text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Close details"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl bg-white/95 p-3 flex items-center justify-center shrink-0">
+                  <img
+                    src={proxyImage(selected.image, 400)}
+                    alt={selected.name}
+                    className="w-full h-full object-contain"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[10px] font-bold tracking-wide">
+                      {selected.symbol}
+                    </span>
+                    {selected.trend === 'up' && (
+                      <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-500/90 text-white text-[10px] font-bold">
+                        <Star className="w-2.5 h-2.5 fill-current" /> {selected.change.toFixed(1)}%
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-foreground">{selected.name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{selected.validity}</p>
+                  <div className="flex flex-wrap items-center gap-3 mt-4">
+                    <span className="text-2xl md:text-3xl font-bold text-primary">₹{selected.price}</span>
+                    <Link
+                      to="/ai-tools"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
+                    >
+                      Grab this tool <ExternalLink className="w-4 h-4" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setSelected(null)}
+                      className="text-sm text-muted-foreground hover:text-foreground"
+                    >
+                      Keep browsing
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
