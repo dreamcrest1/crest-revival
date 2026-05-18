@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Billboard, OrbitControls, Trail } from '@react-three/drei';
+import { Billboard, OrbitControls } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import type { GlobeItem } from './ProductGlobe';
@@ -60,32 +60,22 @@ function useSafeTexture(url: string): TexState {
   return state;
 }
 
-type OrbitParams = {
-  u: THREE.Vector3;
-  v: THREE.Vector3;
-  radius: number;
-  phase: number;
-  speed: number;
-};
-
 function LogoTile({
-  orbit,
+  position,
   startPosition,
   formStart,
   formDuration,
   item,
   size,
   onSelect,
-  paused,
 }: {
-  orbit: OrbitParams;
+  position: THREE.Vector3;
   startPosition: THREE.Vector3;
   formStart: number;
   formDuration: number;
   item: GlobeItem;
   size: number;
   onSelect: (href: string) => void;
-  paused: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const [sourceIndex, setSourceIndex] = useState(0);
@@ -97,11 +87,8 @@ function LogoTile({
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
-  const orbitPos = useMemo(() => new THREE.Vector3(), []);
   const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
   const appearStartRef = useRef<number | null>(null);
-  const pausedAngleRef = useRef<number>(0);
-  const lastTimeRef = useRef<number>(0);
   const APPEAR_DURATION = 0.7;
 
   // easeOutCubic
@@ -110,7 +97,7 @@ function LogoTile({
   useFrame(({ clock }) => {
     const now = clock.getElapsedTime();
 
-    // Formation animation
+    // Formation animation (globe-wide): position + base scale ease
     const formP = THREE.MathUtils.clamp((now - formStart) / formDuration, 0, 1);
     const formEased = ease(formP);
 
@@ -124,26 +111,10 @@ function LogoTile({
         : THREE.MathUtils.clamp((now - appearStartRef.current) / APPEAR_DURATION, 0, 1);
     const appearEased = ease(appearP);
 
-    // Advance orbit angle (pauses on interaction)
-    const dt = Math.min(0.05, now - lastTimeRef.current || 0);
-    lastTimeRef.current = now;
-    if (!paused) pausedAngleRef.current += dt * orbit.speed;
-    const theta = orbit.phase + pausedAngleRef.current;
-
-    // Position on orbit circle
-    const c = Math.cos(theta) * orbit.radius;
-    const s = Math.sin(theta) * orbit.radius;
-    orbitPos.set(
-      orbit.u.x * c + orbit.v.x * s,
-      orbit.u.y * c + orbit.v.y * s,
-      orbit.u.z * c + orbit.v.z * s,
-    );
-
     if (billboardRef.current) {
-      currentPos.lerpVectors(startPosition, orbitPos, formEased);
+      currentPos.lerpVectors(startPosition, position, formEased);
       billboardRef.current.position.copy(currentPos);
     }
-
 
     if (!groupRef.current) return;
     // Scale combines formation + a gentle pop-in once texture arrives
@@ -174,44 +145,65 @@ function LogoTile({
 
   return (
     <Billboard ref={billboardRef} position={startPosition}>
-      <Trail
-        width={0.35}
-        length={4}
-        color={'#f97316'}
-        attenuation={(t) => t * t}
-        decay={1.2}
+      <group
+        ref={groupRef}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          setHovered(true);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = '';
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelect(item.href);
+        }}
       >
-        <group
-          ref={groupRef}
-          onPointerOver={(e) => {
-            e.stopPropagation();
-            setHovered(true);
-            document.body.style.cursor = 'pointer';
-          }}
-          onPointerOut={() => {
-            setHovered(false);
-            document.body.style.cursor = '';
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect(item.href);
-          }}
-        >
-          {/* Logo image — only mounted once texture has loaded */}
-          {texture && (
-            <mesh>
-              <planeGeometry args={[0.9, 0.9]} />
-              <meshBasicMaterial
-                ref={logoMatRef}
-                map={texture}
-                transparent
-                toneMapped={false}
-                depthWrite={false}
-              />
-            </mesh>
-          )}
-        </group>
-      </Trail>
+        {/* Outer glow ring on hover */}
+        {hovered && (
+          <mesh position={[0, 0, -0.02]}>
+            <ringGeometry args={[0.56, 0.72, 48]} />
+            <meshBasicMaterial color="#f97316" transparent opacity={0.55} depthWrite={false} />
+          </mesh>
+        )}
+        {/* Subtle border ring always visible */}
+        <mesh position={[0, 0, -0.01]}>
+          <ringGeometry args={[0.52, 0.56, 48]} />
+          <meshBasicMaterial
+            ref={ringMatRef}
+            color={hovered ? '#f97316' : '#ffffff'}
+            transparent
+            opacity={0.25}
+            depthWrite={false}
+          />
+        </mesh>
+        {/* Clean white circular icon plate */}
+        <mesh>
+          <circleGeometry args={[0.52, 48]} />
+          <meshBasicMaterial
+            ref={discMatRef}
+            color="#ffffff"
+            transparent
+            opacity={0.96}
+            depthWrite={false}
+          />
+        </mesh>
+        {/* Logo image — only mounted once texture has loaded */}
+        {texture && (
+          <mesh position={[0, 0, 0.001]}>
+            <planeGeometry args={[0.72, 0.72]} />
+            <meshBasicMaterial
+              ref={logoMatRef}
+              map={texture}
+              transparent
+              toneMapped={false}
+              depthWrite={false}
+            />
+          </mesh>
+        )}
+      </group>
     </Billboard>
   );
 }
@@ -256,34 +248,11 @@ function RotatingGroup({
   paused: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
-
-  // Generate per-tile orbit params: random axis, radius slightly outside the globe,
-  // varied phase and speed (some clockwise, some counter-clockwise).
-  const orbits = useMemo<OrbitParams[]>(() => {
-    return items.map(() => {
-      const axis = new THREE.Vector3(
-        Math.random() * 2 - 1,
-        Math.random() * 2 - 1,
-        Math.random() * 2 - 1,
-      ).normalize();
-      // Build an orthonormal basis (u, v) perpendicular to axis
-      const helper =
-        Math.abs(axis.y) < 0.95
-          ? new THREE.Vector3(0, 1, 0)
-          : new THREE.Vector3(1, 0, 0);
-      const u = new THREE.Vector3().crossVectors(axis, helper).normalize();
-      const v = new THREE.Vector3().crossVectors(axis, u).normalize();
-      const r = radius * (1.15 + Math.random() * 0.45);
-      const phase = Math.random() * Math.PI * 2;
-      const dir = Math.random() < 0.5 ? -1 : 1;
-      const speed = dir * (0.04 + Math.random() * 0.05);
-      return { u, v, radius: r, phase, speed };
-    });
-  }, [items, radius]);
-
+  const positions = useMemo(() => fibonacciSphere(items.length, radius), [items.length, radius]);
   const startPositions = useMemo(
     () =>
-      orbits.map(() => {
+      positions.map((p) => {
+        // Scatter tiles randomly within a much larger sphere; biased outward
         const dir = new THREE.Vector3(
           Math.random() * 2 - 1,
           Math.random() * 2 - 1,
@@ -292,15 +261,17 @@ function RotatingGroup({
         const dist = radius * (3 + Math.random() * 2);
         return dir.multiplyScalar(dist);
       }),
-    [orbits, radius],
+    [positions, radius],
   );
   const formStartRef = useRef<number | null>(null);
   const [formStart, setFormStart] = useState(0);
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     if (formStartRef.current === null) {
       formStartRef.current = clock.getElapsedTime();
       setFormStart(formStartRef.current);
     }
+    if (!group.current || paused) return;
+    group.current.rotation.y += delta * 0.2;
   });
 
   return (
@@ -309,14 +280,13 @@ function RotatingGroup({
       {items.map((it, i) => (
         <LogoTile
           key={it.name + i}
-          orbit={orbits[i]}
+          position={positions[i]}
           startPosition={startPositions[i]}
           formStart={formStart}
           formDuration={1.8}
           item={it}
           size={tileSize}
           onSelect={onSelect}
-          paused={paused}
         />
       ))}
     </group>
@@ -331,7 +301,7 @@ type Props = {
 
 const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   const radius = isMobile ? 2.4 : 3.0;
-  const tileSize = isMobile ? 0.48 : 0.544;
+  const tileSize = isMobile ? 0.6 : 0.68;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
