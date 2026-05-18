@@ -46,6 +46,26 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
   );
 }
 
+const FALLBACK_TOOL_NAMES = [
+  'ChatGPT Plus',
+  'Lovable Pro',
+  'Figma Professional',
+  'Replit Core',
+  'Gamma Pro',
+  'Manus AI Pro',
+  'Canva Pro',
+  'Perplexity Pro',
+];
+
+function shuffleTools(items: AiTool[]) {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
 /**
  * Home-page AI Tools showcase with realtime 3-D parallax: the grid container
  * tracks the cursor and rotates on X/Y axes, individual tiles lift on
@@ -54,6 +74,23 @@ function ShowcaseLogo({ tool, meta }: { tool: AiTool; meta: ToolMeta }) {
  */
 const AiToolsShowcase = () => {
   const { data: tools = [] } = useAiTools();
+
+  const fallbackTools = useMemo<AiTool[]>(
+    () =>
+      FALLBACK_TOOL_NAMES.map((name, idx) => ({
+        id: `fallback-${idx}-${slugifyAiTool(name)}`,
+        name,
+        validity: '',
+        price: 0,
+        image: '',
+        symbol: name.slice(0, 4).toUpperCase(),
+        change: 0,
+        trend: 'flat',
+        spark: [],
+        meta: metaForTool(name),
+      })),
+    [],
+  );
 
   // Full unique product pool (deduped by name) so every shuffle pulls from all
   // tools while preventing duplicates from showing in the same 8-card instance.
@@ -70,15 +107,6 @@ const AiToolsShowcase = () => {
     }
     return unique;
   }, [tools]);
-
-  const shuffleTools = (items: AiTool[]) => {
-    const next = [...items];
-    for (let i = next.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [next[i], next[j]] = [next[j], next[i]];
-    }
-    return next;
-  };
 
   const [isShufflePaused, setIsShufflePaused] = useState(false);
   const [shuffledPool, setShuffledPool] = useState<AiTool[]>([]);
@@ -103,11 +131,11 @@ const AiToolsShowcase = () => {
   }, [isShufflePaused, pool]);
 
   const featured = useMemo(() => {
-    if (shuffledPool.length === 0) return [];
-    const count = Math.min(8, shuffledPool.length);
-    const start = (page * count) % shuffledPool.length;
-    return Array.from({ length: count }, (_, i) => shuffledPool[(start + i) % shuffledPool.length]);
-  }, [page, shuffledPool]);
+    const activePool = shuffledPool.length > 0 ? shuffledPool : fallbackTools;
+    const count = Math.min(8, activePool.length);
+    const start = (page * count) % activePool.length;
+    return Array.from({ length: count }, (_, i) => activePool[(start + i) % activePool.length]);
+  }, [fallbackTools, page, shuffledPool]);
 
   // ── Realtime 3-D parallax ──
   // Mouse / touch updates a *target* tilt; a requestAnimationFrame loop lerps
