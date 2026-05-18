@@ -1,10 +1,8 @@
-import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { useProducts } from '@/hooks/useProducts';
 import { useAiTools, proxyImage } from '@/hooks/useAiTools';
 import { popularityFor } from '@/data/aiToolPopularity';
-import { slugify } from '@/lib/productSeo';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 
 const GlobeCanvas = lazy(() => import('./ProductGlobeCanvas'));
@@ -15,8 +13,16 @@ export type GlobeItem = {
   href: string;
 };
 
+// Curated OTT brand logos via Clearbit (square, mostly transparent/dark)
+const OTT_LOGOS: GlobeItem[] = [
+  { name: 'Netflix', image: 'https://logo.clearbit.com/netflix.com', href: '/all-tools' },
+  { name: 'Prime Video', image: 'https://logo.clearbit.com/primevideo.com', href: '/all-tools' },
+  { name: 'Hotstar', image: 'https://logo.clearbit.com/hotstar.com', href: '/all-tools' },
+  { name: 'Zee5', image: 'https://logo.clearbit.com/zee5.com', href: '/all-tools' },
+  { name: 'SonyLIV', image: 'https://logo.clearbit.com/sonyliv.com', href: '/all-tools' },
+].map((o) => ({ ...o, image: proxyImage(o.image, 256) }));
+
 function useGlobeItems(isMobile: boolean): GlobeItem[] {
-  const { data: productsData } = useProducts();
   const { data: aiTools } = useAiTools();
 
   return useMemo(() => {
@@ -29,26 +35,23 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
       out.push(it);
     };
 
-    const products = productsData?.products ?? [];
-    const hot = [...products]
-      .sort((a, b) => (b.isHotSelling ? 1 : 0) - (a.isHotSelling ? 1 : 0));
-    hot.forEach((p) =>
-      push({ name: p.name, image: p.image, href: `/product/${slugify(p.name)}` }),
-    );
+    // OTT logos first (always crisp via Clearbit)
+    OTT_LOGOS.forEach(push);
 
-    const tools = [...(aiTools ?? [])].sort(
-      (a, b) => popularityFor(b.name) - popularityFor(a.name),
-    );
+    // Then AI tools — only those that actually have a logo image
+    const tools = [...(aiTools ?? [])]
+      .filter((t) => t.image && t.image.trim().length > 0)
+      .sort((a, b) => popularityFor(b.name) - popularityFor(a.name));
     tools.forEach((t) =>
       push({
         name: t.name,
-        image: t.image ? proxyImage(t.image, 256) : '',
+        image: proxyImage(t.image, 256),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );
 
-    return out.slice(0, isMobile ? 30 : 60);
-  }, [productsData, aiTools, isMobile]);
+    return out.slice(0, isMobile ? 28 : 45);
+  }, [aiTools, isMobile]);
 }
 
 const ProductGlobe = () => {
@@ -79,7 +82,7 @@ const ProductGlobe = () => {
   return (
     <section
       ref={ref}
-      className="relative w-full py-12 sm:py-16 overflow-hidden"
+      className="relative w-full pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden"
       aria-label="Explore Our Universe of Tools"
     >
       <div className="text-center mb-6 sm:mb-10 px-4">

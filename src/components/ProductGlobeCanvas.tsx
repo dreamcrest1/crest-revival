@@ -6,6 +6,26 @@ import type { GlobeItem } from './ProductGlobe';
 
 const PLACEHOLDER = '/placeholder.svg';
 
+/** Build a soft circular alpha mask texture once and share across all tiles. */
+let _circleAlpha: THREE.CanvasTexture | null = null;
+function getCircleAlphaTexture(): THREE.CanvasTexture {
+  if (_circleAlpha) return _circleAlpha;
+  const size = 256;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d')!;
+  const g = ctx.createRadialGradient(size / 2, size / 2, size * 0.35, size / 2, size / 2, size * 0.5);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.85, 'rgba(255,255,255,1)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.NoColorSpace;
+  _circleAlpha = tex;
+  return tex;
+}
+
 /** Even sphere distribution via Fibonacci lattice. */
 function fibonacciSphere(n: number, radius: number): THREE.Vector3[] {
   const out: THREE.Vector3[] = [];
@@ -135,12 +155,13 @@ function LogoTile({
             depthWrite={false}
           />
         </mesh>
-        {/* Logo image, contained inside the disc */}
+        {/* Logo image, contained inside the disc, masked to a circle */}
         <mesh position={[0, 0, 0.001]}>
-          <planeGeometry args={[0.78, 0.78]} />
+          <circleGeometry args={[0.5, 48]} />
           <meshBasicMaterial
             ref={logoMatRef}
             map={texture}
+            alphaMap={getCircleAlphaTexture()}
             transparent
             toneMapped={false}
             depthWrite={false}
