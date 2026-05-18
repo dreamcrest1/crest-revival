@@ -32,6 +32,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminPages from "./pages/admin/AdminPages";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminSeoAudit from "./pages/admin/AdminSeoAudit";
+import AdminErrorLogs from "./pages/admin/AdminErrorLogs";
 
 const queryClient = new QueryClient();
 
