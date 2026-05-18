@@ -181,7 +181,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                     <ShoppingCart className="w-4 h-4" />
                   </button>
                   <a
-                    href={`https://wa.me/916357998730?text=${encodeURIComponent(`Hi! I'm interested in ${product.name} (${product.price}). Please share details.`)}`}
+                    href={waLink({ name: product.name, price: product.price, slug: slugify(product.name), category: product.category }, 'product-card')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
