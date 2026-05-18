@@ -42,8 +42,17 @@ export const captureUtmFromUrl = () => {
   } catch { /* ignore */ }
 };
 
+export type TrackedEvent =
+  | 'product_view'
+  | 'whatsapp_click'
+  | 'checkout_click'
+  | 'add_to_cart'
+  | 'tool_view'
+  | 'tool_whatsapp_click'
+  | 'search_query';
+
 export const trackEvent = async (
-  eventType: 'product_view' | 'whatsapp_click' | 'checkout_click' | 'search_query',
+  eventType: TrackedEvent,
   extra: Record<string, unknown> = {},
 ) => {
   try {
