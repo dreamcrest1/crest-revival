@@ -248,6 +248,17 @@ const AllTools = () => {
                 })}
               </motion.div>
             </AnimatePresence>
+
+            {hasMore && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={() => setDisplayCount((c) => c + LOAD_MORE_INCREMENT)}
+                  className="px-6 py-3 rounded-xl bg-card/60 backdrop-blur-sm border border-border/60 text-sm font-medium text-foreground hover:border-primary/40 hover:text-primary transition-all duration-300"
+                >
+                  Load more ({filteredTools.length - displayCount} remaining)
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Streaming Deals */}
