@@ -1,162 +1,92 @@
-# Build Plan — Phases 1 through 6
+# Globe overhaul + India map masking + logo→product mapping
 
-Phase 1 (reviews DB + seed data + most UI) is already in place from the previous turn. This plan finishes Phase 1 wiring and delivers Phases 2–6 end-to-end.
+## 1. Asset import & rename
+
+Copy all 40 PNGs from `user-uploads://logos_new-2.zip` into `src/assets/globe-logos/` with brand-named filenames (kebab-case), so the bundler hashes them and they're cached forever.
+
+Identified mapping from numeric filenames (verified by viewing each):
+
+```text
+2.png  → jasper.png            3.png  → deepgram.png
+4.png  → gemini.png            5.png  → perplexity.png
+6.png  → claude.png            7.png  → bolt-new.png
+8.png  → lovable.png           9.png  → netflix.png
+10.png → prime-video.png       11.png → zee5.png
+12.png → sonyliv.png           13.png → jiohotstar.png
+14.png → hoichoi.png           15.png → chaupal.png
+16.png → iptv.png              17.png → hbo-max.png
+18.png → crunchyroll.png       20.png → firecrawl.png
+21.png → canva.png             23.png → adobe-cc.png
+24.png → figma.png             25.png → envato-elements.png
+26.png → heygen.png            27.png → elevenlabs.png
+28.png → runway.png            30.png → gamma.png
+31.png → semrush.png           32.png → office-365.png
+33.png → notion-plus.png       34.png → linkedin.png
+35.png → quillbot.png          36.png → coursera.png
+37.png → datacamp.png          38.png → nordvpn.png
+39.png → turnitin.png
+chatgpt.png · supabase.png · replit.png · wondershare-filmora.png · youtube.png
+```
+
+Total: **40 brand-named PNGs**.
+
+## 2. New globe data source
+
+Create `src/data/globeLogos.ts` — a single source of truth that imports each PNG via ES module and pairs it with a deep-link target:
+
+```text
+{ name, image, href }   // href = '/ai-tool/<slug>' OR '/products/<slug>'
+```
+
+Mapping rules:
+- **OTT / streaming → Products page detail**: Netflix, Prime Video, JioHotstar, SonyLiv, Zee5, Hoichoi, Chaupal, HBO Max, Crunchyroll, YouTube, IPTV
+- **Everything else → AI tool detail page**: ChatGPT, Jasper, Gemini, Perplexity, Claude, Bolt.new, Lovable, Firecrawl, Canva, Adobe CC, Figma, Envato Elements, HeyGen, ElevenLabs, Runway, Gamma, Deepgram, Semrush, Office 365, Notion Plus, LinkedIn, QuillBot, Coursera, Datacamp, NordVPN, Turnitin, Supabase, Replit, Wondershare Filmora
+
+I'll match against existing product names in `src/data/staticProducts.ts` and AI tool names from the Google-Sheet `useAiTools` data. For any logo with no match in either dataset, the href will fall back to `/ai-tools` (the listing page) so nothing 404s.
+
+## 3. `ProductGlobe.tsx` rewrite
+
+- **Drop** `useAiTools` + `metaForTool` + iconify / weserv / clearbit chain → use the static `globeLogos` array. No more dynamic logo fetching, no proxied URLs, no Sheet dependency for the globe.
+- **Remove the radial backdrop disc** behind each logo on the canvas (the round halo behind logos).
+- **Keep the wireframe sphere itself** (per your answer).
+- **Boot-up animation**: when the globe canvas mounts, animate `scale` from `0.15 → 1` over ~1400ms with a soft `easeOut` curve while opacity fades 0→1 and blur 12px→0. Use Framer Motion (already a dependency). This both hides perceived load time and gives the "small sphere forms then expands" feel you asked for.
+- Keep mobile size at the already-reduced 285px and desktop at 560px.
+- Keep the "Explore AI Tools" CTA below the globe.
+
+## 4. `ProductGlobeCanvas.tsx` adjustments
+
+- Remove the per-logo circular disc/plane backing — render only the logo texture on a transparent quad.
+- Slightly increase logo plane size to compensate for the missing disc so logos remain readable.
+- Keep rotation, hover scale, click handler.
+
+## 5. India map masking
+
+In `src/components/IndiaMapBackground.tsx` (fixed full-viewport background): wrap the SVG layer in a container with a **radial CSS mask** centered on the top of the viewport, fading transparent in the globe area and opaque elsewhere:
+
+```text
+mask-image: radial-gradient(ellipse 55% 40% at 50% 18%, transparent 55%, black 80%);
+```
+
+Result: India map renders globally, but the area visually occupied by the globe (top of the homepage) shows none of the map — so the globe stays clean. Everywhere else on the page India remains visible as today. No JS scroll-listener needed.
+
+## 6. Memory update
+
+Add a new memory file `mem://features/globe` recording: PNG-only globe logo set in `src/assets/globe-logos/`, no halo discs, mapped via `src/data/globeLogos.ts` to AI tool or product detail routes, scale-in boot animation.
+
+## 7. Build & ship
+
+After implementing, run `npm run build` and re-package `dreamcrest-dist.zip` (with `.htaccess` + new hashed `index-*.js`) for your manual cPanel upload. Same upload procedure as before — delete old `public_html/index.html` + `assets/`, extract zip.
 
 ---
 
-## Phase 1 — Finish Reviews & Ratings
+## Files touched
 
-Remaining work only (DB + seed already done).
+- **new**: `src/assets/globe-logos/*.png` (40 files), `src/data/globeLogos.ts`, `mem://features/globe`
+- **edited**: `src/components/ProductGlobe.tsx`, `src/components/ProductGlobeCanvas.tsx`, `src/components/IndiaMapBackground.tsx`
+- **removed code paths**: globe's dependency on `useAiTools`, `aiToolMeta` GLOBE_ICON_OVERRIDES, weserv/clearbit URL chain
 
-- Fix TS error in `src/pages/admin/AdminReviews.tsx` (already destructured `data.products` from `useProducts`).
-- Register route `/admin/reviews` in `src/App.tsx`.
-- Add "Reviews" item to `src/components/admin/AdminSidebar.tsx` with star icon.
-- Add compact star badge + review count to `src/components/ProductCard.tsx` (reads from `product_rating_stats` view, batched via a `useAllRatingStats()` hook).
-- Verify `ProductReviews` component renders on `ProductDetail` and that `aggregateRating` JSON-LD only emits when `reviewCount > 0`.
+## Out of scope (won't touch)
 
----
-
-## Phase 2 — WhatsApp Deep-Links + Social Proof
-
-**WhatsApp deep-links**
-- Extend `src/lib/whatsapp.ts` with `waLink(product?, context?)`:
-  - No args → generic enquiry
-  - With product → prefills `"Hi! I'm interested in {name} (₹{price}). Link: {canonical url}"`
-  - `context: 'all-tools' | 'hot-selling' | 'product-detail' | 'footer'` appended as a hidden tag for analytics correlation.
-- Replace every existing `wa.me` / `api.whatsapp.com` usage in:
-  - `ProductCard.tsx`, `ProductDetail.tsx`, `AllToolsPage.tsx`, `Footer`, floating WhatsApp button.
-
-**Live viewers + recent purchase toasts**
-- New `src/components/social/LiveViewers.tsx` on ProductDetail. Deterministic seed from `product.id + hour bucket` → 4–37 viewers, jitters every 25–40s. No DB calls.
-- New `src/components/social/RecentPurchaseToast.tsx` mounted in `App.tsx`:
-  - Pool of ~40 Indian first names + 25 cities + product names from current catalog.
-  - First toast after 18s, then random 35–90s. Pauses on `/admin/*` and when tab hidden.
-  - Uses sonner `toast()` with custom JSX (avatar initial + "Rohit from Pune just ordered Canva Pro").
-
----
-
-## Phase 3 — Blog/Articles CMS
-
-**DB migration** — new `blog_posts` table:
-- `id, slug (unique), title, excerpt, body_markdown, cover_image_url, seo_title, seo_description, og_image_url, tags text[], is_published bool, published_at, created_at, updated_at`
-- RLS: public SELECT where `is_published = true`; admin full CRUD via `has_role`.
-
-**Frontend**
-- `src/pages/Blog.tsx` at `/blog` — grid of published posts (cover + title + excerpt + date).
-- `src/pages/BlogPost.tsx` at `/blog/:slug` — markdown render via `react-markdown` (already a recommended dep; install if missing) + `remark-gfm`. Helmet sets title/description/canonical/og + Article JSON-LD + BreadcrumbList JSON-LD.
-- Add `/blog` and `/blog/:slug` routes to `src/App.tsx` and to `public/sitemap.xml` generation (already dynamic? if static, append `/blog` and call a build-time list — we'll inject the slugs at runtime via a `sitemap.xml` edge function instead so new posts auto-appear).
-
-**Admin**
-- `src/pages/admin/AdminBlog.tsx` — list, create, edit, delete; markdown textarea with live preview; publish toggle; SEO fields.
-- Sidebar entry "Blog".
-
----
-
-## Phase 4 — SEO Enrichments
-
-**Per-product SEO fields**
-- Migration: add `seo_title`, `seo_description`, `seo_keywords` (text), `og_image_url` to `products`.
-- `ProductDetail.tsx` + `buildProductSeo` use product overrides when present, else fall back to current defaults.
-- Admin product form gains a collapsible "SEO" section.
-
-**Auto image alt-text**
-- Edge function `image-alt-gen` — input `{ image_url, product_name }` → calls Lovable AI Gateway `google/gemini-3-flash-preview` with the image → returns 8–14 word alt.
-- Admin button "Generate alt text for all missing" runs in batches of 10.
-- Stored in new `image_alt` column on `products`.
-
-**Internal link suggestions**
-- Page `src/pages/admin/AdminInternalLinks.tsx`. For each product/blog post, suggest 3 related items by category overlap + tag overlap. One-click "Insert link" appends to description.
-
-**Auto Product+Offer+AggregateRating schema**
-- Already partially done; extend `buildProductSeo` to always emit `Offer` (priceCurrency INR, availability InStock, url canonical) and `AggregateRating` when stats exist.
-
-**Breadcrumb JSON-LD**
-- Helper `buildBreadcrumbJsonLd(pathSegments)` used on ProductDetail, BlogPost, AllTools.
-
----
-
-## Phase 5 — Analytics Deepening
-
-**New event types** (insert into existing `site_analytics`, no schema change needed — `event_type` is free text):
-- `product_view`, `whatsapp_click`, `checkout_click`, `search_query`.
-
-**Click tracking (heatmap-lite)**
-- New table `click_events (id, page_path, x_pct, y_pct, element_tag, element_text, viewport_w, created_at)`.
-- Client samples 30% of sessions (seeded by visitorId hash) and forwards clicks (debounced 250ms). Admin-only insert restriction lifted to public insert with strict size limits.
-- Admin page `/admin/heatmap` renders an SVG overlay of dots per path (top 20 paths dropdown).
-
-**UTM dashboard**
-- Capture `utm_source/medium/campaign/content/term` on first load (sessionStorage) and include in every analytics insert as `metadata` jsonb (add column if missing).
-- `/admin/utm` shows top campaigns, sources, conversion rate to WhatsApp/checkout click.
-
-**Funnel view**
-- `/admin/funnel`: visits → product_view → whatsapp_click OR checkout_click. Stacked bar + dropoff %.
-
-**Top search queries**
-- Wire existing `SearchBar`/`SearchModal` to log `search_query` event with the query string. Admin page shows top 50 (last 30/90/all days).
-
-**Geo map**
-- `/admin/geo`: world/India map (react-simple-maps) with circles sized by visit count, using existing `country`/`city` columns.
-
----
-
-## Phase 6 — AI Tools
-
-**AI product description generator (admin)**
-- Edge function `ai-product-copy`: input `{ product_name, category, key_features?[] }` → outputs `{ description, seo_title, seo_description, keywords }` via Gemini 3 Flash with structured output.
-- Button in admin product form: "✨ Generate copy" → fills the fields (user reviews before save).
-
-**Storefront AI chatbot**
-- Bottom-right floating bubble (above the WhatsApp FAB so both are visible).
-- Edge function `storefront-chat` (`verify_jwt = false`) using AI SDK + tools:
-  - `searchProducts({ query, category? })` — SELECT from products
-  - `getProductDetails({ id_or_slug })`
-  - `listCategories()`
-  - `recommendProducts({ budget?, use_case? })`
-- Streams responses to client via AI SDK UI (`useChat`). Markdown rendered with `react-markdown`. History persisted in `localStorage` only (no DB).
-- System prompt: Dreamcrest assistant, recommends from catalog, always hands off to WhatsApp for final checkout, never invents products.
-
-**AI category auto-tagger**
-- Admin button on product list "Auto-categorize uncategorized": batches 20 products → Gemini Flash with structured output enum of existing categories → fills `category`.
-
----
-
-## Technical Notes
-
-**New tables / columns**
-```
-blog_posts (new)
-click_events (new)
-products + seo_title, seo_description, seo_keywords, og_image_url, image_alt
-site_analytics + metadata jsonb (UTM + extras)
-```
-
-**New edge functions**
-```
-image-alt-gen        — image → alt text
-ai-product-copy      — name/category → description+SEO
-storefront-chat      — streaming chat with product tools
-sitemap-xml          — dynamic sitemap incl. products + blog
-```
-
-**New routes**
-```
-/blog, /blog/:slug
-/admin/reviews, /admin/blog, /admin/internal-links, /admin/heatmap,
-/admin/utm, /admin/funnel, /admin/search-queries, /admin/geo
-```
-
-**Dependencies to add**
-```
-react-markdown, remark-gfm, react-simple-maps, d3-scale (for geo bubbles)
-```
-
-**Order of execution**
-1. Finish Phase 1 wiring (smallest, immediate visible win).
-2. Phase 2 (WhatsApp + social proof — pure frontend, no migrations).
-3. Phase 4 SEO migration + auto schema (small migration, big SEO lift).
-4. Phase 3 Blog CMS (migration + routes + admin).
-5. Phase 5 Analytics (migration + 5 admin pages — largest).
-6. Phase 6 AI (3 edge functions + chatbot UI).
-
-Each phase ends with a build-pass check and a visual QA on the affected pages.
+- AI tools page and OTT products page themselves
+- Sheet-driven `useAiTools` (still used elsewhere, just not by the globe)
+- GitHub deploy workflow

@@ -25,7 +25,17 @@ const IndiaMapBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center">
+    <div
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center"
+      style={{
+        // Mask out the homepage globe area (top-center) so logos read cleanly,
+        // while keeping the India map fully visible everywhere else.
+        WebkitMaskImage:
+          'radial-gradient(ellipse 42% 32% at 50% 22%, transparent 55%, black 92%)',
+        maskImage:
+          'radial-gradient(ellipse 42% 32% at 50% 22%, transparent 55%, black 92%)',
+      }}
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
