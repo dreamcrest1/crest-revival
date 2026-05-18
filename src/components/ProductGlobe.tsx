@@ -82,7 +82,7 @@ const ProductGlobe = () => {
   return (
     <section
       ref={ref}
-      className="relative w-full py-12 sm:py-16 overflow-hidden"
+      className="relative w-full pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden"
       aria-label="Explore Our Universe of Tools"
     >
       <div className="text-center mb-6 sm:mb-10 px-4">
