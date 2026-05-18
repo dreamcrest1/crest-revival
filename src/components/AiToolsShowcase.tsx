@@ -80,13 +80,8 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
       <X className="w-4 h-4" />
     </button>
     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
-      <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-xl bg-white/95 p-2 md:p-3 flex items-center justify-center shrink-0 mx-auto sm:mx-0">
-        <img
-          src={proxyImage(tool.image, 400)}
-          alt={tool.name}
-          className="w-full h-full object-contain"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/placeholder.svg'; }}
-        />
+      <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex items-center justify-center shrink-0 mx-auto sm:mx-0">
+        <BrandLogo t={tool} compact />
       </div>
       <div className="flex-1 min-w-0 w-full">
         <div className="flex items-center gap-2 mb-2">
