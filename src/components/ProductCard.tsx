@@ -17,9 +17,9 @@ const PLACEHOLDER = '/placeholder.svg';
 const ProductCard = ({ product }: { product: Product }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { addToCart } = useCart();
-  // Prefer the user-uploaded brand logo whenever we have a match for this product.
+  // Only show the user-uploaded brand logos — no external image fallbacks.
   const brandLogo = userLogoFor(product.name);
-  const effectiveImage = brandLogo ?? product.image;
+  const effectiveImage = brandLogo ?? PLACEHOLDER;
   const imgState = useImageValid(effectiveImage);
   const linkOk = isLikelyValidLink(product.buyLink);
   const { data: ratingStats } = useAllRatingStats();
