@@ -101,6 +101,30 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_insights: {
+        Row: {
+          created_at: string
+          for_date: string
+          id: string
+          metrics: Json
+          summary_md: string
+        }
+        Insert: {
+          created_at?: string
+          for_date: string
+          id?: string
+          metrics?: Json
+          summary_md: string
+        }
+        Update: {
+          created_at?: string
+          for_date?: string
+          id?: string
+          metrics?: Json
+          summary_md?: string
+        }
+        Relationships: []
+      }
       error_logs: {
         Row: {
           col_no: number | null
@@ -142,6 +166,30 @@ export type Database = {
           source?: string | null
           stack?: string | null
           user_agent?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: []
+      }
+      exit_feedback: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          page_path: string
+          visitor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          page_path: string
+          visitor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          page_path?: string
           visitor_id?: string | null
         }
         Relationships: []
@@ -188,6 +236,8 @@ export type Database = {
           language: string
           product_id: string
           rating: number
+          sentiment: string | null
+          sentiment_summary: string | null
           title: string | null
           updated_at: string
           verified_buyer: boolean
@@ -203,6 +253,8 @@ export type Database = {
           language?: string
           product_id: string
           rating: number
+          sentiment?: string | null
+          sentiment_summary?: string | null
           title?: string | null
           updated_at?: string
           verified_buyer?: boolean
@@ -218,6 +270,8 @@ export type Database = {
           language?: string
           product_id?: string
           rating?: number
+          sentiment?: string | null
+          sentiment_summary?: string | null
           title?: string | null
           updated_at?: string
           verified_buyer?: boolean

@@ -207,7 +207,7 @@ const ProductDetail = () => {
 
   const waHref = waLink({ name: product.name, price: product.price, slug: slugify(product.name), category: product.category }, 'product-detail');
 
-  useEffect(() => { void trackEvent('product_view', { product_id: product.id, name: product.name }); }, [product.id, product.name]);
+  useEffect(() => { void trackEvent('product_view', { product_id: product.id, name: product.name, category: product.category, image: product.image }); }, [product.id, product.name, product.category, product.image]);
 
   return (
     <div className="min-h-screen relative z-10">
@@ -289,19 +289,20 @@ const ProductDetail = () => {
                   href={product.buyLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => void trackEvent('checkout_click', { product_id: product.id, name: product.name, category: product.category, image: product.image })}
                   className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
                 >
                   <ExternalLink className="w-4 h-4" /> Buy Now
                 </a>
                 <button
-                  onClick={() => addToCart(product)}
+                  onClick={() => { addToCart(product); void trackEvent('add_to_cart', { product_id: product.id, name: product.name, category: product.category, image: product.image }); }}
                   className="flex items-center justify-center gap-2 bg-secondary border border-border rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all"
                 >
                   <ShoppingCart className="w-4 h-4" /> Add to Cart
                 </button>
                 <a
                   href={waHref}
-                  onClick={() => void trackEvent('whatsapp_click', { product_id: product.id })}
+                  onClick={() => void trackEvent('whatsapp_click', { product_id: product.id, name: product.name, category: product.category, image: product.image })}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all"
