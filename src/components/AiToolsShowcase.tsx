@@ -5,6 +5,7 @@ import { Sparkles, ArrowRight, Star, X, ExternalLink, ChevronLeft, ChevronRight 
 import { useAiTools, type AiTool } from '@/hooks/useAiTools';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { BrandLogo } from '@/components/ai/BrandLogo';
+import { slugifyAiTool } from '@/lib/aiToolSeo';
 
 const COUNT = 12;
 const ROTATE_MS = 5000;
