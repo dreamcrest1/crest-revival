@@ -32,7 +32,7 @@ function useTexture(url: string): THREE.Texture | null {
     loader.load(url, (t) => {
       if (cancelled) { t.dispose(); return; }
       t.colorSpace = THREE.SRGBColorSpace;
-      t.anisotropy = 8;
+      t.anisotropy = 16;
       t.minFilter = THREE.LinearMipmapLinearFilter;
       t.magFilter = THREE.LinearFilter;
       t.generateMipmaps = true;
