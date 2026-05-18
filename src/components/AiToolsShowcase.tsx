@@ -339,6 +339,8 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
                   marginTop: -cardH / 2,
                   transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                   transformStyle: 'preserve-3d',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
                 }}
               >
                 <motion.div
