@@ -225,7 +225,7 @@ const ProductGlobeCanvas = ({ items, isMobile, onSelect }: Props) => {
   // Slightly smaller sphere with the camera pulled back so all logos sit
   // comfortably inside the frame (no edge clipping on desktop).
   const radius = isMobile ? 2.3 : 2.9;
-  const tileSize = isMobile ? 1.58 : 1.66;
+  const tileSize = isMobile ? 1.185 : 1.245;
   const [paused, setPaused] = useState(false);
   const resumeTimer = useRef<number | null>(null);
 
