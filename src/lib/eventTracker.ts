@@ -48,12 +48,12 @@ export const trackEvent = async (
 ) => {
   try {
     const metadata = { ...getUtm(), ...extra };
-    await supabase.from('site_analytics').insert({
+    await supabase.from('site_analytics').insert([{
       event_type: eventType,
       page_path: window.location.pathname,
-      visitor_id: getVisitorId(),
+      visitor_id: getVisitorId() ?? undefined,
       metadata,
-    });
+    }]);
   } catch { /* never break */ }
 };
 
@@ -84,14 +84,14 @@ export const initClickTracking = () => {
     const h = window.innerHeight || 1;
     const xPct = Math.round((e.clientX / w) * 10000) / 100;
     const yPct = Math.round((e.clientY / h) * 10000) / 100;
-    void supabase.from('click_events').insert({
+    void supabase.from('click_events').insert([{
       page_path: window.location.pathname,
       x_pct: xPct,
       y_pct: yPct,
       element_tag: target.tagName?.toLowerCase().slice(0, 16) || null,
       element_text: (target.textContent || '').trim().slice(0, 80) || null,
       viewport_w: window.innerWidth,
-      visitor_id: getVisitorId(),
-    });
+      visitor_id: getVisitorId() ?? undefined,
+    }]);
   }, { passive: true });
 };
