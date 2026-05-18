@@ -201,6 +201,7 @@ function ToolCard({ t }: { t: AiTool }) {
             href={t.price > 0 ? COSMOFEED_URL : waLink(t)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => void trackEvent(t.price > 0 ? 'checkout_click' : 'tool_whatsapp_click', { tool_name: t.name, category: bucketFor(t), price: t.price, image: t.image })}
             className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-primary-foreground rounded-xl py-2.5 text-xs font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
           >
             <Zap className="w-3.5 h-3.5" /> {t.price > 0 ? 'Buy Now' : 'Enquire'}
@@ -209,6 +210,7 @@ function ToolCard({ t }: { t: AiTool }) {
             href={waLink(t)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: t.name, category: bucketFor(t), price: t.price, image: t.image })}
             aria-label={`WhatsApp about ${t.name}`}
             className="flex items-center justify-center bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 rounded-xl px-3 py-2.5 text-xs font-semibold hover:bg-[#25D366] hover:text-white transition-all"
           >
