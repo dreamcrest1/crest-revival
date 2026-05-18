@@ -276,7 +276,7 @@ function RotatingGroup({
       const r = radius * (1.15 + Math.random() * 0.45);
       const phase = Math.random() * Math.PI * 2;
       const dir = Math.random() < 0.5 ? -1 : 1;
-      const speed = dir * (0.18 + Math.random() * 0.32);
+      const speed = dir * (0.04 + Math.random() * 0.05);
       return { u, v, radius: r, phase, speed };
     });
   }, [items, radius]);
