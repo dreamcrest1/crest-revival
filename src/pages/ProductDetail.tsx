@@ -194,7 +194,8 @@ const ProductDetail = () => {
     );
   }
 
-  const seo = buildProductSeo(product);
+  const { data: ratingStats } = useRatingStats(product.id);
+  const seo = buildProductSeo(product, ratingStats);
   const features = categoryFeatures[product.category] || categoryFeatures.Other;
   const howItWorks =
     categoryHowItWorks[product.category] ||
