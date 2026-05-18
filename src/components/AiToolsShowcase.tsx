@@ -107,148 +107,118 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
   </motion.div>
 );
 
-/* ---------------- MOBILE: Continuous-drag curved coverflow ---------------- */
-const STEP = 70; // px per card position
+/* ---------------- MOBILE: Touch-driven horizontal wheel ---------------- */
 const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
-  const [pos, setPos] = useState(0); // fractional index
   const [selected, setSelected] = useState<AiTool | null>(null);
-  const startX = useRef<number | null>(null);
-  const startPos = useRef(0);
-  const moved = useRef(0);
-  const lastDx = useRef(0);
-  const lastT = useRef(0);
+  const rotation = useMotionValue(0);
+  const dragging = useRef(false);
+  const captured = useRef(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const lastX = useRef(0);
   const velocity = useRef(0);
-  const rafRef = useRef<number | null>(null);
+  const moved = useRef(0);
 
   const len = items.length;
-  const wrap = (n: number) => ((n % len) + len) % len;
-  const active = wrap(Math.round(pos));
 
-  const cancelInertia = () => {
-    if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-    rafRef.current = null;
-  };
+  useAnimationFrame((_, delta) => {
+    if (dragging.current) return;
+    if (Math.abs(velocity.current) < 0.02) return;
+    rotation.set(rotation.get() + velocity.current * (delta / 16));
+    velocity.current *= Math.pow(0.94, delta / 16);
+  });
 
-  const settle = (target: number) => {
-    cancelInertia();
-    const start = performance.now();
-    const from = pos;
-    const dur = 280;
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setPos(from + (target - from) * eased);
-      if (p < 1) rafRef.current = requestAnimationFrame(tick);
-      else rafRef.current = null;
-    };
-    rafRef.current = requestAnimationFrame(tick);
-  };
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    cancelInertia();
-    startX.current = e.touches[0].clientX;
-    startPos.current = pos;
-    moved.current = 0;
-    lastDx.current = 0;
-    lastT.current = performance.now();
+  const onPointerDown = (e: React.PointerEvent) => {
+    dragging.current = true;
+    captured.current = false;
+    lastX.current = e.clientX;
     velocity.current = 0;
+    moved.current = 0;
   };
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (startX.current == null) return;
-    const dx = e.touches[0].clientX - startX.current;
-    const now = performance.now();
-    const dt = Math.max(1, now - lastT.current);
-    velocity.current = (dx - lastDx.current) / dt; // px/ms
-    lastDx.current = dx;
-    lastT.current = now;
-    moved.current = Math.abs(dx);
-    setPos(startPos.current - dx / STEP);
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!dragging.current) return;
+    const dx = e.clientX - lastX.current;
+    lastX.current = e.clientX;
+    moved.current += Math.abs(dx);
+    if (!captured.current && moved.current > 4) {
+      captured.current = true;
+      stageRef.current?.setPointerCapture(e.pointerId);
+    }
+    if (!captured.current) return;
+    const next = dx * 0.65;
+    rotation.set(rotation.get() + next);
+    velocity.current = next;
   };
-  const onTouchEnd = () => {
-    if (startX.current == null) return;
-    startX.current = null;
-    // Project with momentum, then snap to nearest card.
-    const projected = pos - (velocity.current * 180) / STEP;
-    settle(Math.round(projected));
+  const onPointerUp = (e: React.PointerEvent) => {
+    dragging.current = false;
+    if (captured.current) {
+      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch (error) { void error; }
+    }
+    captured.current = false;
   };
 
   if (!len) return null;
 
+  const radius = 185;
+  const cardW = 108;
+  const cardH = 154;
+
   return (
     <>
       <div
-        className="relative h-[300px] w-full select-none touch-pan-y"
-        style={{ perspective: '1100px' }}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
+        ref={stageRef}
+        className="relative h-[320px] w-full select-none touch-none overflow-visible cursor-grab active:cursor-grabbing"
+        style={{ perspective: '950px' }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
-        {items.map((tool, i) => {
-          // signed fractional offset from pos, wrapped
-          let offset = i - pos;
-          if (offset > len / 2) offset -= len;
-          if (offset < -len / 2) offset += len;
-          const abs = Math.abs(offset);
-          if (abs > 3.2) return null;
-          const x = offset * STEP;
-          const rotY = Math.max(-90, Math.min(90, offset * -28));
-          const scale = Math.max(0.35, 1 - abs * 0.22);
-          const z = -abs * 90;
-          const opacity = Math.max(0.1, 1 - abs * 0.32);
-          const focused = abs < 0.5;
-
-          return (
-            <motion.button
-              key={tool.id}
-              type="button"
-              onClick={() => {
-                if (moved.current > 8) return;
-                if (focused) setSelected(tool);
-                else settle(i);
-              }}
-              className="absolute top-1/2 left-1/2 focus:outline-none"
-              style={{
-                width: 130,
-                height: 190,
-                marginLeft: -65,
-                marginTop: -95,
-                transformStyle: 'preserve-3d',
-                transform: `translate3d(${x}px,0,${z}px) rotateY(${rotY}deg) scale(${scale})`,
-                opacity,
-                zIndex: 10 - Math.round(abs),
-              }}
-            >
-              <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${focused ? 'border-primary shadow-[0_25px_60px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
-                <div className="relative aspect-square overflow-hidden">
-                  <BrandLogo t={tool} compact />
-                  <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold tracking-wide">
-                    {tool.symbol}
+        <div className="absolute left-1/2 top-1/2 h-8 w-[78vw] -translate-x-1/2 translate-y-[110px] rounded-[50%] bg-primary/20 blur-xl pointer-events-none" />
+        <motion.div
+          className="absolute inset-0"
+          style={{ transformStyle: 'preserve-3d', rotateY: rotation }}
+        >
+          {items.map((tool, i) => {
+            const angle = (i / len) * 360;
+            return (
+              <button
+                key={tool.id}
+                type="button"
+                onClick={(e) => {
+                  if (moved.current > 8) return;
+                  e.stopPropagation();
+                  setSelected(tool);
+                }}
+                className="absolute left-1/2 top-1/2 focus:outline-none"
+                style={{
+                  width: cardW,
+                  height: cardH,
+                  marginLeft: -cardW / 2,
+                  marginTop: -cardH / 2,
+                  transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                  transformStyle: 'preserve-3d',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                <div className="w-full h-full rounded-xl overflow-hidden bg-card/50 backdrop-blur-xl border border-primary/25 shadow-[0_18px_50px_-18px_hsl(var(--primary)/0.75)] flex flex-col">
+                  <div className="relative aspect-square overflow-hidden">
+                    <BrandLogo t={tool} compact />
+                    <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold tracking-wide">
+                      {tool.symbol}
+                    </div>
                   </div>
-                </div>
-                <div className="flex-1 px-2 py-1.5 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90 min-h-0">
-                  <h3 className="font-display text-[10px] font-bold text-foreground line-clamp-1 leading-tight text-left">
-                    {tool.name}
-                  </h3>
-                  <div className="flex items-center justify-between mt-0.5">
+                  <div className="flex-1 px-2 py-1.5 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90 min-h-0">
+                    <h3 className="font-display text-[10px] font-bold text-foreground line-clamp-1 leading-tight text-left">
+                      {tool.name}
+                    </h3>
                     <span className="text-primary font-bold text-[11px]">₹{tool.price}</span>
                   </div>
                 </div>
-              </div>
-            </motion.button>
-          );
-        })}
-      </div>
-
-      {/* Dots only — swipe to navigate */}
-      <div className="flex items-center justify-center gap-1.5 mt-3">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => settle(i)}
-            className={`h-1.5 rounded-full transition-all ${i === active ? 'w-5 bg-primary' : 'w-1.5 bg-muted-foreground/40'}`}
-            aria-label={`Go to ${i + 1}`}
-          />
-        ))}
+              </button>
+            );
+          })}
+        </motion.div>
       </div>
 
       <AnimatePresence>
@@ -314,7 +284,7 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
   const onPointerUp = (e: React.PointerEvent) => {
     dragging.current = false;
     if (captured.current) {
-      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch {}
+      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch (error) { void error; }
     }
     captured.current = false;
   };
