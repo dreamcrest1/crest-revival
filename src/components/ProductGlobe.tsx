@@ -13,7 +13,7 @@ function proxiedSquareLogo(src: string, size = 256): string {
   return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}&w=${size}&h=${size}&fit=contain&output=webp&q=85`;
 }
 
-function logoSourcesForTool(name: string, sheetImage?: string): string[] {
+function logoSourcesForTool(name: string): string[] {
   const meta = metaForTool(name);
   const sources: string[] = [];
   if (meta.logo) {
@@ -57,7 +57,7 @@ function useGlobeItems(isMobile: boolean): GlobeItem[] {
     tools.forEach((t) =>
       push({
         name: t.name.trim(),
-        images: logoSourcesForTool(t.name, t.image),
+        images: logoSourcesForTool(t.name),
         href: `/ai-tool/${slugifyAiTool(t.name)}`,
       }),
     );
