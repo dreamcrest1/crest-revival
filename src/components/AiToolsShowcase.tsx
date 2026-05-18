@@ -151,7 +151,7 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
   const onPointerUp = (e: React.PointerEvent) => {
     dragging.current = false;
     if (captured.current) {
-      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch {}
+      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch (error) { void error; }
     }
     captured.current = false;
   };
@@ -284,7 +284,7 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
   const onPointerUp = (e: React.PointerEvent) => {
     dragging.current = false;
     if (captured.current) {
-      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch {}
+      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch (error) { void error; }
     }
     captured.current = false;
   };
