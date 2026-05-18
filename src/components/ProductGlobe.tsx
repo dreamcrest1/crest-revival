@@ -83,11 +83,10 @@ const ProductGlobe = () => {
             <Suspense fallback={<GlobeSkeleton />}>
               <motion.div
                 key="globe"
-                className="w-full h-full"
-                style={{ transformOrigin: '50% 50%' }}
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 w-full h-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
               >
                 <GlobeCanvas
                   items={items}
