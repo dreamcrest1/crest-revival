@@ -157,26 +157,21 @@ function LogoTile({
           onSelect(item.href);
         }}
       >
-        {/* Subtle hover glow only — no background circle/ring; the PNGs already have their own tile */}
-        {hovered && (
-          <mesh position={[0, 0, -0.02]}>
-            <planeGeometry args={[1.05, 1.05]} />
-            <meshBasicMaterial color="#f97316" transparent opacity={0.18} depthWrite={false} />
-          </mesh>
-        )}
-        {/* Logo image — only mounted once texture has loaded */}
+        {/* Logo image — click & hover target is the logo plane itself, no surrounding square */}
         {texture && (
           <mesh position={[0, 0, 0.001]}>
-            <planeGeometry args={[0.95, 0.95]} />
+            <planeGeometry args={[1, 1]} />
             <meshBasicMaterial
               ref={logoMatRef}
               map={texture}
               transparent
+              alphaTest={0.05}
               toneMapped={false}
               depthWrite={false}
             />
           </mesh>
         )}
+
       </group>
     </Billboard>
   );
