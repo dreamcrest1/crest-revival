@@ -392,6 +392,9 @@ const ProductDetail = () => {
             </ul>
           </div>
 
+          {/* Reviews */}
+          <ProductReviews productId={product.id} productName={product.name} />
+
           {/* Related */}
           <RelatedProducts all={products} current={product} />
         </div>
