@@ -28,6 +28,7 @@ const menuItems = [
   { title: 'Heatmap', url: '/admin/heatmap', icon: MousePointerClick },
   { title: 'Geo', url: '/admin/geo', icon: Globe },
   { title: 'Search Queries', url: '/admin/search-queries', icon: SearchCheck },
+  { title: 'Insights', url: '/admin/insights', icon: Sparkles },
   { title: 'SEO Audit', url: '/admin/seo-audit', icon: Search },
   { title: 'Error Logs', url: '/admin/errors', icon: AlertCircle },
 ];
