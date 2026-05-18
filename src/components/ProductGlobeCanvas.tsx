@@ -125,9 +125,7 @@ function LogoTile({
     const t = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0, 1);
     const depthOpacity = 0.45 + t * 0.55;
     const opacity = depthOpacity * formEased * reveal;
-    if (discMatRef.current) discMatRef.current.opacity = opacity * 0.92;
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
-    if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
   });
 
   useEffect(() => {
