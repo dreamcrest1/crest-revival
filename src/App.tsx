@@ -45,6 +45,8 @@ import AdminSearchQueries from "./pages/admin/AdminSearchQueries";
 import AdminGeo from "./pages/admin/AdminGeo";
 import AdminHeatmap from "./pages/admin/AdminHeatmap";
 import AdminUtm from "./pages/admin/AdminUtm";
+import AdminInsights from "./pages/admin/AdminInsights";
+import ExitIntentSurvey from "./components/ExitIntentSurvey";
 
 const queryClient = new QueryClient();
 
@@ -98,12 +100,14 @@ const App = () => {
                     <Route path="heatmap" element={<AdminHeatmap />} />
                     <Route path="geo" element={<AdminGeo />} />
                     <Route path="search-queries" element={<AdminSearchQueries />} />
+                    <Route path="insights" element={<AdminInsights />} />
                     <Route path="seo-audit" element={<AdminSeoAudit />} />
                     <Route path="errors" element={<AdminErrorLogs />} />
                   </Route>
 
                   <Route path="*" element={<NotFound />} />
                 </Routes>
+                <ExitIntentSurvey />
               </BrowserRouter>
             </AuthProvider>
           </CartProvider>

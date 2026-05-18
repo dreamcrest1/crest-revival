@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { X } from 'lucide-react';
 
-const TRIGGER_PATHS = ['/products', '/all-tools', '/ai-tools'];
+const TRIGGER_PATHS = ['/products', '/all-tools', '/alltools', '/ai-tools'];
 const KEY = 'dc_exit_shown';
 
 const ExitIntentSurvey = () => {
