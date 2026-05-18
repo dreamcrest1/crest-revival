@@ -62,11 +62,17 @@ function useSafeTexture(url: string): TexState {
 
 function LogoTile({
   position,
+  startPosition,
+  formStart,
+  formDuration,
   item,
   size,
   onSelect,
 }: {
   position: THREE.Vector3;
+  startPosition: THREE.Vector3;
+  formStart: number;
+  formDuration: number;
   item: GlobeItem;
   size: number;
   onSelect: (href: string) => void;
@@ -75,19 +81,37 @@ function LogoTile({
   const [sourceIndex, setSourceIndex] = useState(0);
   const activeImage = item.images[Math.min(sourceIndex, item.images.length - 1)] ?? '';
   const { tex: texture, failed } = useSafeTexture(activeImage);
+  const billboardRef = useRef<THREE.Group>(null);
   const groupRef = useRef<THREE.Group>(null);
   const discMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const logoMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const worldPos = useMemo(() => new THREE.Vector3(), []);
+  const currentPos = useMemo(() => startPosition.clone(), [startPosition]);
 
-  // Depth-based fade: back of sphere fades, front stays sharp
-  useFrame(() => {
+  // easeOutCubic
+  const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+  useFrame(({ clock }) => {
+    // Formation animation: interpolate position + reveal scale/opacity
+    const elapsed = clock.getElapsedTime() - formStart;
+    const p = THREE.MathUtils.clamp(elapsed / formDuration, 0, 1);
+    const eased = ease(p);
+
+    if (billboardRef.current) {
+      currentPos.lerpVectors(startPosition, position, eased);
+      billboardRef.current.position.copy(currentPos);
+    }
+
     if (!groupRef.current) return;
+    const baseScale = (hovered ? size * 1.2 : size) * eased;
+    groupRef.current.scale.setScalar(baseScale);
+
+    // Depth-based fade once formed
     groupRef.current.getWorldPosition(worldPos);
-    // worldPos.z roughly in [-radius, +radius]; map to opacity
     const t = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0, 1);
-    const opacity = 0.45 + t * 0.55;
+    const depthOpacity = 0.45 + t * 0.55;
+    const opacity = depthOpacity * eased;
     if (discMatRef.current) discMatRef.current.opacity = opacity * 0.92;
     if (logoMatRef.current) logoMatRef.current.opacity = opacity;
     if (ringMatRef.current) ringMatRef.current.opacity = opacity * 0.6;
@@ -102,13 +126,11 @@ function LogoTile({
   }, [failed, sourceIndex, item.images.length]);
 
   if (failed || !texture) return null;
-  const scale = hovered ? size * 1.2 : size;
 
   return (
-    <Billboard position={position}>
+    <Billboard ref={billboardRef} position={startPosition}>
       <group
         ref={groupRef}
-        scale={[scale, scale, scale]}
         onPointerOver={(e) => {
           e.stopPropagation();
           setHovered(true);
