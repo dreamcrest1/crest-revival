@@ -176,7 +176,7 @@ const AllTools = () => {
             {categories.map(cat => (
               <button
                 key={cat.name}
-                onClick={() => setActiveFilter(cat.name)}
+                onClick={() => handleSetFilter(cat.name)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                   activeFilter === cat.name
                     ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
