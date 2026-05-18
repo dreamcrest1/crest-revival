@@ -2,10 +2,13 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
-import { Search, X, ExternalLink } from 'lucide-react';
+import { Search, X, ExternalLink, Flame } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { useProducts } from '@/hooks/useProducts';
+import { useAiTools } from '@/hooks/useAiTools';
+import { popularityFor } from '@/data/aiToolPopularity';
 
 type ToolCategory = {
   emoji: string;
@@ -41,18 +44,52 @@ const streamingDeals: StreamingDeal[] = [
 const getWhatsAppLink = (toolName: string) =>
   `https://wa.me/916357998730?text=${encodeURIComponent(`Hi Dreamcrest Solutions! I'm interested in ${toolName}. Please share price and details.`)}`;
 
+const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+type UnifiedTool = { name: string; category: string; emoji: string; popularity: number };
+
 const AllTools = () => {
-  const [activeCategory, setActiveCategory] = useState(toolCategories[0].name);
   const [searchQuery, setSearchQuery] = useState('');
-  const totalTools = toolCategories.reduce((sum, cat) => sum + cat.tools.length, 0);
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+  const { data: productsData } = useProducts();
+  const { data: aiTools = [] } = useAiTools();
 
-  const activeCat = toolCategories.find(c => c.name === activeCategory);
+  const unified = useMemo<UnifiedTool[]>(() => {
+    const seen = new Set<string>();
+    const out: UnifiedTool[] = [];
+    const add = (name: string, category: string, emoji: string) => {
+      const n = (name || '').trim();
+      if (!n) return;
+      const key = normalize(n);
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      out.push({ name: n, category, emoji, popularity: popularityFor(n) });
+    };
+    toolCategories.forEach((cat) => cat.tools.forEach((t) => add(t, cat.name, cat.emoji)));
+    (productsData?.products || []).forEach((p) => add(p.name, p.category, p.emoji || '📦'));
+    (aiTools || []).forEach((t) => add(t.name, 'AI Tools', '🤖'));
+    return out.sort((a, b) => b.popularity - a.popularity);
+  }, [productsData, aiTools]);
 
-  const filteredTools = searchQuery.trim()
-    ? toolCategories.flatMap(cat => cat.tools.filter(t => t.toLowerCase().includes(searchQuery.toLowerCase())))
-    : activeCat?.tools || [];
+  const categories = useMemo(() => {
+    const set = new Map<string, string>();
+    unified.forEach((t) => { if (!set.has(t.category)) set.set(t.category, t.emoji); });
+    return Array.from(set.entries()).map(([name, emoji]) => ({ name, emoji }));
+  }, [unified]);
 
   const isSearching = searchQuery.trim().length > 0;
+
+  const filteredTools = useMemo(() => {
+    let list = unified;
+    if (activeFilter !== 'All') list = list.filter((t) => t.category === activeFilter);
+    if (isSearching) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter((t) => t.name.toLowerCase().includes(q));
+    }
+    return list;
+  }, [unified, activeFilter, isSearching, searchQuery]);
+
+  const trendingCount = Math.min(12, filteredTools.length);
 
   return (
     <div className="min-h-screen relative z-10">
@@ -69,13 +106,13 @@ const AllTools = () => {
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
               className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2 mb-5"
             >
-              <span className="text-sm font-medium text-primary">🚀 {totalTools}+ Premium Tools Available</span>
+              <span className="text-sm font-medium text-primary">🚀 {unified.length}+ Premium Tools Available</span>
             </motion.div>
             <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
               All <span className="text-gradient">Tools</span>
             </h1>
             <p className="text-muted-foreground max-w-lg mx-auto mb-6">
-              Browse our complete catalog. Tap any tool to instantly connect on WhatsApp.
+              Browse our complete catalog, sorted by what's trending on Google. Tap any tool to chat on WhatsApp.
             </p>
             <a
               href="https://chat.whatsapp.com/HAygGmjN7cNLePOWBtrPjc"
@@ -89,7 +126,7 @@ const AllTools = () => {
           </motion.div>
 
           {/* Search */}
-          <div className="max-w-md mx-auto mb-8">
+          <div className="max-w-md mx-auto mb-6">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
@@ -107,78 +144,91 @@ const AllTools = () => {
             </div>
           </div>
 
-          {/* Category Tabs */}
-          {!isSearching && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-wrap gap-2 justify-center mb-10">
-              {toolCategories.map(cat => (
-                <button
-                  key={cat.name}
-                  onClick={() => setActiveCategory(cat.name)}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
-                    activeCategory === cat.name
-                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
-                      : 'bg-card/60 backdrop-blur-sm border border-border/60 text-muted-foreground hover:text-primary hover:border-primary/30'
-                  }`}
-                >
-                  {cat.emoji} {cat.name}
-                </button>
-              ))}
-            </motion.div>
-          )}
+          {/* Category Filter Pills */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-wrap gap-2 justify-center mb-10">
+            <button
+              onClick={() => setActiveFilter('All')}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                activeFilter === 'All'
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
+                  : 'bg-card/60 backdrop-blur-sm border border-border/60 text-muted-foreground hover:text-primary hover:border-primary/30'
+              }`}
+            >
+              ✨ All ({unified.length})
+            </button>
+            {categories.map(cat => (
+              <button
+                key={cat.name}
+                onClick={() => setActiveFilter(cat.name)}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  activeFilter === cat.name
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
+                    : 'bg-card/60 backdrop-blur-sm border border-border/60 text-muted-foreground hover:text-primary hover:border-primary/30'
+                }`}
+              >
+                {cat.emoji} {cat.name}
+              </button>
+            ))}
+          </motion.div>
 
           {/* Tools Grid */}
           <div className="mb-20">
-            {!isSearching && activeCat && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <h2 className="font-display text-xl md:text-2xl font-bold text-foreground">
-                    {activeCat.emoji} {activeCat.name}
-                  </h2>
-                  <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
-                    {activeCat.tools.length}
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground hidden sm:block">Tap to chat on WhatsApp</p>
-              </motion.div>
-            )}
-
-            {isSearching && (
-              <p className="text-sm text-muted-foreground mb-6">
-                Found <span className="text-primary font-semibold">{filteredTools.length}</span> tools matching "{searchQuery}"
-              </p>
-            )}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <h2 className="font-display text-xl md:text-2xl font-bold text-foreground flex items-center gap-2">
+                  <Flame className="w-5 h-5 text-primary" />
+                  {isSearching ? 'Search Results' : activeFilter === 'All' ? 'Top Trending on Google' : `${activeFilter}`}
+                </h2>
+                <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
+                  {filteredTools.length}
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground hidden sm:block">Tap to chat on WhatsApp</p>
+            </motion.div>
 
             <AnimatePresence mode="wait">
               <motion.div
-                key={isSearching ? 'search' : activeCategory}
+                key={`${activeFilter}-${isSearching ? searchQuery : 'browse'}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3"
               >
-                {filteredTools.map((tool, i) => (
-                  <motion.a
-                    key={tool}
-                    href={getWhatsAppLink(tool)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.015 }}
-                    className="group relative bg-card/60 backdrop-blur-sm border border-border/60 rounded-xl p-4 text-center overflow-hidden hover:border-primary/30 transition-all duration-300 flex flex-col items-center gap-2.5"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10 flex flex-col items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <WhatsAppIcon className="w-3.5 h-3.5 text-primary" />
+                {filteredTools.map((tool, i) => {
+                  const isTrending = !isSearching && activeFilter === 'All' && i < trendingCount;
+                  return (
+                    <motion.a
+                      key={tool.name}
+                      href={getWhatsAppLink(tool.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: Math.min(i * 0.01, 0.4) }}
+                      className={`group relative bg-card/60 backdrop-blur-sm border rounded-xl p-4 text-center overflow-hidden transition-all duration-300 flex flex-col items-center gap-2.5 ${
+                        isTrending
+                          ? 'border-primary/40 ring-1 ring-primary/30 shadow-lg shadow-primary/10'
+                          : 'border-border/60 hover:border-primary/30'
+                      }`}
+                    >
+                      {isTrending && (
+                        <span className="absolute top-1.5 right-1.5 text-[9px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                          <Flame className="w-2.5 h-2.5" /> #{i + 1}
+                        </span>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="relative z-10 flex flex-col items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors text-base">
+                          {tool.emoji}
+                        </div>
+                        <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors leading-tight">
+                          {tool.name}
+                        </span>
                       </div>
-                      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors leading-tight">
-                        {tool}
-                      </span>
-                    </div>
-                  </motion.a>
-                ))}
+                    </motion.a>
+                  );
+                })}
               </motion.div>
             </AnimatePresence>
           </div>
