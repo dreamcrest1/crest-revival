@@ -13,14 +13,14 @@ export type GlobeItem = {
   href: string;
 };
 
-// Curated OTT brand logos via Clearbit (square, mostly transparent/dark)
+// Curated OTT brand logos via simpleicons CDN (crisp SVG, CORS-friendly)
 const OTT_LOGOS: GlobeItem[] = [
-  { name: 'Netflix', image: 'https://logo.clearbit.com/netflix.com', href: '/all-tools' },
-  { name: 'Prime Video', image: 'https://logo.clearbit.com/primevideo.com', href: '/all-tools' },
-  { name: 'Hotstar', image: 'https://logo.clearbit.com/hotstar.com', href: '/all-tools' },
-  { name: 'Zee5', image: 'https://logo.clearbit.com/zee5.com', href: '/all-tools' },
-  { name: 'SonyLIV', image: 'https://logo.clearbit.com/sonyliv.com', href: '/all-tools' },
-].map((o) => ({ ...o, image: proxyImage(o.image, 256) }));
+  { name: 'Netflix', image: 'https://cdn.simpleicons.org/netflix/E50914', href: '/all-tools' },
+  { name: 'Prime Video', image: 'https://cdn.simpleicons.org/primevideo/00A8E1', href: '/all-tools' },
+  { name: 'Hotstar', image: 'https://cdn.simpleicons.org/hotstar/1F80E0', href: '/all-tools' },
+  { name: 'Zee5', image: 'https://cdn.simpleicons.org/zee5/8230FF', href: '/all-tools' },
+  { name: 'SonyLIV', image: 'https://cdn.simpleicons.org/sonyliv/E50914', href: '/all-tools' },
+];
 
 function useGlobeItems(isMobile: boolean): GlobeItem[] {
   const { data: aiTools } = useAiTools();
@@ -109,9 +109,9 @@ const ProductGlobe = () => {
         />
         <div className="relative w-full h-full">
         {reduced || items.length === 0 ? (
-          <StaticGrid items={items} />
+          <GlobeSkeleton />
         ) : inView ? (
-          <Suspense fallback={<StaticGrid items={items.slice(0, 24)} />}>
+          <Suspense fallback={<GlobeSkeleton />}>
             <GlobeCanvas
               items={items}
               isMobile={isMobile}
@@ -119,7 +119,7 @@ const ProductGlobe = () => {
             />
           </Suspense>
         ) : (
-          <div className="w-full h-full" />
+          <GlobeSkeleton />
         )}
         </div>
       </div>
@@ -127,23 +127,14 @@ const ProductGlobe = () => {
   );
 };
 
-const StaticGrid = ({ items }: { items: GlobeItem[] }) => (
-  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 px-4">
-    {items.slice(0, 24).map((it) => (
-      <a
-        key={it.name}
-        href={it.href}
-        className="aspect-square rounded-2xl bg-card/60 backdrop-blur border border-border/60 p-2 flex items-center justify-center hover:border-primary/40 transition-colors"
-        title={it.name}
-      >
-        <img
-          src={it.image || '/placeholder.svg'}
-          alt={it.name}
-          className="w-full h-full object-contain"
-          loading="lazy"
-        />
-      </a>
-    ))}
+const GlobeSkeleton = () => (
+  <div className="w-full h-full flex items-center justify-center">
+    <div className="relative w-48 h-48 sm:w-64 sm:h-64">
+      <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse" />
+      <div className="absolute inset-4 rounded-full border border-primary/10" />
+      <div className="absolute inset-8 rounded-full border border-primary/5" />
+      <div className="absolute inset-0 rounded-full bg-primary/5 blur-2xl" />
+    </div>
   </div>
 );
 
