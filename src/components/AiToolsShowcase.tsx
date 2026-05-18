@@ -309,6 +309,7 @@ const DesktopOrbit = ({ items, tablet }: { items: AiTool[]; tablet: boolean }) =
   return (
     <>
       <div
+        ref={stageRef}
         className="relative w-full select-none touch-none cursor-grab active:cursor-grabbing"
         style={{ perspective: '1600px', height: stageH }}
         onPointerDown={onPointerDown}
