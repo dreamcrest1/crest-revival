@@ -107,29 +107,28 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
   </motion.div>
 );
 
-/* ---------------- MOBILE: Curved coverflow ---------------- */
+/* ---------------- MOBILE: Swipe-only curved coverflow ---------------- */
 const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
   const [active, setActive] = useState(0);
   const [selected, setSelected] = useState<AiTool | null>(null);
   const startX = useRef<number | null>(null);
   const dx = useRef(0);
-
-  // Auto-advance
-  useEffect(() => {
-    if (selected) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % items.length), 3500);
-    return () => clearInterval(id);
-  }, [items.length, selected]);
+  const moved = useRef(0);
 
   const go = (dir: number) => setActive((a) => (a + dir + items.length) % items.length);
 
-  const onTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; dx.current = 0; };
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+    dx.current = 0;
+    moved.current = 0;
+  };
   const onTouchMove = (e: React.TouchEvent) => {
     if (startX.current == null) return;
     dx.current = e.touches[0].clientX - startX.current;
+    moved.current = Math.abs(dx.current);
   };
   const onTouchEnd = () => {
-    if (Math.abs(dx.current) > 40) go(dx.current < 0 ? 1 : -1);
+    if (Math.abs(dx.current) > 35) go(dx.current < 0 ? 1 : -1);
     startX.current = null;
     dx.current = 0;
   };
@@ -139,89 +138,68 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
   return (
     <>
       <div
-        className="relative h-[340px] w-full overflow-hidden"
-        style={{ perspective: '1000px' }}
+        className="relative h-[300px] w-full select-none touch-pan-y"
+        style={{ perspective: '1100px' }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
         {items.map((tool, i) => {
-          // signed circular distance
           let offset = i - active;
           if (offset > items.length / 2) offset -= items.length;
           if (offset < -items.length / 2) offset += items.length;
           const abs = Math.abs(offset);
-          if (abs > 2) return null; // only render 5 cards
-          const x = offset * 95; // px translateX
-          const rotY = offset * -22; // deg
-          const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.65;
-          const z = -abs * 80;
-          const opacity = abs === 0 ? 1 : abs === 1 ? 0.7 : 0.35;
+          if (abs > 3) return null;
+          const x = offset * 70;
+          const rotY = offset * -28;
+          const scale = abs === 0 ? 1 : abs === 1 ? 0.78 : abs === 2 ? 0.6 : 0.45;
+          const z = -abs * 90;
+          const opacity = abs === 0 ? 1 : abs === 1 ? 0.7 : abs === 2 ? 0.4 : 0.18;
 
           return (
             <motion.button
               key={tool.id}
               type="button"
-              onClick={() => (abs === 0 ? setSelected(tool) : setActive(i))}
+              onClick={() => {
+                if (moved.current > 8) return;
+                abs === 0 ? setSelected(tool) : setActive(i);
+              }}
               className="absolute top-1/2 left-1/2 focus:outline-none"
-              style={{ width: 160, height: 230, marginLeft: -80, marginTop: -115, transformStyle: 'preserve-3d' }}
+              style={{ width: 130, height: 190, marginLeft: -65, marginTop: -95, transformStyle: 'preserve-3d' }}
               animate={{ x, scale, rotateY: rotY, z, opacity, zIndex: 10 - abs }}
               transition={{ type: 'spring', stiffness: 220, damping: 28 }}
             >
-              <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${abs === 0 ? 'border-primary shadow-[0_30px_80px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
+              <div className={`w-full h-full rounded-2xl overflow-hidden bg-card/50 backdrop-blur-xl border ${abs === 0 ? 'border-primary shadow-[0_25px_60px_-15px_hsl(var(--primary)/0.8)]' : 'border-white/10'} flex flex-col`}>
                 <div className="relative aspect-square overflow-hidden">
                   <BrandLogo t={tool} compact />
-                  <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[9px] font-bold tracking-wide">
+                  <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold tracking-wide">
                     {tool.symbol}
                   </div>
                 </div>
-                <div className="flex-1 px-2.5 py-2 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90 min-h-0">
-                  <h3 className="font-display text-[11px] font-bold text-foreground line-clamp-1 leading-tight text-left">
+                <div className="flex-1 px-2 py-1.5 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90 min-h-0">
+                  <h3 className="font-display text-[10px] font-bold text-foreground line-clamp-1 leading-tight text-left">
                     {tool.name}
                   </h3>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-primary font-bold text-xs">₹{tool.price}</span>
-                    <span className="text-[9px] text-muted-foreground truncate ml-1">{tool.validity}</span>
+                  <div className="flex items-center justify-between mt-0.5">
+                    <span className="text-primary font-bold text-[11px]">₹{tool.price}</span>
                   </div>
                 </div>
               </div>
             </motion.button>
           );
         })}
-
-        {/* Edge fades */}
-        <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent pointer-events-none z-20" />
-        <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent pointer-events-none z-20" />
       </div>
 
-      {/* Controls + dots */}
-      <div className="flex items-center justify-center gap-4 mt-3">
-        <button
-          type="button"
-          onClick={() => go(-1)}
-          className="p-2 rounded-full bg-card/60 border border-white/10 text-foreground hover:border-primary/60 transition-colors"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-        <div className="flex gap-1.5">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`h-1.5 rounded-full transition-all ${i === active ? 'w-5 bg-primary' : 'w-1.5 bg-muted-foreground/40'}`}
-              aria-label={`Go to ${i + 1}`}
-            />
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => go(1)}
-          className="p-2 rounded-full bg-card/60 border border-white/10 text-foreground hover:border-primary/60 transition-colors"
-          aria-label="Next"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
+      {/* Dots only — swipe to navigate */}
+      <div className="flex items-center justify-center gap-1.5 mt-3">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`h-1.5 rounded-full transition-all ${i === active ? 'w-5 bg-primary' : 'w-1.5 bg-muted-foreground/40'}`}
+            aria-label={`Go to ${i + 1}`}
+          />
+        ))}
       </div>
 
       <AnimatePresence>
