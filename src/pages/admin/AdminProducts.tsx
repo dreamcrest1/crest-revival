@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Plus, Pencil, Trash2, Search, Package } from 'lucide-react';
 import { toast } from 'sonner';
 import { PAYMENT_URL } from '@/config/payment';
+import PaymentUrlPanel from '@/components/admin/PaymentUrlPanel';
 
 interface Product {
   id: string;
