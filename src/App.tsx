@@ -14,7 +14,7 @@ import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import Preloader from "./components/Preloader";
 import ScrollToTop from "./components/ScrollToTop";
-import RecentPurchaseToast from "./components/social/RecentPurchaseToast";
+
 import StorefrontChatbot from "./components/chatbot/StorefrontChatbot";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
