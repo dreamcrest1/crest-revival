@@ -417,24 +417,26 @@ const AiToolsShowcase = () => {
   }, []);
 
   const pool = data || [];
-  const items = useMemo(() => pickUnique(pool, offset, COUNT), [pool, offset]);
+  const count = isMobile ? MOBILE_COUNT : COUNT;
+  const items = useMemo(() => pickUnique(pool, offset, count), [pool, offset, count]);
 
   useEffect(() => {
-    if (pool.length <= COUNT) return;
-    // Advance by (COUNT - 1) so a fresh batch shows each cycle (Claude stays pinned at index 0).
-    const step = Math.max(1, COUNT - 1);
+    if (pool.length <= count) return;
+    const step = Math.max(1, count - 1);
     const id = setInterval(() => setOffset((o) => (o + step) % pool.length), ROTATE_MS);
     return () => clearInterval(id);
-  }, [pool.length]);
+  }, [pool.length, count]);
 
   if (!isLoading && items.length === 0) return null;
 
   return (
     <section className="relative py-12 md:py-24 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[80px]" />
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-primary/10 blur-[120px]" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[80px]" />
+        </div>
+      )}
       <div className="container mx-auto px-4 relative z-10">
         <Header />
         <AnimatePresence mode="wait">
