@@ -24,8 +24,23 @@ function pickUnique(pool: AiTool[], offset: number, n: number): AiTool[] {
   const out: AiTool[] = [];
   const len = pool.length;
   if (!len) return out;
+
+  // Always pin Claude AI Pro Plan (1 Month, ₹1800) first
+  const pinned = pool.find(
+    (t) =>
+      /claude/i.test(t.name) &&
+      /pro/i.test(t.name) &&
+      /1\s*month/i.test(t.validity) &&
+      t.price === 1800,
+  );
+  if (pinned) {
+    out.push(pinned);
+    seen.add(baseKey(pinned.name));
+  }
+
   for (let i = 0; i < len && out.length < n; i++) {
     const t = pool[(offset + i) % len];
+    if (pinned && t.id === pinned.id) continue;
     const k = baseKey(t.name);
     if (seen.has(k)) continue;
     seen.add(k);
