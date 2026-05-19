@@ -106,7 +106,7 @@ export function generateReviews(seed: string, name: string, count = 6): Generate
     const rating = rnd() < 0.78 ? 5 : 4; // overwhelmingly positive
     const daysAgo = Math.floor(rnd() * 95) + 2;
     const created = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
-    const body = (isHinglish ? pick(bodiesHi) : pick(bodiesEn)).replaceAll('{NAME}', name);
+    const body = (isHinglish ? pick(bodiesHi) : pick(bodiesEn)).split('{NAME}').join(name);
     reviews.push({
       id: `${seed}-r${i}`,
       author_name: `${pick(FIRST_NAMES)} ${pick(LAST_INITIALS)}`,
