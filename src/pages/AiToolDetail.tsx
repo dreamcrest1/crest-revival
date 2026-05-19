@@ -102,17 +102,10 @@ const AiToolDetail = () => {
           </nav>
 
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
-            {/* Logo / image card */}
-            <div className="bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl p-6 aspect-square flex items-center justify-center relative overflow-hidden">
-              <LogoImage
-                name={tool.name}
-                meta={meta}
-                sheetImage={tool.image}
-              />
-              <div className="absolute top-3 left-3 bg-primary/10 text-primary border border-primary/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
-                {meta.category}
-              </div>
-              <div className="absolute top-3 right-3 bg-background/85 backdrop-blur border border-border text-foreground text-[10px] font-mono px-2 py-0.5 rounded-full">
+            {/* Logo / image card — matches the AI Tools listing tile */}
+            <div className="border border-border/60 rounded-2xl aspect-square relative overflow-hidden">
+              <BrandLogo t={tool} />
+              <div className="absolute top-3 right-3 bg-background/85 backdrop-blur border border-border text-foreground text-[10px] font-mono px-2 py-0.5 rounded-full z-10">
                 {tool.validity}
               </div>
             </div>
