@@ -94,7 +94,7 @@ export function useAiTools() {
 
       return data
         .map((cols, idx): AiTool | null => {
-          const [name, validity, priceRaw, image] = cols;
+          const [name, validity, priceRaw, activationRaw, image] = cols;
           if (!name || !name.trim()) return null;
           const price = Number(String(priceRaw || '').replace(/[^\d.]/g, '')) || 0;
 
@@ -111,7 +111,8 @@ export function useAiTools() {
             name: trimmedName,
             validity: (validity || '').trim(),
             price,
-            image: image?.trim() || '',
+            image: (image || '').trim(),
+            activationType: (activationRaw || '').trim(),
             symbol: symbolFor(name),
             change,
             trend,
