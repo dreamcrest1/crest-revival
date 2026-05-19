@@ -8,6 +8,7 @@ import { BrandLogo } from '@/components/ai/BrandLogo';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 
 const COUNT = 12;
+const MOBILE_COUNT = 8;
 const ROTATE_MS = 5000;
 
 function baseKey(name: string): string {
