@@ -12,6 +12,7 @@ import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
 import { PAYMENT_URL } from '@/config/payment';
+import GeneratedReviews from '@/components/GeneratedReviews';
 
 const COSMOFEED_URL = PAYMENT_URL;
 const WHATSAPP_NUMBER = '916357998730';
@@ -214,6 +215,9 @@ const AiToolDetail = () => {
               ))}
             </div>
           </section>
+
+          {/* AI-generated customer reviews */}
+          <GeneratedReviews seed={tool.id} name={tool.name} count={8} />
 
           {/* Related tools */}
           {related.length > 0 && (
