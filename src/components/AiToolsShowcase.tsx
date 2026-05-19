@@ -109,6 +109,11 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
         </div>
         <h3 className="font-display text-lg md:text-2xl font-bold text-foreground">{tool.name}</h3>
         <p className="text-xs md:text-sm text-muted-foreground mt-1">{tool.validity}</p>
+        {tool.activationType && (
+          <p className="inline-block mt-2 px-2 py-0.5 rounded-md bg-primary/10 border border-primary/30 text-primary text-[11px] font-semibold">
+            {tool.activationType}
+          </p>
+        )}
         <div className="flex flex-wrap items-center gap-3 mt-3 md:mt-4">
           <span className="text-xl md:text-3xl font-bold text-primary">₹{tool.price}</span>
           <Link
