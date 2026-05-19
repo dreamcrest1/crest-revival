@@ -9,7 +9,8 @@ import { slugifyAiTool } from '@/lib/aiToolSeo';
 
 const COUNT = 12;
 const MOBILE_COUNT = 8;
-const ROTATE_MS = 5000;
+const ROTATE_MS = 9000;
+const FADE_S = 1.4;
 
 function baseKey(name: string): string {
   return name
@@ -445,7 +446,7 @@ const AiToolsShowcase = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            transition={{ duration: FADE_S, ease: 'easeInOut' }}
           >
             {isMobile ? <MobileCoverflow items={items} /> : <DesktopOrbit items={items} tablet={tablet} />}
           </motion.div>
