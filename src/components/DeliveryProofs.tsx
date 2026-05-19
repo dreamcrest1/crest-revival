@@ -1,19 +1,45 @@
 import { motion } from 'framer-motion';
+import { Instagram, CheckCircle2, ArrowUpRight, Sparkles } from 'lucide-react';
 
 const proofs = [
-  { emoji: '🎬', name: 'Netflix', city: 'Mumbai' },
-  { emoji: '🤖', name: 'ChatGPT Plus', city: 'Delhi' },
-  { emoji: '📺', name: 'Prime Video', city: 'Bangalore' },
-  { emoji: '🎨', name: 'Canva Pro', city: 'Chennai' },
-  { emoji: '🎵', name: 'Spotify Premium', city: 'Pune' },
-  { emoji: '🏏', name: 'Hotstar', city: 'Kolkata' },
-  { emoji: '🖌️', name: 'Adobe CC', city: 'Hyderabad' },
-  { emoji: '▶️', name: 'YouTube Premium', city: 'Ahmedabad' },
-  { emoji: '📊', name: 'Microsoft 365', city: 'Jaipur' },
-  { emoji: '✍️', name: 'Grammarly', city: 'Lucknow' },
-  { emoji: '🔍', name: 'Perplexity AI', city: 'Chandigarh' },
-  { emoji: '📱', name: 'Zee5', city: 'Indore' },
+  { emoji: '🎬', name: 'Netflix Premium', city: 'Mumbai', time: '2 min ago' },
+  { emoji: '🤖', name: 'ChatGPT Plus', city: 'Delhi', time: '6 min ago' },
+  { emoji: '📺', name: 'Prime Video', city: 'Bangalore', time: '11 min ago' },
+  { emoji: '🎨', name: 'Canva Pro', city: 'Chennai', time: '18 min ago' },
+  { emoji: '🎵', name: 'Spotify Premium', city: 'Pune', time: '22 min ago' },
+  { emoji: '🏏', name: 'Hotstar', city: 'Kolkata', time: '27 min ago' },
+  { emoji: '🖌️', name: 'Adobe CC', city: 'Hyderabad', time: '34 min ago' },
+  { emoji: '▶️', name: 'YouTube Premium', city: 'Ahmedabad', time: '41 min ago' },
+  { emoji: '📊', name: 'Microsoft 365', city: 'Jaipur', time: '48 min ago' },
+  { emoji: '✍️', name: 'Grammarly', city: 'Lucknow', time: '55 min ago' },
+  { emoji: '🔍', name: 'Perplexity AI', city: 'Chandigarh', time: '1 hr ago' },
+  { emoji: '📱', name: 'Zee5', city: 'Indore', time: '1 hr ago' },
 ];
+
+type Proof = (typeof proofs)[number];
+
+const ProofCard = ({ p }: { p: Proof }) => (
+  <div className="flex-shrink-0 w-64 relative bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl p-4 group hover:border-primary/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/10">
+    <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-emerald-500 border-2 border-background flex items-center justify-center">
+      <CheckCircle2 className="w-3 h-3 text-white" />
+    </div>
+    <div className="flex items-center gap-3">
+      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center shrink-0">
+        <span className="text-xl">{p.emoji}</span>
+      </div>
+      <div className="min-w-0 flex-1">
+        <h4 className="font-display font-semibold text-foreground text-sm truncate">{p.name}</h4>
+        <p className="text-[11px] text-muted-foreground truncate">Customer · {p.city}</p>
+      </div>
+    </div>
+    <div className="mt-3 pt-3 border-t border-border/40 flex items-center justify-between">
+      <span className="text-[11px] text-emerald-400 font-semibold inline-flex items-center gap-1">
+        <CheckCircle2 className="w-3 h-3" /> Delivered
+      </span>
+      <span className="text-[11px] text-muted-foreground">{p.time}</span>
+    </div>
+  </div>
+);
 
 const DeliveryProofs = () => {
   const doubled = [...proofs, ...proofs];
@@ -21,82 +47,92 @@ const DeliveryProofs = () => {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Section glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent pointer-events-none" />
+      <div className="absolute left-1/2 top-1/3 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-12"
         >
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-primary font-bold bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-4">
+            <Sparkles className="w-3 h-3" /> Live delivery feed
+          </span>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
             Delivery <span className="text-gradient">Proofs</span>
           </h2>
-          <p className="text-muted-foreground text-lg">Real deliveries. Real customers. Real trust.</p>
+          <p className="text-muted-foreground text-base md:text-lg">
+            Real deliveries. Real customers. Real trust.
+          </p>
+
+          {/* Trust stats */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs">
+            <span className="text-muted-foreground">
+              <span className="font-bold text-foreground">15,000+</span> deliveries
+            </span>
+            <span className="hidden sm:inline text-muted-foreground/40">•</span>
+            <span className="text-muted-foreground">
+              <span className="font-bold text-foreground">⭐ 4.9</span> avg rating
+            </span>
+            <span className="hidden sm:inline text-muted-foreground/40">•</span>
+            <span className="text-muted-foreground">
+              <span className="font-bold text-foreground">99%</span> delivered in &lt;10 min
+            </span>
+          </div>
         </motion.div>
       </div>
 
       {/* Scrolling row 1 */}
-      <div className="overflow-hidden mb-5">
-        <div className="flex gap-5 animate-scroll-left w-max">
+      <div className="overflow-hidden mb-5 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="flex gap-4 animate-scroll-left w-max">
           {doubled.map((p, i) => (
-            <div
-              key={`r1-${i}`}
-              className="flex-shrink-0 w-60 bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl p-5 group hover:border-primary/30 transition-colors duration-300"
-            >
-              <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
-                <span className="text-lg">{p.emoji}</span>
-              </div>
-              <h4 className="font-display font-semibold text-foreground text-sm">{p.name}</h4>
-              <p className="text-xs text-muted-foreground mt-1">Customer from {p.city}</p>
-              <p className="text-xs text-primary mt-2 font-semibold flex items-center gap-1">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                Delivered Successfully
-              </p>
-            </div>
+            <ProofCard key={`r1-${i}`} p={p} />
           ))}
         </div>
       </div>
 
       {/* Scrolling row 2 - reversed */}
-      <div className="overflow-hidden">
-        <div className="flex gap-5 animate-scroll-right w-max">
+      <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="flex gap-4 animate-scroll-right w-max">
           {[...doubled].reverse().map((p, i) => (
-            <div
-              key={`r2-${i}`}
-              className="flex-shrink-0 w-60 bg-card/80 backdrop-blur-sm border border-border/60 rounded-2xl p-5 group hover:border-primary/30 transition-colors duration-300"
-            >
-              <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
-                <span className="text-lg">{p.emoji}</span>
-              </div>
-              <h4 className="font-display font-semibold text-foreground text-sm">{p.name}</h4>
-              <p className="text-xs text-muted-foreground mt-1">Customer from {p.city}</p>
-              <p className="text-xs text-primary mt-2 font-semibold flex items-center gap-1">
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                Delivered Successfully
-              </p>
-            </div>
+            <ProofCard key={`r2-${i}`} p={p} />
           ))}
         </div>
       </div>
 
-      <div className="text-center mt-10">
-        <a
-          href="https://www.instagram.com/dreamcrest_solutions"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-semibold transition-colors"
+      {/* CTA — pops in when scrolled into view */}
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6, y: 30 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ type: 'spring', damping: 14, stiffness: 220, delay: 0.1 }}
+          className="text-center mt-12"
         >
-          View All Proofs on Instagram
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-          </svg>
-        </a>
+          <motion.a
+            href="https://www.instagram.com/dreamcrest_solutions"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="relative inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm text-white shadow-2xl shadow-primary/30 overflow-hidden group"
+            style={{
+              background:
+                'linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+            }}
+          >
+            {/* Animated shine sweep */}
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            <Instagram className="w-5 h-5 relative" />
+            <span className="relative">View All Proofs on Instagram</span>
+            <ArrowUpRight className="w-4 h-4 relative transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </motion.a>
+          <p className="text-xs text-muted-foreground mt-3">
+            Daily delivery stories posted on @dreamcrest_solutions
+          </p>
+        </motion.div>
       </div>
     </section>
   );
