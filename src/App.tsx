@@ -69,7 +69,7 @@ const App = () => {
                 <ScrollToTop />
                 <CartDrawer />
                 <AnalyticsTracker />
-                <RecentPurchaseToast />
+                
                 <StorefrontChatbot />
                 <Routes>
                   <Route path="/" element={<Index />} />
