@@ -112,7 +112,7 @@ const DeliveryProofs = () => {
           className="text-center mt-12"
         >
           <motion.a
-            href="https://www.instagram.com/dreamcrest_solutions"
+            href="https://www.instagram.com/stories/highlights/17993911780498455/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.04 }}
