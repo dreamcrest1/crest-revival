@@ -167,8 +167,13 @@ const AiTools = () => {
 
   // Default order = most-Google-searched first. We pre-sort once so the
   // baseline list is "trending desc"; price sorts then override it.
+  // Claude AI is always pinned to the top of the listing.
   const trending = useMemo(() => {
     return [...tools].sort((a, b) => {
+      const aIsClaude = a.name.toLowerCase().includes('claude');
+      const bIsClaude = b.name.toLowerCase().includes('claude');
+      if (aIsClaude && !bIsClaude) return -1;
+      if (!aIsClaude && bIsClaude) return 1;
       const diff = popularityFor(b.name) - popularityFor(a.name);
       if (diff !== 0) return diff;
       // Tiebreaker: shorter validity (likely entry plan) first, then name.
