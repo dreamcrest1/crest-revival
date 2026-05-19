@@ -161,6 +161,8 @@ const AdminProducts = () => {
         </Button>
       </div>
 
+      <PaymentUrlPanel />
+
       {/* Filters */}
       <div className="flex gap-3 flex-wrap">
         <div className="relative flex-1 min-w-[200px]">
