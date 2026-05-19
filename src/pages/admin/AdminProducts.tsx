@@ -31,7 +31,7 @@ const defaultProduct: Omit<Product, 'id'> = {
   category: 'AI Tools',
   description: '',
   image_url: '',
-  buy_link: 'https://superprofile.bio/vp/dreamcrest-payments',
+  buy_link: 'https://secure.paypur.in/p/8694eb3e2afeadce',
   is_active: true,
   sort_order: 0,
 };

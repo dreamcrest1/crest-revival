@@ -26,7 +26,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 24999,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-10-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 0
@@ -39,7 +39,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 85000,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/175-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 1
@@ -52,7 +52,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 399,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/76-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 2
@@ -65,7 +65,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/77-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 3
@@ -78,7 +78,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/77-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 4
@@ -91,7 +91,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/28-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 5
@@ -104,7 +104,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1499,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-2-1-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 6
@@ -117,7 +117,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/72-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 7
@@ -130,7 +130,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 3500,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/175-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 8
@@ -143,7 +143,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/24-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 9
@@ -156,7 +156,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Writing Tools",
     "image_url": "https://res-academy.cache.wpscdn.com/upload/seo-engine-admin/2026-01-17/926bd49a37a0dba4b1cf417b0b86429e.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 10
@@ -169,7 +169,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/91-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 10
@@ -182,7 +182,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/42-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 11
@@ -195,7 +195,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1499,
     "category": "Writing Tools",
     "image_url": "https://www.groupbuyseotools.org/wp-content/uploads/2024/04/WriteHuman-group-buy.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 11
@@ -208,7 +208,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 4500,
     "category": "AI Tools",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL2E1Oo7YOx_oru5Uef2SZ84PfIMpS4c8Y3A&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 12
@@ -221,7 +221,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 15000,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-21-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 12
@@ -234,7 +234,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 6500,
     "category": "AI Tools",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL2E1Oo7YOx_oru5Uef2SZ84PfIMpS4c8Y3A&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 13
@@ -247,7 +247,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/92-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 13
@@ -260,7 +260,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1500,
     "category": "Video Editing",
     "image_url": "https://premiumatcheap.in/wp-content/uploads/2025/08/heygen-1200x900.webp",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 14
@@ -273,7 +273,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/93-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 14
@@ -286,7 +286,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1800,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/32-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 15
@@ -299,7 +299,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 4500,
     "category": "Video Editing",
     "image_url": "https://premiumatcheap.in/wp-content/uploads/2025/08/heygen-1200x900.webp",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 15
@@ -312,7 +312,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 2500,
     "category": "AI Tools",
     "image_url": "https://www.searchyour.ai/archivos/hailuo-ai-logo.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 16
@@ -325,7 +325,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/95-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 16
@@ -338,7 +338,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/47-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 17
@@ -351,7 +351,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 2500,
     "category": "AI Tools",
     "image_url": "https://seoshope.com/wp-content/uploads/2025/04/runway-logo-png_seeklogo-496519.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 17
@@ -364,7 +364,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 16000,
     "category": "AI Tools",
     "image_url": "https://medicine.ac/wp-content/uploads/2025/09/perplexity-pro-annual-premium-subscription-1-year.webp",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 18
@@ -377,7 +377,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-23.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 18
@@ -390,7 +390,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-6-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 19
@@ -403,7 +403,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1500,
     "category": "AI Tools",
     "image_url": "https://shop.bytevault.co.in/wp-content/uploads/2025/12/13cd26f4dfed642f4ae1c3937ac04d51.webp",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 19
@@ -416,7 +416,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 10000,
     "category": "Cloud Services",
     "image_url": "https://cdn.sanity.io/images/bj34pdbp/migration/5f953c9a8c261d6f43e697b0ce4ca7ddeba8d6da-6504x2328.png?w=3840&q=75&fit=clip&auto=format",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 20
@@ -429,7 +429,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 799,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/85-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 20
@@ -442,7 +442,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1500,
     "category": "Cloud Services",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_p-vx3i3-B_1MGlxpUj2XnvwdebpEG659Vw&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 21
@@ -455,7 +455,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 19000,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-20-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 21
@@ -468,7 +468,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/96-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 22
@@ -481,7 +481,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 9000,
     "category": "AI Tools",
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Bolt.new_logo.png/330px-Bolt.new_logo.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 22
@@ -494,7 +494,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 799,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-13-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 23
@@ -507,7 +507,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 5000,
     "category": "AI Tools",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2p7FcGVmvv38l7Sa56vift1vO9IeQ04XGRA&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 23
@@ -520,7 +520,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 19000,
     "category": "AI Tools",
     "image_url": "https://subo.ma/cdn/shop/files/cursor1mo.png?v=1762816340&width=360",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 24
@@ -533,7 +533,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 2300,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/69-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 24
@@ -546,7 +546,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 13000,
     "category": "AI Tools",
     "image_url": "https://framerusercontent.com/images/pi6jTImSRZx12uZHAflnZa8GMA.png?width=800&height=600",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 25
@@ -559,7 +559,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/71-1-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 25
@@ -572,7 +572,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/80-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 26
@@ -585,7 +585,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 17000,
     "category": "AI Tools",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJNSYRkbcBBSP2grD6LpZmgfB7n6HHNZszbQ&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 26
@@ -598,7 +598,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 4500,
     "category": "Lead Generation",
     "image_url": "https://media.licdn.com/dms/image/v2/D4E12AQFwLrH25C3B5g/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721986119123?e=2147483647&v=beta&t=omCvXrv_HYWy1jpPqKclSNVuophd1ylImFUsjKO_QTU",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 27
@@ -611,7 +611,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/97-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 27
@@ -624,7 +624,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 799,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/180-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 28
@@ -637,7 +637,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 5000,
     "category": "Lead Generation",
     "image_url": "https://media.licdn.com/dms/image/v2/D4E12AQFwLrH25C3B5g/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721986119123?e=2147483647&v=beta&t=omCvXrv_HYWy1jpPqKclSNVuophd1ylImFUsjKO_QTU",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 28
@@ -650,7 +650,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 8000,
     "category": "Software",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMAe9Ff906B7qATHYzBpfEVkixggo6Fr3vqg&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 29
@@ -663,7 +663,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/98-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 29
@@ -676,7 +676,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 6000,
     "category": "Cloud Services",
     "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShcZUjjkcUJBk3XCyhPDKroFzLx6vPSHCeGg&s",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 30
@@ -689,7 +689,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/99-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 30
@@ -702,7 +702,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 14000,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-14-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 31
@@ -715,7 +715,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 299,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/66-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 32
@@ -728,7 +728,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-5-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 33
@@ -741,7 +741,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 3599,
     "category": "VPN",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/28-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 34
@@ -754,7 +754,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/14-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 35
@@ -767,7 +767,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 3999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-12-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 36
@@ -780,7 +780,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/15-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 37
@@ -793,7 +793,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 4999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-3-1.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 38
@@ -806,7 +806,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-16-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 39
@@ -819,7 +819,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/79-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 40
@@ -832,7 +832,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/41-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 41
@@ -845,7 +845,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/46-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 42
@@ -858,7 +858,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 399,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-4.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 43
@@ -871,7 +871,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/82-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 44
@@ -884,7 +884,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/29-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 45
@@ -897,7 +897,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 4999,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/30-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 46
@@ -910,7 +910,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/107-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 47
@@ -923,7 +923,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 2999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/20-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 48
@@ -936,7 +936,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "VPN",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/119-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 49
@@ -949,7 +949,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/52-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 50
@@ -962,7 +962,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 2999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-4-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 51
@@ -975,7 +975,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Indian OTT",
     "image_url": "https://www.jiocinema.com/images/jc_meta_share.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 52
@@ -988,7 +988,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/137-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 53
@@ -1001,7 +1001,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 299,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/65-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 54
@@ -1014,7 +1014,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/148-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 55
@@ -1027,7 +1027,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/144-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 56
@@ -1040,7 +1040,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Leads-Gorilla-2.0-AI-Powered-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 57
@@ -1053,7 +1053,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/34-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 58
@@ -1066,7 +1066,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Writing Tools",
     "image_url": "https://linguix.com/images/og-image.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 59
@@ -1079,7 +1079,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/26-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 60
@@ -1092,7 +1092,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/12-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 61
@@ -1105,7 +1105,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Video Editing",
     "image_url": "https://logowik.com/content/uploads/images/lumen52790.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 62
@@ -1118,7 +1118,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/58-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 63
@@ -1131,7 +1131,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 399,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/75-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 64
@@ -1144,7 +1144,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/17-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 65
@@ -1157,7 +1157,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 6500,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Office-Windows-5.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 66
@@ -1170,7 +1170,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "International OTT",
     "image_url": "https://play-lh.googleusercontent.com/U6kLNnY6Ag7s3i9w8m6E0H8s5nF6L6cQv9N2YdKqg7oF6T3VxX5Y1Z9aGqL8hH4nXg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 67
@@ -1183,7 +1183,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-1-1-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 68
@@ -1196,7 +1196,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 599,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/87-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 69
@@ -1209,7 +1209,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 799,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/56-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 70
@@ -1222,7 +1222,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 3000,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-1-2-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 71
@@ -1235,7 +1235,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 5000,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-22-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 72
@@ -1248,7 +1248,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/49-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 73
@@ -1261,7 +1261,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "VPN",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/130-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 74
@@ -1274,7 +1274,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/156-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 75
@@ -1287,7 +1287,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 599,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Office-Windows-3-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 76
@@ -1300,7 +1300,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1000,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Office-Windows-2-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 77
@@ -1313,7 +1313,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 15000,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Office-Windows-1-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 78
@@ -1326,7 +1326,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/18-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 79
@@ -1339,7 +1339,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/154-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 80
@@ -1352,7 +1352,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 799,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-17-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 81
@@ -1365,7 +1365,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/84-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 82
@@ -1378,7 +1378,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/40-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 83
@@ -1391,7 +1391,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/43-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 84
@@ -1404,7 +1404,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-9-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 85
@@ -1417,7 +1417,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Video Editing",
     "image_url": "https://pictory.ai/wp-content/uploads/2023/03/pictory-logo-dark.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 86
@@ -1430,7 +1430,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/114-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 87
@@ -1443,7 +1443,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-15-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 88
@@ -1456,7 +1456,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1500,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-3-1-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 89
@@ -1469,7 +1469,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "VPN",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/10-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 90
@@ -1482,7 +1482,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/44-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 91
@@ -1495,7 +1495,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/116-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 92
@@ -1508,7 +1508,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 799,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/50-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 93
@@ -1521,7 +1521,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/37-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 94
@@ -1534,7 +1534,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/19-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 95
@@ -1547,7 +1547,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-18-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 96
@@ -1560,7 +1560,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/115-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 97
@@ -1573,7 +1573,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/46-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 98
@@ -1586,7 +1586,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/27-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 99
@@ -1599,7 +1599,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/83-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 100
@@ -1612,7 +1612,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/104-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 101
@@ -1625,7 +1625,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/102-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 102
@@ -1638,7 +1638,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Cloud Services",
     "image_url": "https://static.skillshare.com/uploads/seo/skillshare-og.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 103
@@ -1651,7 +1651,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1500,
     "category": "Indian OTT",
     "image_url": "https://www.bizasialive.com/wp-content/uploads/2020/05/899ec721-sonylivnew001.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": true,
     "is_active": true,
     "sort_order": 104
@@ -1664,7 +1664,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/109-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 106
@@ -1677,7 +1677,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1199,
     "category": "International OTT",
     "image_url": "https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 107
@@ -1690,7 +1690,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-7-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 108
@@ -1703,7 +1703,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/125-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 109
@@ -1716,7 +1716,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/13-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 110
@@ -1729,7 +1729,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 8999,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/21-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 111
@@ -1742,7 +1742,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/48-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 112
@@ -1755,7 +1755,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/11-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 113
@@ -1768,7 +1768,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/100-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 114
@@ -1781,7 +1781,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Writing Tools",
     "image_url": "https://its.weill.cornell.edu/sites/default/files/styles/panopoly_image_full/public/general/default-turnitin-image.png?itok=h8b8xlNG",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 116
@@ -1794,7 +1794,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-1-3.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 117
@@ -1807,7 +1807,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 599,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Discover-The-Ultimate-eBooks-Bundle-300000-eBooks-500-Genres-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 118
@@ -1820,7 +1820,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/153-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 119
@@ -1833,7 +1833,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/168-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 120
@@ -1846,7 +1846,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://vidscribe.ai/images/og-image.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 121
@@ -1859,7 +1859,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/134-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 122
@@ -1872,7 +1872,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1900,
     "category": "Indian OTT",
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/3840px-Netflix_2015_logo.svg.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 122
@@ -1885,7 +1885,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Video Editing",
     "image_url": "https://elevenlabs.io/images/og-image.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 123
@@ -1898,7 +1898,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-19-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 124
@@ -1911,7 +1911,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 2999,
     "category": "Video Editing",
     "image_url": "https://www.vyond.com/wp-content/uploads/2021/06/vyond-logo.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 125
@@ -1924,7 +1924,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 599,
     "category": "Lead Generation",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-3-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 126
@@ -1937,7 +1937,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://wideo.co/images/wideo-logo.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 127
@@ -1950,7 +1950,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "Video Editing",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-2-1.png",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 128
@@ -1963,7 +1963,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1200,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Office-Windows-4-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 129
@@ -1976,7 +1976,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 899,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/157-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 130
@@ -1989,7 +1989,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-8-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 131
@@ -2002,7 +2002,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Software",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/109-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 132
@@ -2015,7 +2015,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/139.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 133
@@ -2028,7 +2028,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "Writing Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/142-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 134
@@ -2041,7 +2041,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/161-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 135
@@ -2054,7 +2054,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 999,
     "category": "AI Tools",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-2-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 136
@@ -2067,7 +2067,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 1999,
     "category": "SEO",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/140-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 137
@@ -2080,7 +2080,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 9600,
     "category": "Cloud Services",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/Website-Poster-11-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 138
@@ -2093,7 +2093,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": null,
     "category": "International OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/62-1.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 139
@@ -2106,7 +2106,7 @@ export const staticProducts: StaticProductRow[] = [
     "original_price": 899,
     "category": "Indian OTT",
     "image_url": "https://dreamstarsolution.com/wp-content/uploads/2025/04/9-2.jpg",
-    "buy_link": "https://superprofile.bio/vp/dreamcrest-payments",
+    "buy_link": "https://secure.paypur.in/p/8694eb3e2afeadce",
     "is_hot_selling": false,
     "is_active": true,
     "sort_order": 140

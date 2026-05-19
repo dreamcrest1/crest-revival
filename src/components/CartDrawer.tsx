@@ -6,7 +6,7 @@ import { WhatsAppIcon } from '@/components/SocialIcons';
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
 
-  const checkoutUrl = 'https://superprofile.bio/vp/dreamcrest-payments';
+  const checkoutUrl = 'https://secure.paypur.in/p/8694eb3e2afeadce';
   const whatsappMsg = encodeURIComponent(
     `Hi! I'd like to order the following:\n${items.map(i => `• ${i.name} x${i.quantity} (${i.price})`).join('\n')}\n\nTotal: ₹${totalPrice.toFixed(0)}`
   );
