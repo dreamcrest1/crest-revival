@@ -197,7 +197,11 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
         <div className="absolute left-1/2 top-1/2 h-8 w-[78vw] -translate-x-1/2 translate-y-[110px] rounded-[50%] bg-primary/20 blur-xl pointer-events-none" />
         <motion.div
           className="absolute inset-0"
-          style={{ transformStyle: 'preserve-3d', rotateY: rotation }}
+          style={{
+            transformStyle: 'preserve-3d',
+            rotateY: rotation,
+            willChange: 'transform',
+          }}
         >
           {items.map((tool, i) => {
             const angle = (i / len) * 360;
@@ -220,16 +224,17 @@ const MobileCoverflow = ({ items }: { items: AiTool[] }) => {
                   transformStyle: 'preserve-3d',
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
+                  contain: 'layout paint',
                 }}
               >
-                <div className="w-full h-full rounded-xl overflow-hidden bg-card/50 backdrop-blur-xl border border-primary/25 shadow-[0_18px_50px_-18px_hsl(var(--primary)/0.75)] flex flex-col">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-card border border-primary/25 shadow-lg flex flex-col">
                   <div className="relative aspect-square overflow-hidden">
                     <BrandLogo t={tool} compact />
                     <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-primary/90 text-primary-foreground text-[8px] font-bold tracking-wide">
                       {tool.symbol}
                     </div>
                   </div>
-                  <div className="flex-1 px-2 py-1.5 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/90 min-h-0">
+                  <div className="flex-1 px-2 py-1.5 flex flex-col justify-between bg-card min-h-0">
                     <h3 className="font-display text-[10px] font-bold text-foreground line-clamp-1 leading-tight text-left">
                       {tool.name}
                     </h3>
