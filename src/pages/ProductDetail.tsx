@@ -400,6 +400,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Reviews */}
+          <GeneratedReviews seed={product.id} name={product.name} count={8} />
           <ProductReviews productId={product.id} productName={product.name} />
 
           {/* Related */}
