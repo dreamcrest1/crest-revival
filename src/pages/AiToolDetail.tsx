@@ -12,7 +12,7 @@ import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
 
-const COSMOFEED_URL = 'https://superprofile.bio/vp/dreamcrest-payments';
+const COSMOFEED_URL = 'https://secure.paypur.in/p/8694eb3e2afeadce';
 const WHATSAPP_NUMBER = '916357998730';
 
 
