@@ -2,11 +2,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Minus, Trash2, ShoppingBag, ExternalLink } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { WhatsAppIcon } from '@/components/SocialIcons';
+import { PAYMENT_URL } from '@/config/payment';
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
 
-  const checkoutUrl = 'https://secure.paypur.in/p/8694eb3e2afeadce';
+  const checkoutUrl = PAYMENT_URL;
   const whatsappMsg = encodeURIComponent(
     `Hi! I'd like to order the following:\n${items.map(i => `• ${i.name} x${i.quantity} (${i.price})`).join('\n')}\n\nTotal: ₹${totalPrice.toFixed(0)}`
   );

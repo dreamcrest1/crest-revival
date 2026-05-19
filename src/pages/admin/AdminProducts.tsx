@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Pencil, Trash2, Search, Package } from 'lucide-react';
 import { toast } from 'sonner';
+import { PAYMENT_URL } from '@/config/payment';
 
 interface Product {
   id: string;
@@ -31,7 +32,7 @@ const defaultProduct: Omit<Product, 'id'> = {
   category: 'AI Tools',
   description: '',
   image_url: '',
-  buy_link: 'https://secure.paypur.in/p/8694eb3e2afeadce',
+  buy_link: PAYMENT_URL,
   is_active: true,
   sort_order: 0,
 };
