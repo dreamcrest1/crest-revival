@@ -10,6 +10,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import ProductReviews from '@/components/ProductReviews';
+import GeneratedReviews from '@/components/GeneratedReviews';
 import { useRatingStats } from '@/hooks/useProductReviews';
 import LiveViewers from '@/components/social/LiveViewers';
 import { waLink } from '@/lib/whatsapp';
