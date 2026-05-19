@@ -44,10 +44,10 @@ const CategoriesSection = () => {
   const angleStep = 360 / count;
   // Radius scales with count so cards don't overlap
   const radius = isMobile
-    ? Math.max(220, count * 38)
+    ? Math.max(150, count * 24)
     : Math.max(380, count * 62);
-  const cardWidth = isMobile ? 150 : 200;
-  const cardHeight = isMobile ? 170 : 220;
+  const cardWidth = isMobile ? 120 : 200;
+  const cardHeight = isMobile ? 140 : 220;
 
   // Auto-rotation + inertia
   useAnimationFrame((_, delta) => {
