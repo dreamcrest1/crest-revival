@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { staticProducts, type StaticProductRow } from '@/data/staticProducts';
+import { PAYMENT_URL } from '@/config/payment';
 
 export type Product = {
   id: string;
