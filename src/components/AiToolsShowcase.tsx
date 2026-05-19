@@ -24,8 +24,23 @@ function pickUnique(pool: AiTool[], offset: number, n: number): AiTool[] {
   const out: AiTool[] = [];
   const len = pool.length;
   if (!len) return out;
+
+  // Always pin Claude AI Pro Plan (1 Month, ₹1800) first
+  const pinned = pool.find(
+    (t) =>
+      /claude/i.test(t.name) &&
+      /pro/i.test(t.name) &&
+      /1\s*month/i.test(t.validity) &&
+      t.price === 1800,
+  );
+  if (pinned) {
+    out.push(pinned);
+    seen.add(baseKey(pinned.name));
+  }
+
   for (let i = 0; i < len && out.length < n; i++) {
     const t = pool[(offset + i) % len];
+    if (pinned && t.id === pinned.id) continue;
     const k = baseKey(t.name);
     if (seen.has(k)) continue;
     seen.add(k);
@@ -94,6 +109,11 @@ const DetailPanel = ({ tool, onClose }: { tool: AiTool; onClose: () => void }) =
         </div>
         <h3 className="font-display text-lg md:text-2xl font-bold text-foreground">{tool.name}</h3>
         <p className="text-xs md:text-sm text-muted-foreground mt-1">{tool.validity}</p>
+        {tool.activationType && (
+          <p className="inline-block mt-2 px-2 py-0.5 rounded-md bg-primary/10 border border-primary/30 text-primary text-[11px] font-semibold">
+            {tool.activationType}
+          </p>
+        )}
         <div className="flex flex-wrap items-center gap-3 mt-3 md:mt-4">
           <span className="text-xl md:text-3xl font-bold text-primary">₹{tool.price}</span>
           <Link

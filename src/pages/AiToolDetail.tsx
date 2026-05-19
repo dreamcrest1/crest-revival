@@ -178,6 +178,12 @@ const AiToolDetail = () => {
                   </span>
                 </div>
               )}
+              {tool.activationType && (
+                <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-semibold">
+                  <Sparkles className="w-3 h-3" />
+                  {tool.activationType}
+                </div>
+              )}
               <p className="text-muted-foreground mb-5">{meta.description || meta.tagline}</p>
 
               <div className="flex items-baseline gap-3 mb-5">

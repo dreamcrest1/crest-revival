@@ -15,6 +15,7 @@ function makeTool(over: Partial<AiTool> = {}): AiTool {
     validity: '1 Month',
     price: 1499,
     image: '',
+    activationType: 'Activated on customer mail',
     symbol: 'CGPT',
     change: 0,
     trend: 'flat',
