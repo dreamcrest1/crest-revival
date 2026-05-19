@@ -45,14 +45,16 @@ export function BrandLogo({ t, compact = false }: BrandLogoProps) {
       className={`w-full h-full flex items-center justify-center relative ${compact ? 'p-2' : 'p-6'}`}
       style={bg}
     >
-      <div
-        className="absolute inset-0 opacity-[0.08] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
-          backgroundSize: '14px 14px',
-          color: onDark ? '#fff' : '#000',
-        }}
-      />
+      {!compact && (
+        <div
+          className="absolute inset-0 opacity-[0.08] pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+            backgroundSize: '14px 14px',
+            color: onDark ? '#fff' : '#000',
+          }}
+        />
+      )}
 
       {exhausted ? (
         <span
@@ -62,7 +64,7 @@ export function BrandLogo({ t, compact = false }: BrandLogoProps) {
         </span>
       ) : (
         <div
-          className={`relative rounded-2xl flex items-center justify-center bg-white/95 backdrop-blur-sm border border-white/40 shadow-sm ${compact ? 'w-[88%] h-[88%]' : 'w-3/4 h-3/4'}`}
+          className={`relative rounded-2xl flex items-center justify-center bg-white border border-white/40 ${compact ? 'w-[88%] h-[88%]' : 'w-3/4 h-3/4 shadow-sm backdrop-blur-sm bg-white/95'}`}
         >
           <img
             key={sources[idx]}
