@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
+import { BrandLogo } from '@/components/ai/BrandLogo';
 import { useAiTools } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
