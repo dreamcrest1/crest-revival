@@ -9,7 +9,8 @@ import { slugifyAiTool } from '@/lib/aiToolSeo';
 
 const COUNT = 12;
 const MOBILE_COUNT = 8;
-const ROTATE_MS = 5000;
+const ROTATE_MS = 9000;
+const FADE_S = 1.4;
 
 function baseKey(name: string): string {
   return name
