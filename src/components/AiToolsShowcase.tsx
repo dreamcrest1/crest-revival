@@ -415,7 +415,9 @@ const AiToolsShowcase = () => {
 
   useEffect(() => {
     if (pool.length <= COUNT) return;
-    const id = setInterval(() => setOffset((o) => (o + 1) % pool.length), ROTATE_MS);
+    // Advance by (COUNT - 1) so a fresh batch shows each cycle (Claude stays pinned at index 0).
+    const step = Math.max(1, COUNT - 1);
+    const id = setInterval(() => setOffset((o) => (o + step) % pool.length), ROTATE_MS);
     return () => clearInterval(id);
   }, [pool.length]);
 
@@ -429,7 +431,17 @@ const AiToolsShowcase = () => {
       </div>
       <div className="container mx-auto px-4 relative z-10">
         <Header />
-        {isMobile ? <MobileCoverflow items={items} /> : <DesktopOrbit items={items} tablet={tablet} />}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={offset}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
+          >
+            {isMobile ? <MobileCoverflow items={items} /> : <DesktopOrbit items={items} tablet={tablet} />}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
