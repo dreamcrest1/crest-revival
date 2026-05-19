@@ -216,6 +216,9 @@ const AiToolDetail = () => {
             </div>
           </section>
 
+          {/* AI-generated customer reviews */}
+          <GeneratedReviews seed={tool.id} name={tool.name} count={8} />
+
           {/* Related tools */}
           {related.length > 0 && (
             <section className="mt-12">
