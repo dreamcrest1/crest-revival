@@ -67,7 +67,7 @@ function mapRows(rows: RawRow[]) {
     category: p.category,
     emoji: categoryEmojis[p.category] || '📦',
     image: p.image_url || '/placeholder.svg',
-    buyLink: p.buy_link,
+    buyLink: PAYMENT_URL,
     isHotSelling: p.is_hot_selling ?? false,
   }));
 
