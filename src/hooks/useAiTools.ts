@@ -10,6 +10,7 @@ export type AiTool = {
   validity: string;
   price: number;
   image: string;
+  activationType: string;
   symbol: string; // stock-ticker style
   // Simulated "market" signals — purely cosmetic
   change: number; // % change vs previous fetch
