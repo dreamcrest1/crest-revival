@@ -11,8 +11,9 @@ import { useAiTools } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
+import { PAYMENT_URL } from '@/config/payment';
 
-const COSMOFEED_URL = 'https://secure.paypur.in/p/8694eb3e2afeadce';
+const COSMOFEED_URL = PAYMENT_URL;
 const WHATSAPP_NUMBER = '916357998730';
 
 
