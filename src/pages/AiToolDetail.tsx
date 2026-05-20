@@ -199,22 +199,28 @@ const AiToolDetail = () => {
           </div>
 
           {/* FAQ — mirrors FAQPage JSON-LD for human readers */}
-          <section className="mt-12 bg-card/40 backdrop-blur border border-border/60 rounded-2xl p-6">
-            <h2 className="font-display font-bold text-xl text-foreground mb-4">
-              Frequently asked about {tool.name}
-            </h2>
-            <div className="space-y-4">
-              {(seo.jsonLd.find((b) => b['@type'] === 'FAQPage')?.mainEntity as Array<{
-                name: string;
-                acceptedAnswer: { text: string };
-              }>).map((q) => (
-                <div key={q.name}>
-                  <h3 className="font-semibold text-foreground text-sm mb-1">{q.name}</h3>
-                  <p className="text-sm text-muted-foreground">{q.acceptedAnswer.text}</p>
+          {(() => {
+            const faqBlock = seo.jsonLd.find((b) => b?.['@type'] === 'FAQPage') as
+              | { mainEntity?: Array<{ name?: string; acceptedAnswer?: { text?: string } }> }
+              | undefined;
+            const faqs = Array.isArray(faqBlock?.mainEntity) ? faqBlock!.mainEntity! : [];
+            if (!faqs.length) return null;
+            return (
+              <section className="mt-12 bg-card/40 backdrop-blur border border-border/60 rounded-2xl p-6">
+                <h2 className="font-display font-bold text-xl text-foreground mb-4">
+                  Frequently asked about {tool.name}
+                </h2>
+                <div className="space-y-4">
+                  {faqs.map((q, i) => (
+                    <div key={q?.name ?? i}>
+                      <h3 className="font-semibold text-foreground text-sm mb-1">{q?.name}</h3>
+                      <p className="text-sm text-muted-foreground">{q?.acceptedAnswer?.text}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </section>
+              </section>
+            );
+          })()}
 
           {/* AI-generated customer reviews */}
           <GeneratedReviews seed={tool.id} name={tool.name} count={8} />
