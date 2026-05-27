@@ -419,6 +419,12 @@ const ProductDetail = () => {
 
       <Footer />
       <WhatsAppButton />
+      <CheckoutDialog
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={[{ id: product.id, name: product.name, price: product.price, quantity: 1 }]}
+        totalAmount={parsePriceNum(product.price)}
+      />
     </div>
   );
 };
