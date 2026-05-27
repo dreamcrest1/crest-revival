@@ -21,6 +21,8 @@ const WHATSAPP_NUMBER = '916357998730';
 const AiToolDetail = () => {
   const { slug = '' } = useParams<{ slug: string }>();
   const { data: tools = [], isLoading } = useAiTools();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
 
   const tool = useMemo(() => findAiToolBySlug(tools, slug), [tools, slug]);
   const seo = useMemo(() => (tool ? buildAiToolSeo(tool) : null), [tool]);
