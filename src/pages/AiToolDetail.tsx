@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap, CreditCard } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -11,11 +11,11 @@ import { useAiTools } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
-import { PAYMENT_URL } from '@/config/payment';
 import GeneratedReviews from '@/components/GeneratedReviews';
+import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
-const COSMOFEED_URL = PAYMENT_URL;
 const WHATSAPP_NUMBER = '916357998730';
+
 
 
 const AiToolDetail = () => {
