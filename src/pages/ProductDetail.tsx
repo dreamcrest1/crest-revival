@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ExternalLink, ShoppingCart, Shield, Tag, ArrowLeft, Zap, Clock, RefreshCw, Headphones, CheckCircle2, Star } from 'lucide-react';
+import { ExternalLink, ShoppingCart, Shield, Tag, ArrowLeft, Zap, Clock, RefreshCw, Headphones, CheckCircle2, Star, CreditCard } from 'lucide-react';
 import { useProducts, type Product } from '@/hooks/useProducts';
 import { useCart } from '@/contexts/CartContext';
 import { findProductBySlug, buildProductSeo, slugify } from '@/lib/productSeo';
@@ -15,7 +15,9 @@ import { useRatingStats } from '@/hooks/useProductReviews';
 import LiveViewers from '@/components/social/LiveViewers';
 import { waLink } from '@/lib/whatsapp';
 import { trackEvent } from '@/lib/eventTracker';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import CheckoutDialog from '@/components/checkout/CheckoutDialog';
+
 
 const PLACEHOLDER = '/placeholder.svg';
 
@@ -160,12 +162,20 @@ function RelatedProducts({ all, current }: { all: Product[]; current: Product })
   );
 }
 
+const parsePriceNum = (p?: string) => {
+  if (!p) return 0;
+  const n = parseFloat(String(p).replace(/[^0-9.]/g, ''));
+  return Number.isFinite(n) ? n : 0;
+};
+
 const ProductDetail = () => {
   const { slug = '' } = useParams();
   const { data, isLoading } = useProducts();
   const { addToCart } = useCart();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const products = data?.products || [];
   const product = findProductBySlug(products, slug);
+
 
   const imgState = useImageValid(product?.image);
   const safeImage = imgState === false ? PLACEHOLDER : product?.image || PLACEHOLDER;
@@ -286,15 +296,13 @@ const ProductDetail = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <a
-                  href={product.buyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => void trackEvent('checkout_click', { product_id: product.id, name: product.name, category: product.category, image: product.image })}
+                <button
+                  onClick={() => { void trackEvent('checkout_click', { product_id: product.id, name: product.name, category: product.category, image: product.image }); setCheckoutOpen(true); }}
                   className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
                 >
-                  <ExternalLink className="w-4 h-4" /> Buy Now
-                </a>
+                  <CreditCard className="w-4 h-4" /> Buy Now
+                </button>
+
                 <button
                   onClick={() => { addToCart(product); void trackEvent('add_to_cart', { product_id: product.id, name: product.name, category: product.category, image: product.image }); }}
                   className="flex items-center justify-center gap-2 bg-secondary border border-border rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all"
@@ -411,6 +419,12 @@ const ProductDetail = () => {
 
       <Footer />
       <WhatsAppButton />
+      <CheckoutDialog
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={[{ id: product.id, name: product.name, price: product.price, quantity: 1 }]}
+        totalAmount={parsePriceNum(product.price)}
+      />
     </div>
   );
 };

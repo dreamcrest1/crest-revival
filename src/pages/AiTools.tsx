@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
+import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2, CreditCard } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -12,10 +12,10 @@ import { metaForTool } from '@/data/aiToolMeta';
 import { popularityFor } from '@/data/aiToolPopularity';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
-import { PAYMENT_URL } from '@/config/payment';
+import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
-const COSMOFEED_URL = PAYMENT_URL;
 const WHATSAPP_NUMBER = '916357998730';
+
 
 // Broad category buckets — collapses the many fine-grained meta.category values
 // into a small set of pills so the top filter row isn't cluttered.
@@ -84,7 +84,7 @@ const waLink = (t: AiTool) => {
 
 import { BrandLogo } from '@/components/ai/BrandLogo';
 
-function ToolCard({ t }: { t: AiTool }) {
+function ToolCard({ t, onBuy }: { t: AiTool; onBuy: (tool: AiTool) => void }) {
   const meta = metaForTool(t.name);
   const detailHref = `/ai-tool/${slugifyAiTool(t.name)}`;
   return (
@@ -138,15 +138,24 @@ function ToolCard({ t }: { t: AiTool }) {
         </div>
 
         <div className="flex gap-2 mt-auto pt-1">
-          <a
-            href={t.price > 0 ? COSMOFEED_URL : waLink(t)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => void trackEvent(t.price > 0 ? 'checkout_click' : 'tool_whatsapp_click', { tool_name: t.name, category: bucketFor(t), price: t.price, image: t.image })}
-            className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-primary-foreground rounded-xl py-2.5 text-xs font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
-          >
-            <Zap className="w-3.5 h-3.5" /> {t.price > 0 ? 'Buy Now' : 'Enquire'}
-          </a>
+          {t.price > 0 ? (
+            <button
+              onClick={() => { void trackEvent('checkout_click', { tool_name: t.name, category: bucketFor(t), price: t.price, image: t.image }); onBuy(t); }}
+              className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-primary-foreground rounded-xl py-2.5 text-xs font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+            >
+              <CreditCard className="w-3.5 h-3.5" /> Buy ₹{t.price}
+            </button>
+          ) : (
+            <a
+              href={waLink(t)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: t.name, category: bucketFor(t), price: t.price, image: t.image })}
+              className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-primary-foreground rounded-xl py-2.5 text-xs font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+            >
+              <Zap className="w-3.5 h-3.5" /> Enquire
+            </a>
+          )}
           <a
             href={waLink(t)}
             target="_blank"
@@ -169,6 +178,9 @@ const AiTools = () => {
   const [q, setQ] = useState('');
   const [sort, setSort] = useState<'trending' | 'price-asc' | 'price-desc'>('trending');
   const [category, setCategory] = useState<string>('All');
+  const [buyTool, setBuyTool] = useState<AiTool | null>(null);
+
+
 
   // Default order = most-Google-searched first. We pre-sort once so the
   // baseline list is "trending desc"; price sorts then override it.
@@ -431,7 +443,7 @@ const AiTools = () => {
             <div className="text-center py-20 text-muted-foreground">No tools match "{q}".</div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filtered.map((t) => <ToolCard key={t.id} t={t} />)}
+              {filtered.map((t) => <ToolCard key={t.id} t={t} onBuy={setBuyTool} />)}
             </div>
           )}
 
@@ -446,6 +458,12 @@ const AiTools = () => {
 
       <Footer />
       <WhatsAppButton />
+      <CheckoutDialog
+        open={!!buyTool}
+        onClose={() => setBuyTool(null)}
+        items={buyTool ? [{ id: `tool-${slugifyAiTool(buyTool.name)}`, name: `${buyTool.name} (${buyTool.validity})`, price: `₹${buyTool.price}`, quantity: 1 }] : []}
+        totalAmount={buyTool?.price ?? 0}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Clock, Mail, Shield, Sparkles, Zap, CreditCard } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -11,16 +11,18 @@ import { useAiTools } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
-import { PAYMENT_URL } from '@/config/payment';
 import GeneratedReviews from '@/components/GeneratedReviews';
+import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
-const COSMOFEED_URL = PAYMENT_URL;
 const WHATSAPP_NUMBER = '916357998730';
+
 
 
 const AiToolDetail = () => {
   const { slug = '' } = useParams<{ slug: string }>();
   const { data: tools = [], isLoading } = useAiTools();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
 
   const tool = useMemo(() => findAiToolBySlug(tools, slug), [tools, slug]);
   const seo = useMemo(() => (tool ? buildAiToolSeo(tool) : null), [tool]);
@@ -162,15 +164,24 @@ const AiToolDetail = () => {
               ) : null}
 
               <div className="flex gap-2 mb-6">
-                <a
-                  href={tool.price > 0 ? COSMOFEED_URL : waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => void trackEvent(tool.price > 0 ? 'checkout_click' : 'tool_whatsapp_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image })}
-                  className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
-                >
-                  <Zap className="w-4 h-4" /> {tool.price > 0 ? 'Buy Now' : 'Enquire'}
-                </a>
+                {tool.price > 0 ? (
+                  <button
+                    onClick={() => { void trackEvent('checkout_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image }); setCheckoutOpen(true); }}
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                  >
+                    <CreditCard className="w-4 h-4" /> Buy Now ₹{tool.price}
+                  </button>
+                ) : (
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image })}
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                  >
+                    <Zap className="w-4 h-4" /> Enquire
+                  </a>
+                )}
                 <a
                   href={waLink}
                   target="_blank"
@@ -252,6 +263,12 @@ const AiToolDetail = () => {
 
       <WhatsAppButton />
       <Footer />
+      <CheckoutDialog
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={[{ id: `tool-${slugifyAiTool(tool.name)}`, name: `${tool.name} (${tool.validity})`, price: `₹${tool.price}`, quantity: 1 }]}
+        totalAmount={tool.price}
+      />
     </div>
   );
 };
