@@ -194,6 +194,45 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          amount: number
+          created_at: string
+          customer: Json
+          id: string
+          items: Json
+          order_id: string
+          pay_url: string | null
+          status: string
+          txn_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          customer?: Json
+          id?: string
+          items?: Json
+          order_id: string
+          pay_url?: string | null
+          status?: string
+          txn_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          customer?: Json
+          id?: string
+          items?: Json
+          order_id?: string
+          pay_url?: string | null
+          status?: string
+          txn_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       page_content: {
         Row: {
           content: Json
