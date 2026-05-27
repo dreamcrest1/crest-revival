@@ -50,6 +50,8 @@ import AdminInsights from "./pages/admin/AdminInsights";
 import ExitIntentSurvey from "./components/ExitIntentSurvey";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
+import Auth from "./pages/Auth";
+import MyOrders from "./pages/MyOrders";
 
 const queryClient = new QueryClient();
 
@@ -91,6 +93,8 @@ const App = () => {
 
                   <Route path="/payment/success" element={<PaymentSuccess />} />
                   <Route path="/payment/failure" element={<PaymentFailure />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/my-orders" element={<MyOrders />} />
 
 
                   <Route path="/admin/login" element={<AdminLogin />} />

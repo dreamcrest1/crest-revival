@@ -22,8 +22,9 @@ export async function initPaypurPayment(args: {
   items: CheckoutItem[];
   customer: CheckoutCustomer;
 }): Promise<{ pay_url: string; order_id: string }> {
+  const { data: { session } } = await supabase.auth.getSession();
   const { data, error } = await supabase.functions.invoke('paypur-init', {
-    body: { ...args, origin: window.location.origin },
+    body: { ...args, origin: window.location.origin, user_id: session?.user?.id ?? null },
   });
   if (error) throw new Error(error.message || 'Payment init failed');
   if (!data?.ok || !data?.pay_url) throw new Error(data?.error || 'Payment init failed');
