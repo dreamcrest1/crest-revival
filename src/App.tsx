@@ -52,6 +52,8 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
 import Auth from "./pages/Auth";
 import MyOrders from "./pages/MyOrders";
+import ResetPassword from "./pages/ResetPassword";
+import AdminForgotPassword from "./pages/admin/AdminForgotPassword";
 
 const queryClient = new QueryClient();
 
