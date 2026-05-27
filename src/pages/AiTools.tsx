@@ -178,6 +178,9 @@ const AiTools = () => {
   const [q, setQ] = useState('');
   const [sort, setSort] = useState<'trending' | 'price-asc' | 'price-desc'>('trending');
   const [category, setCategory] = useState<string>('All');
+  const [buyTool, setBuyTool] = useState<AiTool | null>(null);
+
+
 
   // Default order = most-Google-searched first. We pre-sort once so the
   // baseline list is "trending desc"; price sorts then override it.
@@ -440,7 +443,7 @@ const AiTools = () => {
             <div className="text-center py-20 text-muted-foreground">No tools match "{q}".</div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filtered.map((t) => <ToolCard key={t.id} t={t} />)}
+              {filtered.map((t) => <ToolCard key={t.id} t={t} onBuy={setBuyTool} />)}
             </div>
           )}
 
@@ -455,6 +458,12 @@ const AiTools = () => {
 
       <Footer />
       <WhatsAppButton />
+      <CheckoutDialog
+        open={!!buyTool}
+        onClose={() => setBuyTool(null)}
+        items={buyTool ? [{ id: `tool-${slugifyAiTool(buyTool.name)}`, name: `${buyTool.name} (${buyTool.validity})`, price: `₹${buyTool.price}`, quantity: 1 }] : []}
+        totalAmount={buyTool?.price ?? 0}
+      />
     </div>
   );
 };
