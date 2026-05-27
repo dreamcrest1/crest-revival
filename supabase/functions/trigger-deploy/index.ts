@@ -26,22 +26,54 @@ Deno.serve(async (req) => {
     if (!roles?.some((r) => r.role === "admin")) return json({ error: "forbidden" }, 403);
 
     const pat = Deno.env.get("GITHUB_PAT");
-    const repo = Deno.env.get("GITHUB_REPO");
-    const workflow = Deno.env.get("GITHUB_WORKFLOW") ?? "cpanel-deploy.yml";
-    const ref = Deno.env.get("GITHUB_REF") ?? "main";
+    const repoRaw = Deno.env.get("GITHUB_REPO") ?? "";
+    // Normalize: strip https://github.com/, trailing .git, whitespace, trailing slash
+    const repo = repoRaw
+      .trim()
+      .replace(/^https?:\/\/github\.com\//i, "")
+      .replace(/\.git$/i, "")
+      .replace(/\/$/, "");
+    const workflow = (Deno.env.get("GITHUB_WORKFLOW") ?? "cpanel-deploy.yml").trim();
+    const ref = (Deno.env.get("GITHUB_REF") ?? "main").trim();
+
     if (!pat || !repo) return json({ error: "Missing GITHUB_PAT or GITHUB_REPO secret" }, 500);
+    if (!/^[^/]+\/[^/]+$/.test(repo)) {
+      return json({ error: `GITHUB_REPO must be in 'owner/repo' format. Got: '${repo}'` }, 500);
+    }
+
+    const ghHeaders = {
+      "Authorization": `Bearer ${pat}`,
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      "User-Agent": "dreamcrest-admin",
+    };
+
+    // Pre-flight: can the PAT see the repo?
+    const repoRes = await fetch(`https://api.github.com/repos/${repo}`, { headers: ghHeaders });
+    if (!repoRes.ok) {
+      const body = await repoRes.text();
+      return json({
+        error: `Cannot access repo '${repo}' (${repoRes.status}). Check GITHUB_REPO is exactly 'owner/repo' and PAT has 'repo' scope (or fine-grained access to this repo).`,
+        github: body,
+      }, 502);
+    }
+
+    // Pre-flight: does the workflow file exist?
+    const wfRes = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/${workflow}`, { headers: ghHeaders });
+    if (!wfRes.ok) {
+      const body = await wfRes.text();
+      return json({
+        error: `Workflow '${workflow}' not found in '${repo}' (${wfRes.status}). Make sure '.github/workflows/${workflow}' exists on the default branch and the PAT has 'workflow' scope.`,
+        github: body,
+      }, 502);
+    }
 
     const ghRes = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/${workflow}/dispatches`, {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${pat}`,
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-        "Content-Type": "application/json",
-        "User-Agent": "dreamcrest-admin",
-      },
+      headers: { ...ghHeaders, "Content-Type": "application/json" },
       body: JSON.stringify({ ref }),
     });
+
 
     if (!ghRes.ok) {
       const text = await ghRes.text();
