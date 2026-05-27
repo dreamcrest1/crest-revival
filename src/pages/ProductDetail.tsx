@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ExternalLink, ShoppingCart, Shield, Tag, ArrowLeft, Zap, Clock, RefreshCw, Headphones, CheckCircle2, Star, CreditCard } from 'lucide-react';
+import { ExternalLink, ShoppingCart, Shield, Tag, ArrowLeft, Zap, Clock, RefreshCw, Headphones, CheckCircle2, CreditCard } from 'lucide-react';
 import { useProducts, type Product } from '@/hooks/useProducts';
 import { useCart } from '@/contexts/CartContext';
 import { findProductBySlug, buildProductSeo, slugify } from '@/lib/productSeo';
@@ -9,9 +9,6 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
 import { WhatsAppIcon } from '@/components/SocialIcons';
-import ProductReviews from '@/components/ProductReviews';
-import GeneratedReviews from '@/components/GeneratedReviews';
-import { useRatingStats } from '@/hooks/useProductReviews';
 import LiveViewers from '@/components/social/LiveViewers';
 import { waLink } from '@/lib/whatsapp';
 import { trackEvent } from '@/lib/eventTracker';
@@ -108,20 +105,6 @@ const categoryHowItWorks: Record<string, string> = {
 };
 
 // ---------- Helpers ----------
-function StarRow({ rating = 4.9 }: { rating?: number }) {
-  const full = Math.floor(rating);
-  return (
-    <div className="flex items-center gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={`w-4 h-4 ${i < full ? 'fill-primary text-primary' : 'text-muted-foreground/40'}`}
-        />
-      ))}
-      <span className="text-xs text-muted-foreground ml-1">{rating} (127 reviews)</span>
-    </div>
-  );
-}
 
 function RelatedProducts({ all, current }: { all: Product[]; current: Product }) {
   const related = all
@@ -180,7 +163,6 @@ const ProductDetail = () => {
   const safeImage = imgState === false ? PLACEHOLDER : product?.image || PLACEHOLDER;
 
   // IMPORTANT: all hooks must run on every render — no early returns above this line.
-  const { data: ratingStats } = useRatingStats(product?.id ?? '');
 
   useEffect(() => {
     if (!product) return;
@@ -221,7 +203,7 @@ const ProductDetail = () => {
     );
   }
 
-  const seo = buildProductSeo(product, ratingStats);
+  const seo = buildProductSeo(product);
   const features = categoryFeatures[product.category] || categoryFeatures.Other;
   const howItWorks =
     categoryHowItWorks[product.category] ||
@@ -280,8 +262,6 @@ const ProductDetail = () => {
               </span>
 
               <h1 className="font-display font-bold text-foreground text-2xl md:text-3xl mt-3 mb-2">{product.name}</h1>
-
-              <div className="mb-3"><StarRow /></div>
 
               <p className="text-sm text-muted-foreground leading-relaxed mb-5 whitespace-pre-line">
                 {product.description || `Get premium ${product.name} at the cheapest group buy price in India. Genuine subscription with full warranty, instant delivery and 24/7 support — exclusively from Dreamcrest Solutions.`}
@@ -417,9 +397,6 @@ const ProductDetail = () => {
             </ul>
           </div>
 
-          {/* Reviews */}
-          <GeneratedReviews seed={product.id} name={product.name} count={8} />
-          <ProductReviews productId={product.id} productName={product.name} />
 
           {/* Related */}
           <RelatedProducts all={products} current={product} />

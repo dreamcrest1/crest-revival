@@ -52,13 +52,12 @@ Deno.serve(async (req) => {
 
     if (mode === "daily") {
       const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
-      const [{ data: events }, { data: searches }, { data: errors }, { data: reviews }] = await Promise.all([
-        supa.from("site_analytics").select("event_type, page_path, metadata, country, city, device_type")
+      const [{ data: events }, { data: searches }, { data: errors }] = await Promise.all([
+        supa.from("site_analytics").select("event_type, page_path, metadata, country, city, device_type, visitor_id, created_at")
           .gte("created_at", since).limit(20000),
-        supa.from("site_analytics").select("metadata, page_path")
+        supa.from("site_analytics").select("metadata, page_path, visitor_id, created_at")
           .eq("event_type", "search_query").gte("created_at", since).limit(2000),
         supa.from("error_logs").select("message").gte("created_at", since).limit(200),
-        supa.from("product_reviews").select("rating, body, title").gte("created_at", since).limit(200),
       ]);
 
       const totals: Record<string, number> = {};
@@ -67,38 +66,67 @@ Deno.serve(async (req) => {
       const topPages: string[] = [];
       const topCountries: string[] = [];
       const devices: string[] = [];
+      const intentVisitors = new Set<string>();
+      const viewVisitors = new Set<string>();
       for (const e of events ?? []) {
         totals[e.event_type] = (totals[e.event_type] || 0) + 1;
-        if (e.event_type === "product_view" || e.event_type === "whatsapp_click") {
+        if (e.event_type === "product_view" || e.event_type === "tool_view" || e.event_type === "whatsapp_click" || e.event_type === "tool_whatsapp_click" || e.event_type === "checkout_click" || e.event_type === "add_to_cart") {
           const md: any = e.metadata ?? {};
           if (md.name) topProducts.push(String(md.name).slice(0, 60));
           if (md.category) topCategories.push(String(md.category).slice(0, 40));
+        }
+        if (e.event_type === "product_view" || e.event_type === "tool_view") {
+          if (e.visitor_id) viewVisitors.add(e.visitor_id);
+        }
+        if (e.event_type === "whatsapp_click" || e.event_type === "tool_whatsapp_click" || e.event_type === "checkout_click") {
+          if (e.visitor_id) intentVisitors.add(e.visitor_id);
         }
         if (e.page_path) topPages.push(e.page_path);
         if (e.country) topCountries.push(e.country);
         if (e.device_type) devices.push(e.device_type);
       }
-      const searchTerms = (searches ?? []).map((s: any) => String(s.metadata?.q ?? s.metadata?.query ?? "").trim()).filter(Boolean).slice(0, 200);
+
+      // Searches that did NOT lead to intent from same visitor within 30 minutes
+      const visitorIntentTimes: Record<string, number[]> = {};
+      for (const e of events ?? []) {
+        if (!e.visitor_id) continue;
+        if (e.event_type === "whatsapp_click" || e.event_type === "tool_whatsapp_click" || e.event_type === "checkout_click") {
+          (visitorIntentTimes[e.visitor_id] ||= []).push(new Date(e.created_at).getTime());
+        }
+      }
+      const missedSearches: string[] = [];
+      for (const s of (searches ?? []) as any[]) {
+        const term = String(s.metadata?.q ?? s.metadata?.query ?? "").trim().toLowerCase();
+        if (!term) continue;
+        const ts = new Date(s.created_at).getTime();
+        const intents = s.visitor_id ? visitorIntentTimes[s.visitor_id] || [] : [];
+        const converted = intents.some(t => t > ts && t - ts < 30 * 60 * 1000);
+        if (!converted) missedSearches.push(term);
+      }
+
+      const intentRate = viewVisitors.size ? Math.round((intentVisitors.size / viewVisitors.size) * 1000) / 10 : 0;
 
       const metrics = {
         totals,
+        intent_rate_pct: intentRate,
+        unique_view_visitors: viewVisitors.size,
+        unique_intent_visitors: intentVisitors.size,
         top_products: topCounts(topProducts, 10),
         top_categories: topCounts(topCategories, 8),
         top_pages: topCounts(topPages, 10),
         top_countries: topCounts(topCountries, 8),
         device_split: topCounts(devices, 4),
-        sample_searches: searchTerms.slice(0, 50),
+        searched_but_not_converted: topCounts(missedSearches, 12),
         error_count: errors?.length ?? 0,
-        review_count: reviews?.length ?? 0,
       };
 
       const prompt = `You are a senior growth analyst for an Indian premium-subscription store called Dreamcrest Solutions.
-Given the last 24 hours of raw metrics, produce a tight Markdown brief with EXACTLY these sections:
-1. **What users wanted today** — 3 bullets, name specific tools/categories.
-2. **What may have blocked them** — 2 bullets (errors, drop-offs, missing inventory).
-3. **Emerging demand** — 2 bullets of products/categories rising fast or searched but not bought.
-4. **One recommended action for tomorrow** — 1 sentence.
-Be specific, reference numbers when useful, no fluff, no preamble.
+Given the last 24 hours of raw metrics, produce a tight Markdown brief with EXACTLY these 4 sections:
+1. **What users wanted today** — 3 bullets naming specific tools/categories and the numbers behind them.
+2. **What blocked them** — 2 bullets (errors, low intent rate, drop-offs, missing inventory inferred from "searched_but_not_converted").
+3. **Emerging demand & inventory gaps** — 2 bullets: rising products + searched-but-missing terms worth stocking.
+4. **One recommended action for tomorrow** — 1 sentence, concrete.
+Be specific, reference numbers, no fluff, no preamble.
 
 METRICS_JSON:
 ${JSON.stringify(metrics).slice(0, 12000)}`;

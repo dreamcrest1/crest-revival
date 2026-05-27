@@ -8,6 +8,14 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
   const [phase, setPhase] = useState<'loading' | 'exit'>('loading');
 
   useEffect(() => {
+    // Skip preloader entirely when ?nopreload=1 is in URL (used by heatmap screenshot capture).
+    try {
+      if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('nopreload')) {
+        onComplete();
+        return;
+      }
+    } catch { /* ignore */ }
+
     const interval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {

@@ -155,10 +155,12 @@ const AdminHeatmap = () => {
       // Open the page in a hidden iframe, wait for load, capture
       const iframe = document.createElement('iframe');
       iframe.style.cssText = 'position:fixed;left:-10000px;top:0;width:1280px;height:900px;border:0;';
-      iframe.src = selected;
+      const sep = selected.includes('?') ? '&' : '?';
+      iframe.src = `${selected}${sep}nopreload=1`;
       document.body.appendChild(iframe);
-      await new Promise<void>((res) => { iframe.onload = () => setTimeout(res, 2200); });
+      await new Promise<void>((res) => { iframe.onload = () => setTimeout(res, 3500); });
       const doc = iframe.contentDocument!;
+      try { iframe.contentWindow?.scrollTo(0, 0); } catch { /* ignore */ }
       const canvas = await html2canvas(doc.body, { width: 1280, height: 900, scale: 0.7, backgroundColor: '#0f1014', useCORS: true });
       const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
       try { localStorage.setItem(SCREENSHOT_KEY(selected), dataUrl); } catch { /* quota */ }
