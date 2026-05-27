@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart, Shield } from 'lucide-react';
+import { Menu, X, ShoppingCart, Shield, User, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/contexts/AuthContext';
 import logo from '@/assets/logo.png';
 
 const navLinks = [
@@ -20,6 +21,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const cart = useCart();
+  const { user } = useAuth();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/60 backdrop-blur-xl">
@@ -68,6 +70,21 @@ const Navbar = () => {
               Shop Now
             </Link>
           </Button>
+          {user ? (
+            <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10" asChild>
+              <Link to="/my-orders">
+                <Package className="w-4 h-4 mr-2" />
+                My Orders
+              </Link>
+            </Button>
+          ) : (
+            <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10" asChild>
+              <Link to="/auth">
+                <User className="w-4 h-4 mr-2" />
+                Login
+              </Link>
+            </Button>
+          )}
           <Button size="sm" variant="outline" className="border-primary/30 text-primary hover:bg-primary/10" asChild>
             <Link to="/admin">
               <Shield className="w-4 h-4 mr-2" />
