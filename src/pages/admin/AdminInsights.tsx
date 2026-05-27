@@ -39,25 +39,38 @@ const AdminInsights = () => {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
 
+  const fetchAllPaged = async <T,>(build: (from: number, to: number) => any, max = 30000): Promise<T[]> => {
+    const out: T[] = []; const size = 1000;
+    for (let from = 0; from < max; from += size) {
+      const { data, error } = await build(from, from + size - 1);
+      if (error || !data || data.length === 0) break;
+      out.push(...(data as T[]));
+      if (data.length < size) break;
+    }
+    return out;
+  };
+
   const load = async () => {
     setLoading(true);
     const days = RANGES[range];
     const sinceCur = new Date(Date.now() - days * 86400000).toISOString();
     const sincePrev = new Date(Date.now() - 2 * days * 86400000).toISOString();
-    const [{ data: ev }, { data: evPrev }, { data: fb }, { data: ck }, { data: ins }] = await Promise.all([
-      supabase.from('site_analytics').select('event_type, metadata, visitor_id, page_path, device_type, created_at').gte('created_at', sinceCur).limit(20000),
-      supabase.from('site_analytics').select('event_type, metadata, visitor_id, page_path, device_type, created_at').gte('created_at', sincePrev).lt('created_at', sinceCur).limit(20000),
+    const evCols = 'event_type, metadata, visitor_id, page_path, device_type, created_at';
+    const [ev, evPrev, ck, { data: fb }, { data: ins }] = await Promise.all([
+      fetchAllPaged<EventRow>((f, t) => supabase.from('site_analytics').select(evCols).gte('created_at', sinceCur).order('created_at', { ascending: true }).range(f, t)),
+      fetchAllPaged<EventRow>((f, t) => supabase.from('site_analytics').select(evCols).gte('created_at', sincePrev).lt('created_at', sinceCur).order('created_at', { ascending: true }).range(f, t)),
+      fetchAllPaged<ClickRow>((f, t) => supabase.from('click_events').select('page_path, element_text, visitor_id, created_at').gte('created_at', sinceCur).order('created_at', { ascending: true }).range(f, t)),
       supabase.from('exit_feedback').select('id, page_path, message, created_at').order('created_at', { ascending: false }).limit(100),
-      supabase.from('click_events').select('page_path, element_text, visitor_id, created_at').gte('created_at', sinceCur).limit(10000),
       supabase.from('daily_insights').select('for_date, summary_md, created_at').order('for_date', { ascending: false }).limit(1).maybeSingle(),
     ]);
-    setEvents((ev as EventRow[]) || []);
-    setEventsPrev((evPrev as EventRow[]) || []);
+    setEvents(ev);
+    setEventsPrev(evPrev);
     setFeedback((fb as Feedback[]) || []);
-    setClicks((ck as ClickRow[]) || []);
+    setClicks(ck);
     setInsight(ins as Insight | null);
     setLoading(false);
   };
+
 
   useEffect(() => { void load(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [range]);
 
