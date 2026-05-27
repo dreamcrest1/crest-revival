@@ -66,29 +66,17 @@ export const trackEvent = async (
   } catch { /* never break */ }
 };
 
-// Click sampling: 30% of visitors get their clicks recorded for heatmap
-let _shouldSample: boolean | null = null;
-const shouldSample = (): boolean => {
-  if (_shouldSample !== null) return _shouldSample;
-  const id = getVisitorId() || 'x';
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
-  _shouldSample = Math.abs(h) % 10 < 3;
-  return _shouldSample;
-};
-
+// Click tracking — 100% sampling so the heatmap actually has data to render.
 let _lastClick = 0;
 export const initClickTracking = () => {
   if (typeof window === 'undefined') return;
-  if (!shouldSample()) return;
-  window.addEventListener('click', (e) => {
+  const handler = (e: PointerEvent | MouseEvent) => {
     const now = Date.now();
     if (now - _lastClick < 250) return; // debounce
     _lastClick = now;
     if (window.location.pathname.startsWith('/admin')) return;
     const target = e.target as HTMLElement;
     if (!target) return;
-    const rect = document.documentElement.getBoundingClientRect();
     const w = window.innerWidth || 1;
     const h = window.innerHeight || 1;
     const xPct = Math.round((e.clientX / w) * 10000) / 100;
@@ -102,5 +90,6 @@ export const initClickTracking = () => {
       viewport_w: window.innerWidth,
       visitor_id: getVisitorId() ?? undefined,
     }]);
-  }, { passive: true });
+  };
+  window.addEventListener('pointerdown', handler, { passive: true });
 };
