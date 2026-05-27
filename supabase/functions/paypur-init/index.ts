@@ -36,12 +36,14 @@ Deno.serve(async (req) => {
       items = [],
       customer = {},
       origin,
+      user_id = null,
     } = body as {
       orderId?: string;
       amount?: number | string;
       items?: Array<{ name: string; price: string; quantity: number }>;
       customer?: { firstname?: string; email?: string; phone?: string };
       origin?: string;
+      user_id?: string | null;
     };
 
     if (!orderId || !amount) {
@@ -70,6 +72,7 @@ Deno.serve(async (req) => {
       status: 'pending',
       items,
       customer: { firstname, email, phone },
+      user_id,
     });
     if (insErr && !insErr.message.includes('duplicate')) {
       console.error('insert order failed', insErr);
