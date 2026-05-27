@@ -263,6 +263,12 @@ const AiToolDetail = () => {
 
       <WhatsAppButton />
       <Footer />
+      <CheckoutDialog
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={[{ id: `tool-${slugifyAiTool(tool.name)}`, name: `${tool.name} (${tool.validity})`, price: `₹${tool.price}`, quantity: 1 }]}
+        totalAmount={tool.price}
+      />
     </div>
   );
 };
