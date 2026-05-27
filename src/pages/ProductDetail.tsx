@@ -176,9 +176,21 @@ const ProductDetail = () => {
   const products = data?.products || [];
   const product = findProductBySlug(products, slug);
 
-
   const imgState = useImageValid(product?.image);
   const safeImage = imgState === false ? PLACEHOLDER : product?.image || PLACEHOLDER;
+
+  // IMPORTANT: all hooks must run on every render — no early returns above this line.
+  const { data: ratingStats } = useRatingStats(product?.id ?? '');
+
+  useEffect(() => {
+    if (!product) return;
+    void trackEvent('product_view', {
+      product_id: product.id,
+      name: product.name,
+      category: product.category,
+      image: product.image,
+    });
+  }, [product?.id, product?.name, product?.category, product?.image]);
 
   if (isLoading) {
     return (
@@ -209,7 +221,6 @@ const ProductDetail = () => {
     );
   }
 
-  const { data: ratingStats } = useRatingStats(product.id);
   const seo = buildProductSeo(product, ratingStats);
   const features = categoryFeatures[product.category] || categoryFeatures.Other;
   const howItWorks =
@@ -217,8 +228,6 @@ const ProductDetail = () => {
     'After payment, you receive your access details directly on WhatsApp within minutes. Follow the simple instructions to log in and start using your subscription.';
 
   const waHref = waLink({ name: product.name, price: product.price, slug: slugify(product.name), category: product.category }, 'product-detail');
-
-  useEffect(() => { void trackEvent('product_view', { product_id: product.id, name: product.name, category: product.category, image: product.image }); }, [product.id, product.name, product.category, product.image]);
 
   return (
     <div className="min-h-screen relative z-10">
