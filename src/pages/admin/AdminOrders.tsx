@@ -34,7 +34,7 @@ const AdminOrders = () => {
         .order('created_at', { ascending: false })
         .limit(500);
       if (error) throw error;
-      return (data || []) as OrderRow[];
+      return (data || []) as unknown as OrderRow[];
     },
     refetchInterval: 30_000,
   });
