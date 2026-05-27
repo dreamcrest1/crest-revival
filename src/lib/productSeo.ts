@@ -56,10 +56,7 @@ export interface ProductSeo {
 }
 
 /** Build full SEO bundle for a product — auto keyword + schema generation. */
-export function buildProductSeo(
-  product: Product,
-  ratingStats?: { avg_rating: number; review_count: number } | null,
-): ProductSeo {
+export function buildProductSeo(product: Product): ProductSeo {
   const slug = slugify(product.name);
   const url = `${SITE}/product/${slug}`;
   const name = product.name;
@@ -92,8 +89,6 @@ export function buildProductSeo(
   const catKw = categoryKeywords[cat] || categoryKeywords.Other;
   const keywords = [...baseKw, ...catKw, BRAND].join(', ').toLowerCase();
 
-  const hasRatings = ratingStats && ratingStats.review_count > 0;
-
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -113,17 +108,6 @@ export function buildProductSeo(
       seller: { '@type': 'Organization', name: BRAND },
       priceValidUntil: new Date(Date.now() + 90 * 86400 * 1000).toISOString().slice(0, 10),
     },
-    ...(hasRatings
-      ? {
-          aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: String(ratingStats!.avg_rating),
-            reviewCount: String(ratingStats!.review_count),
-            bestRating: '5',
-            worstRating: '1',
-          },
-        }
-      : {}),
   };
 
   return { title, description, keywords, canonical: url, jsonLd, slug };

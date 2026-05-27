@@ -11,7 +11,6 @@ import { useAiTools } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
-import GeneratedReviews from '@/components/GeneratedReviews';
 import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
 const WHATSAPP_NUMBER = '916357998730';
@@ -233,8 +232,6 @@ const AiToolDetail = () => {
             );
           })()}
 
-          {/* AI-generated customer reviews */}
-          <GeneratedReviews seed={tool.id} name={tool.name} count={8} />
 
           {/* Related tools */}
           {related.length > 0 && (

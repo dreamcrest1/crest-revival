@@ -39,7 +39,7 @@ import AdminPages from "./pages/admin/AdminPages";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminSeoAudit from "./pages/admin/AdminSeoAudit";
 import AdminErrorLogs from "./pages/admin/AdminErrorLogs";
-import AdminReviews from "./pages/admin/AdminReviews";
+
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminFunnel from "./pages/admin/AdminFunnel";
 import AdminSearchQueries from "./pages/admin/AdminSearchQueries";
@@ -108,7 +108,7 @@ const App = () => {
                     <Route path="products" element={<AdminProducts />} />
                     <Route path="orders" element={<AdminOrders />} />
                     <Route path="pages" element={<AdminPages />} />
-                    <Route path="reviews" element={<AdminReviews />} />
+                    
                     <Route path="blog" element={<AdminBlog />} />
                     <Route path="analytics" element={<AdminAnalytics />} />
                     <Route path="funnel" element={<AdminFunnel />} />
