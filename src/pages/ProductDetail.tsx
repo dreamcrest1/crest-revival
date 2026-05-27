@@ -283,7 +283,7 @@ const ProductDetail = () => {
 
               <div className="mb-3"><StarRow /></div>
 
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5 whitespace-pre-line">
                 {product.description || `Get premium ${product.name} at the cheapest group buy price in India. Genuine subscription with full warranty, instant delivery and 24/7 support — exclusively from Dreamcrest Solutions.`}
               </p>
 
