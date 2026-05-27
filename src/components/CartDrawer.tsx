@@ -1,19 +1,22 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Minus, Trash2, ShoppingBag, ExternalLink } from 'lucide-react';
+import { X, Plus, Minus, Trash2, ShoppingBag, CreditCard } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { WhatsAppIcon } from '@/components/SocialIcons';
-import { PAYMENT_URL } from '@/config/payment';
+import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
-  const checkoutUrl = PAYMENT_URL;
   const whatsappMsg = encodeURIComponent(
     `Hi! I'd like to order the following:\n${items.map(i => `• ${i.name} x${i.quantity} (${i.price})`).join('\n')}\n\nTotal: ₹${totalPrice.toFixed(0)}`
   );
 
   return (
+    <>
     <AnimatePresence>
+
       {isOpen && (
         <>
           <motion.div
@@ -103,14 +106,12 @@ const CartDrawer = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <a
-                    href={checkoutUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => { setIsOpen(false); setCheckoutOpen(true); }}
                     className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
                   >
-                    <ExternalLink className="w-4 h-4" /> Checkout
-                  </a>
+                    <CreditCard className="w-4 h-4" /> Pay ₹{totalPrice.toFixed(0)}
+                  </button>
                   <a
                     href={`https://wa.me/916357998730?text=${whatsappMsg}`}
                     target="_blank"
@@ -130,6 +131,13 @@ const CartDrawer = () => {
         </>
       )}
     </AnimatePresence>
+    <CheckoutDialog
+      open={checkoutOpen}
+      onClose={() => setCheckoutOpen(false)}
+      items={items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity }))}
+      totalAmount={totalPrice}
+    />
+    </>
   );
 };
 

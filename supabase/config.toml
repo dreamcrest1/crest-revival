@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.sitemap]
 verify_jwt = false
+
+[functions.paypur-init]
+verify_jwt = false
+
+[functions.paypur-verify]
+verify_jwt = false
