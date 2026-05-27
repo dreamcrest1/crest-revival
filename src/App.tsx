@@ -120,6 +120,7 @@ const App = () => {
                     <Route path="insights" element={<AdminInsights />} />
                     <Route path="seo-audit" element={<AdminSeoAudit />} />
                     <Route path="errors" element={<AdminErrorLogs />} />
+                    <Route path="deploy" element={<AdminDeploy />} />
                   </Route>
 
                   <Route path="*" element={<NotFound />} />
