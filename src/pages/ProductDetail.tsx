@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { ExternalLink, ShoppingCart, Shield, Tag, ArrowLeft, Zap, Clock, RefreshCw, Headphones, CheckCircle2, Star } from 'lucide-react';
+import { ExternalLink, ShoppingCart, Shield, Tag, ArrowLeft, Zap, Clock, RefreshCw, Headphones, CheckCircle2, Star, CreditCard } from 'lucide-react';
 import { useProducts, type Product } from '@/hooks/useProducts';
 import { useCart } from '@/contexts/CartContext';
 import { findProductBySlug, buildProductSeo, slugify } from '@/lib/productSeo';
@@ -15,7 +15,9 @@ import { useRatingStats } from '@/hooks/useProductReviews';
 import LiveViewers from '@/components/social/LiveViewers';
 import { waLink } from '@/lib/whatsapp';
 import { trackEvent } from '@/lib/eventTracker';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import CheckoutDialog from '@/components/checkout/CheckoutDialog';
+
 
 const PLACEHOLDER = '/placeholder.svg';
 
