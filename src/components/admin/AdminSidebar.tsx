@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, Star, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck, Sparkles } from 'lucide-react';
+import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, Star, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck, Sparkles, ShoppingBag } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -19,6 +19,7 @@ import logo from '@/assets/logo.png';
 const menuItems = [
   { title: 'Dashboard', url: '/admin/dashboard', icon: LayoutDashboard },
   { title: 'Products', url: '/admin/products', icon: Package },
+  { title: 'Orders', url: '/admin/orders', icon: ShoppingBag },
   { title: 'Reviews', url: '/admin/reviews', icon: Star },
   { title: 'Blog', url: '/admin/blog', icon: BookOpen },
   { title: 'Pages', url: '/admin/pages', icon: FileText },
