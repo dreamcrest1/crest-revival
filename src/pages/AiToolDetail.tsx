@@ -164,15 +164,24 @@ const AiToolDetail = () => {
               ) : null}
 
               <div className="flex gap-2 mb-6">
-                <a
-                  href={tool.price > 0 ? COSMOFEED_URL : waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => void trackEvent(tool.price > 0 ? 'checkout_click' : 'tool_whatsapp_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image })}
-                  className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
-                >
-                  <Zap className="w-4 h-4" /> {tool.price > 0 ? 'Buy Now' : 'Enquire'}
-                </a>
+                {tool.price > 0 ? (
+                  <button
+                    onClick={() => { void trackEvent('checkout_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image }); setCheckoutOpen(true); }}
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                  >
+                    <CreditCard className="w-4 h-4" /> Buy Now ₹{tool.price}
+                  </button>
+                ) : (
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => void trackEvent('tool_whatsapp_click', { tool_name: tool.name, category: meta.category, price: tool.price, image: tool.image })}
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-xl py-3 text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                  >
+                    <Zap className="w-4 h-4" /> Enquire
+                  </a>
+                )}
                 <a
                   href={waLink}
                   target="_blank"
