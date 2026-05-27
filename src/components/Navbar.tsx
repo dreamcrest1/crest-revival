@@ -110,6 +110,13 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <Link
+            to={user ? '/my-orders' : '/auth'}
+            className="block text-sm font-medium text-primary"
+            onClick={() => setIsOpen(false)}
+          >
+            {user ? 'My Orders' : 'Login / Sign Up'}
+          </Link>
           <Button size="sm" className="w-full bg-primary text-primary-foreground" asChild>
             <Link to="/products" onClick={() => setIsOpen(false)}>Shop Now</Link>
           </Button>
