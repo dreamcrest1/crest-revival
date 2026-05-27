@@ -128,6 +128,12 @@ const CartDrawer = () => {
           </motion.div>
         </>
       )}
+      <CheckoutDialog
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity }))}
+        totalAmount={totalPrice}
+      />
     </AnimatePresence>
   );
 };
