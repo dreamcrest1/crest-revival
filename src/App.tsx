@@ -52,6 +52,8 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
 import Auth from "./pages/Auth";
 import MyOrders from "./pages/MyOrders";
+import ResetPassword from "./pages/ResetPassword";
+import AdminForgotPassword from "./pages/admin/AdminForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +100,8 @@ const App = () => {
 
 
                   <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
                   <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />
                     <Route path="dashboard" element={<AdminDashboard />} />

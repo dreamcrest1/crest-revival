@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -100,6 +100,12 @@ const AdminLogin = () => {
             <Button type="submit" className="w-full bg-primary text-primary-foreground" disabled={submitting}>
               {submitting ? 'Signing in...' : 'Sign In'}
             </Button>
+
+            <div className="text-center pt-2">
+              <Link to="/admin/forgot-password" className="text-sm text-muted-foreground hover:text-primary">
+                Forgot password?
+              </Link>
+            </div>
           </form>
         </div>
       </div>
