@@ -12,7 +12,7 @@ import HyperspaceBackground from "./components/HyperspaceBackground";
 import IndiaMapBackground from "./components/IndiaMapBackground";
 import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
-import Preloader from "./components/Preloader";
+
 import ScrollToTop from "./components/ScrollToTop";
 
 import StorefrontChatbot from "./components/chatbot/StorefrontChatbot";
