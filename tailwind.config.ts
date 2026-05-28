@@ -14,13 +14,14 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-      fontFamily: {
         sans: ['Crimson Text', 'IM Fell English', 'Georgia', 'serif'],
         display: ['Cinzel Decorative', 'Cinzel', 'serif'],
         medieval: ['MedievalSharp', 'Cinzel Decorative', 'serif'],
         script: ['IM Fell English', 'Crimson Text', 'serif'],
       },
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
