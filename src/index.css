@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +6,67 @@
 
 @layer base {
   :root {
-    --background: 220 20% 6%;
-    --foreground: 210 20% 95%;
+    /* Castle palette — HSL */
+    --background: 240 22% 5%;            /* #0A0A0F */
+    --foreground: 45 47% 89%;            /* #F0EAD6 parchment */
 
-    --card: 220 18% 10%;
-    --card-foreground: 210 20% 95%;
+    --card: 240 18% 9%;                  /* #12121A */
+    --card-foreground: 45 47% 89%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 240 18% 9%;
+    --popover-foreground: 45 47% 89%;
 
-    --primary: 24 95% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 45 53% 54%;               /* #C9A84C castle gold */
+    --primary-foreground: 240 22% 5%;
 
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 210 20% 90%;
+    --secondary: 263 28% 51%;            /* #7B5EA7 royal purple */
+    --secondary-foreground: 45 47% 89%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 240 20% 13%;                /* #1A1A26 surface 2 */
+    --muted-foreground: 240 11% 58%;     /* #8A8AA0 */
 
-    --accent: 24 95% 53%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 53% 54%;
+    --accent-foreground: 240 22% 5%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 7 65% 46%;            /* #C0392B */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 24 95% 53%;
+    --border: 240 26% 18%;               /* #22223A surface 3 */
+    --input: 240 20% 13%;
+    --ring: 45 53% 54%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 220 18% 8%;
-    --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 24 95% 53%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 15%;
-    --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 24 95% 53%;
+    /* Surfaces */
+    --surface-1: 240 18% 9%;             /* #12121A */
+    --surface-2: 240 20% 13%;            /* #1A1A26 */
+    --surface-3: 240 26% 18%;            /* #22223A */
 
-    /* Custom tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(24, 95%, 53%), hsl(35, 95%, 60%));
-    --gradient-hero: linear-gradient(180deg, hsl(220, 20%, 8%) 0%, hsl(220, 20%, 4%) 100%);
-    --shadow-glow: 0 0 30px hsl(24 95% 53% / 0.15);
-    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.3);
+    /* Text shades */
+    --text-muted: 240 12% 33%;           /* #4A4A60 */
 
-    --success: 142 71% 45%;
+    /* Sidebar */
+    --sidebar-background: 240 22% 6%;
+    --sidebar-foreground: 45 47% 89%;
+    --sidebar-primary: 45 53% 54%;
+    --sidebar-primary-foreground: 240 22% 5%;
+    --sidebar-accent: 240 20% 13%;
+    --sidebar-accent-foreground: 45 47% 89%;
+    --sidebar-border: 240 26% 18%;
+    --sidebar-ring: 45 53% 54%;
+
+    --success: 142 60% 42%;              /* #27AE60 */
     --success-foreground: 0 0% 100%;
+
+    /* Decorative */
+    --gold: 45 53% 54%;
+    --gold-light: 41 64% 78%;            /* #E8D5A3 */
+    --gradient-gold: linear-gradient(135deg, hsl(45 53% 54%), hsl(41 64% 78%));
+    --gradient-torch: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%);
+
+    --shadow-card: 0 4px 32px rgba(201, 168, 76, 0.08);
+    --shadow-glow: 0 0 24px rgba(201, 168, 76, 0.18);
+    --shadow-btn-hover: 0 0 20px rgba(201, 168, 76, 0.4);
   }
 }
 
@@ -68,39 +82,135 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    background-image: var(--gradient-torch);
+    background-attachment: fixed;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+  h1, h2, h3 {
+    font-family: 'Cinzel Decorative', serif;
+    letter-spacing: 0.04em;
+  }
+
+  h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  h1 { font-size: 3.5rem; line-height: 1.15; }
+  h2 { font-size: 2.5rem; line-height: 1.2; }
+  h3 { font-size: 1.75rem; line-height: 1.3; }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 2.25rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.35rem; }
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
+  .font-display {
+    font-family: 'Cinzel Decorative', serif;
+    letter-spacing: 0.04em;
   }
 
-  .glow-border {
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
+  .bg-gold {
+    background-color: hsl(var(--gold));
+  }
+
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .border-gold {
+    border-color: hsl(var(--gold));
+  }
+
+  .border-gold-soft {
+    border-color: rgba(201, 168, 76, 0.2);
+  }
+
+  .glow-gold {
     box-shadow: var(--shadow-glow);
   }
 
-  .card-hover {
-    @apply transition-all duration-300;
+  .glow-gold-strong {
+    box-shadow: 0 0 40px rgba(201, 168, 76, 0.35);
   }
 
-  .card-hover:hover {
+  .card-castle {
+    background: hsl(var(--surface-1));
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+    transition: all 0.2s ease;
+  }
+  .card-castle:hover {
+    border-color: rgba(201, 168, 76, 0.5);
+    box-shadow: var(--shadow-glow);
     transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
   }
 
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
+
+/* Global scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.7); }
+
+/* Castle background animations */
+@keyframes ember-rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(-100vh) translateX(var(--drift, 20px)); opacity: 0; }
+}
+@keyframes window-flicker {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.6; }
+}
+@keyframes torch-flicker {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  25% { opacity: 0.7; transform: scale(0.96); }
+  50% { opacity: 1; transform: scale(1.04); }
+  75% { opacity: 0.8; transform: scale(0.98); }
+}
+@keyframes slow-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(10px, -8px) rotate(3deg); }
+}
+@keyframes underline-slide {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+@keyframes medallion-spin {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
+.animate-window-flicker { animation: window-flicker 4s ease-in-out infinite; }
+.animate-torch-flicker  { animation: torch-flicker 1.6s ease-in-out infinite; }
+.animate-slow-drift     { animation: slow-drift 14s ease-in-out infinite; }
+.animate-medallion-spin { animation: medallion-spin 20s linear infinite; }
