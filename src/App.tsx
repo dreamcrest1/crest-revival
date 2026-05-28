@@ -47,6 +47,7 @@ import AdminGeo from "./pages/admin/AdminGeo";
 import AdminHeatmap from "./pages/admin/AdminHeatmap";
 import AdminUtm from "./pages/admin/AdminUtm";
 import AdminInsights from "./pages/admin/AdminInsights";
+import AdminAnalyticsDebug from "./pages/admin/AdminAnalyticsDebug";
 
 import ExitIntentSurvey from "./components/ExitIntentSurvey";
 import PaymentSuccess from "./pages/PaymentSuccess";
