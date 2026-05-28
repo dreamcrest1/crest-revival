@@ -86,6 +86,7 @@ const Footer = () => {
             <span className="text-primary">❖</span>
           </p>
         </div>
+      </div>
     </footer>
   );
 };
