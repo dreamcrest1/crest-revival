@@ -214,3 +214,45 @@
 .animate-torch-flicker  { animation: torch-flicker 1.6s ease-in-out infinite; }
 .animate-slow-drift     { animation: slow-drift 14s ease-in-out infinite; }
 .animate-medallion-spin { animation: medallion-spin 20s linear infinite; }
+
+/* Extended castle background */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 1; }
+}
+@keyframes cloud-drift {
+  0%   { transform: translateX(-10%); }
+  100% { transform: translateX(110%); }
+}
+@keyframes banner-wave {
+  0%, 100% { transform: skewX(0deg) scaleY(1); }
+  50%      { transform: skewX(-4deg) scaleY(1.02); }
+}
+@keyframes bat-fly {
+  0%   { transform: translate(0,0) scale(0.9); opacity: 0; }
+  10%  { opacity: 0.7; }
+  50%  { transform: translate(40vw,-8vh) scale(1); }
+  90%  { opacity: 0.5; }
+  100% { transform: translate(80vw,4vh) scale(0.85); opacity: 0; }
+}
+@keyframes bat-flap {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(0.55); }
+}
+@keyframes lightning-flash {
+  0%, 92%, 100% { opacity: 0; }
+  93%, 95%      { opacity: 0.55; }
+  94%           { opacity: 0; }
+  96%           { opacity: 0; }
+}
+@keyframes moon-halo {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 0.6;  transform: scale(1.06); }
+}
+.animate-star-twinkle  { animation: star-twinkle 3s ease-in-out infinite; }
+.animate-cloud-drift   { animation: cloud-drift 120s linear infinite; }
+.animate-banner-wave   { animation: banner-wave 3s ease-in-out infinite; transform-origin: top center; }
+.animate-bat-flap      { animation: bat-flap 0.25s ease-in-out infinite; transform-origin: center; }
+.animate-lightning     { animation: lightning-flash 9s ease-in-out infinite; }
+.animate-moon-halo     { animation: moon-halo 6s ease-in-out infinite; }
+
