@@ -11,11 +11,12 @@ const Terms = () => {
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <div className="text-center mb-10">
-            <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
-              Terms & <span className="text-gradient">Conditions</span>
-            </h1>
-          </div>
+          <PageBanner
+            eyebrow="Code of the Realm"
+            title="Terms &"
+            highlight="Conditions"
+          />
+
 
           <div className="prose prose-invert max-w-none space-y-6">
             <div className="bg-card border border-border rounded-xl p-6">
