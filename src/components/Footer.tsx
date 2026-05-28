@@ -79,10 +79,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>Powered by Dreamcrest & Dreamstar | © {new Date().getFullYear()} All rights reserved.</p>
+        <div className="border-t border-primary/20 mt-8 pt-6 text-center text-sm text-muted-foreground">
+          <p className="flex items-center justify-center gap-2 flex-wrap">
+            <span className="text-primary">❖</span>
+            <span>Powered by Dreamcrest & Dreamstar | © {new Date().getFullYear()} All rights reserved.</span>
+            <span className="text-primary">❖</span>
+          </p>
         </div>
-      </div>
     </footer>
   );
 };
