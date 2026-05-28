@@ -32,7 +32,7 @@ const menuItems = [
   { title: 'Insights', url: '/admin/insights', icon: Sparkles },
   { title: 'SEO Audit', url: '/admin/seo-audit', icon: Search },
   { title: 'Error Logs', url: '/admin/errors', icon: AlertCircle },
-  { title: 'Deploy', url: '/admin/deploy', icon: Rocket },
+  
 ];
 
 const AdminSidebar = () => {
