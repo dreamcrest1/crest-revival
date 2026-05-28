@@ -43,9 +43,10 @@ const AdminInsights = () => {
   useEffect(() => {
     (async () => {
       const map: Record<string, string> = {};
-      for (const table of ['products', 'ai_tools'] as const) {
-        const { data } = await supabase.from(table).select('id, name, image_url');
-        for (const r of (data || []) as Array<{ id: string; name: string; image_url: string | null }>) {
+      const tables: Array<'products' | 'ai_tools'> = ['products', 'ai_tools'];
+      for (const table of tables) {
+        const { data } = await (supabase.from(table) as any).select('id, name, image_url');
+        for (const r of ((data || []) as Array<{ id: string; name: string; image_url: string | null }>)) {
           if (!r.image_url) continue;
           map[r.id] = r.image_url;
           if (r.name) map[r.name.toLowerCase()] = r.image_url;
