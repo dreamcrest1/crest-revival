@@ -59,15 +59,12 @@ import AdminForgotPassword from "./pages/admin/AdminForgotPassword";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          {loading && <Preloader onComplete={() => setLoading(false)} />}
           <HyperspaceBackground />
           <IndiaMapBackground />
           <CursorTrail />
