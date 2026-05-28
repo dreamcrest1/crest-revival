@@ -8,8 +8,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import CartDrawer from "@/components/CartDrawer";
-import HyperspaceBackground from "./components/HyperspaceBackground";
-import IndiaMapBackground from "./components/IndiaMapBackground";
+import CastleBackground from "./components/CastleBackground";
 import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 
@@ -67,9 +66,9 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
+          <Toaster />
           <Sonner />
-          <HyperspaceBackground />
-          <IndiaMapBackground />
+          <CastleBackground />
           <CursorTrail />
           <CartProvider>
             <AuthProvider>
