@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 
 const policies = [
   {
@@ -69,18 +70,13 @@ const Refunds = () => {
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-10"
-          >
-            <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
-              Refund & <span className="text-gradient">Return Policy</span>
-            </h1>
-            <p className="text-muted-foreground">
-              Effective for: Dreamcrest Solutions & Dreamstar Solutions
-            </p>
-          </motion.div>
+          <PageBanner
+            eyebrow="The Royal Decree"
+            title="Refund &"
+            highlight="Return Policy"
+            subtitle="Effective for: Dreamcrest Solutions & Dreamstar Solutions"
+          />
+
 
           {/* Important Notice */}
           <motion.div

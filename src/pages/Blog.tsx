@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Calendar, ArrowRight } from 'lucide-react';
+import PageBanner from '@/components/PageBanner';
 
 interface BlogRow {
   id: string;
@@ -44,12 +45,13 @@ const Blog = () => {
       </Helmet>
       <Navbar />
       <main className="container mx-auto px-4 pt-32 pb-20 max-w-6xl">
-        <div className="text-center mb-12">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Dreamcrest Blog</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Honest guides, deals and how-tos on the tools we sell — written for Indian creators, marketers and entrepreneurs.
-          </p>
-        </div>
+        <PageBanner
+          eyebrow="Chronicles & Sagas"
+          title="Dreamcrest"
+          highlight="Chronicles"
+          subtitle="Honest guides, deals and how-tos on the tools we sell — written for Indian creators, marketers and entrepreneurs."
+        />
+
 
         {loading ? (
           <p className="text-center text-muted-foreground">Loading…</p>

@@ -244,9 +244,14 @@ const ProductDetail = () => {
           </nav>
 
           {/* Hero card */}
-          <div className="grid md:grid-cols-2 gap-8 bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden p-6 md:p-8">
+          {/* Hero card */}
+          <div className="grid md:grid-cols-2 gap-8 bg-card/60 backdrop-blur-sm border border-primary/30 rounded-2xl overflow-hidden p-6 md:p-8 shadow-[0_0_48px_hsl(var(--primary)/0.1)] relative">
+            <span className="absolute top-3 left-3 text-primary/60 text-lg">❖</span>
+            <span className="absolute top-3 right-3 text-primary/60 text-lg">❖</span>
+            <span className="absolute bottom-3 left-3 text-primary/60 text-lg">❖</span>
+            <span className="absolute bottom-3 right-3 text-primary/60 text-lg">❖</span>
             {/* Image */}
-            <div className="bg-secondary/20 rounded-xl overflow-hidden aspect-square">
+            <div className="bg-secondary/20 rounded-xl overflow-hidden aspect-square border border-primary/20">
               <img
                 src={safeImage}
                 alt={`${product.name} – cheapest ${product.category} group buy in India at ${product.price}`}

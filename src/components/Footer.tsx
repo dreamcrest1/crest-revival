@@ -4,18 +4,20 @@ import logo from '@/assets/logo.png';
 
 const Footer = () => {
   return (
-    <footer id="contact" className="relative z-10 border-t border-border bg-card/50 backdrop-blur-sm py-12">
+    <footer id="contact" className="relative z-10 border-t border-primary/30 bg-card/60 backdrop-blur-sm py-12 mt-12">
+      {/* Top gold rule */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Dreamcrest" className="w-8 h-8 rounded-lg object-contain" />
-              <span className="font-display font-bold text-xl text-foreground">
-                Dream<span className="text-primary">crest</span>
+              <img src={logo} alt="Dreamcrest" className="w-9 h-9 rounded-lg object-contain ring-1 ring-primary/40" />
+              <span className="font-display font-bold text-xl text-foreground tracking-wide">
+                Dream<span className="text-primary italic">crest</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4">
-              India's most trusted digital product store. Serving 15,000+ happy customers since 2021.
+              The kingdom's most trusted digital product store. Serving 15,000+ loyal subjects since 2021.
             </p>
             {/* Social icons row */}
             <div className="flex items-center gap-3">
@@ -77,8 +79,12 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>Powered by Dreamcrest & Dreamstar | © {new Date().getFullYear()} All rights reserved.</p>
+        <div className="border-t border-primary/20 mt-8 pt-6 text-center text-sm text-muted-foreground">
+          <p className="flex items-center justify-center gap-2 flex-wrap">
+            <span className="text-primary">❖</span>
+            <span>Powered by Dreamcrest & Dreamstar | © {new Date().getFullYear()} All rights reserved.</span>
+            <span className="text-primary">❖</span>
+          </p>
         </div>
       </div>
     </footer>

@@ -106,11 +106,14 @@ const AiToolDetail = () => {
 
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
             {/* Logo / image card — matches the AI Tools listing tile */}
-            <div className="border border-border/60 rounded-2xl aspect-square relative overflow-hidden">
+            <div className="border-2 border-primary/30 rounded-2xl aspect-square relative overflow-hidden shadow-[0_0_32px_hsl(var(--primary)/0.15)]">
               <BrandLogo t={tool} />
-              <div className="absolute top-3 right-3 bg-background/85 backdrop-blur border border-border text-foreground text-[10px] font-mono px-2 py-0.5 rounded-full z-10">
+              <div className="absolute top-3 right-3 bg-background/85 backdrop-blur border border-primary/40 text-primary text-[10px] font-mono px-2 py-0.5 rounded-full z-10">
                 {tool.validity}
               </div>
+              {/* Corner ornaments */}
+              <span className="absolute top-2 left-2 text-primary/60 text-sm z-10">❖</span>
+              <span className="absolute bottom-2 right-2 text-primary/60 text-sm z-10">❖</span>
             </div>
 
             {/* Details */}
