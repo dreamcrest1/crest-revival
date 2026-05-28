@@ -96,7 +96,15 @@ export function installErrorReporter() {
   console.error = (...args: unknown[]) => {
     try {
       const msg = args.map((a) => (a instanceof Error ? `${a.message}\n${a.stack}` : typeof a === 'string' ? a : JSON.stringify(a))).join(' ');
-      if (msg && !msg.includes('[hmr]') && !msg.includes('React DevTools')) {
+      const IGNORED = [
+        '[hmr]',
+        'React DevTools',
+        'Error loading image',
+        'non-existent route',
+        'Download the React DevTools',
+        'Warning:',
+      ];
+      if (msg && !IGNORED.some((s) => msg.includes(s))) {
         report({ error_type: 'console_error', message: msg.slice(0, 2000) });
       }
     } catch {}
