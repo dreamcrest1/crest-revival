@@ -78,8 +78,12 @@ const PaymentSuccess = () => {
     : `https://wa.me/${WA_NUMBER}`;
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-lg bg-card/80 backdrop-blur-md border border-border rounded-3xl p-8 shadow-2xl">
+    <main className="min-h-screen flex items-center justify-center px-4 py-20 relative z-10">
+      <div className="w-full max-w-lg bg-card/80 backdrop-blur-md border-2 border-primary/30 rounded-3xl p-8 shadow-[0_0_40px_hsl(var(--primary)/0.18)] relative">
+        <span className="absolute top-2 left-3 text-primary/60 text-xs">❖</span>
+        <span className="absolute top-2 right-3 text-primary/60 text-xs">❖</span>
+        <span className="absolute bottom-2 left-3 text-primary/60 text-xs">❖</span>
+        <span className="absolute bottom-2 right-3 text-primary/60 text-xs">❖</span>
         {loading ? (
           <div className="flex flex-col items-center text-center py-10">
             <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />

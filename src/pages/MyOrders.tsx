@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 
 type OrderRow = {
   id: string;
@@ -52,16 +53,16 @@ const MyOrders = () => {
       <SEOHead title="My Orders | Dreamcrest" description="View your order history and download details." />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 pt-32 pb-16 max-w-5xl">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="font-display font-bold text-3xl text-foreground flex items-center gap-2">
-              <Package className="w-7 h-7 text-primary" /> My Orders
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">Logged in as {user?.email}</p>
-          </div>
+        <PageBanner
+          eyebrow="Royal Ledger"
+          title="My"
+          highlight="Orders"
+          subtitle={user?.email ? `Logged in as ${user.email}` : 'Your purchase history'}
+        />
+        <div className="flex justify-end mb-6">
           <button
             onClick={async () => { await signOut(); navigate('/'); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/40 border border-border text-sm hover:bg-secondary/60 transition"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/40 border border-primary/30 text-sm hover:bg-secondary/60 hover:border-primary/60 transition"
           >
             <LogOut className="w-4 h-4" /> Sign out
           </button>

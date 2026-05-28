@@ -11,8 +11,12 @@ const PaymentFailure = () => {
   );
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-md bg-card/80 backdrop-blur-md border border-border rounded-3xl p-8 shadow-2xl text-center">
+    <main className="min-h-screen flex items-center justify-center px-4 py-20 relative z-10">
+      <div className="w-full max-w-md bg-card/80 backdrop-blur-md border-2 border-primary/30 rounded-3xl p-8 shadow-[0_0_40px_hsl(var(--primary)/0.18)] text-center relative">
+        <span className="absolute top-2 left-3 text-primary/60 text-xs">❖</span>
+        <span className="absolute top-2 right-3 text-primary/60 text-xs">❖</span>
+        <span className="absolute bottom-2 left-3 text-primary/60 text-xs">❖</span>
+        <span className="absolute bottom-2 right-3 text-primary/60 text-xs">❖</span>
         <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mx-auto mb-3">
           <XCircle className="w-10 h-10 text-destructive" />
         </div>
