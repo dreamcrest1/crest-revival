@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,66 +6,60 @@
 
 @layer base {
   :root {
-    /* Castle medieval palette — HSL */
-    --background: 30 22% 7%;             /* dungeon dark #0f0c08 */
-    --foreground: 41 60% 87%;            /* vellum #f5e6c8 */
+    --background: 220 20% 6%;
+    --foreground: 210 20% 95%;
 
-    --card: 28 25% 10%;                  /* deep stone #1a1510 */
-    --card-foreground: 41 60% 87%;
+    --card: 220 18% 10%;
+    --card-foreground: 210 20% 95%;
 
-    --popover: 28 25% 10%;
-    --popover-foreground: 41 60% 87%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 210 20% 95%;
 
-    --primary: 43 79% 46%;               /* molten gold #d4a017 */
-    --primary-foreground: 28 70% 6%;     /* dark ink */
+    --primary: 24 95% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 27 39% 39%;             /* aged leather #8b5e3c */
-    --secondary-foreground: 41 60% 87%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 210 20% 90%;
 
-    --muted: 30 12% 18%;
-    --muted-foreground: 38 30% 70%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 16 64% 46%;                /* ember orange #c0622a */
-    --accent-foreground: 41 60% 92%;
+    --accent: 24 95% 53%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 100% 27%;           /* royal crimson #8b0000 */
-    --destructive-foreground: 41 60% 92%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 30 6% 27%;                 /* iron grey #4a4540 */
-    --input: 30 6% 22%;
-    --ring: 43 79% 46%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 24 95% 53%;
 
-    --parchment: 36 47% 61%;             /* #c9a96e */
-    --leather: 27 39% 39%;
-    --crimson: 0 100% 27%;
-    --gold: 43 79% 46%;
-    --ember: 16 64% 46%;
-    --ink: 28 70% 6%;
-    --vellum: 41 60% 87%;
+    --radius: 0.75rem;
 
-    --radius: 0.15rem;
+    --sidebar-background: 220 18% 8%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 24 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 24 95% 53%;
 
-    --sidebar-background: 30 22% 6%;
-    --sidebar-foreground: 41 60% 87%;
-    --sidebar-primary: 43 79% 46%;
-    --sidebar-primary-foreground: 28 70% 6%;
-    --sidebar-accent: 30 12% 14%;
-    --sidebar-accent-foreground: 41 60% 87%;
-    --sidebar-border: 30 6% 22%;
-    --sidebar-ring: 43 79% 46%;
+    /* Custom tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(24, 95%, 53%), hsl(35, 95%, 60%));
+    --gradient-hero: linear-gradient(180deg, hsl(220, 20%, 8%) 0%, hsl(220, 20%, 4%) 100%);
+    --shadow-glow: 0 0 30px hsl(24 95% 53% / 0.15);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.3);
 
-    --gradient-primary: linear-gradient(135deg, hsl(43 79% 46%), hsl(16 64% 46%));
-    --gradient-hero: linear-gradient(180deg, hsl(30 22% 4%) 0%, hsl(28 25% 8%) 100%);
-    --shadow-glow: 0 0 30px hsl(43 79% 46% / 0.35), 0 0 60px hsl(16 64% 46% / 0.15);
-    --shadow-card: 0 6px 28px hsl(0 0% 0% / 0.55), inset 0 0 0 1px hsl(43 79% 46% / 0.15);
-
-    --success: 142 50% 35%;
-    --success-foreground: 41 60% 92%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
   }
 }
 
 @layer base {
-  * { @apply border-border; }
+  * {
+    @apply border-border;
+  }
 
   html, body {
     overflow-x: hidden;
@@ -74,169 +68,39 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Crimson Text', 'IM Fell English', Georgia, serif;
-    background-color: hsl(var(--background));
-    /* Stone brick texture overlay */
-    background-image:
-      radial-gradient(ellipse at top, hsl(28 25% 12%) 0%, transparent 60%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.04  0 0 0 0 0.03  0 0 0 0.35 0'/></filter></defs><rect width='120' height='60' fill='%23120e08'/><g filter='url(%23n)'><rect width='120' height='60'/></g><g fill='none' stroke='%23000' stroke-opacity='0.55' stroke-width='1'><path d='M0 30 H120 M0 60 H120'/><path d='M0 0 V30 M40 0 V30 M80 0 V30 M120 0 V30'/><path d='M20 30 V60 M60 30 V60 M100 30 V60'/></g><g fill='none' stroke='%23d4a017' stroke-opacity='0.04' stroke-width='1'><path d='M0 30 H120 M0 60 H120'/></g></svg>");
-    background-repeat: repeat;
-    background-size: auto, 120px 60px;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cinzel Decorative', 'Cinzel', 'MedievalSharp', serif;
-    letter-spacing: 0.02em;
+    font-family: 'Space Grotesk', sans-serif;
   }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Cinzel Decorative', 'Cinzel', serif; }
-  .font-medieval { font-family: 'MedievalSharp', 'Cinzel Decorative', serif; }
-  .font-script { font-family: 'IM Fell English', 'Crimson Text', serif; }
-
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: var(--gradient-primary);
   }
 
-  .text-gold-glow {
-    color: hsl(var(--gold));
-    text-shadow:
-      0 0 8px hsl(43 79% 46% / 0.55),
-      0 0 22px hsl(16 64% 46% / 0.35),
-      0 2px 0 hsl(0 0% 0% / 0.6);
+  .glow-border {
+    box-shadow: var(--shadow-glow);
   }
 
-  .glow-border { box-shadow: var(--shadow-glow); }
+  .card-hover {
+    @apply transition-all duration-300;
+  }
 
-  .card-hover { @apply transition-all duration-300; }
   .card-hover:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-glow), 0 12px 30px hsl(0 0% 0% / 0.5);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
   }
 
-  /* Parchment surface */
-  .parchment {
-    background:
-      radial-gradient(ellipse at 30% 20%, hsl(36 47% 70%) 0%, hsl(36 47% 61%) 60%, hsl(30 35% 48%) 100%);
-    color: hsl(var(--ink));
-    box-shadow:
-      inset 0 0 30px hsl(28 50% 25% / 0.45),
-      0 6px 20px hsl(0 0% 0% / 0.5);
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-
-  /* Stone tablet surface */
-  .stone-tablet {
-    background:
-      linear-gradient(180deg, hsl(28 18% 14%) 0%, hsl(28 22% 10%) 100%);
-    border: 1px solid hsl(43 79% 46% / 0.25);
-    box-shadow:
-      inset 0 1px 0 hsl(43 79% 46% / 0.15),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.6),
-      0 8px 24px hsl(0 0% 0% / 0.55);
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
-
-  /* Gothic arch top (reliquary frame) */
-  .gothic-arch {
-    clip-path: path('M 0 60 Q 0 0 50 0 Q 100 0 100 60 L 100 100 L 0 100 Z');
-  }
-  @supports not (clip-path: path('M 0 0')) {
-    .gothic-arch { border-top-left-radius: 50% 30%; border-top-right-radius: 50% 30%; }
-  }
-  .gothic-arch-mask {
-    -webkit-mask: radial-gradient(ellipse 100% 40% at 50% 40%, #000 99%, transparent 100%),
-                  linear-gradient(#000, #000);
-    -webkit-mask-composite: source-over;
-  }
-
-  /* Shield button shape */
-  .shield-shape {
-    clip-path: polygon(50% 0%, 100% 18%, 100% 70%, 50% 100%, 0% 70%, 0% 18%);
-  }
-
-  /* Castle battlement top */
-  .crenellated-top {
-    --m: 16px;
-    -webkit-mask:
-      linear-gradient(#000 0 0) bottom/100% calc(100% - var(--m)) no-repeat,
-      repeating-linear-gradient(90deg, #000 0 28px, transparent 28px 56px) top/100% var(--m) repeat-x;
-            mask:
-      linear-gradient(#000 0 0) bottom/100% calc(100% - var(--m)) no-repeat,
-      repeating-linear-gradient(90deg, #000 0 28px, transparent 28px 56px) top/100% var(--m) repeat-x;
-  }
-
-  /* Rampart silhouette bottom (footer top edge) */
-  .ramparts-top {
-    --m: 14px;
-    -webkit-mask:
-      linear-gradient(#000 0 0) top/100% calc(100% - var(--m)) no-repeat,
-      repeating-linear-gradient(90deg, transparent 0 22px, #000 22px 44px) bottom/100% var(--m) repeat-x;
-            mask:
-      linear-gradient(#000 0 0) top/100% calc(100% - var(--m)) no-repeat,
-      repeating-linear-gradient(90deg, transparent 0 22px, #000 22px 44px) bottom/100% var(--m) repeat-x;
-  }
-
-  /* Pennant/herald flag */
-  .pennant {
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
-  }
-
-  /* Torch flicker animation */
-  .torch-flicker {
-    animation: torch-flicker 2.4s ease-in-out infinite alternate;
-  }
-
-  /* Wax seal */
-  .wax-seal {
-    background: radial-gradient(circle at 30% 30%, hsl(0 80% 45%), hsl(0 100% 22%) 70%, hsl(0 100% 14%));
-    color: hsl(var(--gold));
-    box-shadow: 0 2px 6px hsl(0 0% 0% / 0.6), inset 0 -2px 4px hsl(0 0% 0% / 0.5), inset 0 2px 2px hsl(0 100% 60% / 0.4);
-    text-shadow: 0 1px 1px hsl(0 0% 0% / 0.6);
-  }
-
-  /* Stone-engraved text */
-  .engraved {
-    text-shadow:
-      1px 1px 2px hsl(0 0% 0% / 0.85),
-      -1px -1px 1px hsl(43 79% 60% / 0.08);
-  }
-
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
-
-@keyframes torch-flicker {
-  0%   { filter: drop-shadow(0 0 6px hsl(16 64% 50% / 0.55)) drop-shadow(0 0 14px hsl(43 79% 46% / 0.35)); }
-  30%  { filter: drop-shadow(0 0 10px hsl(16 64% 55% / 0.75)) drop-shadow(0 0 22px hsl(43 79% 50% / 0.45)); }
-  55%  { filter: drop-shadow(0 0 5px hsl(16 64% 45% / 0.4)) drop-shadow(0 0 10px hsl(43 79% 46% / 0.25)); }
-  80%  { filter: drop-shadow(0 0 12px hsl(16 64% 55% / 0.8)) drop-shadow(0 0 24px hsl(43 79% 50% / 0.5)); }
-  100% { filter: drop-shadow(0 0 7px hsl(16 64% 50% / 0.6)) drop-shadow(0 0 16px hsl(43 79% 46% / 0.35)); }
-}
-
-@keyframes flag-wave {
-  0%, 100% { transform: skewX(-4deg) translateY(0); }
-  50%      { transform: skewX(4deg) translateY(-2px); }
-}
-.animate-flag-wave { animation: flag-wave 3.5s ease-in-out infinite; transform-origin: left center; }
-
-@keyframes mist-drift {
-  0%   { transform: translateX(0); opacity: 0.35; }
-  50%  { opacity: 0.55; }
-  100% { transform: translateX(-50%); opacity: 0.35; }
-}
-.animate-mist { animation: mist-drift 60s linear infinite; }
-
-@keyframes portcullis-rise {
-  0%   { transform: translateY(0); opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: translateY(-100vh); opacity: 0; }
-}
-.animate-portcullis { animation: portcullis-rise 1.2s ease-in 0.2s 1 forwards; }
-
-@keyframes emerge-mist {
-  from { opacity: 0; transform: translateY(30px); filter: blur(6px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-.animate-emerge { animation: emerge-mist 0.9s ease-out forwards; }

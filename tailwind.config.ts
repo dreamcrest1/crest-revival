@@ -14,10 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Crimson Text', 'IM Fell English', 'Georgia', 'serif'],
-        display: ['Cinzel Decorative', 'Cinzel', 'serif'],
-        medieval: ['MedievalSharp', 'Cinzel Decorative', 'serif'],
-        script: ['IM Fell English', 'Crimson Text', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+        display: ['Space Grotesk', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -67,13 +65,6 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        vellum: "hsl(var(--vellum))",
-        parchment: "hsl(var(--parchment))",
-        leather: "hsl(var(--leather))",
-        crimson: "hsl(var(--crimson))",
-        gold: "hsl(var(--gold))",
-        ember: "hsl(var(--ember))",
-        ink: "hsl(var(--ink))",
       },
       borderRadius: {
         lg: "var(--radius)",
