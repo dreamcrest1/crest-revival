@@ -12,8 +12,6 @@ const ProductCard = ({ product }: { product: Product }) => {
   const imgState = useImageValid(product.image);
   const linkOk = isLikelyValidLink(product.buyLink);
 
-  // Hide the product entirely when its image is confirmed broken AND the buy link
-  // is also unusable — this keeps shelves looking clean during outages.
   if (imgState === false && !linkOk) return null;
 
   const safeImage = imgState === false ? PLACEHOLDER : product.image;
@@ -22,13 +20,21 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link
       to={detailHref}
-      className="group relative block bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-300"
+      className="group relative block overflow-hidden transition-all duration-300 hover:-translate-y-1"
+      style={{
+        background: 'hsl(240 18% 9%)',
+        border: '1px solid rgba(201,168,76,0.12)',
+        borderRadius: 12,
+        boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+      }}
     >
-      {/* Hover glow */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/[0.04] to-transparent pointer-events-none z-10" />
+      <style>{`
+        .castle-product-card:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 24px rgba(201,168,76,0.2); }
+      `}</style>
+      <div className="castle-product-card absolute inset-0 rounded-[12px] pointer-events-none transition-all" />
 
-      {/* Product image */}
-      <div className="relative bg-secondary/20 overflow-hidden aspect-square">
+      {/* Image */}
+      <div className="relative bg-white overflow-hidden aspect-square">
         <img
           src={safeImage}
           alt={`${product.name} – cheap ${product.category} group buy in India`}
@@ -40,42 +46,83 @@ const ProductCard = ({ product }: { product: Product }) => {
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
         />
         {product.discount && (
-          <span className="absolute top-2.5 left-2.5 bg-primary text-primary-foreground text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg">
+          <span
+            className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-bold"
+            style={{ background: 'rgba(34,34,58,0.92)', color: '#C9A84C' }}
+          >
             {product.discount}
           </span>
         )}
         {product.isHotSelling && (
-          <span className="absolute top-2.5 right-2.5 bg-destructive text-destructive-foreground text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1">
-            🔥 HOT
+          <span
+            className="absolute -top-1 -right-1 w-9 h-9 rounded-full flex items-center justify-center font-bold text-[9px] tracking-wider"
+            style={{
+              background: 'radial-gradient(circle at 35% 35%, #E84A3E, #8B1A14)',
+              color: '#FFF7E8',
+              boxShadow: '0 2px 8px rgba(192,57,43,0.5), inset 0 -2px 4px rgba(0,0,0,0.3)',
+              border: '1.5px solid #5C1410',
+              transform: 'rotate(-12deg)',
+            }}
+          >
+            HOT
           </span>
         )}
       </div>
 
+      {/* Gold separator */}
+      <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent)' }} />
+
       {/* Content */}
-      <div className="p-4 relative z-10">
-        <h3 className="font-display font-semibold text-foreground text-sm leading-tight mb-1 line-clamp-2 min-h-[36px]">
+      <div className="p-4">
+        <h3
+          className="font-display text-[15px] font-bold leading-tight mb-2 line-clamp-2 min-h-[40px]"
+          style={{ color: '#F0EAD6' }}
+        >
           {product.name}
         </h3>
-        <p className="text-[11px] text-muted-foreground/60 font-medium truncate mb-2">{product.category}</p>
+        {product.category && (
+          <span
+            className="inline-block px-2 py-0.5 rounded text-[10px] font-medium mb-2"
+            style={{ background: '#2A1E3F', color: '#9B77D4' }}
+          >
+            {product.category}
+          </span>
+        )}
 
-        <div className="flex items-baseline gap-2 mb-3">
-          <span className="font-display font-bold text-lg text-primary">{product.price}</span>
+        <div className="flex items-baseline gap-2 mb-3 flex-wrap">
+          <span className="font-display font-bold text-lg" style={{ color: '#C9A84C' }}>
+            {product.price}
+          </span>
           {product.originalPrice && (
-            <span className="text-[11px] text-muted-foreground line-through">{product.originalPrice}</span>
+            <span className="text-xs line-through" style={{ color: '#4A4A60' }}>
+              {product.originalPrice}
+            </span>
+          )}
+          {product.discount && (
+            <span
+              className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+              style={{ background: 'rgba(192,57,43,0.15)', color: '#E84A3E' }}
+            >
+              {product.discount}
+            </span>
           )}
         </div>
 
         <div className="flex gap-2">
-          <span className="flex-1 text-center bg-primary/10 text-primary border border-primary/20 rounded-xl py-2 text-xs font-semibold group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+          <span
+            className="flex-1 text-center rounded text-xs font-semibold py-2 transition-all group-hover:bg-[#C9A84C] group-hover:text-[#0A0A0F]"
+            style={{ border: '1px solid #C9A84C', color: '#C9A84C', borderRadius: 6 }}
+          >
             View Details
           </span>
           <button
             type="button"
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product); }}
             aria-label={`Add ${product.name} to cart`}
-            className="w-9 h-9 flex items-center justify-center bg-primary text-primary-foreground rounded-xl hover:bg-primary/80 transition-all duration-300 shrink-0"
+            className="w-9 h-9 flex items-center justify-center transition-all hover:scale-105"
+            style={{ background: '#C9A84C', color: '#0A0A0F', borderRadius: '50%' }}
           >
-            <ShoppingCart className="w-3.5 h-3.5" />
+            <ShoppingCart className="w-4 h-4" />
           </button>
         </div>
       </div>

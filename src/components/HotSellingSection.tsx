@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Flame, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 import { useProducts, type Product } from '@/hooks/useProducts';
 import { slugify } from '@/lib/productSeo';
 
 const PLACEHOLDER = '/placeholder.svg';
-const DRAG_THRESHOLD = 6;
-const AUTO_MS = 4500;
+const AUTO_MS = 4000;
 
 type Size = 'mobile' | 'tablet' | 'desktop';
-
 const SIZES: Record<Size, { w: number; h: number; gap: number; stage: number; range: number }> = {
-  mobile: { w: 170, h: 240, gap: 95, stage: 380, range: 1 },
-  tablet: { w: 210, h: 290, gap: 180, stage: 500, range: 2 },
-  desktop: { w: 240, h: 340, gap: 240, stage: 600, range: 2 },
+  mobile:  { w: 220, h: 320, gap: 130, stage: 380, range: 1 },
+  tablet:  { w: 240, h: 350, gap: 200, stage: 440, range: 2 },
+  desktop: { w: 280, h: 400, gap: 260, stage: 500, range: 2 },
 };
 
 function useSize(): Size {
@@ -31,7 +28,31 @@ function useSize(): Size {
   return size;
 }
 
-const Cover = ({
+const ShieldArrow = ({ dir, onClick }: { dir: 'l' | 'r'; onClick: () => void }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label={dir === 'l' ? 'Previous' : 'Next'}
+    className="group absolute top-1/2 -translate-y-1/2 z-30 transition-transform hover:scale-110"
+    style={{ [dir === 'l' ? 'left' : 'right']: 8 } as React.CSSProperties}
+  >
+    <svg width="48" height="56" viewBox="0 0 48 56">
+      <path
+        d="M4 4 L44 4 L44 32 Q44 44 24 52 Q4 44 4 32 Z"
+        fill="hsl(240 18% 9%)"
+        stroke="#C9A84C"
+        strokeWidth="1.5"
+      />
+      {dir === 'l' ? (
+        <path d="M28 18 L20 28 L28 38" fill="none" stroke="#C9A84C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      ) : (
+        <path d="M20 18 L28 28 L20 38" fill="none" stroke="#C9A84C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      )}
+    </svg>
+  </button>
+);
+
+const HotCard = ({
   product,
   isCenter,
   w,
@@ -46,40 +67,82 @@ const Cover = ({
 }) => {
   const body = (
     <div
-      className={`w-full h-full rounded-2xl overflow-hidden bg-card/60 backdrop-blur-xl border flex flex-col transition-[border-color,box-shadow] duration-300 ${
-        isCenter
-          ? 'border-primary shadow-[0_30px_80px_-15px_hsl(var(--primary)/0.8)] ring-2 ring-primary/40'
-          : 'border-white/10 shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.3)]'
-      }`}
+      className="w-full h-full flex flex-col overflow-hidden transition-all duration-300"
+      style={{
+        background: 'hsl(240 18% 9%)',
+        borderRadius: 12,
+        border: isCenter ? '1.5px solid #C9A84C' : '1px solid rgba(201,168,76,0.12)',
+        boxShadow: isCenter ? '0 0 28px rgba(201,168,76,0.35)' : '0 4px 24px rgba(0,0,0,0.4)',
+      }}
     >
-      <div className="relative aspect-square bg-white overflow-hidden">
+      <div className="relative bg-white" style={{ aspectRatio: '16/9' }}>
         <img
           src={product.image || PLACEHOLDER}
           alt={product.name}
           loading="lazy"
           draggable={false}
           className="w-full h-full object-contain p-3"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = PLACEHOLDER;
-          }}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
         />
-        {product.discount && (
-          <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-primary text-primary-foreground text-[10px] font-bold tracking-wide shadow">
-            {product.discount}
+        {product.category && (
+          <div
+            className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-medium"
+            style={{ background: 'hsl(240 26% 18%)', color: '#8A8AA0' }}
+          >
+            {product.category}
           </div>
         )}
-        <div className="absolute top-2 right-2 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-destructive/90 text-destructive-foreground text-[10px] font-bold uppercase tracking-wider shadow">
-          <Flame className="w-2.5 h-2.5" /> Hot
+        {/* HOT wax-seal */}
+        <div
+          className="absolute -top-2 -right-2 w-10 h-10 rounded-full flex items-center justify-center font-bold text-[9px] tracking-wider"
+          style={{
+            background: 'radial-gradient(circle at 35% 35%, #E84A3E, #8B1A14)',
+            color: '#FFF7E8',
+            boxShadow: '0 2px 8px rgba(192,57,43,0.5), inset 0 -2px 4px rgba(0,0,0,0.3)',
+            border: '1.5px solid #5C1410',
+            transform: 'rotate(-12deg)',
+          }}
+        >
+          HOT
         </div>
       </div>
-      <div className="flex-1 p-3 flex flex-col justify-between bg-gradient-to-b from-card/60 to-card/95 min-h-0">
-        <h3 className="font-display text-sm font-bold text-foreground line-clamp-2 leading-tight text-left">
-          {product.name}
-        </h3>
-        <div className="flex items-baseline gap-2 mt-2">
-          <span className="text-primary font-display font-bold text-base">{product.price}</span>
+
+      {/* Gold separator */}
+      <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent)' }} />
+
+      <div className="flex-1 p-4 flex flex-col justify-between min-h-0">
+        <div>
+          <h3
+            className="font-display text-sm font-bold line-clamp-2 leading-tight mb-2"
+            style={{ color: '#F0EAD6' }}
+          >
+            {product.name}
+          </h3>
+          {product.category && (
+            <span
+              className="inline-block px-2 py-0.5 rounded text-[10px] font-medium"
+              style={{ background: '#2A1E3F', color: '#9B77D4' }}
+            >
+              {product.category}
+            </span>
+          )}
+        </div>
+        <div className="flex items-baseline gap-2 mt-2 flex-wrap">
+          <span className="font-display font-bold text-lg" style={{ color: '#C9A84C' }}>
+            {product.price}
+          </span>
           {product.originalPrice && (
-            <span className="text-[11px] text-muted-foreground line-through">{product.originalPrice}</span>
+            <span className="text-xs line-through" style={{ color: '#4A4A60' }}>
+              {product.originalPrice}
+            </span>
+          )}
+          {product.discount && (
+            <span
+              className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+              style={{ background: 'rgba(192,57,43,0.15)', color: '#E84A3E' }}
+            >
+              {product.discount}
+            </span>
           )}
         </div>
       </div>
@@ -99,96 +162,47 @@ const Cover = ({
     );
   }
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      style={{ width: w, height: h }}
-      className="focus:outline-none"
-    >
+    <button type="button" onClick={onClick} style={{ width: w, height: h }} className="focus:outline-none">
       {body}
     </button>
   );
 };
 
-const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
+const Stage = ({ items }: { items: Product[] }) => {
   const size = useSize();
   const { w, h, gap, stage, range } = SIZES[size];
   const [active, setActive] = useState(0);
   const hover = useRef(false);
-  const startX = useRef(0);
-  const dragging = useRef(false);
-  const moved = useRef(0);
-  const captured = useRef(false);
-  const stageRef = useRef<HTMLDivElement>(null);
 
-  // Auto-advance
   useEffect(() => {
     const id = setInterval(() => {
-      if (!hover.current && !dragging.current) {
-        setActive((a) => (a + 1) % items.length);
-      }
+      if (!hover.current) setActive((a) => (a + 1) % items.length);
     }, AUTO_MS);
     return () => clearInterval(id);
   }, [items.length]);
 
-  const go = (dir: number) => setActive((a) => (a + dir + items.length) % items.length);
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    dragging.current = true;
-    captured.current = false;
-    startX.current = e.clientX;
-    moved.current = 0;
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!dragging.current) return;
-    const dx = e.clientX - startX.current;
-    moved.current = Math.abs(dx);
-    if (!captured.current && moved.current > DRAG_THRESHOLD) {
-      captured.current = true;
-      stageRef.current?.setPointerCapture(e.pointerId);
-    }
-  };
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (captured.current) {
-      try { stageRef.current?.releasePointerCapture(e.pointerId); } catch {}
-    }
-    const dx = e.clientX - startX.current;
-    if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
-    dragging.current = false;
-    captured.current = false;
-  };
-
-
-  // Keyboard
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') go(-1);
-      else if (e.key === 'ArrowRight') go(1);
-    };
-    const node = stageRef.current;
-    node?.addEventListener('keydown', onKey as any);
-    return () => node?.removeEventListener('keydown', onKey as any);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items.length]);
+  const go = (d: number) => setActive((a) => (a + d + items.length) % items.length);
 
   if (!items.length) return null;
 
   return (
     <div className="relative">
       <div
-        ref={stageRef}
-        tabIndex={0}
-        className="relative w-full select-none touch-pan-y cursor-grab active:cursor-grabbing focus:outline-none"
-        style={{ perspective: '1400px', height: stage }}
+        className="relative w-full"
+        style={{ height: stage }}
         onMouseEnter={() => (hover.current = true)}
         onMouseLeave={() => (hover.current = false)}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
       >
-        {/* glow floor */}
-        <div className="absolute left-1/2 bottom-8 -translate-x-1/2 w-[80%] max-w-[760px] h-10 rounded-[50%] bg-primary/20 blur-2xl pointer-events-none" />
+        {/* Bottom spotlight */}
+        <div
+          className="absolute left-1/2 bottom-2 -translate-x-1/2 pointer-events-none"
+          style={{
+            width: '70%',
+            height: 40,
+            background: 'radial-gradient(ellipse, rgba(201,168,76,0.35), transparent 70%)',
+            filter: 'blur(20px)',
+          }}
+        />
 
         {items.map((p, i) => {
           let offset = i - active;
@@ -198,14 +212,13 @@ const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
           if (abs > range) return null;
 
           const x = offset * gap;
-          const rotY = offset * -45;
-          const z = -abs * 120;
-          const scale = 1 - abs * 0.12;
-          const opacity = abs === 0 ? 1 : abs === 1 ? 0.85 : 0.45;
+          const scale = abs === 0 ? 1 : abs === 1 ? 0.88 : 0.76;
+          const opacity = abs === 0 ? 1 : abs === 1 ? 0.7 : 0.45;
+          const blur = abs >= 2 ? 1 : 0;
           const isCenter = abs === 0;
 
           return (
-            <motion.div
+            <div
               key={p.id}
               className="absolute top-1/2 left-1/2"
               style={{
@@ -213,59 +226,37 @@ const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
                 height: h,
                 marginLeft: -w / 2,
                 marginTop: -h / 2,
-                transformStyle: 'preserve-3d',
-                backfaceVisibility: 'hidden',
+                transform: `translateX(${x}px) scale(${scale})`,
+                opacity,
+                filter: blur ? `blur(${blur}px)` : undefined,
+                zIndex: 10 - abs,
+                transition: 'transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.55s ease',
               }}
-              animate={{ x, scale, rotateY: rotY, z, opacity, zIndex: 10 - abs }}
-              transition={{ type: 'spring', stiffness: 220, damping: 28 }}
             >
-              <Cover
-                product={p}
-                isCenter={isCenter}
-                w={w}
-                h={h}
-                onClick={() => {
-                  if (moved.current > 8) return;
-                  setActive(i);
-                }}
-              />
-            </motion.div>
+              <HotCard product={p} isCenter={isCenter} w={w} h={h} onClick={() => setActive(i)} />
+            </div>
           );
         })}
 
-        {/* edge fades */}
-        <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent pointer-events-none z-20" />
-        <div className="absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-background to-transparent pointer-events-none z-20" />
-
-        {/* arrows */}
-        <button
-          type="button"
-          onClick={() => go(-1)}
-          className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/70 backdrop-blur border border-white/10 hover:border-primary hover:bg-card flex items-center justify-center text-foreground transition-colors"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => go(1)}
-          className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-card/70 backdrop-blur border border-white/10 hover:border-primary hover:bg-card flex items-center justify-center text-foreground transition-colors"
-          aria-label="Next"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
+        <ShieldArrow dir="l" onClick={() => go(-1)} />
+        <ShieldArrow dir="r" onClick={() => go(1)} />
       </div>
 
-      {/* dots */}
-      <div className="flex items-center justify-center gap-1.5 mt-4">
+      {/* Diamond dots */}
+      <div className="flex items-center justify-center gap-2 mt-6">
         {items.map((_, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`h-1.5 rounded-full transition-all ${
-              i === active ? 'w-6 bg-primary' : 'w-1.5 bg-muted-foreground/40 hover:bg-muted-foreground/70'
-            }`}
             aria-label={`Go to ${i + 1}`}
+            className="transition-all"
+            style={{
+              width: 10,
+              height: 10,
+              transform: 'rotate(45deg)',
+              background: i === active ? '#C9A84C' : 'transparent',
+              border: '1px solid #C9A84C',
+            }}
           />
         ))}
       </div>
@@ -275,50 +266,36 @@ const HotSellingCoverflow = ({ items }: { items: Product[] }) => {
 
 const HotSellingSection = () => {
   const { data, isLoading } = useProducts();
-  const hotSelling = data?.hotSelling || [];
-
-  if (!isLoading && hotSelling.length === 0) return null;
-
-  const items = hotSelling.slice(0, 12);
+  const hot = (data?.hotSelling || []).slice(0, 10);
+  if (!isLoading && hot.length === 0) return null;
 
   return (
     <section className="py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-destructive/[0.03] to-transparent pointer-events-none" />
-
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10"
-        >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-destructive/10 border border-destructive/20 text-destructive text-xs font-semibold mb-3">
-              <Flame className="w-3.5 h-3.5" /> Trending Now
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Hot <span className="text-gradient">Selling</span> Products
-            </h2>
-            <p className="text-muted-foreground mt-2 max-w-xl">
-              Our most loved premium subscriptions — fastest moving picks of the month.
-            </p>
-          </div>
-
-          <Link
-            to="/products?filter=hot"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all"
-          >
-            View all <ArrowRight className="w-4 h-4" />
-          </Link>
-        </motion.div>
+        <div className="flex items-center justify-center gap-4 mb-12">
+          <div className="flex-1 max-w-[200px]" style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5))' }} />
+          <Flame className="w-5 h-5 animate-torch-flicker" style={{ color: '#C9A84C' }} />
+          <h2 className="font-display text-center whitespace-nowrap">
+            <span className="text-gradient-gold">Hot Selling</span>{' '}
+            <span style={{ color: '#F0EAD6' }}>Products</span>
+          </h2>
+          <Flame className="w-5 h-5 animate-torch-flicker" style={{ color: '#C9A84C', animationDelay: '0.3s' }} />
+          <div className="flex-1 max-w-[200px]" style={{ height: 1, background: 'linear-gradient(90deg, rgba(201,168,76,0.5), transparent)' }} />
+        </div>
 
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2" style={{ borderColor: '#C9A84C' }} />
           </div>
         ) : (
-          <HotSellingCoverflow items={items} />
+          <Stage items={hot} />
         )}
+
+        <div className="text-center mt-8">
+          <Link to="/products?filter=hot" className="text-sm font-semibold hover:underline" style={{ color: '#C9A84C' }}>
+            View all hot products →
+          </Link>
+        </div>
       </div>
     </section>
   );
