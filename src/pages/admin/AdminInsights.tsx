@@ -319,7 +319,7 @@ const AdminInsights = () => {
             <ul className="space-y-2 text-xs">
               {rising.map((p) => (
                 <li key={p.name} className="flex items-center gap-3 bg-secondary/20 rounded-lg p-2">
-                  <img src={p.image || PLACEHOLDER} alt={p.name} className="w-8 h-8 rounded object-contain bg-background/40" onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }} />
+                  <img src={resolveImg("", p.name, p.image)} alt={p.name} className="w-8 h-8 rounded object-contain bg-background/40" onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }} />
                   <span className="flex-1 truncate font-medium" title={p.name}>{p.name}</span>
                   <span className="text-emerald-400 font-semibold tabular-nums">+{p.delta}</span>
                   <span className="text-[10px] text-muted-foreground tabular-nums w-14 text-right">{p.recent} vs {p.older}</span>
@@ -352,7 +352,7 @@ const AdminInsights = () => {
             {stats.topByViews.map((p) => (
               <div key={p.name} className="bg-secondary/20 border border-border rounded-xl p-2.5 flex flex-col items-center text-center">
                 <div className="w-full aspect-square bg-background/40 rounded-lg overflow-hidden mb-2">
-                  <img src={p.image || PLACEHOLDER} alt={p.name} className="w-full h-full object-contain" onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }} />
+                  <img src={resolveImg("", p.name, p.image)} alt={p.name} className="w-full h-full object-contain" onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }} />
                 </div>
                 <p className="text-xs font-medium truncate w-full" title={p.name}>{p.name}</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">{p.views} views · {p.clicks} clicks</p>
@@ -369,7 +369,7 @@ const AdminInsights = () => {
             {stats.topByClicks.map((p) => (
               <div key={p.name} className="bg-emerald-500/5 border border-emerald-500/30 rounded-xl p-2.5 flex flex-col items-center text-center">
                 <div className="w-full aspect-square bg-background/40 rounded-lg overflow-hidden mb-2">
-                  <img src={p.image || PLACEHOLDER} alt={p.name} className="w-full h-full object-contain" onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }} />
+                  <img src={resolveImg("", p.name, p.image)} alt={p.name} className="w-full h-full object-contain" onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }} />
                 </div>
                 <p className="text-xs font-medium truncate w-full" title={p.name}>{p.name}</p>
                 <p className="text-[10px] text-emerald-400 font-semibold mt-0.5">{p.clicks} clicks · {p.views} views</p>
