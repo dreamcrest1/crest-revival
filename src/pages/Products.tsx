@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,7 @@ import { slugify } from '@/lib/productSeo';
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
+  useTrackSearch(search, 'products');
   const activeCategory = searchParams.get('category') || 'All';
   const filterParam = searchParams.get('filter');
   const isHotFilter = filterParam === 'hot';

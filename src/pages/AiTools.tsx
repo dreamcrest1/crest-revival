@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2, CreditCard } from 'lucide-react';
@@ -179,6 +180,7 @@ const AiTools = () => {
   const [sort, setSort] = useState<'trending' | 'price-asc' | 'price-desc'>('trending');
   const [category, setCategory] = useState<string>('All');
   const [buyTool, setBuyTool] = useState<AiTool | null>(null);
+  useTrackSearch(q, 'ai-tools');
 
 
 
