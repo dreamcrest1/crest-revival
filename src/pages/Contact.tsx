@@ -46,14 +46,13 @@ const Contact = () => {
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-5xl">
-          {/* Hero */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-14">
-            <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
-              Contact <span className="text-gradient">Us</span>
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              We're here to help! Reach out to us through any of our channels below.
-            </p>
+          <PageBanner
+            eyebrow="Send a Raven"
+            title="Contact"
+            highlight="the Castle"
+            subtitle="We're here to help! Summon us through any of our royal channels below."
+          />
+
           </motion.div>
 
           {/* Brands & Channels */}
