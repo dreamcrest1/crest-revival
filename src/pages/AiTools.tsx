@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { RefreshCw, Search, Mail, Shield, Zap, Clock, Sparkles, CheckCircle2, CreditCard } from 'lucide-react';
