@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 
 const faqs = [
   {
