@@ -44,13 +44,12 @@ const ProductCard = ({ product }: { product: Product }) => {
           loading="lazy"
           decoding="async"
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
-        />
-        {product.validity && (
+        {product.discount && (
           <span
-            className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-medium"
-            style={{ background: 'rgba(34,34,58,0.92)', color: '#8A8AA0' }}
+            className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-bold"
+            style={{ background: 'rgba(34,34,58,0.92)', color: '#C9A84C' }}
           >
-            {product.validity}
+            {product.discount}
           </span>
         )}
         {product.isHotSelling && (

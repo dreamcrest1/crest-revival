@@ -83,15 +83,14 @@ const HotCard = ({
           draggable={false}
           className="w-full h-full object-contain p-3"
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
-        />
-        {/* Duration badge */}
-        {product.validity && (
+        {product.category && (
           <div
             className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-medium"
             style={{ background: 'hsl(240 26% 18%)', color: '#8A8AA0' }}
           >
-            {product.validity}
+            {product.category}
           </div>
+        )}
         )}
         {/* HOT wax-seal */}
         <div
