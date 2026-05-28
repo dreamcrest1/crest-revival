@@ -327,24 +327,19 @@ const AiTools = () => {
 
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-7xl">
-          {/* Hero */}
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-xs font-medium text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-4">
-              <Sparkles className="w-3.5 h-3.5" /> Premium AI Subscriptions
-            </div>
-            <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-3">
-              AI <span className="text-primary">Tools</span> Collection
-            </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Genuine premium subscriptions at the most affordable prices in India.
-              Private accounts delivered instantly to your email after payment.
-            </p>
-            <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-foreground bg-card/60 backdrop-blur border border-border/60 px-3 py-1.5 rounded-full">
+          <PageBanner
+            eyebrow="Arcane Arsenal"
+            title="AI"
+            highlight="Tools"
+            subtitle="Genuine premium subscriptions at the most affordable prices in the realm. Private accounts delivered instantly to your email after payment."
+          >
+            <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-foreground bg-card/60 backdrop-blur border border-primary/30 px-3 py-1.5 rounded-full">
               <Sparkles className="w-3.5 h-3.5 text-primary" />
               <span className="text-primary tabular-nums">{tools.length}</span>
-              <span className="text-muted-foreground">premium tools available</span>
+              <span className="text-muted-foreground">premium tools in the vault</span>
             </div>
-          </div>
+          </PageBanner>
+
 
           {/* Trust strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
