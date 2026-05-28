@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
