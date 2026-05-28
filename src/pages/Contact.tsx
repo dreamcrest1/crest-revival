@@ -5,6 +5,7 @@ import { WhatsAppIcon } from '@/components/SocialIcons';
 import { motion } from 'framer-motion';
 import { StarIcon, RocketIcon, WrenchIcon, CameraIcon, PlayIcon, PhoneIcon, GlobeIcon } from '@/components/icons/BrandIcons';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 
 const dreamcrestNumbers = [
   { label: '+91 97123 01164', link: 'https://wa.me/919712301164' },
