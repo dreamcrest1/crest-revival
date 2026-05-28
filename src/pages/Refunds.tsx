@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 
 const policies = [
   {
