@@ -33,7 +33,8 @@ const Auth = () => {
           options: { emailRedirectTo: `${window.location.origin}/my-orders` },
         });
         if (error) throw error;
-        toast({ title: 'Check your email', description: 'Confirm your email to finish signing up.' });
+        toast({ title: 'Account created!', description: 'You are now signed in.' });
+        navigate(redirectTo, { replace: true });
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
