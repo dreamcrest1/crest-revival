@@ -70,14 +70,13 @@ const FAQ = () => {
       <Navbar />
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
-          <div className="text-center mb-10">
-            <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
-              Frequently Asked <span className="text-gradient">Questions</span>
-            </h1>
-            <p className="text-muted-foreground">
-              Everything you need to know about our products and services
-            </p>
-          </div>
+          <PageBanner
+            eyebrow="The Royal Scrolls"
+            title="Frequently Asked"
+            highlight="Questions"
+            subtitle="Everything you need to know about our products and services"
+          />
+
 
           <div className="bg-card border border-border rounded-xl p-6">
             <Accordion type="single" collapsible className="w-full">
