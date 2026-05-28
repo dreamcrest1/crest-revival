@@ -28,12 +28,16 @@ const NotFound = () => {
 
       <div className="container mx-auto max-w-2xl text-center">
         {/* Glass card */}
-        <div className="relative bg-card/60 backdrop-blur-xl border border-border/60 rounded-3xl p-10 md:p-14 shadow-2xl">
+        <div className="relative bg-card/60 backdrop-blur-xl border-2 border-primary/30 rounded-3xl p-10 md:p-14 shadow-[0_0_40px_hsl(var(--primary)/0.18)]">
           {/* Glow */}
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-primary/[0.06] to-transparent pointer-events-none" />
+          <span className="absolute top-3 left-4 text-primary/60 text-sm">❖</span>
+          <span className="absolute top-3 right-4 text-primary/60 text-sm">❖</span>
+          <span className="absolute bottom-3 left-4 text-primary/60 text-sm">❖</span>
+          <span className="absolute bottom-3 right-4 text-primary/60 text-sm">❖</span>
 
           <div className="relative z-10">
-            <p className="font-display text-7xl md:text-8xl font-bold text-gradient mb-3">404</p>
+            <p className="font-display text-7xl md:text-8xl font-bold text-gradient-gold mb-3">404</p>
             <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">
               Page Not Found
             </h1>

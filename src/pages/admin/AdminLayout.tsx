@@ -21,9 +21,10 @@ const AdminLayout = () => {
       <div className="min-h-screen flex w-full relative z-10">
         <AdminSidebar />
         <div className="flex-1 flex flex-col min-h-screen">
-          <header className="h-14 flex items-center border-b border-border bg-card/80 backdrop-blur-sm px-4 gap-4">
+          <header className="h-14 flex items-center border-b border-primary/30 bg-card/80 backdrop-blur-sm px-4 gap-4 shadow-[0_2px_20px_hsl(var(--primary)/0.08)]">
             <SidebarTrigger />
-            <span className="font-display font-semibold text-foreground">Dreamcrest Admin</span>
+            <span className="text-primary text-sm">❖</span>
+            <span className="font-display font-semibold text-foreground tracking-wide">Dreamcrest Keep — Admin</span>
           </header>
           <main className="flex-1 p-6 overflow-auto">
             <Outlet />
