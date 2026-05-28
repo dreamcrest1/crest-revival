@@ -66,6 +66,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        vellum: "hsl(var(--vellum))",
+        parchment: "hsl(var(--parchment))",
+        leather: "hsl(var(--leather))",
+        crimson: "hsl(var(--crimson))",
+        gold: "hsl(var(--gold))",
+        ember: "hsl(var(--ember))",
+        ink: "hsl(var(--ink))",
       },
       borderRadius: {
         lg: "var(--radius)",
