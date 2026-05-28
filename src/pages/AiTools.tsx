@@ -179,6 +179,7 @@ const AiTools = () => {
   const [sort, setSort] = useState<'trending' | 'price-asc' | 'price-desc'>('trending');
   const [category, setCategory] = useState<string>('All');
   const [buyTool, setBuyTool] = useState<AiTool | null>(null);
+  useTrackSearch(q, 'ai-tools');
 
 
 
