@@ -119,32 +119,25 @@ const AllTools = () => {
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4">
 
-          {/* Header */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2 mb-5"
-            >
-              <span className="text-sm font-medium text-primary">🚀 {unified.length}+ Premium Tools Available</span>
-            </motion.div>
-            <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
-              All <span className="text-gradient">Tools</span>
-            </h1>
-            <p className="text-muted-foreground max-w-lg mx-auto mb-6">
-              Browse our complete catalog, sorted by what's trending on Google. Tap any tool to chat on WhatsApp.
-            </p>
-            <a
-              href="https://chat.whatsapp.com/HAygGmjN7cNLePOWBtrPjc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
-            >
-              <WhatsAppIcon className="w-4 h-4" />
-              Join WhatsApp Group
-            </a>
-          </motion.div>
+          <PageBanner
+            eyebrow={`${unified.length}+ Tools in the Kingdom`}
+            title="The"
+            highlight="Armoury"
+            subtitle="Browse our complete catalogue, sorted by what's trending on Google. Tap any tool to summon us on WhatsApp."
+          >
+            <div className="mt-5">
+              <a
+                href="https://chat.whatsapp.com/HAygGmjN7cNLePOWBtrPjc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors shadow-[0_0_24px_hsl(var(--primary)/0.35)]"
+              >
+                <WhatsAppIcon className="w-4 h-4" />
+                Join the Royal Court (WhatsApp)
+              </a>
+            </div>
+          </PageBanner>
+
 
           {/* Search */}
           <div className="max-w-md mx-auto mb-6">
