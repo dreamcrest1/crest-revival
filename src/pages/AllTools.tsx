@@ -9,6 +9,7 @@ import SEOHead from '@/components/SEOHead';
 import { useProducts } from '@/hooks/useProducts';
 import { useAiTools } from '@/hooks/useAiTools';
 import { trackEvent } from '@/lib/eventTracker';
+import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { popularityFor } from '@/data/aiToolPopularity';
 
 type ToolCategory = {
