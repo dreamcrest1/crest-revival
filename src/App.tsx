@@ -47,6 +47,7 @@ import AdminGeo from "./pages/admin/AdminGeo";
 import AdminHeatmap from "./pages/admin/AdminHeatmap";
 import AdminUtm from "./pages/admin/AdminUtm";
 import AdminInsights from "./pages/admin/AdminInsights";
+import AdminAnalyticsDebug from "./pages/admin/AdminAnalyticsDebug";
 
 import ExitIntentSurvey from "./components/ExitIntentSurvey";
 import PaymentSuccess from "./pages/PaymentSuccess";
@@ -115,6 +116,7 @@ const App = () => {
                     <Route path="geo" element={<AdminGeo />} />
                     <Route path="search-queries" element={<AdminSearchQueries />} />
                     <Route path="insights" element={<AdminInsights />} />
+                    <Route path="analytics-debug" element={<AdminAnalyticsDebug />} />
                     <Route path="seo-audit" element={<AdminSeoAudit />} />
                     <Route path="errors" element={<AdminErrorLogs />} />
                     
