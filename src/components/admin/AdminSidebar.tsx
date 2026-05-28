@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck, Sparkles, ShoppingBag, Rocket } from 'lucide-react';
+import { LayoutDashboard, Package, FileText, BarChart3, LogOut, Home, Search, AlertCircle, BookOpen, Filter, Megaphone, MousePointerClick, Globe, SearchCheck, Sparkles, ShoppingBag } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -32,7 +32,7 @@ const menuItems = [
   { title: 'Insights', url: '/admin/insights', icon: Sparkles },
   { title: 'SEO Audit', url: '/admin/seo-audit', icon: Search },
   { title: 'Error Logs', url: '/admin/errors', icon: AlertCircle },
-  { title: 'Deploy', url: '/admin/deploy', icon: Rocket },
+  
 ];
 
 const AdminSidebar = () => {

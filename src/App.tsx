@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -12,7 +12,7 @@ import HyperspaceBackground from "./components/HyperspaceBackground";
 import IndiaMapBackground from "./components/IndiaMapBackground";
 import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
-import Preloader from "./components/Preloader";
+
 import ScrollToTop from "./components/ScrollToTop";
 
 import StorefrontChatbot from "./components/chatbot/StorefrontChatbot";
@@ -47,7 +47,7 @@ import AdminGeo from "./pages/admin/AdminGeo";
 import AdminHeatmap from "./pages/admin/AdminHeatmap";
 import AdminUtm from "./pages/admin/AdminUtm";
 import AdminInsights from "./pages/admin/AdminInsights";
-import AdminDeploy from "./pages/admin/AdminDeploy";
+
 import ExitIntentSurvey from "./components/ExitIntentSurvey";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
@@ -59,15 +59,12 @@ import AdminForgotPassword from "./pages/admin/AdminForgotPassword";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          {loading && <Preloader onComplete={() => setLoading(false)} />}
           <HyperspaceBackground />
           <IndiaMapBackground />
           <CursorTrail />
@@ -120,7 +117,7 @@ const App = () => {
                     <Route path="insights" element={<AdminInsights />} />
                     <Route path="seo-audit" element={<AdminSeoAudit />} />
                     <Route path="errors" element={<AdminErrorLogs />} />
-                    <Route path="deploy" element={<AdminDeploy />} />
+                    
                   </Route>
 
                   <Route path="*" element={<NotFound />} />
