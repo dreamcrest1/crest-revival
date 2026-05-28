@@ -59,17 +59,7 @@ export default {
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
-        success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
-        },
-        vellum: "hsl(var(--vellum))",
-        parchment: "hsl(var(--parchment))",
-        leather: "hsl(var(--leather))",
-        crimson: "hsl(var(--crimson))",
-        gold: "hsl(var(--gold))",
-        ember: "hsl(var(--ember))",
-        ink: "hsl(var(--ink))",
+          primary: "hsl(var(--sidebar-primary))",
           "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
           accent: "hsl(var(--sidebar-accent))",
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
