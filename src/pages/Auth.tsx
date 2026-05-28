@@ -53,18 +53,24 @@ const Auth = () => {
       <SEOHead title={mode === 'login' ? 'Login | Dreamcrest' : 'Sign Up | Dreamcrest'} description="Login to view your order history and manage your account." />
       <Navbar />
       <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
-        <div className="w-full max-w-md bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-8 shadow-2xl">
+        <div className="w-full max-w-md bg-card/70 backdrop-blur-xl border border-primary/30 rounded-2xl p-8 shadow-[0_0_48px_hsl(var(--primary)/0.15)]">
           <div className="text-center mb-6">
-            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center">
-              {mode === 'login' ? <LogIn className="w-6 h-6 text-primary" /> : <UserPlus className="w-6 h-6 text-primary" />}
+            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-primary/15 border-2 border-primary/40 flex items-center justify-center shadow-[0_0_24px_hsl(var(--primary)/0.35)]">
+              {mode === 'login' ? <LogIn className="w-7 h-7 text-primary" /> : <UserPlus className="w-7 h-7 text-primary" />}
             </div>
-            <h1 className="font-display font-bold text-2xl text-foreground">
-              {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+            <h1 className="font-display font-bold text-2xl text-foreground tracking-wide">
+              {mode === 'login' ? 'Enter the Keep' : 'Join the Court'}
             </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              {mode === 'login' ? 'Login to see your order history' : 'Sign up to track your orders'}
+            <div className="flex items-center justify-center gap-2 my-2">
+              <span className="h-px w-10 bg-primary/40" />
+              <span className="text-primary text-xs">❖</span>
+              <span className="h-px w-10 bg-primary/40" />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {mode === 'login' ? 'Sign in to view your royal ledger' : 'Forge your seal to track your orders'}
             </p>
           </div>
+
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="relative">
