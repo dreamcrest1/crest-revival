@@ -55,6 +55,7 @@ const LOAD_MORE_INCREMENT = 24;
 
 const AllTools = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  useTrackSearch(searchQuery, 'all-tools');
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [displayCount, setDisplayCount] = useState(INITIAL_DISPLAY);
   const { data: productsData } = useProducts();
