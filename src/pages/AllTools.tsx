@@ -6,6 +6,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { WhatsAppIcon } from '@/components/SocialIcons';
 import { Search, X, ExternalLink, Flame } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 import { useProducts } from '@/hooks/useProducts';
 import { useAiTools } from '@/hooks/useAiTools';
 import { trackEvent } from '@/lib/eventTracker';
