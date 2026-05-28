@@ -14,6 +14,7 @@ import { slugify } from '@/lib/productSeo';
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
+  useTrackSearch(search, 'products');
   const activeCategory = searchParams.get('category') || 'All';
   const filterParam = searchParams.get('filter');
   const isHotFilter = filterParam === 'hot';
