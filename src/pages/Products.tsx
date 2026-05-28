@@ -9,6 +9,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import SEOHead from '@/components/SEOHead';
+import PageBanner from '@/components/PageBanner';
 import { slugify } from '@/lib/productSeo';
 
 const Products = () => {
