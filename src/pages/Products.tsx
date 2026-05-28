@@ -113,15 +113,13 @@ const Products = () => {
 
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
-              All <span className="text-gradient">Products</span>
-            </h1>
-            <p className="text-muted-foreground">
-              Browse our complete collection of {products.length}+ premium digital products
-            </p>
-          </div>
+          <PageBanner
+            eyebrow="Royal Catalogue"
+            title="The"
+            highlight="Treasury"
+            subtitle={`Browse our complete collection of ${products.length}+ premium digital artefacts`}
+          />
+
 
           {/* Search */}
           <div className="relative max-w-xl mx-auto mb-8">
