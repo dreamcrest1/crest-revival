@@ -68,7 +68,7 @@ const App = () => {
           <Toaster />
           <Toaster />
           <Sonner />
-          <CastleBackground />
+          <StoryBackground />
           <CursorTrail />
           <CartProvider>
             <AuthProvider>
