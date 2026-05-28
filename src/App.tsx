@@ -116,6 +116,7 @@ const App = () => {
                     <Route path="geo" element={<AdminGeo />} />
                     <Route path="search-queries" element={<AdminSearchQueries />} />
                     <Route path="insights" element={<AdminInsights />} />
+                    <Route path="analytics-debug" element={<AdminAnalyticsDebug />} />
                     <Route path="seo-audit" element={<AdminSeoAudit />} />
                     <Route path="errors" element={<AdminErrorLogs />} />
                     
