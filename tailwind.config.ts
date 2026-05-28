@@ -15,11 +15,12 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+      fontFamily: {
+        sans: ['Crimson Text', 'IM Fell English', 'Georgia', 'serif'],
+        display: ['Cinzel Decorative', 'Cinzel', 'serif'],
+        medieval: ['MedievalSharp', 'Cinzel Decorative', 'serif'],
+        script: ['IM Fell English', 'Crimson Text', 'serif'],
       },
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -58,7 +59,17 @@ export default {
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        vellum: "hsl(var(--vellum))",
+        parchment: "hsl(var(--parchment))",
+        leather: "hsl(var(--leather))",
+        crimson: "hsl(var(--crimson))",
+        gold: "hsl(var(--gold))",
+        ember: "hsl(var(--ember))",
+        ink: "hsl(var(--ink))",
           "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
           accent: "hsl(var(--sidebar-accent))",
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
