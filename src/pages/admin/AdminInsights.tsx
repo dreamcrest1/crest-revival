@@ -36,8 +36,27 @@ const AdminInsights = () => {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   const [clicks, setClicks] = useState<ClickRow[]>([]);
   const [insight, setInsight] = useState<Insight | null>(null);
+  const [productMap, setProductMap] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const map: Record<string, string> = {};
+      for (const table of ['products', 'ai_tools'] as const) {
+        const { data } = await supabase.from(table).select('id, name, image_url');
+        for (const r of (data || []) as Array<{ id: string; name: string; image_url: string | null }>) {
+          if (!r.image_url) continue;
+          map[r.id] = r.image_url;
+          if (r.name) map[r.name.toLowerCase()] = r.image_url;
+        }
+      }
+      setProductMap(map);
+    })();
+  }, []);
+
+  const resolveImg = (id: string, name: string, fallback?: string) =>
+    fallback || productMap[id] || productMap[name?.toLowerCase?.() || ''] || PLACEHOLDER;
 
   const fetchAllPaged = async <T,>(build: (from: number, to: number) => any, max = 30000): Promise<T[]> => {
     const out: T[] = []; const size = 1000;
