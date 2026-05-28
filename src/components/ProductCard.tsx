@@ -44,6 +44,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           loading="lazy"
           decoding="async"
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
+        />
         {product.discount && (
           <span
             className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-bold"

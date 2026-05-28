@@ -83,6 +83,7 @@ const HotCard = ({
           draggable={false}
           className="w-full h-full object-contain p-3"
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
+        />
         {product.category && (
           <div
             className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-medium"
@@ -90,7 +91,6 @@ const HotCard = ({
           >
             {product.category}
           </div>
-        )}
         )}
         {/* HOT wax-seal */}
         <div
