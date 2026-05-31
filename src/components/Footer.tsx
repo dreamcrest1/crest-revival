@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { WhatsAppIcon, InstagramIcon, EmailIcon, YouTubeIcon } from './SocialIcons';
+import { WhatsAppIcon, InstagramIcon, EmailIcon } from './SocialIcons';
+import { GlobeIcon } from './icons/BrandIcons';
 import logo from '@/assets/logo.png';
 
 const Footer = () => {
