@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,6 +15,9 @@ import { popularityFor } from '@/data/aiToolPopularity';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
 import CheckoutDialog from '@/components/checkout/CheckoutDialog';
+
+// Heavy 3D + physics — code-split so it doesn't bloat the initial bundle.
+const PhysicsPlayground = lazy(() => import('@/components/ai/PhysicsPlayground'));
 
 const WHATSAPP_NUMBER = '919773453978';
 
@@ -341,8 +344,24 @@ const AiTools = () => {
           </PageBanner>
 
 
+          {/* 3D physics playground — drag, throw and click chips to open a tool */}
+          {trending.length > 0 && (
+            <div className="mb-10">
+              <Suspense
+                fallback={
+                  <div className="w-full h-[60vh] min-h-[420px] rounded-3xl border border-border/60 bg-card/30 backdrop-blur flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+                  </div>
+                }
+              >
+                <PhysicsPlayground tools={trending} maxChips={28} />
+              </Suspense>
+            </div>
+          )}
+
           {/* Trust strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+
             {[
               { icon: Shield, label: '100% Genuine' },
               { icon: Mail, label: 'Email Delivery' },
