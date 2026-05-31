@@ -28,8 +28,8 @@ const Footer = () => {
               <a href="https://www.instagram.com/Castletool99" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#E4405F] transition-colors">
                 <InstagramIcon className="w-5 h-5" />
               </a>
-              <a href="https://www.youtube.com/channel/UCbqBFmu4oZ3PpcwEdMVDDcw" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#FF0000] transition-colors">
-                <YouTubeIcon className="w-5 h-5" />
+              <a href="https://www.facebook.com/share/18fxQZhomn/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#1877F2] transition-colors" aria-label="Facebook">
+                <GlobeIcon className="w-5 h-5" />
               </a>
               <a href="mailto:Castletool99@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                 <EmailIcon className="w-5 h-5" />
