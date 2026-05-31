@@ -9,7 +9,6 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 import StoryBackground from "./components/StoryBackground";
-import CursorTrail from "./components/CursorTrail";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 
 import ScrollToTop from "./components/ScrollToTop";
@@ -69,7 +68,6 @@ const App = () => {
           <Toaster />
           <Sonner />
           <StoryBackground />
-          <CursorTrail />
           <CartProvider>
             <AuthProvider>
               <BrowserRouter>
