@@ -7,44 +7,44 @@ import PageBanner from '@/components/PageBanner';
 
 const faqs = [
   {
-    q: 'What payment methods do you accept?',
-    a: 'We accept UPI, Google Pay, PhonePe, Paytm, bank transfers, and all major debit/credit cards via our secure payment gateway.',
+    q: 'Which payment options work on Castle Tools?',
+    a: 'You can pay using UPI, Google Pay, PhonePe, Paytm, net banking or any Visa / Mastercard / RuPay card through our secured checkout.',
   },
   {
-    q: 'How will I receive my product after purchase?',
-    a: 'All products are delivered digitally. You will receive your credentials, activation link, or product access via WhatsApp or email within 5–30 minutes of payment confirmation.',
+    q: 'How do I actually get the tool after paying?',
+    a: 'Everything is digital. Once the payment lands, we send your login, key or activation link on WhatsApp and email, usually within 5 to 30 minutes.',
   },
   {
-    q: 'Are these products genuine and legal?',
-    a: 'Yes, all our products are 100% genuine. We are authorized resellers and group-buy partners for the tools and subscriptions we offer.',
+    q: 'Are the subscriptions you sell genuine?',
+    a: 'Yes — every plan is sourced from official panels or licensed group buys. No cracks, no pirated builds, nothing dodgy.',
   },
   {
-    q: 'What is your refund policy?',
-    a: 'Refunds are provided within 7 days of purchase if the product has not been activated or used. Once a product is activated or credentials are shared, refunds cannot be processed. Contact us on WhatsApp for refund requests.',
+    q: 'What if I change my mind after ordering?',
+    a: 'If the product has not been used or activated, ping us on WhatsApp within 7 days and we will arrange a refund. Once credentials are shared and used, refunds are not possible.',
   },
   {
-    q: 'What if my product stops working during the warranty period?',
-    a: 'All products come with a warranty for the specified duration. If you face any issues during the warranty period, we will provide a free replacement. Contact our 24/7 WhatsApp support.',
+    q: 'Something stopped working mid-plan — what now?',
+    a: 'Every order ships with a warranty for the listed period. If anything breaks inside that window, message us and we replace it free, no long forms.',
   },
   {
-    q: 'How long does delivery take?',
-    a: 'Most orders are delivered within 5–30 minutes. In rare cases, delivery may take up to 24 hours. You will be notified via WhatsApp once your order is ready.',
+    q: 'How quickly will I get my order?',
+    a: 'Most orders go out in under half an hour. On very rare days it can stretch to 24 hours, and we keep you posted on WhatsApp till it lands.',
   },
   {
-    q: 'Can I share my account with others?',
-    a: 'Sharing depends on the product type. Some subscriptions are single-user, while others support multiple devices. Check the product description or ask us on WhatsApp for details.',
+    q: 'Can I share the account with my team?',
+    a: 'It depends on the plan. Some are strictly single-device, others happily handle a small team. The product page mentions it, and we will gladly clarify on chat.',
   },
   {
-    q: 'Do you offer bulk or reseller pricing?',
-    a: 'Yes! We offer special pricing for bulk orders and resellers. Contact us on WhatsApp to discuss custom pricing for your needs.',
+    q: 'Do you give discounts for bulk or reseller orders?',
+    a: 'Yes. If you need many seats or want to resell, drop us a WhatsApp message and we will put together custom pricing.',
   },
   {
-    q: 'Is my personal information safe?',
-    a: 'Absolutely. We respect your privacy. Your personal information is used only for order processing and communication. We do not share your data with third parties.',
+    q: 'How safe is the information I share?',
+    a: 'We only use your details to process the order and talk to you about it. Nothing is sold, leaked or shared with third parties.',
   },
   {
-    q: 'How can I contact support?',
-    a: 'Our 24/7 support team is available on WhatsApp at +91 9773453978. You can also reach us via email or Instagram @Castletool99.',
+    q: 'Where do I get help?',
+    a: 'WhatsApp is the fastest at +91 97734 53978. You can also email Castletool99@gmail.com or DM @Castletool99 on Instagram.',
   },
 ];
 
