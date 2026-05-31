@@ -12,7 +12,6 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Castle Tools" className="w-9 h-9 rounded-lg object-contain ring-1 ring-primary/40" />
               <span className="font-display font-bold text-xl text-foreground tracking-wide">
                 Castle <span className="text-primary italic">Tools</span>
               </span>
