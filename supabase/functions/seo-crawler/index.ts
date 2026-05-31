@@ -46,7 +46,7 @@ async function fetchWithTimeout(url: string, opts: RequestInit = {}, timeout = T
     return await fetch(url, {
       ...opts,
       signal: ctrl.signal,
-      headers: { 'user-agent': 'DreamcrestSEOBot/1.0', ...(opts.headers || {}) },
+      headers: { 'user-agent': 'Castle ToolsSEOBot/1.0', ...(opts.headers || {}) },
       redirect: 'follow',
     });
   } finally { clearTimeout(t); }
