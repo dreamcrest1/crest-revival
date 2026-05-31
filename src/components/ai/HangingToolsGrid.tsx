@@ -71,7 +71,7 @@ function HangingTile({ tool }: HangingTileProps) {
         <button
           type="button"
           onClick={() => navigate(`/ai-tool/${slugifyAiTool(tool.name)}`)}
-          className="block w-full aspect-square rounded-md overflow-hidden border border-border/70 bg-card shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)] transition-shadow duration-300 group-hover:shadow-[0_14px_36px_-10px_rgba(0,0,0,0.65)] focus:outline-none focus:ring-2 focus:ring-primary"
+          className="relative block w-full aspect-square rounded-md overflow-hidden border border-border/70 bg-card shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)] transition-shadow duration-300 group-hover:shadow-[0_14px_36px_-10px_rgba(0,0,0,0.65)] focus:outline-none focus:ring-2 focus:ring-primary"
           aria-label={`${tool.name} — open details`}
         >
           <div className="absolute inset-0">
