@@ -54,10 +54,10 @@ const About = () => {
         <div className="container mx-auto px-4">
 
           <PageBanner
-            eyebrow="Our Royal Lineage"
-            title="About"
+            eyebrow="Inside the Keep"
+            title="Meet"
             highlight="Castle Tools"
-            subtitle="India's oldest & most trusted multi-platform digital service provider. Forging premium tools accessible to every realm since 2021."
+            subtitle="A small, friendly Indian shop quietly handing genuine digital keys to creators, students and small businesses — at prices that finally feel fair."
           />
 
 
