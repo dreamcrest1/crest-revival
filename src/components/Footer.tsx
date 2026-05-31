@@ -14,11 +14,11 @@ const Footer = () => {
             <Link to="/" className="flex items-center gap-2 mb-4">
               <img src={logo} alt="Castle Tools" className="w-9 h-9 rounded-lg object-contain ring-1 ring-primary/40" />
               <span className="font-display font-bold text-xl text-foreground tracking-wide">
-                Dream<span className="text-primary italic">crest</span>
+                Castle <span className="text-primary italic">Tools</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4">
-              The kingdom's most trusted digital product store. Serving 15,000+ loyal subjects since 2021.
+              The kingdom's trusted vault for premium digital tools, OTT plans and AI subscriptions — looking after happy customers since day one.
             </p>
             {/* Social icons row */}
             <div className="flex items-center gap-3">
