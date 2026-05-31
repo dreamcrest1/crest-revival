@@ -7,32 +7,32 @@ import SEOHead from '@/components/SEOHead';
 import PageBanner from '@/components/PageBanner';
 
 const stats = [
-  { value: '15,000+', label: 'Happy Customers', icon: '👥' },
-  { value: '200+', label: 'Digital Products', icon: '📦' },
-  { value: 'Since 2021', label: 'Years of Trust', icon: '📅' },
-  { value: '100%', label: 'Genuine Products', icon: '✅' },
+  { value: 'Pan-India', label: 'Shipped digitally', icon: '🇮🇳' },
+  { value: '200+', label: 'Tools in the vault', icon: '🗝️' },
+  { value: 'Minutes', label: 'Average delivery', icon: '⚡' },
+  { value: '100%', label: 'Genuine keys only', icon: '✅' },
 ];
 
 const timeline = [
-  { year: '2021', text: 'Castle Tools founded in Chennai', highlight: 'Founded' },
-  { year: '2022', text: 'Launched Dreamtools.in for group buy services', highlight: 'Expansion' },
-  { year: '2023', text: 'Crossed 10,000 happy customers milestone', highlight: '10K Users' },
-  { year: '2024', text: 'Expanded catalog to 200+ premium products', highlight: '200+ Tools' },
-  { year: '2025', text: 'Serving 15,000+ customers across India', highlight: '15K+ Users' },
+  { year: '2021', text: 'A small Indian shop opens its doors as Castle Tools', highlight: 'Day One' },
+  { year: '2022', text: 'Catalog grows beyond OTT into AI, SEO and creator suites', highlight: 'New Wings' },
+  { year: '2023', text: 'Group-buy panels added so creators pay even less', highlight: 'Group Buy' },
+  { year: '2024', text: 'Crossed 200+ tools and rolled out 24×7 WhatsApp desk', highlight: '200+ Tools' },
+  { year: '2025', text: 'Quietly serving customers in every Indian state', highlight: 'Nationwide' },
 ];
 
 const whyUs = [
-  { icon: Zap, title: 'Instant Delivery', desc: 'Digital products delivered within minutes of purchase. No waiting.' },
-  { icon: Shield, title: 'Genuine Products', desc: '100% authentic subscriptions and licenses from authorized sources.' },
-  { icon: Tag, title: 'Best Prices', desc: 'Up to 80% off on premium digital products and subscriptions.' },
-  { icon: HeadphonesIcon, title: '24/7 Support', desc: 'Round-the-clock customer support with hassle-free replacements.' },
-  { icon: Award, title: 'Trusted Brand', desc: 'India\'s most trusted & oldest multi-platform service provider.' },
-  { icon: Globe, title: 'Pan-India Service', desc: 'Serving customers in every state with seamless digital delivery.' },
+  { icon: Zap, title: 'Delivery in minutes', desc: 'Your key, login or activation lands as soon as we see the payment — no overnight waits.' },
+  { icon: Shield, title: 'Only genuine keys', desc: 'Every subscription is sourced from official panels and group buys, never cracked or pirated.' },
+  { icon: Tag, title: 'Honest pricing', desc: 'You usually save 60–80% versus buying direct, with the savings clearly shown up front.' },
+  { icon: HeadphonesIcon, title: 'Real human help', desc: 'A small team on WhatsApp that actually replies — not a recycled chatbot script.' },
+  { icon: Award, title: 'Treated like a person', desc: 'Replacements, refunds and odd questions handled politely, the same day where possible.' },
+  { icon: Globe, title: 'Built for India', desc: 'UPI, INR pricing, Hindi/English support and timezones that match your day.' },
 ];
 
 const brands = [
-  { name: 'Dreamtools', desc: 'Group Buy SEO & Premium Tools', url: 'https://castletools.in/', tag: 'Group Buy' },
-  { name: 'Castle Tools', desc: 'Digital Products & Services', url: 'https://castletools.in/', tag: 'E-Commerce' },
+  { name: 'Castle Tools Store', desc: 'Premium subscriptions, instantly delivered', url: 'https://castletools.in/', tag: 'Marketplace' },
+  { name: 'Castle Tools Group Buy', desc: 'SEO suites & creator panels at split cost', url: 'https://castletools.in/', tag: 'Group Buy' },
 ];
 
 const containerVariants = {
