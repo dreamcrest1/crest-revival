@@ -59,8 +59,8 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2">
           <Crown className="w-6 h-6" style={{ color: '#C9A84C' }} />
           <span className="font-display font-bold text-xl">
-            <span style={{ color: '#F0EAD6' }}>Dream</span>
-            <span style={{ color: '#C9A84C' }}>crest</span>
+            <span style={{ color: '#F0EAD6' }}>Castle</span>
+            <span style={{ color: '#C9A84C' }}> Tools</span>
           </span>
         </Link>
 
