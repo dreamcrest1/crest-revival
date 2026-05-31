@@ -184,10 +184,10 @@ const About = () => {
                 <div className="w-10 h-1 bg-primary rounded-full" />
               </div>
               <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
-                Why Choose <span className="text-gradient">Castle Tools?</span>
+                Why folks pick <span className="text-gradient">Castle Tools</span>
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                We're committed to providing the best digital products experience in India
+                The little things we obsess over so buying premium tools stops feeling like a gamble.
               </p>
             </motion.div>
 
