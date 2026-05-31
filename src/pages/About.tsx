@@ -227,13 +227,13 @@ const About = () => {
             >
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="w-10 h-1 bg-primary rounded-full" />
-                <span className="text-primary font-medium text-sm uppercase tracking-wider">Our Brands</span>
+                <span className="text-primary font-medium text-sm uppercase tracking-wider">Our Wings</span>
                 <div className="w-10 h-1 bg-primary rounded-full" />
               </div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-3">
-                Part of a Growing <span className="text-gradient">Family</span>
+                One small <span className="text-gradient">keep, two doors</span>
               </h2>
-              <p className="text-muted-foreground">Castle Tools is part of a growing family of digital service brands.</p>
+              <p className="text-muted-foreground">Pick the storefront that fits how you shop — both run from the same Castle Tools desk.</p>
             </motion.div>
 
             <div className="grid sm:grid-cols-2 gap-5">
