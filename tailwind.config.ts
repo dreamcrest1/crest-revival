@@ -112,7 +112,7 @@ export default {
         "scroll-right": "scroll-right 30s linear infinite",
         "fade-in": "fade-in 0.6s ease-out forwards",
         "sway-idle": "sway-idle 7s ease-in-out infinite",
-        "sway-hover": "sway-hover 1.2s ease-out",
+        "sway-hover": "sway-hover 1.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both",
       },
     },
   },
