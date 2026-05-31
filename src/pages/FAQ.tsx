@@ -71,10 +71,10 @@ const FAQ = () => {
       <div className="pt-28 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
           <PageBanner
-            eyebrow="The Royal Scrolls"
-            title="Frequently Asked"
-            highlight="Questions"
-            subtitle="Everything you need to know about our products and services"
+            eyebrow="From the Scrollroom"
+            title="Quick"
+            highlight="Answers"
+            subtitle="The questions our gatekeepers hear most often — clear, short and written like a friend would explain it."
           />
 
 
