@@ -88,7 +88,7 @@ const Footer = () => {
         <div className="border-t border-primary/20 mt-8 pt-6 text-center text-sm text-muted-foreground">
           <p className="flex items-center justify-center gap-2 flex-wrap">
             <span className="text-primary">❖</span>
-            <span>Powered by Castle Tools & Castle Tools | © {new Date().getFullYear()} All rights reserved.</span>
+            <span>Crafted by Castle Tools · © {new Date().getFullYear()} — Every keep, every key, looked after.</span>
             <span className="text-primary">❖</span>
           </p>
         </div>
