@@ -50,7 +50,7 @@ const MyOrders = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead title="My Orders | Dreamcrest" description="View your order history and download details." />
+      <SEOHead title="My Orders | Castle Tools" description="View your order history and download details." />
       <Navbar />
       <main className="flex-1 container mx-auto px-4 pt-32 pb-16 max-w-5xl">
         <PageBanner

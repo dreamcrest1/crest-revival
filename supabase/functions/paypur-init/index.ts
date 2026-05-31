@@ -59,11 +59,11 @@ Deno.serve(async (req) => {
     const furl = `${baseOrigin}/payment/failure?order_id=${encodeURIComponent(orderId)}`;
 
     const firstname = (customer.firstname || 'Customer').slice(0, 60);
-    const email = (customer.email || 'noreply@dreamcrest.net').slice(0, 120);
+    const email = (customer.email || 'noreply@castletools.in').slice(0, 120);
     const phone = (customer.phone || '9999999999').replace(/\D/g, '').slice(-10) || '9999999999';
     const productinfo = items.length
       ? items.map((i) => `${i.name} x${i.quantity}`).join(', ').slice(0, 200)
-      : 'Dreamcrest Order';
+      : 'Castle Tools Order';
 
     // Persist pending order
     const { error: insErr } = await supabase.from('orders').insert({

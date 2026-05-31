@@ -1,7 +1,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { corsHeaders } from 'jsr:@supabase/supabase-js@2/cors';
 
-const SITE = 'https://dreamcrest.net';
+const SITE = 'https://castletools.in';
 const AI_TOOLS_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDvURG_Eu2-ecumNbY-FOKyhweInykVs25janeK4MJn8uGw7WLFVyyhFU_nEMbIMjKAF9aGh_-Au3e/pub?output=csv';
 

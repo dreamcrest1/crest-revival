@@ -180,7 +180,7 @@ const Medallion = () => {
               <path id="med-arc-front" d="M 60 190 A 130 130 0 0 1 320 190" fill="none" />
               <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="14" letterSpacing="6">
                 <textPath href="#med-arc-front" startOffset="50%" textAnchor="middle">
-                  DREAMCREST
+                  CASTLE TOOLS
                 </textPath>
               </text>
               <path id="med-arc-front-bot" d="M 60 200 A 130 130 0 0 0 320 200" fill="none" />
@@ -221,7 +221,7 @@ const Medallion = () => {
               <path id="med-arc-back" d="M 60 190 A 130 130 0 0 1 320 190" fill="none" />
               <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="14" letterSpacing="6">
                 <textPath href="#med-arc-back" startOffset="50%" textAnchor="middle">
-                  DREAMCREST
+                  CASTLE TOOLS
                 </textPath>
               </text>
               <path id="med-arc-back-bot" d="M 60 200 A 130 130 0 0 0 320 200" fill="none" />
@@ -257,16 +257,16 @@ const HeroSection = () => {
             >
               <Sparkles className="w-3.5 h-3.5" style={{ color: '#C9A84C' }} />
               <span className="text-[13px] font-medium" style={{ color: '#C9A84C', letterSpacing: '0.04em' }}>
-                Premium Digital Marketplace
+                The Castle Tools Armoury
               </span>
             </div>
 
             <h1 className="font-display font-bold mb-6" style={{ color: '#F0EAD6' }}>
-              Explore Our <span className="text-gradient-gold">Universe</span> of Tools
+              Unlock the <span className="text-gradient-gold">Royal Vault</span> of Digital Tools
             </h1>
 
             <p className="text-base md:text-lg mb-8 max-w-xl" style={{ color: '#8A8AA0', lineHeight: 1.7 }}>
-              India's most trusted store for premium AI tools, OTT subscriptions, SEO tools, VPN & software at up to 80% off. 15,000+ happy customers delivered since 2021.
+              Castle Tools is India's friendly little keep for genuine AI subscriptions, OTT plans, SEO suites, VPNs and pro software — handed over instantly at prices that quietly slash up to 80% off retail.
             </p>
 
             <div className="flex flex-wrap gap-2 mb-8">
@@ -296,7 +296,7 @@ const HeroSection = () => {
                 Explore Products <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href="https://wa.me/916357998730"
+                href="https://wa.me/919773453978"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md transition-all"

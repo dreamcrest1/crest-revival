@@ -97,7 +97,7 @@ const DeliveryProofs = () => {
           <ArrowUpRight className="w-4 h-4" />
         </a>
         <p className="text-xs mt-3" style={{ color: '#4A4A60' }}>
-          Daily delivery stories posted on @dreamcrest_solutions
+          Daily delivery stories posted on @Castletool99
         </p>
       </div>
     </section>

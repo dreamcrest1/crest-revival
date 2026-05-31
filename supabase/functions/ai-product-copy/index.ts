@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: 'product_name required (2-200 chars)' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
-    const prompt = `Write product copy for an Indian premium tools reseller called Dreamcrest Solutions.
+    const prompt = `Write product copy for an Indian premium tools reseller called Castle Tools.
 
 Product: ${product_name}
 Category: ${category || 'Software'}

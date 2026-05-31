@@ -13,44 +13,44 @@ const Terms = () => {
         <div className="container mx-auto px-4 max-w-3xl">
           <PageBanner
             eyebrow="Code of the Realm"
-            title="Terms &"
-            highlight="Conditions"
+            title="Terms of"
+            highlight="Castle Tools"
           />
 
 
           <div className="prose prose-invert max-w-none space-y-6">
             <div className="bg-card border border-border rounded-xl p-6">
-              <h2 className="font-display font-semibold text-foreground text-xl mb-3">General Terms</h2>
+              <h2 className="font-display font-semibold text-foreground text-xl mb-3">The basics</h2>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                By purchasing from Dreamcrest Solutions, you agree to our terms and conditions. All products sold are digital goods and services delivered instantly via email or direct activation.
+                When you place an order with Castle Tools, you agree to the points laid out on this page. Everything we sell is a digital good — handed over by email, WhatsApp or instant activation, never as a physical parcel.
               </p>
             </div>
 
             <div className="bg-card border border-border rounded-xl p-6">
-              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Refund Policy</h2>
+              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Money back</h2>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Refunds are provided within 7 days of purchase if the product has not been activated or used. Once a product is activated or credentials are shared, refunds cannot be processed. Contact us on WhatsApp for refund requests.
+                You can request a refund up to 7 days after buying, as long as the key has not been used or activated. Once login details are shared and consumed, refunds aren't possible. Drop us a WhatsApp message and we'll guide you through it.
               </p>
             </div>
 
             <div className="bg-card border border-border rounded-xl p-6">
-              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Delivery</h2>
+              <h2 className="font-display font-semibold text-foreground text-xl mb-3">How fast we deliver</h2>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                All products are delivered digitally. Most orders are delivered within 5-30 minutes. In rare cases, delivery may take up to 24 hours. You will receive your credentials or activation link via WhatsApp or email.
+                Most orders go out in 5 to 30 minutes. On the occasional slow day it can stretch up to 24 hours. Either way, you'll get your access on WhatsApp or email and we'll keep you posted.
               </p>
             </div>
 
             <div className="bg-card border border-border rounded-xl p-6">
-              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Warranty & Support</h2>
+              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Warranty &amp; help</h2>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                All products come with a warranty for the specified duration. If you face any issues with your product during the warranty period, we will provide a replacement at no extra cost. Our 24/7 support team is available on WhatsApp.
+                Every plan ships with a warranty for the validity mentioned on its page. If something stops working inside that window, message us and we'll replace it free — no fine print.
               </p>
             </div>
 
             <div className="bg-card border border-border rounded-xl p-6">
-              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Privacy</h2>
+              <h2 className="font-display font-semibold text-foreground text-xl mb-3">Your information</h2>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                We respect your privacy. Your personal information is used only for order processing and communication. We do not share your data with third parties.
+                The details you share with Castle Tools are used only to fulfil and support your order. Nothing is rented, sold or handed to third-party advertisers — privacy is taken seriously here.
               </p>
             </div>
           </div>

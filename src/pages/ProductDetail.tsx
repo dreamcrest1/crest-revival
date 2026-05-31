@@ -189,7 +189,7 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <div className="min-h-screen relative z-10">
-        <SEOHead title="Product Not Found | Dreamcrest Solutions" noindex />
+        <SEOHead title="Product Not Found | Castle Tools" noindex />
         <Navbar />
         <div className="pt-28 pb-16 container mx-auto px-4 text-center">
           <h1 className="font-display text-3xl font-bold text-foreground mb-3">Product not found</h1>
@@ -269,7 +269,7 @@ const ProductDetail = () => {
               <h1 className="font-display font-bold text-foreground text-2xl md:text-3xl mt-3 mb-2">{product.name}</h1>
 
               <p className="text-sm text-muted-foreground leading-relaxed mb-5 whitespace-pre-line">
-                {product.description || `Get premium ${product.name} at the cheapest group buy price in India. Genuine subscription with full warranty, instant delivery and 24/7 support — exclusively from Dreamcrest Solutions.`}
+                {product.description || `Get premium ${product.name} at the cheapest group buy price in India. Genuine subscription with full warranty, instant delivery and 24/7 support — exclusively from Castle Tools.`}
               </p>
 
               <div className="flex items-baseline gap-3 mb-5">
@@ -391,7 +391,7 @@ const ProductDetail = () => {
           {/* SEO content */}
           <div className="mt-6 bg-card/60 backdrop-blur-sm border border-border/60 rounded-2xl p-6">
             <h2 className="font-display font-semibold text-foreground text-lg mb-2">
-              Why buy {product.name} from Dreamcrest Solutions?
+              Why buy {product.name} from Castle Tools?
             </h2>
             <ul className="text-sm text-muted-foreground space-y-1.5 list-disc pl-5">
               <li>Cheapest {product.name} group buy price in India — only {product.price}.</li>

@@ -16,11 +16,11 @@ const Index = () => {
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'WebSite',
-          name: 'Dreamcrest Solutions',
-          url: 'https://dreamcrest.net',
+          name: 'Castle Tools',
+          url: 'https://castletools.in',
           potentialAction: {
             '@type': 'SearchAction',
-            target: 'https://dreamcrest.net/products?search={search_term_string}',
+            target: 'https://castletools.in/products?search={search_term_string}',
             'query-input': 'required name=search_term_string',
           },
         }}

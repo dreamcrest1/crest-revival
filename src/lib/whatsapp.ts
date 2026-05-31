@@ -1,8 +1,8 @@
 // Centralised WhatsApp deep-link helper.
 // Use waLink() everywhere instead of hard-coding wa.me URLs.
 
-export const WA_NUMBER = '916357998730';
-const SITE = 'https://dreamcrest.net';
+export const WA_NUMBER = '919773453978';
+const SITE = 'https://castletools.in';
 
 export type WaContext =
   | 'generic'
@@ -25,7 +25,7 @@ export interface WaProductLike {
 
 const buildText = (product?: WaProductLike, context: WaContext = 'generic', extra?: string): string => {
   if (!product) {
-    return extra || "Hi! I'd like to know more about Dreamcrest tools.";
+    return extra || "Hi! I'd like to know more about Castle Tools tools.";
   }
   const price = typeof product.price === 'number' ? `₹${product.price}` : product.price;
   const url = product.slug ? `${SITE}/product/${product.slug}` : SITE;

@@ -13,7 +13,7 @@ import { buildAiToolSeo, findAiToolBySlug, slugifyAiTool } from '@/lib/aiToolSeo
 import { trackEvent } from '@/lib/eventTracker';
 import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
-const WHATSAPP_NUMBER = '916357998730';
+const WHATSAPP_NUMBER = '919773453978';
 
 
 
@@ -50,7 +50,7 @@ const AiToolDetail = () => {
   if (!tool || !seo) {
     return (
       <div className="min-h-screen relative z-10">
-        <SEOHead title="AI Tool not found | Dreamcrest" noindex />
+        <SEOHead title="AI Tool not found | Castle Tools" noindex />
         <Navbar />
         <div className="pt-32 pb-20 container mx-auto px-4 max-w-3xl text-center">
           <h1 className="font-display font-bold text-3xl text-foreground mb-3">AI tool not found</h1>

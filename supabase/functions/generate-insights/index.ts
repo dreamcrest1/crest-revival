@@ -120,7 +120,7 @@ Deno.serve(async (req) => {
         error_count: errors?.length ?? 0,
       };
 
-      const prompt = `You are a senior growth analyst for an Indian premium-subscription store called Dreamcrest Solutions.
+      const prompt = `You are a senior growth analyst for an Indian premium-subscription store called Castle Tools.
 Given the last 24 hours of raw metrics, produce a tight Markdown brief with EXACTLY these 4 sections:
 1. **What users wanted today** — 3 bullets naming specific tools/categories and the numbers behind them.
 2. **What blocked them** — 2 bullets (errors, low intent rate, drop-offs, missing inventory inferred from "searched_but_not_converted").

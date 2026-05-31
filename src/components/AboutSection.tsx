@@ -1,10 +1,10 @@
 import { Crown, Shield } from 'lucide-react';
 
 const features = [
-  'Most Trusted Service Provider',
-  'Over 200+ Products Available',
-  'Most Responsive Customer Support',
-  'Instant Digital Delivery',
+  'Hand-picked, genuine subscriptions',
+  '200+ tools stocked in the vault',
+  'Real humans on chat, not bots',
+  'Keys delivered in minutes',
 ];
 
 const stats = [
@@ -27,17 +27,15 @@ const AboutSection = () => {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] mb-3" style={{ color: '#C9A84C' }}>About Us</p>
+            <p className="text-xs uppercase tracking-[0.2em] mb-3" style={{ color: '#C9A84C' }}>Inside the Keep</p>
             <h2 className="font-display font-bold mb-3" style={{ color: '#F0EAD6' }}>
-              Dreamcrest Solutions
+              Castle Tools
             </h2>
             <h3 className="font-display text-lg mb-6" style={{ color: '#8A8AA0' }}>
-              Oldest Multiplatform Service Provider
+              A small Indian shop for premium digital keys
             </h3>
             <p className="mb-8" style={{ color: '#8A8AA0', lineHeight: 1.8 }}>
-              Dreamcrest Group is a leading provider of OTT services and group buy tools at discounted
-              prices. Founded in 2021, Dreamcrest has gained over 15,000+ customers and has expanded its
-              reach internationally.
+              We started Castle Tools to make legitimate AI subscriptions, OTT plans and creator software actually affordable in India. Everything is sourced, tested and handed over personally — no shady resellers, no surprises, just clean access at fair prices and quick help whenever you need it.
             </p>
 
             <div className="space-y-3">

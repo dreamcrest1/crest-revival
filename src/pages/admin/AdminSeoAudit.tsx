@@ -90,7 +90,7 @@ function sitemapToCsv(entries: { loc: string; status?: number }[]): string {
 }
 
 const AdminSeoAudit = () => {
-  const [url, setUrl] = useState('https://dreamcrest.net');
+  const [url, setUrl] = useState('https://castletools.in');
   const [maxPages, setMaxPages] = useState(30);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CrawlResult | null>(null);
@@ -125,7 +125,7 @@ const AdminSeoAudit = () => {
       <Card>
         <CardContent className="pt-6 flex flex-col sm:flex-row gap-3">
           <Input
-            placeholder="https://dreamcrest.net"
+            placeholder="https://castletools.in"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             className="flex-1"

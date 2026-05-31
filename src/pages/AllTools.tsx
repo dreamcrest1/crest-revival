@@ -45,7 +45,7 @@ const streamingDeals: StreamingDeal[] = [
 ];
 
 const getWhatsAppLink = (toolName: string) =>
-  `https://wa.me/916357998730?text=${encodeURIComponent(`Hi Dreamcrest Solutions! I'm interested in ${toolName}. Please share price and details.`)}`;
+  `https://wa.me/919773453978?text=${encodeURIComponent(`Hi Castle Tools! I'm interested in ${toolName}. Please share price and details.`)}`;
 
 const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 

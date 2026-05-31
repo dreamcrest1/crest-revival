@@ -50,7 +50,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEOHead title={mode === 'login' ? 'Login | Dreamcrest' : 'Sign Up | Dreamcrest'} description="Login to view your order history and manage your account." />
+      <SEOHead title={mode === 'login' ? 'Login | Castle Tools' : 'Sign Up | Castle Tools'} description="Login to view your order history and manage your account." />
       <Navbar />
       <main className="flex-1 flex items-center justify-center px-4 pt-32 pb-16">
         <div className="w-full max-w-md bg-card/70 backdrop-blur-xl border border-primary/30 rounded-2xl p-8 shadow-[0_0_48px_hsl(var(--primary)/0.15)]">

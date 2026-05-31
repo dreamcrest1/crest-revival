@@ -21,7 +21,7 @@ const NotFound = () => {
   return (
     <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-20">
       <SEOHead
-        title="404 – Page Not Found | Dreamcrest Solutions"
+        title="404 – Page Not Found | Castle Tools"
         description="The page you're looking for doesn't exist. Browse our premium digital products, AI tools and OTT subscriptions instead."
         noindex
       />
@@ -73,7 +73,7 @@ const NotFound = () => {
             </Button>
 
             <p className="text-xs text-muted-foreground mt-6">
-              Need help? <a href="https://wa.me/916357998730" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Chat with us on WhatsApp</a>
+              Need help? <a href="https://wa.me/919773453978" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Chat with us on WhatsApp</a>
             </p>
           </div>
         </div>

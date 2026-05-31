@@ -13,48 +13,48 @@ interface SEOProps {
   noindex?: boolean;
 }
 
-const baseUrl = 'https://dreamcrest.net';
+const baseUrl = 'https://castletools.in';
 
 const seoDefaults: Record<string, SEOProps> = {
   '/': {
-    title: 'Dreamcrest Solutions – Premium Digital Products at 80% Off | India\'s #1 Store',
+    title: 'Castle Tools – Premium Digital Products at 80% Off | India\'s #1 Store',
     description: 'Buy premium AI tools, OTT subscriptions, SEO tools, VPN & software licenses at up to 80% off. Serving 15,000+ customers since 2021. Instant delivery & 24/7 support.',
-    keywords: 'premium digital products, cheap AI tools, OTT subscriptions India, software deals, Dreamcrest Solutions, buy ChatGPT cheap, Netflix cheap India, Adobe cheap license, Canva Pro India, Microsoft 365 cheap',
+    keywords: 'premium digital products, cheap AI tools, OTT subscriptions India, software deals, Castle Tools, buy ChatGPT cheap, Netflix cheap India, Adobe cheap license, Canva Pro India, Microsoft 365 cheap',
   },
   '/products': {
-    title: 'All Products – 200+ Premium Tools & Subscriptions at Best Prices | Dreamcrest',
+    title: 'All Products – 200+ Premium Tools & Subscriptions at Best Prices | Castle Tools',
     description: 'Browse 200+ premium digital products: AI tools, video editing software, OTT subscriptions, SEO tools, VPN & more at unbeatable prices. Instant WhatsApp delivery guaranteed.',
     keywords: 'buy premium tools cheap, AI tools India, OTT subscription deals, software licenses cheap, digital products store India, Netflix Prime Hotstar cheap, ChatGPT Plus India',
   },
   '/about': {
-    title: 'About Dreamcrest Solutions – India\'s Most Trusted Digital Store Since 2021',
-    description: 'Learn about Dreamcrest Solutions – India\'s oldest & most trusted digital product marketplace. 15,000+ happy customers, 200+ products, instant delivery since 2021.',
-    keywords: 'Dreamcrest Solutions about, digital product store India, trusted online store, premium tools seller India, group buy India',
+    title: 'About Castle Tools – India\'s Most Trusted Digital Store Since 2021',
+    description: 'Learn about Castle Tools – India\'s oldest & most trusted digital product marketplace. 15,000+ happy customers, 200+ products, instant delivery since 2021.',
+    keywords: 'Castle Tools about, digital product store India, trusted online store, premium tools seller India, group buy India',
   },
   '/contact': {
-    title: 'Contact Dreamcrest Solutions – 24/7 WhatsApp Support | +91 6357998730',
-    description: 'Get in touch with Dreamcrest Solutions for queries, orders & support. Available 24/7 on WhatsApp at +91 6357998730. Instant responses guaranteed.',
-    keywords: 'contact Dreamcrest Solutions, WhatsApp support, digital products support India, customer care premium tools',
+    title: 'Contact Castle Tools – 24/7 WhatsApp Support | +91 9773453978',
+    description: 'Get in touch with Castle Tools for queries, orders & support. Available 24/7 on WhatsApp at +91 9773453978. Instant responses guaranteed.',
+    keywords: 'contact Castle Tools, WhatsApp support, digital products support India, customer care premium tools',
   },
   '/alltools': {
-    title: 'All Tools Catalog – 200+ Premium Digital Tools & Services | Dreamcrest',
+    title: 'All Tools Catalog – 200+ Premium Digital Tools & Services | Castle Tools',
     description: 'Complete catalog of 200+ premium tools: AI writers, SEO tools, VPN services, stock assets, video editors, lead generation & cloud services at best prices in India.',
     keywords: 'all digital tools, premium software catalog, AI tools list, SEO tools India, cheap premium tools, AI humanizer, stealth writer, writehuman',
   },
   '/faq': {
-    title: 'FAQ – Frequently Asked Questions | Dreamcrest Solutions',
-    description: 'Find answers to common questions about orders, delivery, refunds, warranties & support at Dreamcrest Solutions. Instant delivery & 24/7 WhatsApp support.',
-    keywords: 'Dreamcrest FAQ, digital products FAQ, how to buy premium tools cheap, refund policy India',
+    title: 'FAQ – Frequently Asked Questions | Castle Tools',
+    description: 'Find answers to common questions about orders, delivery, refunds, warranties & support at Castle Tools. Instant delivery & 24/7 WhatsApp support.',
+    keywords: 'Castle Tools FAQ, digital products FAQ, how to buy premium tools cheap, refund policy India',
   },
   '/terms': {
-    title: 'Terms & Conditions | Dreamcrest Solutions',
-    description: 'Read the terms and conditions for using Dreamcrest Solutions digital products marketplace. Transparent policies for our customers.',
-    keywords: 'terms and conditions, Dreamcrest terms, digital store policies',
+    title: 'Terms & Conditions | Castle Tools',
+    description: 'Read the terms and conditions for using Castle Tools digital products marketplace. Transparent policies for our customers.',
+    keywords: 'terms and conditions, Castle Tools terms, digital store policies',
   },
   '/refunds': {
-    title: 'Refund & Replacement Policy | Dreamcrest Solutions',
-    description: 'Hassle-free refund and replacement policy for digital products at Dreamcrest Solutions. 7-day refund window and free warranty replacements.',
-    keywords: 'refund policy, Dreamcrest refund, digital products return policy, warranty replacement India',
+    title: 'Refund & Replacement Policy | Castle Tools',
+    description: 'Hassle-free refund and replacement policy for digital products at Castle Tools. 7-day refund window and free warranty replacements.',
+    keywords: 'refund policy, Castle Tools refund, digital products return policy, warranty replacement India',
   },
 };
 
@@ -64,9 +64,9 @@ const SEOHead = ({
   const location = useLocation();
   const defaults = seoDefaults[location.pathname] || {};
 
-  const finalTitle = title || defaults.title || 'Dreamcrest Solutions – Premium Digital Products Store';
+  const finalTitle = title || defaults.title || 'Castle Tools – Premium Digital Products Store';
   const finalDesc = description || defaults.description || 'India\'s most trusted digital product store. Premium tools at unbeatable prices.';
-  const finalKeywords = keywords || defaults.keywords || 'Dreamcrest Solutions, digital products, premium tools India';
+  const finalKeywords = keywords || defaults.keywords || 'Castle Tools, digital products, premium tools India';
 
   // Build canonical: normalize path (lowercase, strip trailing slash except root)
   // and only keep SEO-relevant query params (category, filter) on /products.
@@ -101,20 +101,20 @@ const SEOHead = ({
   const orgLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Dreamcrest Solutions',
+    name: 'Castle Tools',
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
     description: 'India\'s most trusted digital product store offering premium AI tools, OTT subscriptions, software licenses & more at unbeatable prices.',
     foundingDate: '2021',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+91-6357998730',
+      telephone: '+91-9773453978',
       contactType: 'customer service',
       availableLanguage: ['English', 'Hindi'],
     },
     sameAs: [
-      'https://www.instagram.com/dreamcrestsolutions',
-      'https://www.youtube.com/@dreamcrestsolutions',
+      'https://www.instagram.com/Castletool99',
+      'https://www.youtube.com/@Castletool99',
     ],
   };
 
@@ -143,7 +143,7 @@ const SEOHead = ({
       <meta name="keywords" content={finalKeywords} />
       <link rel="canonical" href={finalCanonical} />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
-      <meta name="author" content="Dreamcrest Solutions" />
+      <meta name="author" content="Castle Tools" />
       <meta name="geo.region" content="IN" />
       <meta name="geo.placename" content="Chennai, India" />
       <meta name="theme-color" content="#0F172A" />
@@ -156,7 +156,7 @@ const SEOHead = ({
       <meta property="og:url" content={finalCanonical} />
       <meta property="og:image" content={finalImage} />
       <meta property="og:image:alt" content={finalTitle} />
-      <meta property="og:site_name" content="Dreamcrest Solutions" />
+      <meta property="og:site_name" content="Castle Tools" />
       <meta property="og:locale" content="en_IN" />
 
       {/* Twitter */}
@@ -164,7 +164,7 @@ const SEOHead = ({
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDesc} />
       <meta name="twitter:image" content={finalImage} />
-      <meta name="twitter:site" content="@dreamcrestsolutions" />
+      <meta name="twitter:site" content="@Castletool99" />
 
       {/* JSON-LD: emit each block separately */}
       {allLd.map((ld, i) => (

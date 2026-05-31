@@ -8,58 +8,58 @@ import PageBanner from '@/components/PageBanner';
 const policies = [
   {
     number: '1',
-    title: 'All Sales Are Final',
-    content: 'All purchases are final. We do not offer refunds under any circumstances, except as specifically mentioned in this policy.',
+    title: 'Most digital sales are final',
+    content: 'Because what we ship are digital keys and accounts, all orders are treated as final unless a clause below clearly applies to your case.',
   },
   {
     number: '2',
-    title: 'Replacement for Non-Functional Services',
-    content: 'If any OTT service is not working, we will provide a replacement or an alternative OTT service of similar value.',
+    title: 'Free replacement when an OTT plan breaks',
+    content: 'If an OTT subscription stops working before its validity ends, we either repair the same plan or hand you an equivalent one at no extra cost.',
   },
   {
     number: '3',
-    title: 'No Refund After Order or Delivery',
-    content: 'Once the service is ordered, taken, or delivered, we reserve the right to refuse any kind of refund request.',
+    title: 'Already activated? Refunds close',
+    content: 'Once the credentials are delivered, the key is activated, or the service has been used even once, the order moves out of the refund window.',
   },
   {
     number: '4',
-    title: 'Warranty on Lifetime Services',
-    content: 'Services labeled as "lifetime" come with a 1-year warranty. If the service stops working after the warranty period (e.g., after 1.5 years), we will not be able to offer support or replacement.',
+    title: 'Lifetime plans come with a 1-year care window',
+    content: 'Anything sold as "lifetime" is covered by a 12-month warranty from purchase. After the window closes, we cannot guarantee fixes or swaps on that key.',
   },
   {
     number: '5',
-    title: 'Annual Maintenance Charges (AMC)',
-    content: 'Some lifetime services may include an AMC (Annual Maintenance Charge) to keep our operations sustainable. The AMC will range from 25% to 30% of the original service price.',
+    title: 'Small upkeep fee on long-life plans',
+    content: 'A few lifetime services may carry an Annual Maintenance Charge of roughly 25%–30% of the original price to keep the underlying account healthy.',
   },
   {
     number: '6',
-    title: 'Refund Eligibility',
-    content: 'Refunds are only applicable if: The product/service is not delivered to you, or the product/service is out of stock.',
+    title: 'When you do qualify for a refund',
+    content: 'Refunds are granted only when we are unable to deliver your order, or when the stock you paid for has run out and an alternative is not acceptable to you.',
   },
   {
     number: '7',
-    title: 'OEM Policy Dependency',
-    content: 'We are service providers, not developers or OEMs (Original Equipment Manufacturers). Our policies may change in accordance with OEM policy updates.',
+    title: 'We follow the upstream rules',
+    content: 'Castle Tools is a reseller — not the maker of these tools. If an OEM changes its terms or pricing mid-cycle, our policy follows their lead.',
   },
   {
     number: '8',
-    title: 'Mass Service Disruptions',
-    content: 'In the event of mass bans or service disruptions (e.g., Prime Video, Netflix), we will provide free replacements wherever applicable.',
+    title: 'Large-scale platform bans',
+    content: 'If a whole platform (think Netflix, Prime Video, etc.) freezes or bans accounts in bulk, we replace impacted plans free, wherever a fix is possible from our end.',
   },
   {
     number: '9',
-    title: 'Technical Downtime Compensation',
-    content: 'If a service is non-functional due to technical or backend issues, we will compensate by extending your service validity to cover the downtime experienced.',
+    title: 'Downtime is added back to your plan',
+    content: 'When a tool is down due to backend hiccups, we extend your validity to cover the lost days, so you do not pay for time you could not use.',
   },
   {
     number: '10',
-    title: 'Policy Updates',
-    content: 'We reserve the right to modify this policy at any time, based on business needs or external conditions.',
+    title: 'This page may evolve',
+    content: 'We may tune this policy from time to time. Major changes will reflect on this page, and your continued use of Castle Tools means you accept them.',
   },
   {
     number: '11',
-    title: 'Affordable Pricing & Service Quality',
-    content: 'As we offer services at a fraction of the original price, minor issues may occasionally occur. However, we are committed to delivering the best possible service experience and timely support.',
+    title: 'Fair price, fair expectations',
+    content: 'Because plans here are priced at a fraction of retail, occasional hiccups are part of the deal — but we work fast to keep your experience smooth.',
   },
 ];
 
@@ -72,9 +72,9 @@ const Refunds = () => {
         <div className="container mx-auto px-4 max-w-3xl">
           <PageBanner
             eyebrow="The Royal Decree"
-            title="Refund &"
-            highlight="Return Policy"
-            subtitle="Effective for: Dreamcrest Solutions & Dreamstar Solutions"
+            title="Refunds &"
+            highlight="Replacements"
+            subtitle="How Castle Tools handles money-back requests, warranty fixes and the unusual edge cases."
           />
 
 
@@ -85,9 +85,9 @@ const Refunds = () => {
             transition={{ delay: 0.1 }}
             className="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-8"
           >
-            <h3 className="font-display font-semibold text-primary text-lg mb-2">⚠️ Important Notice</h3>
+            <h3 className="font-display font-semibold text-primary text-lg mb-2">⚠️ Heads-up</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              By purchasing or subscribing to any of our services, you agree to the terms outlined below. Since we deal in digital products, most delivered items are <strong className="text-foreground">non-refundable</strong> once activated.
+              By placing an order on Castle Tools you accept the points below. Since most items are delivered as digital keys, anything <strong className="text-foreground">already activated</strong> usually cannot be refunded — but we'll always try to make things right.
             </p>
           </motion.div>
 
@@ -117,14 +117,14 @@ const Refunds = () => {
             className="mt-10 bg-card border border-border rounded-xl p-8 text-center"
           >
             <h2 className="font-display font-semibold text-foreground text-xl mb-3">
-              Need Support or Have Questions?
+              Need a hand with your order?
             </h2>
             <p className="text-muted-foreground text-sm mb-6">
-              Contact us with your order details. We'll review your request and get back to you within 24-48 hours. WhatsApp is the fastest way to reach us!
+              Share your order number and what went wrong — our team usually replies on WhatsApp within minutes, and over email within a day.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="https://wa.me/916357998730?text=Hi,%20I%20have%20a%20query%20regarding%20my%20order."
+                href="https://wa.me/919773453978?text=Hi,%20I%20have%20a%20query%20regarding%20my%20order."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
@@ -132,7 +132,7 @@ const Refunds = () => {
                 💬 Chat on WhatsApp
               </a>
               <a
-                href="mailto:dreamcrestsolutions@gmail.com?subject=Refund/Support%20Request"
+                href="mailto:Castletool99@gmail.com?subject=Refund/Support%20Request"
                 className="inline-block bg-card text-primary border border-primary/30 px-6 py-2.5 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-colors"
               >
                 📧 Email Us

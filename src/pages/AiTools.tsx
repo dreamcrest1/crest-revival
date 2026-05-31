@@ -16,7 +16,7 @@ import { slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
 import CheckoutDialog from '@/components/checkout/CheckoutDialog';
 
-const WHATSAPP_NUMBER = '916357998730';
+const WHATSAPP_NUMBER = '919773453978';
 
 
 // Broad category buckets — collapses the many fine-grained meta.category values
@@ -272,7 +272,7 @@ const AiTools = () => {
               priceCurrency: 'INR',
               price: t.price > 0 ? String(t.price) : '0',
               availability: 'https://schema.org/InStock',
-              seller: { '@type': 'Organization', name: 'Dreamcrest Solutions' },
+              seller: { '@type': 'Organization', name: 'Castle Tools' },
               ...(t.price === 0 ? { description: 'Contact for pricing' } : {}),
             },
           },
@@ -286,7 +286,7 @@ const AiTools = () => {
       mainEntity: [
         {
           '@type': 'Question',
-          name: 'How does group buy for AI tools work at Dreamcrest?',
+          name: 'How does group buy for AI tools work at Castle Tools?',
           acceptedAnswer: { '@type': 'Answer', text: 'You pay a fraction of the official price for a private premium AI subscription. Accounts are delivered instantly to your registered email after payment, with full warranty for the entire validity period.' },
         },
         {
@@ -297,7 +297,7 @@ const AiTools = () => {
         {
           '@type': 'Question',
           name: 'Where can I buy cheap AI tools in India?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Dreamcrest Solutions offers the cheapest AI tools, SEO tools, design tools and SaaS subscriptions in India via group buy, with instant delivery and 24/7 WhatsApp support at +91 6357998730.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Castle Tools offers the cheapest AI tools, SEO tools, design tools and SaaS subscriptions in India via group buy, with instant delivery and 24/7 WhatsApp support at +91 9773453978.' },
         },
       ],
     };
@@ -308,10 +308,10 @@ const AiTools = () => {
   return (
     <div className="min-h-screen relative z-10">
       <SEOHead
-        title="Group Buy AI Tools India – Cheap ChatGPT, Lovable, Figma & 100+ More | Dreamcrest"
+        title="Group Buy AI Tools India – Cheap ChatGPT, Lovable, Figma & 100+ More | Castle Tools"
         description={seoDescription}
         keywords={seoKeywords}
-        canonical="https://dreamcrest.net/ai-tools"
+        canonical="https://castletools.in/ai-tools"
         jsonLd={seoJsonLd}
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -321,7 +321,7 @@ const AiTools = () => {
       {/* Hidden SEO text — gives crawlers a per-product keyword block without cluttering UI */}
       <div className="sr-only" aria-hidden="true">
         <h2>Group buy AI tools, cheap AI subscriptions & discounted SaaS in India</h2>
-        <p>Dreamcrest Solutions offers group buy and discounted prices for: {trending.map((t) => `group buy ${t.name}, cheap ${t.name}, ${t.name} India price`).join('; ')}.</p>
+        <p>Castle Tools offers group buy and discounted prices for: {trending.map((t) => `group buy ${t.name}, cheap ${t.name}, ${t.name} India price`).join('; ')}.</p>
       </div>
       <Navbar />
 
@@ -449,7 +449,7 @@ const AiTools = () => {
           <div className="mt-10 bg-card/40 backdrop-blur border border-border/60 rounded-2xl p-6 text-center">
             <Mail className="w-5 h-5 text-primary mx-auto mb-2" />
             <p className="text-sm text-foreground font-semibold">All AI tools are private subscriptions delivered directly to your registered email after payment.</p>
-            <p className="text-xs text-muted-foreground mt-1.5">For more information, contact us on WhatsApp: <span className="text-primary font-semibold">+91 6357998730</span></p>
+            <p className="text-xs text-muted-foreground mt-1.5">For more information, contact us on WhatsApp: <span className="text-primary font-semibold">+91 9773453978</span></p>
           </div>
         </div>
       </div>
