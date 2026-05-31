@@ -257,16 +257,16 @@ const HeroSection = () => {
             >
               <Sparkles className="w-3.5 h-3.5" style={{ color: '#C9A84C' }} />
               <span className="text-[13px] font-medium" style={{ color: '#C9A84C', letterSpacing: '0.04em' }}>
-                Premium Digital Marketplace
+                The Castle Tools Armoury
               </span>
             </div>
 
             <h1 className="font-display font-bold mb-6" style={{ color: '#F0EAD6' }}>
-              Explore Our <span className="text-gradient-gold">Universe</span> of Tools
+              Unlock the <span className="text-gradient-gold">Royal Vault</span> of Digital Tools
             </h1>
 
             <p className="text-base md:text-lg mb-8 max-w-xl" style={{ color: '#8A8AA0', lineHeight: 1.7 }}>
-              India's most trusted store for premium AI tools, OTT subscriptions, SEO tools, VPN & software at up to 80% off. 15,000+ happy customers delivered since 2021.
+              Castle Tools is India's friendly little keep for genuine AI subscriptions, OTT plans, SEO suites, VPNs and pro software — handed over instantly at prices that quietly slash up to 80% off retail.
             </p>
 
             <div className="flex flex-wrap gap-2 mb-8">
