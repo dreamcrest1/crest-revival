@@ -117,10 +117,10 @@ const Refunds = () => {
             className="mt-10 bg-card border border-border rounded-xl p-8 text-center"
           >
             <h2 className="font-display font-semibold text-foreground text-xl mb-3">
-              Need Support or Have Questions?
+              Need a hand with your order?
             </h2>
             <p className="text-muted-foreground text-sm mb-6">
-              Contact us with your order details. We'll review your request and get back to you within 24-48 hours. WhatsApp is the fastest way to reach us!
+              Share your order number and what went wrong — our team usually replies on WhatsApp within minutes, and over email within a day.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
