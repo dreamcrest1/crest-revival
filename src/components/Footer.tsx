@@ -71,11 +71,16 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:Castletool99@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
-                  <EmailIcon className="w-4 h-4" /> Email
+                <a href="https://www.facebook.com/share/18fxQZhomn/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#1877F2] transition-colors">
+                  <GlobeIcon className="w-4 h-4" /> Facebook
                 </a>
               </li>
-              <li className="text-xs pt-1">🏢 D-18 Richmond Heights, Sector 37, Gandhinagar, GJ 382010</li>
+              <li>
+                <a href="mailto:Castletool99@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+                  <EmailIcon className="w-4 h-4" /> Castletool99@gmail.com
+                </a>
+              </li>
+              <li className="text-xs pt-1">📞 +91 97734 53978</li>
             </ul>
           </div>
         </div>
