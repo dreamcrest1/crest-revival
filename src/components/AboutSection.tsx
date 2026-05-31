@@ -1,10 +1,10 @@
 import { Crown, Shield } from 'lucide-react';
 
 const features = [
-  'Most Trusted Service Provider',
-  'Over 200+ Products Available',
-  'Most Responsive Customer Support',
-  'Instant Digital Delivery',
+  'Hand-picked, genuine subscriptions',
+  '200+ tools stocked in the vault',
+  'Real humans on chat, not bots',
+  'Keys delivered in minutes',
 ];
 
 const stats = [
