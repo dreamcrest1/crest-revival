@@ -1,5 +1,5 @@
 # ============================================================
-# Dreamcrest Solutions — Apache config (cPanel / MilesWeb)
+# Castle Tools — Apache config (cPanel / MilesWeb)
 # ============================================================
 
 # ---------- Force HTTPS + non-www canonical host ----------
@@ -9,7 +9,7 @@ RewriteBase /
 # Redirect HTTP -> HTTPS
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
-RewriteRule ^(.*)$ https://dreamcrest.net/$1 [R=301,L]
+RewriteRule ^(.*)$ https://castletools.in/$1 [R=301,L]
 
 # Strip trailing slashes (except root) for canonical URLs
 RewriteCond %{REQUEST_FILENAME} !-d

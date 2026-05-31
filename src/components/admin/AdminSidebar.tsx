@@ -56,7 +56,7 @@ const AdminSidebar = () => {
     <Sidebar collapsible="icon" className="border-r border-border">
       <SidebarContent className="bg-card/80 backdrop-blur-sm">
         <div className="p-4 flex items-center gap-3 border-b border-border">
-          <img src={logo} alt="Dreamcrest" className="w-8 h-8 rounded-lg shrink-0" />
+          <img src={logo} alt="Castle Tools" className="w-8 h-8 rounded-lg shrink-0" />
           {!collapsed && <span className="font-display font-bold text-foreground">Admin</span>}
         </div>
 

@@ -62,25 +62,25 @@ const Products = () => {
   const itemListLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Dreamcrest Solutions Premium Digital Products',
+    name: 'Castle Tools Premium Digital Products',
     numberOfItems: filtered.length,
     itemListElement: filtered.slice(0, 30).map((p, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `https://dreamcrest.net/product/${slugify(p.name)}`,
+      url: `https://castletools.in/product/${slugify(p.name)}`,
       item: {
         '@type': 'Product',
         name: p.name,
         image: p.image,
         description: p.description || p.name,
         category: p.category,
-        url: `https://dreamcrest.net/product/${slugify(p.name)}`,
+        url: `https://castletools.in/product/${slugify(p.name)}`,
         offers: {
           '@type': 'Offer',
           priceCurrency: 'INR',
           price: p.price.replace(/[^\d.]/g, ''),
           availability: 'https://schema.org/InStock',
-          url: `https://dreamcrest.net/product/${slugify(p.name)}`,
+          url: `https://castletools.in/product/${slugify(p.name)}`,
         },
       },
     })),
@@ -88,12 +88,12 @@ const Products = () => {
 
   const dynamicSeo = isHotFilter
     ? {
-        title: 'Hot Selling Products – Trending Premium Tools & OTT | Dreamcrest Solutions',
+        title: 'Hot Selling Products – Trending Premium Tools & OTT | Castle Tools',
         description: `Shop our ${hotSellingCount} hottest-selling premium digital products including Netflix, Prime Video, Hotstar, ChatGPT & more. Trending picks at up to 80% off with instant delivery.`,
       }
     : activeCategory !== 'All'
     ? {
-        title: `${activeCategory} – Premium ${activeCategory} at Best Prices | Dreamcrest Solutions`,
+        title: `${activeCategory} – Premium ${activeCategory} at Best Prices | Castle Tools`,
         description: `Browse premium ${activeCategory} products at unbeatable prices in India. Verified, genuine subscriptions & licenses with instant WhatsApp delivery and 24/7 support.`,
       }
     : {};

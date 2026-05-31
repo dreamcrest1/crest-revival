@@ -8,21 +8,21 @@ import SEOHead from '@/components/SEOHead';
 import PageBanner from '@/components/PageBanner';
 
 const dreamcrestNumbers = [
-  { label: '+91 97123 01164', link: 'https://wa.me/919712301164' },
-  { label: '+91 63579 98730', link: 'https://wa.me/916357998730' },
+  { label: '+91 97734 53978', link: 'https://wa.me/919773453978' },
+  { label: '+91 97734 53978', link: 'https://wa.me/919773453978' },
 ];
 
 const dreamstarNumbers = [
-  { label: '+91 99914 83279', link: 'https://wa.me/919991483279' },
-  { label: '+91 97292 13279', link: 'https://wa.me/919729213279' },
-  { label: '+91 91769 00944', link: 'https://wa.me/919176900944' },
-  { label: '+91 80030 78749', link: 'https://wa.me/918003078749' },
+  { label: '+91 99914 83279', link: 'https://wa.me/919773453978' },
+  { label: '+91 97292 13279', link: 'https://wa.me/919773453978' },
+  { label: '+91 91769 00944', link: 'https://wa.me/919773453978' },
+  { label: '+91 80030 78749', link: 'https://wa.me/919773453978' },
 ];
 
 const brands = [
-  { name: 'Dreamcrest', desc: 'Premier OTT & Cloud Services', url: 'https://dreamcrest.net/', Icon: StarIcon },
-  { name: 'Dreamstar Solution', desc: 'Our Second Firm', url: 'https://dreamstarsolution.com/', Icon: RocketIcon },
-  { name: 'Dreamtools.in', desc: 'Group Buy Tools Panel', url: 'https://dreamtools.in/', Icon: WrenchIcon },
+  { name: 'Castle Tools', desc: 'Premier OTT & Cloud Services', url: 'https://castletools.in/', Icon: StarIcon },
+  { name: 'Castle Tools', desc: 'Our Second Firm', url: 'https://castletools.in/', Icon: RocketIcon },
+  { name: 'Dreamtools.in', desc: 'Group Buy Tools Panel', url: 'https://castletools.in/', Icon: WrenchIcon },
   { name: 'Delivery Proofs', desc: 'Instagram Showcase', url: 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTkzOTExNzgwNDk4NDU1?igshid=YmMyMTA2M2Y=', Icon: CameraIcon },
   { name: 'YouTube Channel', desc: 'Product Demos', url: 'https://www.youtube.com/channel/UCbqBFmu4oZ3PpcwEdMVDDcw', Icon: PlayIcon },
 ];
@@ -35,11 +35,11 @@ const Contact = () => {
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'ContactPage',
-          name: 'Contact Dreamcrest Solutions',
-          url: 'https://dreamcrest.net/contact',
+          name: 'Contact Castle Tools',
+          url: 'https://castletools.in/contact',
           contactPoint: [
-            { '@type': 'ContactPoint', telephone: '+91-6357998730', contactType: 'customer service', availableLanguage: ['English', 'Hindi'] },
-            { '@type': 'ContactPoint', telephone: '+91-9712301164', contactType: 'sales', availableLanguage: ['English', 'Hindi'] },
+            { '@type': 'ContactPoint', telephone: '+91-9773453978', contactType: 'customer service', availableLanguage: ['English', 'Hindi'] },
+            { '@type': 'ContactPoint', telephone: '+91-9773453978', contactType: 'sales', availableLanguage: ['English', 'Hindi'] },
           ],
         }}
       />
@@ -85,7 +85,7 @@ const Contact = () => {
 
           {/* Phone Numbers */}
           <div className="grid md:grid-cols-2 gap-6 mb-14">
-            {/* Dreamcrest */}
+            {/* Castle Tools */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -96,7 +96,7 @@ const Contact = () => {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <GlobeIcon className="w-5 h-5" />
                 </div>
-                <h3 className="font-display font-bold text-foreground text-lg">Dreamcrest Solutions</h3>
+                <h3 className="font-display font-bold text-foreground text-lg">Castle Tools</h3>
               </div>
               <div className="space-y-3">
                 {dreamcrestNumbers.map(n => (
@@ -116,7 +116,7 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* Dreamstar */}
+            {/* Castle Tools */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -127,7 +127,7 @@ const Contact = () => {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <RocketIcon className="w-5 h-5" />
                 </div>
-                <h3 className="font-display font-bold text-foreground text-lg">Dreamstar Solutions</h3>
+                <h3 className="font-display font-bold text-foreground text-lg">Castle Tools</h3>
               </div>
               <div className="space-y-3">
                 {dreamstarNumbers.map(n => (
@@ -158,16 +158,16 @@ const Contact = () => {
             <h3 className="font-display font-bold text-foreground text-lg mb-5 text-center">📧 Email Us</h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:dreamcrestsolutions@gmail.com"
+                href="mailto:Castletool99@gmail.com"
                 className="group bg-secondary/50 hover:bg-secondary text-foreground border border-border hover:border-primary/30 px-6 py-3.5 rounded-xl font-medium transition-all duration-300 text-center text-sm"
               >
-                dreamcrestsolutions@gmail.com
+                Castletool99@gmail.com
               </a>
               <a
-                href="mailto:dreamstarott@gmail.com"
+                href="mailto:Castletool99@gmail.com"
                 className="group bg-secondary/50 hover:bg-secondary text-foreground border border-border hover:border-primary/30 px-6 py-3.5 rounded-xl font-medium transition-all duration-300 text-center text-sm"
               >
-                dreamstarott@gmail.com
+                Castletool99@gmail.com
               </a>
             </div>
           </motion.div>
@@ -198,7 +198,7 @@ const Contact = () => {
                 Get instant replies and support via WhatsApp. We typically respond within minutes.
               </p>
               <a
-                href="https://wa.me/916357998730"
+                href="https://wa.me/919773453978"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 bg-[#25D366] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#22c55e] transition-all duration-300 shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)]"

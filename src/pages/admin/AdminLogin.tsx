@@ -45,7 +45,7 @@ const AdminLogin = () => {
       <div className="w-full max-w-md mx-4">
         <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-8 shadow-lg">
           <div className="text-center mb-8">
-            <img src={logo} alt="Dreamcrest" className="w-16 h-16 mx-auto mb-4 rounded-xl" />
+            <img src={logo} alt="Castle Tools" className="w-16 h-16 mx-auto mb-4 rounded-xl" />
             <h1 className="font-display text-2xl font-bold text-foreground">Admin Panel</h1>
             <p className="text-muted-foreground text-sm mt-1">Sign in to manage your store</p>
           </div>
@@ -74,7 +74,7 @@ const AdminLogin = () => {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="admin@dreamcrest.net"
+                  placeholder="admin@Castletool99.net"
                   className="pl-10"
                   required
                 />

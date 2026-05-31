@@ -95,7 +95,7 @@ const StorefrontChatbot = () => {
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center"><Sparkles className="w-4 h-4" /></div>
               <div>
-                <div className="text-sm font-semibold">Dreamcrest AI</div>
+                <div className="text-sm font-semibold">Castle Tools AI</div>
                 <div className="text-[10px] text-emerald-400">● Online</div>
               </div>
             </div>

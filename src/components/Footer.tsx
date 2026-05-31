@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Dreamcrest" className="w-9 h-9 rounded-lg object-contain ring-1 ring-primary/40" />
+              <img src={logo} alt="Castle Tools" className="w-9 h-9 rounded-lg object-contain ring-1 ring-primary/40" />
               <span className="font-display font-bold text-xl text-foreground tracking-wide">
                 Dream<span className="text-primary italic">crest</span>
               </span>
@@ -21,16 +21,16 @@ const Footer = () => {
             </p>
             {/* Social icons row */}
             <div className="flex items-center gap-3">
-              <a href="https://wa.me/916357998730" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#25D366] transition-colors">
+              <a href="https://wa.me/919773453978" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#25D366] transition-colors">
                 <WhatsAppIcon className="w-5 h-5" />
               </a>
-              <a href="https://www.instagram.com/dreamcrest_solutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#E4405F] transition-colors">
+              <a href="https://www.instagram.com/Castletool99" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#E4405F] transition-colors">
                 <InstagramIcon className="w-5 h-5" />
               </a>
               <a href="https://www.youtube.com/channel/UCbqBFmu4oZ3PpcwEdMVDDcw" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#FF0000] transition-colors">
                 <YouTubeIcon className="w-5 h-5" />
               </a>
-              <a href="mailto:dreamcrestsolutions@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="mailto:Castletool99@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                 <EmailIcon className="w-5 h-5" />
               </a>
             </div>
@@ -60,17 +60,17 @@ const Footer = () => {
             <h4 className="font-display font-semibold text-foreground mb-4">Contact Us</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="https://wa.me/916357998730" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#25D366] transition-colors">
+                <a href="https://wa.me/919773453978" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#25D366] transition-colors">
                   <WhatsAppIcon className="w-4 h-4" /> WhatsApp
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/dreamcrest_solutions" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#E4405F] transition-colors">
+                <a href="https://www.instagram.com/Castletool99" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#E4405F] transition-colors">
                   <InstagramIcon className="w-4 h-4" /> Instagram
                 </a>
               </li>
               <li>
-                <a href="mailto:dreamcrestsolutions@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+                <a href="mailto:Castletool99@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
                   <EmailIcon className="w-4 h-4" /> Email
                 </a>
               </li>
@@ -82,7 +82,7 @@ const Footer = () => {
         <div className="border-t border-primary/20 mt-8 pt-6 text-center text-sm text-muted-foreground">
           <p className="flex items-center justify-center gap-2 flex-wrap">
             <span className="text-primary">❖</span>
-            <span>Powered by Dreamcrest & Dreamstar | © {new Date().getFullYear()} All rights reserved.</span>
+            <span>Powered by Castle Tools & Castle Tools | © {new Date().getFullYear()} All rights reserved.</span>
             <span className="text-primary">❖</span>
           </p>
         </div>

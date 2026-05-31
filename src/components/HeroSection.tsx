@@ -180,7 +180,7 @@ const Medallion = () => {
               <path id="med-arc-front" d="M 60 190 A 130 130 0 0 1 320 190" fill="none" />
               <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="14" letterSpacing="6">
                 <textPath href="#med-arc-front" startOffset="50%" textAnchor="middle">
-                  DREAMCREST
+                  CASTLE TOOLS
                 </textPath>
               </text>
               <path id="med-arc-front-bot" d="M 60 200 A 130 130 0 0 0 320 200" fill="none" />
@@ -221,7 +221,7 @@ const Medallion = () => {
               <path id="med-arc-back" d="M 60 190 A 130 130 0 0 1 320 190" fill="none" />
               <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="14" letterSpacing="6">
                 <textPath href="#med-arc-back" startOffset="50%" textAnchor="middle">
-                  DREAMCREST
+                  CASTLE TOOLS
                 </textPath>
               </text>
               <path id="med-arc-back-bot" d="M 60 200 A 130 130 0 0 0 320 200" fill="none" />
@@ -296,7 +296,7 @@ const HeroSection = () => {
                 Explore Products <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href="https://wa.me/916357998730"
+                href="https://wa.me/919773453978"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 font-semibold text-sm px-6 py-3 rounded-md transition-all"

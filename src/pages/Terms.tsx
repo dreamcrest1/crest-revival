@@ -22,7 +22,7 @@ const Terms = () => {
             <div className="bg-card border border-border rounded-xl p-6">
               <h2 className="font-display font-semibold text-foreground text-xl mb-3">General Terms</h2>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                By purchasing from Dreamcrest Solutions, you agree to our terms and conditions. All products sold are digital goods and services delivered instantly via email or direct activation.
+                By purchasing from Castle Tools, you agree to our terms and conditions. All products sold are digital goods and services delivered instantly via email or direct activation.
               </p>
             </div>
 

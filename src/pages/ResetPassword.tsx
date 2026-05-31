@@ -55,7 +55,7 @@ const ResetPassword = () => {
       <div className="w-full max-w-md mx-4">
         <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-8 shadow-lg">
           <div className="text-center mb-8">
-            <img src={logo} alt="Dreamcrest" className="w-16 h-16 mx-auto mb-4 rounded-xl" />
+            <img src={logo} alt="Castle Tools" className="w-16 h-16 mx-auto mb-4 rounded-xl" />
             <h1 className="font-display text-2xl font-bold text-foreground">Set New Password</h1>
             <p className="text-muted-foreground text-sm mt-1">Choose a strong password for your account.</p>
           </div>

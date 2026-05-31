@@ -73,7 +73,7 @@ describe('AI tool JSON-LD (Google Rich Results compliance)', () => {
       expect(offer.url).toMatch(/^https:\/\/dreamcrest\.net\/ai-tool\//);
       // priceValidUntil must be ISO yyyy-mm-dd
       expect(offer.priceValidUntil as string).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect((offer.seller as Record<string, unknown>).name).toBe('Dreamcrest Solutions');
+      expect((offer.seller as Record<string, unknown>).name).toBe('Castle Tools');
     });
 
     it('aggregateRating has all four Rich Results properties', () => {
@@ -133,7 +133,7 @@ describe('AI tool JSON-LD (Google Rich Results compliance)', () => {
       expect(seo.description.length).toBeLessThanOrEqual(160);
     });
     it('canonical url matches slug', () => {
-      expect(seo.url).toBe(`https://dreamcrest.net/ai-tool/${seo.slug}`);
+      expect(seo.url).toBe(`https://castletools.in/ai-tool/${seo.slug}`);
     });
     it('ogImage resolves to an absolute https URL', () => {
       expect(seo.ogImage).toMatch(/^https?:\/\//);

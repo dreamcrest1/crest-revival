@@ -113,7 +113,7 @@ const CartDrawer = () => {
                     <CreditCard className="w-4 h-4" /> Pay ₹{totalPrice.toFixed(0)}
                   </button>
                   <a
-                    href={`https://wa.me/916357998730?text=${whatsappMsg}`}
+                    href={`https://wa.me/919773453978?text=${whatsappMsg}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/20 rounded-xl px-4 py-3 text-sm font-semibold hover:bg-[#25D366] hover:text-white transition-all"

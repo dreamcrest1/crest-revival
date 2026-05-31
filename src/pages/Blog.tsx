@@ -37,17 +37,17 @@ const Blog = () => {
   return (
     <div className="min-h-screen relative z-10">
       <Helmet>
-        <title>Blog — Dreamcrest Solutions</title>
+        <title>Blog — Castle Tools</title>
         <meta name="description" content="Guides, deals, and tips on the best AI, SEO, OTT and design tools — explained for Indian creators and businesses." />
-        <link rel="canonical" href="https://dreamcrest.net/blog" />
-        <meta property="og:title" content="Dreamcrest Blog" />
-        <meta property="og:url" content="https://dreamcrest.net/blog" />
+        <link rel="canonical" href="https://castletools.in/blog" />
+        <meta property="og:title" content="Castle Tools Blog" />
+        <meta property="og:url" content="https://castletools.in/blog" />
       </Helmet>
       <Navbar />
       <main className="container mx-auto px-4 pt-32 pb-20 max-w-6xl">
         <PageBanner
           eyebrow="Chronicles & Sagas"
-          title="Dreamcrest"
+          title="Castle Tools"
           highlight="Chronicles"
           subtitle="Honest guides, deals and how-tos on the tools we sell — written for Indian creators, marketers and entrepreneurs."
         />

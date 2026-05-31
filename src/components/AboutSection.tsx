@@ -29,14 +29,14 @@ const AboutSection = () => {
           <div>
             <p className="text-xs uppercase tracking-[0.2em] mb-3" style={{ color: '#C9A84C' }}>About Us</p>
             <h2 className="font-display font-bold mb-3" style={{ color: '#F0EAD6' }}>
-              Dreamcrest Solutions
+              Castle Tools
             </h2>
             <h3 className="font-display text-lg mb-6" style={{ color: '#8A8AA0' }}>
               Oldest Multiplatform Service Provider
             </h3>
             <p className="mb-8" style={{ color: '#8A8AA0', lineHeight: 1.8 }}>
-              Dreamcrest Group is a leading provider of OTT services and group buy tools at discounted
-              prices. Founded in 2021, Dreamcrest has gained over 15,000+ customers and has expanded its
+              Castle Tools is a leading provider of OTT services and group buy tools at discounted
+              prices. Founded in 2021, Castle Tools has gained over 15,000+ customers and has expanded its
               reach internationally.
             </p>
 

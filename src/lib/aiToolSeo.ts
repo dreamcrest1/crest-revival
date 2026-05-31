@@ -3,9 +3,9 @@
 import type { AiTool } from '@/hooks/useAiTools';
 import { metaForTool } from '@/data/aiToolMeta';
 
-const SITE = 'https://dreamcrest.net';
-const BRAND = 'Dreamcrest Solutions';
-const WHATSAPP = '+91-6357998730';
+const SITE = 'https://castletools.in';
+const BRAND = 'Castle Tools';
+const WHATSAPP = '+91-9773453978';
 
 export function slugifyAiTool(name: string): string {
   return name
@@ -128,12 +128,12 @@ export function buildAiToolSeo(tool: AiTool): AiToolSeo {
     mainEntity: [
       {
         '@type': 'Question',
-        name: `How much does ${tool.name} cost on Dreamcrest?`,
+        name: `How much does ${tool.name} cost on Castle Tools?`,
         acceptedAnswer: {
           '@type': 'Answer',
           text:
             tool.price > 0
-              ? `${tool.name} (${validity}) is available at ₹${tool.price.toLocaleString('en-IN')} via group buy at Dreamcrest Solutions — a fraction of the official price.`
+              ? `${tool.name} (${validity}) is available at ₹${tool.price.toLocaleString('en-IN')} via group buy at Castle Tools — a fraction of the official price.`
               : `${tool.name} pricing is shared on request. Contact us on WhatsApp at ${WHATSAPP} for the latest group-buy price.`,
         },
       },

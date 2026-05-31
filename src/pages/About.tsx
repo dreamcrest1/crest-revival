@@ -14,7 +14,7 @@ const stats = [
 ];
 
 const timeline = [
-  { year: '2021', text: 'Dreamcrest Solutions founded in Chennai', highlight: 'Founded' },
+  { year: '2021', text: 'Castle Tools founded in Chennai', highlight: 'Founded' },
   { year: '2022', text: 'Launched Dreamtools.in for group buy services', highlight: 'Expansion' },
   { year: '2023', text: 'Crossed 10,000 happy customers milestone', highlight: '10K Users' },
   { year: '2024', text: 'Expanded catalog to 200+ premium products', highlight: '200+ Tools' },
@@ -31,8 +31,8 @@ const whyUs = [
 ];
 
 const brands = [
-  { name: 'Dreamtools', desc: 'Group Buy SEO & Premium Tools', url: 'https://dreamtools.in/', tag: 'Group Buy' },
-  { name: 'Dreamstar Solutions', desc: 'Digital Products & Services', url: 'https://dreamstarsolution.com/', tag: 'E-Commerce' },
+  { name: 'Dreamtools', desc: 'Group Buy SEO & Premium Tools', url: 'https://castletools.in/', tag: 'Group Buy' },
+  { name: 'Castle Tools', desc: 'Digital Products & Services', url: 'https://castletools.in/', tag: 'E-Commerce' },
 ];
 
 const containerVariants = {
@@ -56,7 +56,7 @@ const About = () => {
           <PageBanner
             eyebrow="Our Royal Lineage"
             title="About"
-            highlight="Dreamcrest"
+            highlight="Castle Tools"
             subtitle="India's oldest & most trusted multi-platform digital service provider. Forging premium tools accessible to every realm since 2021."
           />
 
@@ -104,7 +104,7 @@ const About = () => {
                 </h2>
                 <div className="space-y-5 text-muted-foreground leading-relaxed text-[15px]">
                   <p>
-                    Dreamcrest Solutions was founded in 2021 with a simple yet powerful mission: to make premium digital products accessible to everyone at prices that don't break the bank.
+                    Castle Tools was founded in 2021 with a simple yet powerful mission: to make premium digital products accessible to everyone at prices that don't break the bank.
                   </p>
                   <p>
                     What started as a small venture in Chennai has grown into India's most trusted digital product marketplace, serving over 15,000 happy customers across every state.
@@ -184,7 +184,7 @@ const About = () => {
                 <div className="w-10 h-1 bg-primary rounded-full" />
               </div>
               <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-3">
-                Why Choose <span className="text-gradient">Dreamcrest?</span>
+                Why Choose <span className="text-gradient">Castle Tools?</span>
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
                 We're committed to providing the best digital products experience in India
@@ -233,7 +233,7 @@ const About = () => {
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-3">
                 Part of a Growing <span className="text-gradient">Family</span>
               </h2>
-              <p className="text-muted-foreground">Dreamcrest is part of a growing family of digital service brands.</p>
+              <p className="text-muted-foreground">Castle Tools is part of a growing family of digital service brands.</p>
             </motion.div>
 
             <div className="grid sm:grid-cols-2 gap-5">

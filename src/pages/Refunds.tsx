@@ -74,7 +74,7 @@ const Refunds = () => {
             eyebrow="The Royal Decree"
             title="Refund &"
             highlight="Return Policy"
-            subtitle="Effective for: Dreamcrest Solutions & Dreamstar Solutions"
+            subtitle="Effective for: Castle Tools & Castle Tools"
           />
 
 
@@ -124,7 +124,7 @@ const Refunds = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="https://wa.me/916357998730?text=Hi,%20I%20have%20a%20query%20regarding%20my%20order."
+                href="https://wa.me/919773453978?text=Hi,%20I%20have%20a%20query%20regarding%20my%20order."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
@@ -132,7 +132,7 @@ const Refunds = () => {
                 💬 Chat on WhatsApp
               </a>
               <a
-                href="mailto:dreamcrestsolutions@gmail.com?subject=Refund/Support%20Request"
+                href="mailto:Castletool99@gmail.com?subject=Refund/Support%20Request"
                 className="inline-block bg-card text-primary border border-primary/30 px-6 py-2.5 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-colors"
               >
                 📧 Email Us

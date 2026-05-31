@@ -59,9 +59,9 @@ const BlogPost = () => {
     );
   }
 
-  const title = post.seo_title || `${post.title} — Dreamcrest Blog`;
+  const title = post.seo_title || `${post.title} — Castle Tools Blog`;
   const desc = post.seo_description || post.excerpt || post.title;
-  const url = `https://dreamcrest.net/blog/${post.slug}`;
+  const url = `https://castletools.in/blog/${post.slug}`;
   const ogImg = post.og_image_url || post.cover_image_url || undefined;
 
   const articleJsonLd = {
@@ -71,16 +71,16 @@ const BlogPost = () => {
     description: desc,
     image: ogImg ? [ogImg] : undefined,
     datePublished: post.published_at,
-    author: { '@type': 'Organization', name: 'Dreamcrest Solutions' },
-    publisher: { '@type': 'Organization', name: 'Dreamcrest Solutions' },
+    author: { '@type': 'Organization', name: 'Castle Tools' },
+    publisher: { '@type': 'Organization', name: 'Castle Tools' },
     mainEntityOfPage: url,
   };
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://dreamcrest.net/' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://dreamcrest.net/blog' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://castletools.in/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://castletools.in/blog' },
       { '@type': 'ListItem', position: 3, name: post.title, item: url },
     ],
   };

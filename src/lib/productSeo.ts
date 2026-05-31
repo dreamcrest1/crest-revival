@@ -1,7 +1,7 @@
 import type { Product } from '@/hooks/useProducts';
 
-const SITE = 'https://dreamcrest.net';
-const BRAND = 'Dreamcrest Solutions';
+const SITE = 'https://castletools.in';
+const BRAND = 'Castle Tools';
 
 /** Slugify a product name into a URL-friendly string. */
 export function slugify(name: string): string {

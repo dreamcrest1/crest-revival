@@ -44,7 +44,7 @@ const faqs = [
   },
   {
     q: 'How can I contact support?',
-    a: 'Our 24/7 support team is available on WhatsApp at +91 6357998730. You can also reach us via email or Instagram @dreamcrest_solutions.',
+    a: 'Our 24/7 support team is available on WhatsApp at +91 9773453978. You can also reach us via email or Instagram @Castletool99.',
   },
 ];
 
