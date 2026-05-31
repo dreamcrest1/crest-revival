@@ -72,9 +72,9 @@ const Refunds = () => {
         <div className="container mx-auto px-4 max-w-3xl">
           <PageBanner
             eyebrow="The Royal Decree"
-            title="Refund &"
-            highlight="Return Policy"
-            subtitle="Effective for: Castle Tools & Castle Tools"
+            title="Refunds &"
+            highlight="Replacements"
+            subtitle="How Castle Tools handles money-back requests, warranty fixes and the unusual edge cases."
           />
 
 
@@ -85,9 +85,9 @@ const Refunds = () => {
             transition={{ delay: 0.1 }}
             className="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-8"
           >
-            <h3 className="font-display font-semibold text-primary text-lg mb-2">⚠️ Important Notice</h3>
+            <h3 className="font-display font-semibold text-primary text-lg mb-2">⚠️ Heads-up</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              By purchasing or subscribing to any of our services, you agree to the terms outlined below. Since we deal in digital products, most delivered items are <strong className="text-foreground">non-refundable</strong> once activated.
+              By placing an order on Castle Tools you accept the points below. Since most items are delivered as digital keys, anything <strong className="text-foreground">already activated</strong> usually cannot be refunded — but we'll always try to make things right.
             </p>
           </motion.div>
 
