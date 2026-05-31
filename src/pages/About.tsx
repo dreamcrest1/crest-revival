@@ -100,20 +100,20 @@ const About = () => {
                   <span className="text-primary font-medium text-sm uppercase tracking-wider">Our Story</span>
                 </div>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-8">
-                  From a Vision to <span className="text-gradient">India's #1</span> Digital Marketplace
+                  From a one-room idea to a <span className="text-gradient">trusted little keep</span>
                 </h2>
                 <div className="space-y-5 text-muted-foreground leading-relaxed text-[15px]">
                   <p>
-                    Castle Tools was founded in 2021 with a simple yet powerful mission: to make premium digital products accessible to everyone at prices that don't break the bank.
+                    Castle Tools began with a frustration most Indian creators share — paying global prices in INR for tools that should cost a fraction of that. So we built a tiny, well-stocked store where genuine subscriptions are pooled, split and passed on at honest rates.
                   </p>
                   <p>
-                    What started as a small venture in Chennai has grown into India's most trusted digital product marketplace, serving over 15,000 happy customers across every state.
+                    It grew, mostly by word of mouth, into a quiet favourite for freelancers, students and small studios who just want the tool to work and a real person to message when it doesn't.
                   </p>
                   <p>
-                    We specialize in providing genuine subscriptions for AI tools, OTT platforms, software licenses, SEO tools, and cloud services at discounts of up to 80% off retail prices.
+                    We stock AI assistants, OTT plans, SEO suites, design software, VPNs and cloud add-ons — all sourced legitimately and handed over the moment your payment clears.
                   </p>
                   <p>
-                    Our commitment to authenticity, instant delivery, and exceptional customer support has made us the go-to destination for digital products in India.
+                    No upsells, no jargon, no fake urgency. Just keys, kindness and a WhatsApp chat that actually replies.
                   </p>
                 </div>
 
