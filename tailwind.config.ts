@@ -92,6 +92,17 @@ export default {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "sway-idle": {
+          "0%, 100%": { transform: "rotate(-0.4deg)" },
+          "50%": { transform: "rotate(0.4deg)" },
+        },
+        "sway-hover": {
+          "0%": { transform: "rotate(0deg)" },
+          "20%": { transform: "rotate(-2.2deg)" },
+          "45%": { transform: "rotate(1.6deg)" },
+          "70%": { transform: "rotate(-0.9deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -99,6 +110,8 @@ export default {
         "scroll-left": "scroll-left 30s linear infinite",
         "scroll-right": "scroll-right 30s linear infinite",
         "fade-in": "fade-in 0.6s ease-out forwards",
+        "sway-idle": "sway-idle 7s ease-in-out infinite",
+        "sway-hover": "sway-hover 1.2s ease-out",
       },
     },
   },
