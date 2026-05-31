@@ -344,8 +344,24 @@ const AiTools = () => {
           </PageBanner>
 
 
+          {/* 3D physics playground — drag, throw and click chips to open a tool */}
+          {trending.length > 0 && (
+            <div className="mb-10">
+              <Suspense
+                fallback={
+                  <div className="w-full h-[60vh] min-h-[420px] rounded-3xl border border-border/60 bg-card/30 backdrop-blur flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+                  </div>
+                }
+              >
+                <PhysicsPlayground tools={trending} maxChips={28} />
+              </Suspense>
+            </div>
+          )}
+
           {/* Trust strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+
             {[
               { icon: Shield, label: '100% Genuine' },
               { icon: Mail, label: 'Email Delivery' },
