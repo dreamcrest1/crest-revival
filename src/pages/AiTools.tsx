@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTrackSearch } from '@/hooks/useTrackSearch';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,9 +15,7 @@ import { popularityFor } from '@/data/aiToolPopularity';
 import { slugifyAiTool } from '@/lib/aiToolSeo';
 import { trackEvent } from '@/lib/eventTracker';
 import CheckoutDialog from '@/components/checkout/CheckoutDialog';
-
-// Heavy 3D + physics — code-split so it doesn't bloat the initial bundle.
-const PhysicsPlayground = lazy(() => import('@/components/ai/PhysicsPlayground'));
+import HangingToolsGrid from '@/components/ai/HangingToolsGrid';
 
 const WHATSAPP_NUMBER = '919773453978';
 
