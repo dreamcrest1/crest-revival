@@ -70,7 +70,7 @@ describe('AI tool JSON-LD (Google Rich Results compliance)', () => {
       expect(typeof offer.price).toBe('string');
       expect(offer.price as string).toMatch(/^\d+(\.\d+)?$/);
       expect(offer.availability).toMatch(/^https:\/\/schema\.org\/(InStock|OutOfStock)/);
-      expect(offer.url).toMatch(/^https:\/\/dreamcrest\.net\/ai-tool\//);
+      expect(offer.url).toMatch(/^https:\/\/castletools\.in\/ai-tool\//);
       // priceValidUntil must be ISO yyyy-mm-dd
       expect(offer.priceValidUntil as string).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect((offer.seller as Record<string, unknown>).name).toBe('Castle Tools');
@@ -103,7 +103,7 @@ describe('AI tool JSON-LD (Google Rich Results compliance)', () => {
         expect(item['@type']).toBe('ListItem');
         expect(item.position).toBe(i + 1);
         expect(typeof item.name).toBe('string');
-        expect(item.item as string).toMatch(/^https:\/\/dreamcrest\.net/);
+        expect(item.item as string).toMatch(/^https:\/\/castletools\.in/);
       });
     });
   });
