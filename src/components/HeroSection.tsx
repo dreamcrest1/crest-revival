@@ -178,13 +178,13 @@ const Medallion = () => {
                 style={{ filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.2))' }}
               />
               <path id="med-arc-front" d="M 60 190 A 130 130 0 0 1 320 190" fill="none" />
-              <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="14" letterSpacing="6">
+              <text fill="#2A1E08" fontFamily="'Inter', sans-serif" fontWeight="700" fontSize="14" letterSpacing="6">
                 <textPath href="#med-arc-front" startOffset="50%" textAnchor="middle">
                   CASTLE TOOLS
                 </textPath>
               </text>
               <path id="med-arc-front-bot" d="M 60 200 A 130 130 0 0 0 320 200" fill="none" />
-              <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="11" letterSpacing="5">
+              <text fill="#2A1E08" fontFamily="'Inter', sans-serif" fontWeight="700" fontSize="11" letterSpacing="5">
                 <textPath href="#med-arc-front-bot" startOffset="50%" textAnchor="middle">
                   ★ {currentLogo.name.toUpperCase()} ★
                 </textPath>
@@ -211,7 +211,7 @@ const Medallion = () => {
                 y="225"
                 textAnchor="middle"
                 fill="#2A1E08"
-                fontFamily="'Cinzel Decorative', serif"
+                fontFamily="'Inter', sans-serif"
                 fontWeight="900"
                 fontSize="140"
                 letterSpacing="8"
@@ -219,13 +219,13 @@ const Medallion = () => {
                 AI
               </text>
               <path id="med-arc-back" d="M 60 190 A 130 130 0 0 1 320 190" fill="none" />
-              <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="14" letterSpacing="6">
+              <text fill="#2A1E08" fontFamily="'Inter', sans-serif" fontWeight="700" fontSize="14" letterSpacing="6">
                 <textPath href="#med-arc-back" startOffset="50%" textAnchor="middle">
                   CASTLE TOOLS
                 </textPath>
               </text>
               <path id="med-arc-back-bot" d="M 60 200 A 130 130 0 0 0 320 200" fill="none" />
-              <text fill="#2A1E08" fontFamily="'Cinzel Decorative', serif" fontWeight="700" fontSize="11" letterSpacing="5">
+              <text fill="#2A1E08" fontFamily="'Inter', sans-serif" fontWeight="700" fontSize="11" letterSpacing="5">
                 <textPath href="#med-arc-back-bot" startOffset="50%" textAnchor="middle">
                   ★ EST · 2021 ★
                 </textPath>
