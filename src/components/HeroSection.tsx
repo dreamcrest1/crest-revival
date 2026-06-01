@@ -40,7 +40,7 @@ const Medallion = () => {
       last = now;
       if (auto.current && !dragging.current) {
         setAngle((a) => {
-          const next = a + (dt / 1000) * 22; // 22 deg/sec (~20% faster than 18)
+          const next = a + (dt / 1000) * 33; // 33 deg/sec (50% faster)
           // Swap logo each time the back faces the viewer (every 360°, when front returns)
           const mark = Math.floor(next / 360);
           if (mark !== lastSpinMark.current) {
