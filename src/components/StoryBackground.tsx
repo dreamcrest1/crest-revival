@@ -21,12 +21,12 @@ const StoryBackground: React.FC = React.memo(() => (
       disablePictureInPicture
       className="absolute inset-0 w-full h-full object-cover"
     />
-    {/* Readability overlay */}
+    {/* Readability overlay tuned to the cyber neon theme */}
     <div
       className="absolute inset-0"
       style={{
         background:
-          'linear-gradient(to bottom, hsl(230 60% 3% / 0.55) 0%, hsl(230 60% 3% / 0.35) 50%, hsl(230 60% 3% / 0.65) 100%)',
+          'linear-gradient(to bottom, hsl(240 60% 6% / 0.55) 0%, hsl(240 60% 6% / 0.4) 50%, hsl(240 60% 6% / 0.7) 100%)',
       }}
     />
   </div>

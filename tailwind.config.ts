@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['"Cinzel Decorative"', 'serif'],
+        display: ['Orbitron', 'Inter', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

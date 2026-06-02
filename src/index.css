@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,67 +6,67 @@
 
 @layer base {
   :root {
-    /* Castle palette — HSL */
-    --background: 240 22% 5%;            /* #0A0A0F */
-    --foreground: 45 47% 89%;            /* #F0EAD6 parchment */
+    /* Cyber neon palette — tuned to the circuit/grid background video.
+       Hot magenta primary + electric cyan accent on deep navy. */
+    --background: 240 60% 6%;            /* #07071A deep navy */
+    --foreground: 195 100% 92%;          /* #D6F4FF icy cyan-white */
 
-    --card: 240 18% 9%;                  /* #12121A */
-    --card-foreground: 45 47% 89%;
+    --card: 240 50% 9%;                  /* #0E0E22 */
+    --card-foreground: 195 100% 92%;
 
-    --popover: 240 18% 9%;
-    --popover-foreground: 45 47% 89%;
+    --popover: 240 50% 9%;
+    --popover-foreground: 195 100% 92%;
 
-    --primary: 45 53% 54%;               /* #C9A84C castle gold */
-    --primary-foreground: 240 22% 5%;
+    --primary: 320 95% 58%;              /* #F23BC5 hot magenta */
+    --primary-foreground: 240 60% 6%;
 
-    --secondary: 263 28% 51%;            /* #7B5EA7 royal purple */
-    --secondary-foreground: 45 47% 89%;
+    --secondary: 265 85% 62%;            /* #8B5CF6 electric violet */
+    --secondary-foreground: 195 100% 92%;
 
-    --muted: 240 20% 13%;                /* #1A1A26 surface 2 */
-    --muted-foreground: 240 11% 58%;     /* #8A8AA0 */
+    --muted: 240 40% 14%;                /* #161630 surface 2 */
+    --muted-foreground: 220 30% 70%;     /* #A0AECF */
 
-    --accent: 45 53% 54%;
-    --accent-foreground: 240 22% 5%;
+    --accent: 190 100% 55%;              /* #1AD8FF electric cyan */
+    --accent-foreground: 240 60% 6%;
 
-    --destructive: 7 65% 46%;            /* #C0392B */
+    --destructive: 350 90% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 26% 18%;               /* #22223A surface 3 */
-    --input: 240 20% 13%;
-    --ring: 45 53% 54%;
+    --border: 270 40% 28%;               /* neon-violet edge */
+    --input: 240 40% 14%;
+    --ring: 320 95% 58%;
 
     --radius: 0.75rem;
 
     /* Surfaces */
-    --surface-1: 240 18% 9%;             /* #12121A */
-    --surface-2: 240 20% 13%;            /* #1A1A26 */
-    --surface-3: 240 26% 18%;            /* #22223A */
+    --surface-1: 240 50% 9%;
+    --surface-2: 240 40% 14%;
+    --surface-3: 270 40% 22%;
 
-    /* Text shades */
-    --text-muted: 240 12% 33%;           /* #4A4A60 */
+    --text-muted: 220 20% 55%;
 
     /* Sidebar */
-    --sidebar-background: 240 22% 6%;
-    --sidebar-foreground: 45 47% 89%;
-    --sidebar-primary: 45 53% 54%;
-    --sidebar-primary-foreground: 240 22% 5%;
-    --sidebar-accent: 240 20% 13%;
-    --sidebar-accent-foreground: 45 47% 89%;
-    --sidebar-border: 240 26% 18%;
-    --sidebar-ring: 45 53% 54%;
+    --sidebar-background: 240 55% 7%;
+    --sidebar-foreground: 195 100% 92%;
+    --sidebar-primary: 320 95% 58%;
+    --sidebar-primary-foreground: 240 60% 6%;
+    --sidebar-accent: 240 40% 14%;
+    --sidebar-accent-foreground: 195 100% 92%;
+    --sidebar-border: 270 40% 28%;
+    --sidebar-ring: 320 95% 58%;
 
-    --success: 142 60% 42%;              /* #27AE60 */
-    --success-foreground: 0 0% 100%;
+    --success: 152 80% 50%;
+    --success-foreground: 240 60% 6%;
 
-    /* Decorative */
-    --gold: 45 53% 54%;
-    --gold-light: 41 64% 78%;            /* #E8D5A3 */
-    --gradient-gold: linear-gradient(135deg, hsl(45 53% 54%), hsl(41 64% 78%));
-    --gradient-torch: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    /* Decorative — legacy 'gold' aliases now map to neon so old utilities still work */
+    --gold: 320 95% 58%;
+    --gold-light: 190 100% 70%;
+    --gradient-gold: linear-gradient(135deg, hsl(320 95% 58%), hsl(190 100% 60%));
+    --gradient-torch: radial-gradient(ellipse 80% 60% at 50% 100%, hsl(320 95% 58% / 0.08) 0%, transparent 70%);
 
-    --shadow-card: 0 4px 32px rgba(201, 168, 76, 0.08);
-    --shadow-glow: 0 0 24px rgba(201, 168, 76, 0.18);
-    --shadow-btn-hover: 0 0 20px rgba(201, 168, 76, 0.4);
+    --shadow-card: 0 4px 32px hsl(320 95% 58% / 0.12);
+    --shadow-glow: 0 0 24px hsl(320 95% 58% / 0.35), 0 0 60px hsl(190 100% 55% / 0.15);
+    --shadow-btn-hover: 0 0 24px hsl(320 95% 58% / 0.55), 0 0 48px hsl(190 100% 55% / 0.25);
   }
 }
 
@@ -90,8 +90,9 @@
   }
 
   h1, h2, h3 {
-    font-family: 'Cinzel Decorative', serif;
-    letter-spacing: 0.04em;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 700;
   }
 
   h4, h5, h6 {
@@ -112,8 +113,9 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Cinzel Decorative', serif;
-    letter-spacing: 0.04em;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 700;
   }
 
   .text-gold {
@@ -140,7 +142,7 @@
   }
 
   .border-gold-soft {
-    border-color: rgba(201, 168, 76, 0.2);
+    border-color: hsl(var(--gold) / 0.25);
   }
 
   .glow-gold {
@@ -148,18 +150,20 @@
   }
 
   .glow-gold-strong {
-    box-shadow: 0 0 40px rgba(201, 168, 76, 0.35);
+    box-shadow: 0 0 40px hsl(var(--gold) / 0.5), 0 0 80px hsl(var(--accent) / 0.25);
   }
 
   .card-castle {
-    background: hsl(var(--surface-1));
-    border: 1px solid rgba(201, 168, 76, 0.12);
+    background: hsl(var(--surface-1) / 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--gold) / 0.18);
     border-radius: 12px;
     box-shadow: var(--shadow-card);
     transition: all 0.2s ease;
   }
   .card-castle:hover {
-    border-color: rgba(201, 168, 76, 0.5);
+    border-color: hsl(var(--gold) / 0.6);
     box-shadow: var(--shadow-glow);
     transform: translateY(-4px);
   }
@@ -175,10 +179,10 @@
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: hsl(var(--background)); }
 ::-webkit-scrollbar-thumb {
-  background: rgba(201, 168, 76, 0.4);
+  background: hsl(var(--gold) / 0.5);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.7); }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent) / 0.75); }
 
 /* Castle background animations */
 @keyframes ember-rise {
