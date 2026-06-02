@@ -2,19 +2,10 @@ import { type Product } from '@/hooks/useProducts';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { useImageValid, isLikelyValidLink } from '@/hooks/useImageValid';
 import { slugify } from '@/lib/productSeo';
-
-const PLACEHOLDER = '/placeholder.svg';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
-  const imgState = useImageValid(product.image);
-  const linkOk = isLikelyValidLink(product.buyLink);
-
-  if (imgState === false && !linkOk) return null;
-
-  const safeImage = imgState === false ? PLACEHOLDER : product.image;
   const detailHref = `/product/${slugify(product.name)}`;
 
   return (
