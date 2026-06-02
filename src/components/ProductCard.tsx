@@ -2,19 +2,10 @@ import { type Product } from '@/hooks/useProducts';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
-import { useImageValid, isLikelyValidLink } from '@/hooks/useImageValid';
 import { slugify } from '@/lib/productSeo';
-
-const PLACEHOLDER = '/placeholder.svg';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
-  const imgState = useImageValid(product.image);
-  const linkOk = isLikelyValidLink(product.buyLink);
-
-  if (imgState === false && !linkOk) return null;
-
-  const safeImage = imgState === false ? PLACEHOLDER : product.image;
   const detailHref = `/product/${slugify(product.name)}`;
 
   return (
@@ -22,27 +13,17 @@ const ProductCard = ({ product }: { product: Product }) => {
       to={detailHref}
       className="group relative block overflow-hidden rounded-xl border border-primary/15 bg-card/70 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_28px_hsl(var(--primary)/0.35),0_0_60px_hsl(var(--accent)/0.18)]"
     >
-      {/* Image */}
+      {/* Product Name Placeholder (image area) */}
       <div
-        className="relative overflow-hidden aspect-square"
+        className="relative overflow-hidden aspect-square flex items-center justify-center p-6"
         style={{
           background:
             'linear-gradient(135deg, hsl(var(--surface-2)) 0%, hsl(var(--surface-1)) 100%)',
         }}
       >
-        <img
-          src={safeImage}
-          alt={`${product.name} – cheap ${product.category} group buy in India`}
-          width="400"
-          height="400"
-          className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-          decoding="async"
-          onError={(e) => {
-            const img = e.currentTarget as HTMLImageElement;
-            if (img.src.indexOf(PLACEHOLDER) === -1) img.src = PLACEHOLDER;
-          }}
-        />
+        <h2 className="font-display text-2xl font-bold text-center leading-tight text-primary drop-shadow-[0_0_12px_hsl(var(--primary)/0.5)]">
+          {product.name}
+        </h2>
         {product.discount && (
           <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[11px] font-bold bg-background/85 text-primary border border-primary/30">
             {product.discount}
