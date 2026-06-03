@@ -1,5 +1,9 @@
 import React from 'react';
-import bgVideo from '@/assets/bg-loop.mp4.asset.json';
+import bgVideoAsset from '@/assets/bg-loop.mp4.asset.json';
+
+// Use local bundled video in production builds (e.g. cPanel) where the
+// Lovable /__l5e/ asset CDN is not reachable. Falls back to CDN url in dev.
+const bgVideoUrl = import.meta.env.PROD ? '/media/bg-loop.mp4' : bgVideoAsset.url;
 
 /**
  * StoryBackground — looping video background.
@@ -12,7 +16,7 @@ const StoryBackground: React.FC = React.memo(() => (
     style={{ background: 'hsl(230 60% 3%)' }}
   >
     <video
-      src={bgVideo.url}
+      src={bgVideoUrl}
       autoPlay
       loop
       muted
