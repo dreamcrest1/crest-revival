@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
 
 @tailwind base;
 @tailwind components;
@@ -83,21 +83,16 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Times New Roman', serif;
     line-height: 1.7;
     background-image: var(--gradient-torch);
     background-attachment: fixed;
   }
 
-  h1, h2, h3 {
-    font-family: 'Orbitron', 'Inter', sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Times New Roman', serif;
     letter-spacing: 0.02em;
     font-weight: 700;
-  }
-
-  h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
   }
 
   h1 { font-size: 3.5rem; line-height: 1.15; }
@@ -113,7 +108,7 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-family: 'Times New Roman', serif;
     letter-spacing: 0.02em;
     font-weight: 700;
   }
