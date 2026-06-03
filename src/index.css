@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap');
+@tailwind base;
 
 @tailwind base;
 @tailwind components;
