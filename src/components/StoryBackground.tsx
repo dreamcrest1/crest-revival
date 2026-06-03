@@ -16,7 +16,7 @@ const StoryBackground: React.FC = React.memo(() => (
     style={{ background: 'hsl(230 60% 3%)' }}
   >
     <video
-      src={bgVideo.url}
+      src={bgVideoUrl}
       autoPlay
       loop
       muted
